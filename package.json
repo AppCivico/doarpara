@@ -7,13 +7,22 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint:css": "stylelint assets/scss/**/*.{vue,scss} --fix"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "nuxt": "^3.7.3",
+    "postcss-html": "^1.5.0",
     "sass": "^1.68.0",
     "sassdoc": "^2.7.4",
-    "sassdoc-theme-herman": "^5.0.1"
+    "sassdoc-theme-herman": "^5.0.1",
+    "stylelint": "^15.10.3",
+    "stylelint-config-recess-order": "^4.3.0",
+    "stylelint-config-recommended-scss": "^13.0.0",
+    "stylelint-config-recommended-vue": "^1.5.0",
+    "stylelint-config-sass-guidelines": "^10.0.0",
+    "stylelint-scss": "^5.2.1",
+    "stylelint-selector-bem-pattern": "^3.0.1"
   }
 }
