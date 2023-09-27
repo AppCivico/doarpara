@@ -1,0 +1,121 @@
+@use '../abstracts' as my;
+
+/* navigation
+---------------------------------------------------------------------------- */
+nav {
+}
+
+menu,
+nav ul,
+nav ol {
+  display: flex;
+
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+
+  text-align: center;
+  list-style: none;
+}
+
+menu li,
+nav li {
+  padding: 0;
+  margin: 0;
+
+  &::before {
+    content: none;
+  }
+}
+
+menu a,
+nav a {
+  @include my.link-undercover;
+
+  display: block;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  @media screen and (min-width: my.breakpoint('toggle-menu')) {
+    display: flex;
+
+    align-items: center;
+
+    height: 100%;
+    padding: 0 my.$gutter;
+  }
+
+  &:link {
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: underline;
+
+    @supports (text-decoration-color: #{palette('anchor', 'hover')}) {
+      text-decoration-line: underline;
+      text-decoration-style: solid;
+      text-decoration-color: my.palette('anchor', 'hover');
+    }
+  }
+}
+
+.current > a {
+  pointer-events: none;
+}
+
+// /* access
+// ---------------------------------------------------------------------------- */
+// .skip-links {
+// }
+
+.skip-links a {
+  @include my.visually-hidden--focusable;
+}
+
+// /* pagination
+// ---------------------------------------------------------------------------- */
+.pagination {
+  display: table;
+
+  margin-right: auto;
+  margin-left: auto;
+
+  border-collapse: collapse;
+}
+
+.pagination__list {
+  display: table-row;
+}
+
+.pagination__item {
+  display: table-cell;
+
+  width: my.$gutter * 2;
+  height: my.$gutter * 2;
+  overflow: hidden;
+
+  line-height: my.$gutter * 2;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.pagination__item--first-page {}
+
+.pagination__item--previous-page {}
+
+.pagination__item--current {
+}
+
+.pagination__item--next-page {}
+
+.pagination__item--last-page {}
+
+.pagination__link {
+  @include my.link-undercover;
+}

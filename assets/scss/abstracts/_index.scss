@@ -1,0 +1,18 @@
+@use 'config';
+
+@forward 'config';
+@forward 'functions' with (
+  $my-base-url: config.$base-url,
+  $my-breakpoints: config.$breakpoints,
+  $my-font-weights: config.$font-weights,
+  $my-layers: config.$layers,
+  $my-gutter: config.$gutter,
+  $my-palette: config.$palette,
+);
+@forward 'mixins';
+
+@use '../vendor/modularscale' with (
+  $settings: config.$modularscale,
+);
+
+@forward '../vendor/modularscale' as ms-*;

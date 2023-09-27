@@ -1,0 +1,144 @@
+@use '../abstracts' as my;
+
+@media print {
+  // stylelint-disable disable-block, no-color-literals, declaration-no-important
+
+  /**
+   * @see http://www.alistapart.com/articles/goingtoprint/
+   * @see http://www.merttol.com/articles/css/too-light-for-print.html
+   */
+  * {
+    color: rgb(0, 0, 0) !important; /* Black prints faster: h5bp.com/s */
+    text-shadow: none !important;
+
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  html,
+  body {
+    display: block;
+
+    height: auto;
+    max-height: none;
+  }
+
+
+  body {
+    font: 12pt/1.33333 'Palatino Linotype', Palatino, 'Times New Roman', Times, serif;
+    color: rgb(0, 0, 0);
+
+    background: rgb(255, 255, 255) none;
+  }
+
+  a,
+  a:link,
+  a:visited {
+    font-weight: my.font-weight('bold');
+    color: rgb(68, 68, 68) !important;
+    text-decoration: underline;
+
+    background: transparent;
+  }
+
+  a[href]::after {
+    font-style: italic;
+    color: rgb(51, 51, 51);
+    word-wrap: break-word;
+    white-space: pre-wrap;
+
+    content: ' (' attr(href) ') ';
+  }
+
+  /**
+  * Don't show links for images, or javascript/internal links
+  */
+
+  a[href^='javascript:'],
+  a[href^='#'] {
+    &::after {
+      content: '';
+    }
+  }
+
+  abbr[title]::after {
+    font-style: italic;
+
+    content: ' (' attr(title) ')';
+  }
+
+  pre,
+  blockquote {
+    page-break-inside: avoid;
+
+    border: 1px solid rgb(153, 153, 153);
+  }
+
+  /**
+   * @see css-discuss.incutio.com/wiki/Printing_Tables
+   */
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+
+    vertical-align: bottom;
+  }
+
+  @page {
+    // stylelint-disable-next-line property-units
+    margin: 0.5cm;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  legend,
+  caption {
+    page-break-after: avoid;
+    page-break-inside: never;
+  }
+
+  [role='main'] {
+    float: none !important;
+    width: auto;
+    padding: 0;
+    margin: 0 5%;
+
+    border: 0;
+  }
+
+  nav,
+  .access,
+  .secondary {
+    display: none;
+  }
+
+  article p {
+    max-width: none;
+  }
+
+  .site-footer,
+  .no-print {
+    display: none;
+  }
+}
+
+// stylelint-enable disable-block, no-color-literals, declaration-no-important
