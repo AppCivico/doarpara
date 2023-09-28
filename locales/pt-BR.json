@@ -1,0 +1,23 @@
+{
+  "_currencySymbol": "R$",
+  "campaignBy": "Por",
+  "chooseThisReward": "Selecionar essa recompensa",
+  "credits": {
+    "juridicalPersonIdentification": "Organização responsável por esta página",
+    "poweredBy": "Campanha proporcionada por"
+  },
+  "donateWithoutReward": "Doe sem recompensa",
+  "minimumRewardOrMore": "R$ {n} ou mais",
+  "nSupporters": "Nenhum apoio | 1 apoio | {n} apoios",
+  "nav": {
+    "campaign": "Campanha",
+    "faq": "FAQ",
+    "shows": "Shows",
+    "testimony": "Testemunho | Testemunhos",
+    "transparency": "Transparência"
+  },
+  "privacyPolicy": "Política de privacidade",
+  "totalAmount": "Arrecadados",
+  "totalDonations": "Doações recebidas",
+  "useTerms": "Termos de uso"
+}

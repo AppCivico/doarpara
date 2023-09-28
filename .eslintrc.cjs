@@ -8,6 +8,7 @@ module.exports = {
   },
   globals: {
     defineNuxtConfig: 'readonly',
+    defineNuxtPlugin: 'readonly',
     vue: 'readonly',
   },
   parser: 'vue-eslint-parser',
