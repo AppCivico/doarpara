@@ -12,6 +12,7 @@
     "lint:css": "stylelint assets/scss/**/*.{vue,scss} --fix",
     "lint:prettier": "prettier --check .",
     "lint": "npx lint:js && npx lint:css && npx lint:prettier",
+    "lintAndFix": "prettier --write --list-different . && npx lint:js --fix && npx lint:css --fix && npx lint:prettier --fix",
     "test": "vitest run"
   },
   "devDependencies": {

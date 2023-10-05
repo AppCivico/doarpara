@@ -20,7 +20,7 @@ td {
   background-color: transparent;
   border: 0;
 
-  @media screen and (max-width: #{map.get(my.$breakpoints, 'toggle-table-layout') - 0.01}) {
+  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
     display: block;
   }
 }
@@ -48,7 +48,7 @@ table {
 
 thead,
 tfoot {
-  @media screen and (max-width: #{map.get(my.$breakpoints, 'toggle-table-layout') - 0.01}) {
+  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
     display: none;
   }
 }
@@ -74,7 +74,7 @@ caption {
 }
 
 tr {
-  @media screen and (max-width: #{map.get(my.$breakpoints, 'toggle-table-layout') - 0.01}) {
+  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
     @include my.fallback('margin', 0 0 1.5rem);
 
     &:last-child {
@@ -95,7 +95,7 @@ th {
 td {
   font-family: inherit;
 
-  @media screen and (max-width: #{map.get(my.$breakpoints, 'toggle-table-layout') - 0.01}) {
+  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
     &:empty {
       display: none;
     }
@@ -127,7 +127,7 @@ tbody th {
 tbody td {
   text-align: left;
 
-  @media screen and (max-width: #{map.get(my.$breakpoints, 'toggle-table-layout') - 0.01}) {
+  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
     text-align: left;
 
     &[aria-label] {
@@ -136,7 +136,8 @@ tbody td {
       &::before {
         float: left;
 
-        font-style: italic;
+        font-style: normal;
+        font-weight: 100;
 
         content: attr(aria-label) ': ';
       }
@@ -149,7 +150,7 @@ td img {
 }
 
 tbody tr:nth-of-type(even) {
-  @media screen and (max-width: #{map.get(my.$breakpoints, 'toggle-table-layout') - 0.01}) {
+  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
     background-color: transparent;
   }
 }

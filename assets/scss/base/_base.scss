@@ -4,33 +4,6 @@
 // This file contains very basic styles.
 // -----------------------------------------------------------------------------
 
-/**
- * 1. Make all elements from the DOM inherit from the parent box-sizing
- * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
- */
-*,
-::before,
-::after {
-  box-sizing: inherit;
-
-  tab-size: inherit;
-
-  background-repeat: no-repeat;
-
-  &:focus:not(:focus-visible) {
-    outline: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    // stylelint-disable declaration-no-important
-    transition: none !important;
-    animation: none !important;
-    scroll-behavior: auto !important;
-    // stylelint-enable declaration-no-important
-  }
-}
-
-
 /* User interaction (https://www.w3.org/TR/html5/editing.html)
 ========================================================================== */
 ::selection {
@@ -399,9 +372,9 @@ audio:not([controls]) {
 
 meter,
 progress {
-  background-size: auto;
-
   appearance: none;
+
+  background-size: auto;
 }
 
 audio {
@@ -635,7 +608,8 @@ address {
   padding: 0;
   margin: 0;
 
-  font-style: italic;
+  font-style: normal;
+  font-weight: 100;
 }
 
 /* Code blocks

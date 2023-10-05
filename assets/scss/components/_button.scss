@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 @use '../layout/form';
 @use '../abstracts' as my;
 
@@ -23,22 +25,26 @@
   display: inline-flex;
 
   align-items: center;
+  justify-content: center;
 
   width: auto; /* 3 */
-  min-height: my.$gutter * 2;
+  min-height: my.$gutter * 2.5;
   // stylelint-disable-next-line property-units
-  padding: 1px 6px; /* 6 */
+  padding: 1rem 0.75rem; /* 6 */
   overflow: visible; /* 3 */
 
+  font-weight: my.font-weight('bold');
+  text-align: center;
+  text-decoration: none;
   text-indent: 0;
   white-space: inherit;
 
+  appearance: button; /* 1 */
   cursor: pointer; /* 2 */
 
-  background-color: my.palette('button'); /* 5 */
-  border: my.$stroke;
-
-  appearance: button; /* 1 */
+  background-color: my.palette('button', 'base'); /* 5 */
+  border-color: my.palette('border', 'base');
+  border-width: my.$stroke;
 
   [role='group'] > &,
   fieldset > & {
@@ -72,12 +78,31 @@ button,
 [type='button'] {
   @extend %button-reset;
 
+  transition-duration: 300ms;
+  transition-property: color background-color border-color box-shadow;
+
   &:hover,
   &:focus {
-    @include my.focused;
+    color: my.palette('text', 'light');
 
     background-color: my.palette('button', 'focus');
+    border-color: my.palette('button', 'focus');
+    box-shadow: 0 20px 24px -10px my.palette('effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2);
   }
+
+  &:focus-visible {
+    @include my.focused;
+  }
+
+  @supports not selector(:focus-visible) {
+    &:focus {
+      @include my.focused;
+    }
+  }
+}
+
+.like-a__button:link {
+  @extend %button-reset;
 }
 
 .like-a__button--reset,

@@ -1,0 +1,14 @@
+<svg id="icon-linkedin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <rect id="Rectangle_5030" data-name="Rectangle 5030" width="20" height="20" fill="none"/>
+  <g id="Group_11443" data-name="Group 11443">
+    <rect id="Rectangle_5031" data-name="Rectangle 5031" width="20" height="20" fill="none"/>
+    <g id="Group_2148" data-name="Group 2148">
+      <g id="Group_2147" data-name="Group 2147">
+        <path id="Path_141" data-name="Path 141" d="M14.19,0H5.81A5.816,5.816,0,0,0,0,5.81V14.19A5.816,5.816,0,0,0,5.81,20H14.19A5.816,5.816,0,0,0,20,14.19V5.81A5.816,5.816,0,0,0,14.19,0Zm4.247,14.19a4.252,4.252,0,0,1-4.247,4.247H5.81A4.252,4.252,0,0,1,1.563,14.19V5.81A4.252,4.252,0,0,1,5.81,1.563H14.19A4.252,4.252,0,0,1,18.438,5.81Z" fill="#fff"/>
+      </g>
+    </g>
+    <path id="Path_18165" data-name="Path 18165" d="M20.864,19.8A1,1,0,0,1,19.8,20.864a1.019,1.019,0,0,1-1.06-1.006,1.074,1.074,0,0,1,1.06-1.112A1.03,1.03,0,0,1,20.864,19.8" transform="translate(-13.513 -14.179)" fill="#fff"/>
+    <rect id="Rectangle_5290" data-name="Rectangle 5290" width="2.119" height="6.886" transform="translate(5.232 7.215)" fill="#fff"/>
+    <path id="Path_18166" data-name="Path 18166" d="M34.021,28.613a2.32,2.32,0,0,0-2.013,1.059h-.053l-.106-.9H29.942c0,.583.053,1.271.053,2.066v4.556h2.119V31.632a1.632,1.632,0,0,1,.053-.53,1.139,1.139,0,0,1,1.007-.847c.741,0,1.059.636,1.059,1.483v3.655h2.119v-3.92c0-1.96-1.007-2.861-2.331-2.861" transform="translate(-21.584 -21.293)" fill="#fff"/>
+  </g>
+</svg>

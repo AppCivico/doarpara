@@ -1,0 +1,127 @@
+@use '../abstracts' as my;
+
+span[title] {
+  @include my.abbr-title;
+
+  &::before {
+    display: inline-block;
+
+    width: 1em;
+    height: 1em;
+
+    vertical-align: middle;
+
+    content: '';
+
+    background-color: currentColor;
+    mask-image: my.image('icons/info.svg');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+  }
+}
+
+// .tooltip {
+//   all: unset;
+
+//   position: relative;
+
+//   display: inline-block;
+
+//   cursor: help;
+
+//   border-radius: 3px;
+
+//   transition: 0.15s background linear;
+
+//   &:hover {
+//     background: #d4d1ec;
+//   }
+
+
+//   summary,
+//   summary[open] {
+//     all: unset;
+
+//     padding: 10px;
+//     padding-left: 33px;
+
+//     list-style: none;
+
+//     background: url('https://assets.codepen.io/14179/Info.svg') 11px 11.5px no-repeat;
+//     background-color: cyan;
+
+//     &::before {
+//       all: initial;
+
+//       display: inline-block;
+
+//       vertical-align: middle;
+
+//       // width: 1.2em;
+//       // height: 1.2em;
+//       // padding: 0.125em;
+
+//       // font-family: my.$alt-font-stack;
+//       // font-size: 83.3333%;
+//       // font-style: italic;
+//       // font-weight: my.font-weight('extrabold');
+//       // line-height: 1em;
+//       // color: my.palette('brand', 'primary');
+//       // text-align: center;
+
+//       content: my.image('icons/info.svg');
+
+//       // border: currentColor solid my.$stroke * 2;
+//       // border-radius: 100%;
+//       // box-shadow: 0 0 0 2px currentColor inset;
+//     }
+//   }
+
+//   &[open] summary {
+//     &::after {
+//       position: fixed;
+//       top: 0;
+//       right: 0;
+//       bottom: 0;
+//       left: 0;
+
+//       pointer-events: all;
+//       content: '';
+
+//       background-color: fuchsia;
+//       opacity: 0.25;
+//     }
+//   }
+
+//   [role='tooltip'] {
+//     position: absolute;
+//     // top: 35px;
+//     // right: 0;
+//     // left: 0;
+//     z-index: my.layer('modal');
+
+//     width: 250px;
+//     padding: 15px;
+
+//     cursor: auto;
+
+//     background: #eeeeee;
+//     border-radius: 4px;
+
+//     &::before {
+//       position: absolute;
+//       top: -10px;
+//       left: 10px;
+
+//       width: 0;
+//       height: 0;
+
+//       content: '';
+
+//       border-right: 8px solid transparent;
+//       border-bottom: 12px solid #eeeeee;
+//       border-left: 8px solid transparent;
+//     }
+//   }
+// }

@@ -1,6 +1,15 @@
 @use 'sass:map';
 @use 'sass:color';
 
+
+$_red: hsl(339, 100%, 46%);
+$_light-red: hsl(0, 100%, 78%);
+$_light-blue: hsl(198, 95%, 52%);
+$_blue: hsl(222, 100%, 57%);
+$_purple: hsl(247, 67%, 48%);
+$_dark-blue: hsl(247, 96%, 21%);
+
+
 ////
 /// This file contains all application-wide Sass color palettes
 ///
@@ -17,7 +26,7 @@
 ///
 $palette: () !default;
 
-$accent-color: hsl(330, 72%, 42%) !default;
+$accent-color: $_blue !default;
 
 ///
 /// @colors base
@@ -27,17 +36,30 @@ $base: (
 );
 $palette: map.set($palette, 'base', $base);
 
+$primary: $_blue;
+$secondary: $_dark-blue;
+$tertiary: $_light-blue;
+
+///
+/// @colors brand
+///
+$brand: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'tertiary': $tertiary,
+);
+$palette: map.set($palette, 'brand', $brand);
 
 ///
 /// @colors neutral
 ///
 $neutral: (
-  'white': hsl(240, 2%, 91%),
-  'x-light': color.scale(hsl(216, 11%, 91%), $whiteness: 10%),
-  'light': hsl(216, 11%, 91%),
-  'base': hsl(216, 2%, 60%),
-  'dark': hsl(206, 5%, 26%),
-  'x-dark': color.scale(hsl(206, 5%, 26%), $blackness: 10%),
+  'white': hsl(0, 0%, 100%),
+  'x-light': hsl(195, 25%, 97%),
+  'light': hsl(205, 14%, 74%),
+  'base': hsl(224, 10%, 58%),
+  'dark': hsl(210, 9%, 38%),
+  'x-dark': hsl(220, 6%, 20%),
   'black': hsl(200, 20%, 9%)
 );
 $palette: map.set($palette, 'neutral', $neutral);
@@ -47,11 +69,11 @@ $palette: map.set($palette, 'neutral', $neutral);
 /// @colors text
 ///
 $text: (
-  'dark': hsl(0, 0%, 13%),
+  'dark': map.get($neutral, 'black'),
   'title': $accent-color,
-  'faded': hsl(216, 11%, 32.5%),
-  'light': hsl(216, 11%, 91%),
-  'quotes': hsl(0, 0%, 34%),
+  'faded': map.get($neutral, 'dark'),
+  'light': map.get($neutral, 'x-light'),
+  'quotes': map.get($neutral, 'dark'),
 );
 $palette: map.set($palette, 'text', $text);
 
@@ -59,12 +81,12 @@ $palette: map.set($palette, 'text', $text);
 /// @colors anchor
 ///
 $anchor: (
-  'base': rgb(0, 102, 204),
-  'link': rgb(0, 102, 204),
-  'visited': rgb(128, 0, 128),
-  'hover': rgb(50, 152, 255),
-  'focus': rgb(50, 152, 255),
-  'active': rgb(229, 0, 80),
+  'base': $_blue,
+  'link': $_blue,
+  'visited': $_dark-blue,
+  'hover': $_purple,
+  'focus': $_purple,
+  'active': $_purple,
 );
 $palette: map.set($palette, 'anchor', $anchor);
 
@@ -73,9 +95,9 @@ $palette: map.set($palette, 'anchor', $anchor);
 /// @colors button
 ///
 $button: (
-  'base': rgb(225, 225, 225),
+  'base': map.get($neutral, 'white'),
   'hover': rgb(229, 241, 251),
-  'focus': rgb(229, 241, 251),
+  'focus': map.get($brand, 'primary'),
   'slider': hsl(0, 0%, 40%),
   'submit': rgb(217, 83, 79),
   'reset': transparent,
@@ -86,7 +108,7 @@ $palette: map.set($palette, 'button', $button);
 ///
 /// @colors feedback
 ///
-$feedback: (
+$feedback: ( // TO-DO
   'default': rgb(119, 119, 119),
   'primary': rgb(51, 122, 183),
   'success': rgb(66, 133, 66),
@@ -101,8 +123,8 @@ $palette: map.set($palette, 'feedback', $feedback);
 /// @colors border
 ///
 $border: (
-  'base': rgb(192, 192, 192),
-  'focus': rgb(0, 0, 0),
+  'base': map.get($neutral, 'light'),
+  'focus': map.get($base, 'accent'),
 );
 $palette: map.set($palette, 'border', $border);
 
@@ -111,8 +133,8 @@ $palette: map.set($palette, 'border', $border);
 /// @colors disabled
 ///
 $disabled: (
-  'foreground': hsl(0, 0%, 42%),
-  'background': hsl(0, 0%, 94%),
+  'foreground': map.get($text, 'faded'),
+  'background': map.get($neutral, 'white'),
 );
 $palette: map.set($palette, 'disabled', $disabled);
 
@@ -131,8 +153,8 @@ $palette: map.set($palette, 'loading', $loading);
 /// @colors placeholder
 ///
 $placeholder: (
-  'base': hsl(0, 0%, 34%),
-  'focus': hsl(0, 0%, 56%),
+  'base': map.get($neutral, 'dark'),
+  'focus': map.get($neutral, 'base'),
 );
 $palette: map.set($palette, 'placeholder', $placeholder);
 
@@ -140,9 +162,9 @@ $palette: map.set($palette, 'placeholder', $placeholder);
 ///
 /// @colors effects
 ///
-$effects: (
+$effects: ( // TO-DO
   'backdrop': rgba(0, 0, 0, 0.5),
-  'shadow': rgba(0, 0, 0, 0.75),
+  'shadow': color.adjust($_dark-blue, $alpha: -0.8),
   'tap-highlight': rgb(255, 94, 153),
   'target-highlight': rgb(255, 255, 102),
 );
@@ -152,7 +174,7 @@ $palette: map.set($palette, 'effects', $effects);
 ///
 /// @colors selection
 ///
-$selection: (
+$selection: ( // TO-DO
   'foreground': rgb(255, 255, 255),
   'background': rgb(20, 105, 140),
 );
@@ -162,7 +184,7 @@ $palette: map.set($palette, 'selection', $selection);
 ///
 /// @colors mark
 ///
-$mark: (
+$mark: ( // TO-DO
   'foreground': rgb(51, 51, 51),
   'background': rgb(215, 255, 90),
 );

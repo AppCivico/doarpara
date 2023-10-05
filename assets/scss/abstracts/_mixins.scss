@@ -1023,7 +1023,7 @@ $no-viewport: false !default;
 
 /// Sass fluid typography
 /// @link https://css-tricks.com/snippets/css/fluid-typography/
-@mixin fluid-font($min: 9px, $max, $min-viewport: 20rem, $max-viewport: c.$max-width) {
+@mixin fluid-font-size($min: 9px, $max, $min-viewport: 20rem, $max-viewport: c.$max-width) {
   font-size: $min;
 
   @media screen and (min-width: $min-viewport) {
@@ -1044,7 +1044,6 @@ $no-viewport: false !default;
 @mixin focused {
   outline: 1px dotted f.palette('effects', 'tap-highlight');
   outline-offset: 0.25rem;
-  box-shadow: 0 0 0 0.25rem color.scale(f.palette('effects', 'shadow'), $alpha: 50%);
 }
 
 @mixin shadow {
@@ -1247,5 +1246,58 @@ $no-viewport: false !default;
         flex-basis: 100%;
       }
     }
+  }
+}
+
+@mixin reset {
+  box-sizing: border-box;
+
+  padding: 0;
+  margin: 0;
+
+  font-family: inherit;
+  font-size: 100%;
+  font-style: normal;
+  vertical-align: baseline;
+  list-style: none;
+
+  cursor: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+  content: none;
+  quotes: none;
+
+  background: transparent;
+  // all: initial;
+  isolation: isolate;
+  border: 0;
+
+  &:link,
+  &:visited {
+    text-decoration: none;
+
+    cursor: auto;
+  }
+}
+
+@mixin turn-white {
+  filter: brightness(0) invert(1);
+}
+
+@mixin turn-black {
+  filter: brightness(0);
+}
+
+@mixin abbr-title {
+  text-decoration: none;
+
+  cursor: help; /* 1 */
+
+  border-bottom: 1px dotted;
+
+  @supports (text-decoration: dotted underline) {
+    text-decoration: dotted underline; /* 2 */
+
+    border-bottom: inherit;
   }
 }

@@ -1,0 +1,38 @@
+@use '../abstracts' as my;
+
+.donation-values__list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  padding: 0;
+  margin-top: 0;
+  margin-right: my.$gutter * -0.25;
+  margin-bottom: 0;
+  margin-left: my.$gutter * -0.25;
+}
+
+.donation-values__item {
+  flex-basis: 15%;
+  flex-grow: 1;
+
+  justify-content: stretch;
+
+  padding: 0;
+  margin-right: my.$gutter * 0.25;
+  margin-bottom: my.$gutter * 0.5;
+  margin-left: my.$gutter * 0.25;
+
+  white-space: nowrap;
+  list-style-type: none;
+
+  &::before {
+    content: none;
+  }
+}
+
+.donation-values__value {
+  &[class] {
+    width: 100%;
+  }
+}

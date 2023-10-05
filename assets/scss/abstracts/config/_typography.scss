@@ -22,7 +22,7 @@
 ///   font-family: $text-font-stack;
 /// }
 ///
-$text-font-stack: fs.$NATIVE-FONT-STACK !default;
+$text-font-stack: Outfit, fs.$CENTURY-GOTHIC-FONT-STACK !default;
 
 
 /// Title font stack
@@ -37,8 +37,7 @@ $text-font-stack: fs.$NATIVE-FONT-STACK !default;
 ///   font-family: $title-font-stack;
 /// }
 ///
-$title-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue',
-  'Helvetica', 'Arial', sans-serif !default;
+$title-font-stack: $text-font-stack !default;
 
 
 /// Code (monospace) font stack
@@ -157,6 +156,6 @@ $line-lengths: (
 $font-weights: (
   'text': 400,
   'bold': 600,
-  'extrabold': 800,
+  'extrabold': 700,
   'heading': 600,
 );

@@ -17,7 +17,7 @@
 /// @todo Customize it to match your design.
 /// @type number
 ///
-$rounded-corner: 0 !default;
+$rounded-corner: 5px !default;
 
 /// border default width
 /// @todo Customize it to match your design.
@@ -30,7 +30,7 @@ $stroke: 1px !default;
 /// @todo Customize it to match your design.
 /// @type number
 ///
-$gutter: 1.5rem;
+$gutter: 1.25rem; // 20px
 
 /// column basis width
 /// @todo Customize it to match your design.
@@ -75,6 +75,7 @@ $breakpoints: _im-to-em(
 ) !default;
 
 $toggle-breakpoints: (
+  'toggle-sidebar-position': 64em,
   'toggle-table-layout': 48em,
   'toggle-menu': 64em,
 );
@@ -84,20 +85,22 @@ $breakpoints: map.merge($breakpoints, $toggle-breakpoints);
 /// Container's maximum width
 /// @type number
 ///
-$max-width: 80em !default; // 1180px
-$max-width--narrow: 40.75em; // 668 px
+$max-width: 73.75rem !default; // 1180px
+$max-width--narrow: 48.75rem; // 780px
+
+$cover-max-width: 48.75rem; // 780px
 
 $breakpoints: map.merge(
   $breakpoints,
   (
     '#{$mobile-columns}col': $_device-width,
 
-    'max-width': math.div(80rem, 1rem) * 1em,
-    'max-width--narrow': math.div(40.75rem, 1rem) * 1em,
+    'max-width': math.div($max-width, 1rem) * 1em,
+    'max-width--narrow': math.div($max-width--narrow, 1rem) * 1em,
   )
 );
 
-@while $_device-width <= $max-width {
+@while $_device-width <= (math.div($max-width, 1rem) * 1em) {
   $_device-width: math.div($_device-width, $_i) * ($_i + 1);
   $_i: $_i + 1;
   $breakpoints: map.merge($breakpoints, ('#{$_i}col': $_device-width));
@@ -120,7 +123,7 @@ $layers: (
 /// @example scss - When using a CDN
 ///   $base-url: 'http://cdn.example.com/assets/';
 ///
-$base-url: '/assets/' !default;
+$base-url: '~/assets/' !default;
 
 @function _im-to-px($breakpoints, $base-value: 16px) {
   $new-breakpoints: ();

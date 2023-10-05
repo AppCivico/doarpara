@@ -156,17 +156,7 @@ article fieldset > p:first-child {
 
 %abbr-title {
   &[title] {
-    text-decoration: none;
-
-    cursor: help; /* 1 */
-
-    border-bottom: 1px dotted;
-
-    @supports (text-decoration: dotted underline) {
-      text-decoration: dotted underline; /* 2 */
-
-      border-bottom: inherit;
-    }
+    @include my.abbr-title;
   }
 }
 
@@ -181,8 +171,10 @@ abbr {
  */
 dfn {
   @extend %abbr-title;
+
   font-size: 1em;
-  font-style: italic; /* 1 */
+  font-style: normal; /* 1 */
+  font-weight: 100;
 }
 
 /**
@@ -260,7 +252,8 @@ sup {
 }
 
 time {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 100;
 
   &[pubdate] {
     cursor: help;
@@ -306,11 +299,13 @@ pre {
 }
 
 samp {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 100;
 }
 
 var {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 100;
 }
 
 /* text edition
@@ -321,7 +316,8 @@ s {
 }
 
 s {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 100;
 }
 
 %updated {
@@ -414,13 +410,15 @@ blockquote > p {
 
 q,
 blockquote {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 100;
   color: my.palette('quotes');
 }
 
 cite {
   font-size: 1em;
-  font-style: italic;
+  font-style: normal;
+  font-weight: 100;
 }
 
 blockquote footer {
@@ -430,7 +428,8 @@ blockquote footer {
 }
 
 blockquote footer cite {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 100;
 }
 
 // q {

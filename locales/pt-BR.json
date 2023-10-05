@@ -3,10 +3,12 @@
   "campaignBy": "Por",
   "chooseThisReward": "Selecionar essa recompensa",
   "credits": {
-    "juridicalPersonIdentification": "Organização responsável por esta página",
+    "juridicalPersonLabel": "Organização responsável por esta página",
     "poweredBy": "Campanha proporcionada por"
   },
   "donateWithoutReward": "Doe sem recompensa",
+  "juridicalPersonIdentification": "CNPJ",
+  "loadVideo": "Carregar vídeo",
   "minimumRewardOrMore": "R$ {n} ou mais",
   "nSupporters": "Nenhum apoio | 1 apoio | {n} apoios",
   "nav": {

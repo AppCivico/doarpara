@@ -12,6 +12,13 @@
  * Within any `document` or `application`, the author **SHOULD** mark no more than one element with the `contentinfo` role.
  */
 .main-footer {
+  padding-top: my.$gutter * 5;
+  padding-bottom: my.$gutter;
+
+  font-size: my.ms-step(-1);
+  color: my.palette('text', 'light');
+
+  background-color: my.palette('brand','secondary');
 }
 
 [role='contentinfo'] {

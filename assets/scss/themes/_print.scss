@@ -42,7 +42,8 @@
   }
 
   a[href]::after {
-    font-style: italic;
+    font-style: normal;
+    font-weight: 100;
     color: rgb(51, 51, 51);
     word-wrap: break-word;
     white-space: pre-wrap;
@@ -62,7 +63,8 @@
   }
 
   abbr[title]::after {
-    font-style: italic;
+    font-style: normal;
+    font-weight: 100;
 
     content: ' (' attr(title) ')';
   }

@@ -8,23 +8,13 @@
 
 // 3. Base stuff
 @use 'base/variables';
+@use 'base/reset';
 @use 'base/base';
 @use 'base/fonts';
 @use 'base/typography';
 @use 'base/helpers';
 
-// 4. Layout-related sections
-@use 'layout/lists';
-@use 'layout/navigation';
-@use 'layout/table';
-@use 'layout/form';
-@use 'layout/gallery';
-@use 'layout/main';
-@use 'layout/header';
-@use 'layout/footer';
-@use 'layout/h-feed';
-
-// 5. Components
+// 4. Components
 @use 'components/h-entry';
 @use 'components/figure';
 @use 'components/text-field';
@@ -34,6 +24,21 @@
 @use 'components/progress';
 @use 'components/select';
 @use 'components/slider';
+@use 'components/campaign-colophon';
+@use 'components/donation-values';
+@use 'components/tooltip';
+
+// 5. Layout-related sections
+@use 'layout/lists';
+@use 'layout/navigation';
+@use 'layout/table';
+@use 'layout/form';
+@use 'layout/gallery';
+@use 'layout/main';
+@use 'layout/header';
+@use 'layout/footer';
+@use 'layout/h-feed';
+@use 'layout/intro';
 
 // 6. Page-specific styles
 @use 'pages/home';

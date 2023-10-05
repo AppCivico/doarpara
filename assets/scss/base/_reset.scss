@@ -1,0 +1,25 @@
+/**
+ * 1. Make all elements from the DOM inherit from the parent box-sizing
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*,
+::before,
+::after {
+  box-sizing: inherit;
+
+  tab-size: inherit;
+
+  background-repeat: no-repeat;
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    // stylelint-disable declaration-no-important
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+    // stylelint-enable declaration-no-important
+  }
+}
