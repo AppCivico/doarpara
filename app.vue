@@ -283,88 +283,7 @@
               Este projeto oferece recompensas em troca do seu apoio. Selecione
               uma recompensa abaixo.
             </p>
-            <dl class="rewards__list">
-              <div class="rewards__item">
-                <dd class="rewards__value">
-                  {{ $t('minimumRewardOrMore', 10) }}
-                </dd>
-                <dt class="rewards__title">Kit de brindes Espuma</dt>
-                <dd class="rewards__picture">
-                  <img src="" alt="" width="300" height="150" />
-                </dd>
-                <dd class="rewards__description">
-                  <p>
-                    Como agradecimento pela sua incrível doação, você receberá
-                    um kit de brindes Espuma para guardar ou presentear um amigo
-                    ou familiar. Além disso, você...
-                  </p>
-
-                  <p class="rewards__call-to-action-wrapper">
-                    <a
-                      href="#doar?recompensa=123"
-                      class="rewards__call-to-action"
-                    >
-                      {{ $t('chooseThisReward') }}
-                    </a>
-                  </p>
-                </dd>
-                <dd class="rewards__donors">{{ $t('nSupporters', 215) }}</dd>
-              </div>
-
-              <div class="rewards__item">
-                <dd class="rewards__value">
-                  {{ $t('minimumRewardOrMore', 60) }}
-                </dd>
-                <dt class="rewards__title">Kit banho + guloseimas</dt>
-                <dd class="rewards__picture">
-                  <img src="" alt="" width="300" height="150" />
-                </dd>
-                <dd class="rewards__description">
-                  <p>
-                    Muito obrigado! Pela sua doação, você será incluído em nosso
-                    muro da fama de Espuma em nosso site, ganhe um pano de prato
-                    edição limitada e uma...
-                  </p>
-
-                  <p class="rewards__call-to-action-wrapper">
-                    <a
-                      href="#doar?recompensa=123"
-                      class="rewards__call-to-action"
-                    >
-                      {{ $t('chooseThisReward') }}
-                    </a>
-                  </p>
-                </dd>
-                <dd class="rewards__donors">{{ $t('nSupporters', 48) }}</dd>
-              </div>
-
-              <div class="rewards__item">
-                <dd class="rewards__value">
-                  {{ $t('minimumRewardOrMore', 110) }}
-                </dd>
-                <dt class="rewards__title">Toalha de banho bordada</dt>
-                <dd class="rewards__picture">
-                  <img src="" alt="" width="300" height="150" />
-                </dd>
-                <dd class="rewards__description">
-                  <p>
-                    UAU, obrigado! Você receberá uma toalha de banho impressa
-                    com a marca da campanha (edição limitada) com sua doação,
-                    além de se tornar...
-                  </p>
-
-                  <p class="rewards__call-to-action-wrapper">
-                    <a
-                      href="#doar?recompensa=123"
-                      class="rewards__call-to-action"
-                    >
-                      {{ $t('chooseThisReward') }}
-                    </a>
-                  </p>
-                </dd>
-                <dd class="rewards__donors">{{ $t('nSupporters', 48) }}</dd>
-              </div>
-            </dl>
+            <rewardsList :rewards="rewards" />
           </section>
         </div>
       </div>
@@ -420,3 +339,6 @@
     </footer>
   </div>
 </template>
+<script setup>
+import rewards from '@/mocks/rewards.js';
+</script>

@@ -9,8 +9,10 @@
   "donateWithoutReward": "Doe sem recompensa",
   "juridicalPersonIdentification": "CNPJ",
   "loadVideo": "Carregar vídeo",
-  "minimumRewardOrMore": "R$ {n} ou mais",
-  "nSupporters": "Nenhum apoio | 1 apoio | {n} apoios",
+  "minimumRewardOrMore": "ou mais",
+  "nSupporters": {
+    "plural": "Nenhum apoio | 1 apoio | {n} apoios"
+  },
   "nav": {
     "campaign": "Campanha",
     "faq": "FAQ",
