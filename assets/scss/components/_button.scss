@@ -28,6 +28,7 @@
   justify-content: center;
 
   width: auto; /* 3 */
+  max-width: 100%;
   min-height: my.$gutter * 2.5;
   // stylelint-disable-next-line property-units
   padding: 1rem 0.75rem; /* 6 */
@@ -73,6 +74,7 @@
 }
 
 .like-a__button,
+.like-a__button:link,
 button,
 [role='button'],
 [type='button'] {
@@ -101,11 +103,7 @@ button,
   }
 }
 
-.like-a__button:link {
-  @extend %button-reset;
-}
-
-.like-a__button--reset,
+.like-a__button--reset:link,
 [type='reset'] {
   @extend %button-reset;
 
@@ -114,13 +112,15 @@ button,
   background-color: my.palette('button', 'reset');
 }
 
-.like-a__button--submit,
+.like-a__button--submit:link,
 [type='submit'] {
   @extend %button-reset;
+
   justify-content: center;
 
   width: my.$gutter * 12;
 
+  color: my.palette('text', 'light');
   text-align: center;
 
   background-color: my.palette('button', 'submit');
