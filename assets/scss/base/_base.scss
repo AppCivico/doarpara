@@ -13,6 +13,10 @@
   background-color: my.palette('selection', 'background');
 }
 
+[id] {
+  scroll-margin-top: my.$gutter * 2;
+}
+
 /**
  * ARIA roles should include visual cursor hints
  */
