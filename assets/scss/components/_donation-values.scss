@@ -5,23 +5,25 @@
 
   flex-wrap: wrap;
 
+  gap: my.$gutter * 0.5;
+
   padding: 0;
   margin-top: 0;
-  margin-right: my.$gutter * -0.25;
+  margin-right: 0;
   margin-bottom: 0;
-  margin-left: my.$gutter * -0.25;
+  margin-left: 0;
+
+  font-size: my.ms-step(0);
 }
 
 .donation-values__item {
-  flex-basis: 15%;
+  flex-basis: 10%;
   flex-grow: 1;
 
   justify-content: stretch;
 
   padding: 0;
-  margin-right: my.$gutter * 0.25;
-  margin-bottom: my.$gutter * 0.5;
-  margin-left: my.$gutter * 0.25;
+  margin: 0;
 
   white-space: nowrap;
   list-style-type: none;
