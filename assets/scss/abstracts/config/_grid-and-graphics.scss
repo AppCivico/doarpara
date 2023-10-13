@@ -85,7 +85,7 @@ $breakpoints: map.merge($breakpoints, $toggle-breakpoints);
 /// Container's maximum width
 /// @type number
 ///
-$max-width: 73.75rem !default; // 1180px
+$max-width: 73.75rem + $gutter * 2 !default; // 1180px
 $max-width--narrow: 48.75rem; // 780px
 
 $cover-max-width: 48.75rem; // 780px
