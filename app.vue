@@ -209,29 +209,41 @@
     </article>
 
     <footer class="main-footer">
-      <div class="container">
+      <div class="container main-footer__navigation-social-and-credits">
         <nav
           class="footer-nav"
           aria-label="Menu da campanha, termos de uso e política de privacidade"
         >
           <ul class="footer-nav__list">
             <li class="footer-nav__item">
-              <a href="#campanha">{{ $t('nav.campaign') }}</a>
+              <a class="footer-nav__link" href="#campanha">
+                {{ $t('nav.campaign') }}
+              </a>
             </li>
             <li class="footer-nav__item">
-              <a href="#transparência">{{ $t('nav.transparency') }}</a>
+              <a class="footer-nav__link" href="#transparência">
+                {{ $t('nav.transparency') }}
+              </a>
             </li>
             <li class="footer-nav__item">
-              <a href="#testemunhos">{{ $t('nav.testimony', 0) }}</a>
+              <a class="footer-nav__link" href="#testemunhos">
+                {{ $t('nav.testimony', 0) }}
+              </a>
             </li>
             <li class="footer-nav__item">
-              <a href="#faq">{{ $t('nav.faq') }}</a>
+              <a class="footer-nav__link" href="#faq">
+                {{ $t('nav.faq') }}
+              </a>
             </li>
             <li class="footer-nav__item">
-              <a href="/termos-de-uso">{{ $t('useTerms') }}</a>
+              <a class="footer-nav__link" href="/termos-de-uso">
+                {{ $t('useTerms') }}
+              </a>
             </li>
             <li class="footer-nav__item">
-              <a href="/politica-de-privacidade">{{ $t('privacyPolicy') }}</a>
+              <a class="footer-nav__link" href="/politica-de-privacidade">
+                {{ $t('privacyPolicy') }}
+              </a>
             </li>
           </ul>
         </nav>
@@ -249,7 +261,7 @@
           />
         </div>
       </div>
-      <div class="container">
+      <div class="container main-footer__juridical-data">
         <div class="juridical-person-identification">
           {{ $t('credits.juridicalPersonLabel') }}: Comunidade Solidária Ltda.
           {{ $t('juridicalPersonIdentification') }}: 08.746.641/0001-00
