@@ -15,6 +15,7 @@
 @use 'base/helpers';
 
 // 4. Components
+@use 'components/navigation';
 @use 'components/h-entry';
 @use 'components/figure';
 @use 'components/text-field';
@@ -31,7 +32,6 @@
 
 // 5. Layout-related sections
 @use 'layout/lists';
-@use 'layout/navigation';
 @use 'layout/table';
 @use 'layout/form';
 @use 'layout/gallery';
