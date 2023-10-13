@@ -1,7 +1,8 @@
 @use 'sass:color';
 @use '../abstracts' as my;
 
-// $_preamble-bg: hsla(0, 0%, 0%, 0.04);
+$_background-width-beyond-column: 70px;
+$_preamble-bg: hsl(225, 92%, 56%);
 
 .intro {
   margin-bottom: my.$gutter * 2;
@@ -12,26 +13,28 @@
 }
 
 .intro > .container {
-  @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
-    display: flex;
-
-    flex-wrap: wrap;
-  }
 }
 
 .intro__cover {
   position: relative;
+  z-index: my.layer('default');
+
 
   align-self: flex-start;
 
-  max-width: my.$cover-max-width;
+  width: my.$cover-max-width;
+  max-width: 100%;
   margin-top: 0;
   margin-right: auto;
   margin-bottom: my.$gutter;
   margin-left: auto;
 
+  background-color: my.palette('brand', 'primary');
+
   @media screen and (max-width: my.breakpoint('tablet__portrait') - 0.01) {
     @include my.full-width;
+
+    max-width: none;
   }
 
   @media screen and (min-width: my.breakpoint('tablet__portrait')) {
@@ -41,6 +44,8 @@
   }
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+    float: left;
+    margin-right: my.$gutter * 2;
     // max-width: min-content;
   }
 }
@@ -49,21 +54,45 @@
   display: block;
 }
 
+.intro__video {
+  height: auto;
+  aspect-ratio: 780 / 440;
+
+  animation: fadeIn 1.2s;
+
+  @at-root {
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}
+
 .intro__figure-switcher {
   @include my.reset;
 
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   display: flex;
 
   align-items: center;
   justify-content: center;
 
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+
   cursor: pointer;
 
-  transform: translate(-50%, -50%);
 
   > img {
     @include my.reset;
@@ -77,6 +106,27 @@
 
     transition-duration: 300ms;
     transition-property: filter;
+
+    @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+      width: 50px;
+      height: auto;
+    }
+  }
+
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    content: '';
+
+    background-color: my.palette('brand', 'primary');
+    opacity: 0;
+
+    transition-duration: 300ms;
+    transition-property: opacity;
   }
 
   &:hover,
@@ -88,20 +138,19 @@
     > img {
       filter: invert(1) drop-shadow(my.palette('effects', 'shadow') 0 0 2px) drop-shadow(color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2) 0 0 4px);
     }
+
+    &::before {
+      opacity: 0.3;
+    }
   }
 }
 
-.intro__preamble-and-progress-and-call-to-action {
-  display: flex;
 
-  flex-basis: 0;
-  flex-direction: column;
-  flex-grow: 1;
 
-  justify-content: space-between;
-}
 
 .intro__campaign-preamble {
+  margin-bottom: my.$gutter;
+
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     position: relative;
 
@@ -113,24 +162,36 @@
 
     color: my.palette('text', 'light');
 
-    // background-color: $_preamble-bg;
-    border-bottom-right-radius: 60px;
+    background-color: $_preamble-bg;
 
-    &::before {
+    &::before,
+    &::after {
       position: absolute;
       top: 0;
-      right: calc(-50vw + my.$max-width / 2 - my.$gutter * 0);
       bottom: 0;
+
+      content: '';
+    }
+
+    &::before {
+      left: min((100vw - my.$max-width) / -2 - my.$gutter , my.$gutter * -1);
       z-index: my.layer('below');
 
       width: 100vw;
 
-      content: '';
-
       background-color: my.palette('brand', 'primary');
+      border-bottom-right-radius: 60px;
+    }
+
+    &::after {
+      left: calc(my.$cover-max-width + 350px);
+
+      width: 120px;
+
+      background-color: inherit;
       background-image: my.image('themes/blue/preamble.svg');
-      background-position: calc(max(my.$cover-max-width + my.$gutter, 50vw + my.$cover-max-width - my.$max-width / 2 + my.$gutter)) 0;
-      border-bottom-right-radius: inherit;
+      background-position: 100% 0;
+      border-bottom-right-radius: 60px;
     }
   }
 
@@ -146,15 +207,12 @@
 
     @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
       max-width: 18em;
+      // necessary to prevent the clearing of the float caused by the `max-width`
+      overflow: hidden;
     }
   }
 }
 
-.intro__progress-and-call-to-action {
-  @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
-    padding-left: my.$gutter;
-  }
-}
 
 .intro__campaign-progress {
   margin-bottom: my.$gutter;
@@ -164,10 +222,35 @@
   }
 }
 
+.call-to-action-values {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: space-between;
+
+  overflow: hidden;
+
+  font-size: my.ms-step(-1);
+}
+
+.call-to-action-values__intro,
+.call-to-action-values__campaign-type {
+  flex-basis: 0;
+  flex-grow: 1;
+
+  max-width: max-content;
+}
+
 .call-to-action-values__intro {
-color: my.palette('neutral', 'base');
+  color: my.palette('neutral', 'base');
+  text-transform: uppercase;
 }
 
 .call-to-action-values__campaign-type {
   color: my.palette('brand', 'primary');
+}
+
+.call-to-action-values__donation-values {
+  flex-basis: 100%;
 }

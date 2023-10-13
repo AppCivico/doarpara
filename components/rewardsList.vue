@@ -79,6 +79,7 @@ defineProps<{
   padding: my.$gutter;
   margin-bottom: my.$gutter;
 
+  background-color: my.palette('neutral', 'white');
   border: my.$stroke solid my.palette('border');
   border-radius: 10px;
 
@@ -90,7 +91,9 @@ defineProps<{
   &:focus {
     grid-row-start: span 99;
 
-    box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
+    box-shadow:
+      0 60px 24px -36px my.palette('effects', 'shadow'),
+      0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
   }
 }
 

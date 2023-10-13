@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="471" height="188" viewBox="0 0 471 188" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
-    <g transform="matrix(1,0,0,1,-119.915,-239.83)">
-        <g transform="matrix(0.999293,0,0,0.999293,-837.371,0.999293)">
-            <g id="Rectangle_5027" transform="matrix(1,0,0,1,957.963,239)">
-                <path d="M0,0L411,0C443.915,-0 471,27.085 471,60L471,128C471,160.915 443.915,188 411,188L0,188L0,0Z" style="fill:rgb(59,40,204);fill-opacity:0.17;fill-rule:nonzero;"/>
-            </g>
-        </g>
+<svg width="100%" height="100%" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <g transform="matrix(1,0,0,1,-469.667,-239.918)">
         <g transform="matrix(0.999293,0,0,0.999293,-837.371,0.999293)">
             <g id="Path_1971" transform="matrix(1,0,0,1,183.088,-250.576)">
                 <path d="M1244.87,489.664L1124.87,489.664L1124.87,549.566C1124.87,582.481 1151.96,609.566 1184.87,609.566C1217.79,609.566 1244.87,582.481 1244.87,549.566L1244.87,489.664Z" style="fill:rgb(18,179,249);fill-opacity:0.41;fill-rule:nonzero;"/>
