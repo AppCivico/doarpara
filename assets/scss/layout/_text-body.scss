@@ -1,0 +1,63 @@
+@use '../abstracts' as my;
+
+.text-body {
+}
+
+.text-body__container {
+}
+
+.text-body__tab-navigation {
+}
+
+.text-body__tabs-and-rewards {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: my.$gutter;
+}
+
+.text-body__tab-list {
+  flex-basis: 30rem;
+  flex-grow: 1;
+
+  @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+    flex-basis: my.$cover-max-width;
+    flex-grow: 0;
+  }
+}
+
+.tab-list__item {
+  display: none;
+
+  &[aria-selected='true'],
+  &:target {
+    display: block;
+  }
+}
+
+.text-body__call-to-faq {
+  padding-top: my.$gutter * 2;
+  padding-bottom: my.$gutter * 2;
+  margin-top: my.$gutter * 2;
+  margin-bottom: my.$gutter * 2;
+
+  border-color: my.palette('neutral', 'light');
+  border-style: solid;
+  border-width: my.$stroke 0;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.text-body__rewards {
+  flex-basis: 13.75rem;
+  flex-grow: 1;
+
+  @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+    flex-basis: 0;
+
+    // max-width: 22.5rem;
+  }
+}
