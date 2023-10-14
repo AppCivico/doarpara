@@ -5,7 +5,7 @@ $_background-width-beyond-column: 70px;
 $_preamble-bg: hsl(225, 92%, 56%);
 
 .intro {
-  margin-bottom: my.$gutter * 2;
+  margin-bottom: my.$gutter * 3;
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     margin-bottom: my.$gutter * 5;
@@ -13,12 +13,18 @@ $_preamble-bg: hsl(225, 92%, 56%);
 }
 
 .intro > .container {
+  @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+    display: grid;
+
+    grid-template-columns: minmax(my.$cover-max-width, 1fr) 1fr;
+
+    gap: my.$gutter;
+  }
 }
 
 .intro__cover {
   position: relative;
   z-index: my.layer('default');
-
 
   align-self: flex-start;
 
@@ -26,7 +32,7 @@ $_preamble-bg: hsl(225, 92%, 56%);
   max-width: 100%;
   margin-top: 0;
   margin-right: auto;
-  margin-bottom: my.$gutter;
+  margin-bottom: my.$gutter * 2;
   margin-left: auto;
 
   background-color: my.palette('brand', 'primary');
@@ -38,15 +44,18 @@ $_preamble-bg: hsl(225, 92%, 56%);
   }
 
   @media screen and (min-width: my.breakpoint('tablet__portrait')) {
-    margin-bottom: my.$gutter * 5;
-
     box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
   }
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
-    float: left;
-    margin-right: my.$gutter * 2;
-    // max-width: min-content;
+    grid-row-start: 1;
+    grid-row-end: 3;
+
+    margin-bottom: 0;
+  }
+
+  @media screen and (min-width: my.breakpoint('desktop')) {
+    grid-row-end: 4;
   }
 }
 
@@ -92,7 +101,6 @@ $_preamble-bg: hsl(225, 92%, 56%);
   overflow: visible;
 
   cursor: pointer;
-
 
   > img {
     @include my.reset;
@@ -145,20 +153,25 @@ $_preamble-bg: hsl(225, 92%, 56%);
   }
 }
 
-
-
-
 .intro__campaign-preamble {
-  margin-bottom: my.$gutter;
+  margin-bottom: my.$gutter * 2;
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
 
     padding-top: my.$gutter;
     padding-right: my.$gutter;
     padding-bottom: my.$gutter;
     padding-left: my.$gutter;
     margin-right: my.$gutter * -1;
+    margin-bottom: 0;
+    margin-left: my.$gutter * -1;
 
     color: my.palette('text', 'light');
 
@@ -174,7 +187,9 @@ $_preamble-bg: hsl(225, 92%, 56%);
     }
 
     &::before {
-      left: min((100vw - my.$max-width) / -2 - my.$gutter , my.$gutter * -1);
+      // setting outside the rule to prevent a parsing issue on SASS
+      $minimum-offset: my.$gutter * -2 - my.$cover-max-width;
+      left: min(my.$max-width / 2 - my.$cover-max-width - my.$gutter - 50vw, $minimum-offset);
       z-index: my.layer('below');
 
       width: 100vw;
@@ -184,7 +199,7 @@ $_preamble-bg: hsl(225, 92%, 56%);
     }
 
     &::after {
-      left: calc(my.$cover-max-width + 350px);
+      left: 350px;
 
       width: 120px;
 
@@ -193,13 +208,6 @@ $_preamble-bg: hsl(225, 92%, 56%);
       background-position: 100% 0;
       border-bottom-right-radius: 60px;
     }
-  }
-
-  @media screen and (min-width: my.breakpoint('desktop')) {
-    padding-top: my.$gutter * 2;
-    padding-right: my.$gutter * 2;
-    padding-bottom: my.$gutter * 2;
-    padding-left: my.$gutter * 2;
   }
 
   p {
@@ -213,12 +221,13 @@ $_preamble-bg: hsl(225, 92%, 56%);
   }
 }
 
-
 .intro__campaign-progress {
-  margin-bottom: my.$gutter;
+  margin-bottom: my.$gutter * 2;
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
-    margin-bottom: my.$gutter * 2;
+    min-width: 0;
+    margin-top: auto;
+    margin-bottom: auto;
   }
 }
 
@@ -227,11 +236,28 @@ $_preamble-bg: hsl(225, 92%, 56%);
 
   flex-wrap: wrap;
 
+  gap: my.$gutter;
+
   justify-content: space-between;
 
   overflow: hidden;
 
   font-size: my.ms-step(-1);
+
+  @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+    z-index: my.layer('default');
+
+    grid-column-start: 1;
+    grid-column-end: -1;
+
+    align-items: center;
+  }
+
+  @media screen and (min-width: my.breakpoint('desktop')) {
+    grid-column-start: 2;
+
+    align-items: flex-start;
+  }
 }
 
 .call-to-action-values__intro,
@@ -240,6 +266,7 @@ $_preamble-bg: hsl(225, 92%, 56%);
   flex-grow: 1;
 
   max-width: max-content;
+  margin: 0;
 }
 
 .call-to-action-values__intro {
@@ -252,5 +279,5 @@ $_preamble-bg: hsl(225, 92%, 56%);
 }
 
 .call-to-action-values__donation-values {
-  flex-basis: 100%;
+  flex-grow: 1;
 }
