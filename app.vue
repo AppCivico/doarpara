@@ -167,8 +167,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import rewards from '../mocks/rewards.js';
-import tabs from '../mocks/tabs.js';
+import rewards from './mocks/rewards.ts';
+import tabs from './mocks/tabs.ts';
 
 const currentTab = ref('');
 

@@ -1,4 +1,10 @@
-export default [
+interface Tab {
+  id: string;
+  title: string;
+  content: string;
+}
+
+const tabs: Tab[] = [
   {
     id: 'campanha',
     title: 'Campanha',
@@ -32,7 +38,7 @@ export default [
 
 <p>
   Tudo isto resulta num impacto extremamente negativo na saúde
-  mental das crianças – mais de 72% sofrem de baixa auto-estima,
+  mental das crianças - mais de 72% sofrem de baixa auto-estima,
   questionam por que não podem convidar os amigos e o seu
   desempenho escolar é prejudicado. Oito em cada dez professores
   do ensino primário afirmam ter testemunhado um aumento no
@@ -93,3 +99,5 @@ export default [
     content: `<p>Know your roles</p>`,
   },
 ];
+
+export default tabs;

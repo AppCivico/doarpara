@@ -1,4 +1,13 @@
-export default [
+export interface CampaignItem {
+  id: number;
+  minimum_reward: number;
+  title: string;
+  picture: string;
+  description: string;
+  supporters: number;
+}
+
+const campaignData: CampaignItem[] = [
   {
     id: 1,
     minimum_reward: 10,
@@ -329,3 +338,5 @@ export default [
     supporters: 9938348,
   },
 ];
+
+export default campaignData;
