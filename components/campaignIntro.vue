@@ -134,7 +134,7 @@ const showVideo = ref(false);
 
 const origin: String = process.browser ? window.location.origin : '';
 
-const imageSrc = '/assets/img/Mask%20Group%201.png';
+const imageSrc = '/assets/img/sample-cover.png';
 const videoId: String = getVideoId(
   'https://www.youtube.com/watch?v=ZzH-bAY6KGI',
 );
