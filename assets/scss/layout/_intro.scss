@@ -2,7 +2,7 @@
 @use '../abstracts' as my;
 
 $_background-width-beyond-column: 70px;
-$_preamble-bg: hsl(225, 92%, 56%);
+$_preamble-bg: hsl(247, 67%, 48%);
 
 .intro {
   margin-bottom: my.$gutter * 3;
@@ -165,6 +165,7 @@ $_preamble-bg: hsl(225, 92%, 56%);
 
     justify-content: center;
 
+    min-height: 100px;
     padding-top: my.$gutter;
     padding-right: my.$gutter;
     padding-bottom: my.$gutter;
@@ -174,8 +175,6 @@ $_preamble-bg: hsl(225, 92%, 56%);
     margin-left: my.$gutter * -1;
 
     color: my.palette('text', 'light');
-
-    background-color: $_preamble-bg;
 
     &::before,
     &::after {
@@ -199,12 +198,11 @@ $_preamble-bg: hsl(225, 92%, 56%);
     }
 
     &::after {
-      left: 350px;
+      right: -50px;
+      left: 0;
+      z-index: my.layer('below');
 
-      width: 120px;
-
-      background-color: inherit;
-      background-image: my.image('themes/blue/preamble.svg');
+      background-image: my.image('themes/blue/preamble.svg'), linear-gradient(to bottom, transparent, $_preamble-bg);
       background-position: 100% 0;
       border-bottom-right-radius: 60px;
     }

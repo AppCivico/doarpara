@@ -14,13 +14,15 @@
  * Within any `document` or `application`, the author **SHOULD** mark no more than one element with the `banner` role.
  */
 .main-header {
+  min-height: 246px;
+
   color: my.palette('text', 'light');
 
   background-color: my.palette('brand', 'primary');
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     background-image: my.image('themes/blue/header.svg');
-    background-position: calc(max(my.$cover-max-width + my.$gutter, 50vw + my.$cover-max-width - my.$max-width / 2 + my.$gutter)) 100%;
+    background-position: calc(max(my.$cover-max-width + my.$gutter, 50vw + my.$cover-max-width - my.$max-width / 2 + my.$gutter)) 0;
     // background-size: 580px auto;
   }
 
@@ -46,8 +48,7 @@
       max-width: 48.75rem;
 
       background-image: my.image('themes/blue/top-right-corner.svg');
-      background-position: top right;
-      // background-size: 120px auto;
+      background-position: 100% 2px;
     }
   }
 
