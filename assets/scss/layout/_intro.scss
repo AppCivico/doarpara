@@ -7,6 +7,8 @@ $_preamble-bg: hsl(247, 67%, 48%);
 .intro {
   margin-bottom: my.$gutter * 3;
 
+  line-height: my.$gutter;
+
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     margin-bottom: my.$gutter * 5;
   }
@@ -186,9 +188,7 @@ $_preamble-bg: hsl(247, 67%, 48%);
     }
 
     &::before {
-      // setting outside the rule to prevent a parsing issue on SASS
-      $minimum-offset: my.$gutter * -2 - my.$cover-max-width;
-      left: min(my.$max-width / 2 - my.$cover-max-width - my.$gutter - 50vw, $minimum-offset);
+      right: min(0px, (100vw - my.$max-width) / -2);
       z-index: my.layer('below');
 
       width: 100vw;
@@ -198,9 +198,10 @@ $_preamble-bg: hsl(247, 67%, 48%);
     }
 
     &::after {
-      right: -50px;
       left: 0;
       z-index: my.layer('below');
+
+      width: 470px;
 
       background-image: my.image('themes/blue/preamble.svg'), linear-gradient(to bottom, transparent, $_preamble-bg);
       background-position: 100% 0;
