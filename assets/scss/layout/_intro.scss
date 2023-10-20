@@ -30,8 +30,7 @@ $_preamble-bg: hsl(247, 67%, 48%);
 
   align-self: flex-start;
 
-  width: my.$cover-max-width;
-  max-width: 100%;
+  width: 100%;
   margin-top: 0;
   margin-right: auto;
   margin-bottom: my.$gutter * 2;
@@ -39,20 +38,21 @@ $_preamble-bg: hsl(247, 67%, 48%);
 
   background-color: my.palette('brand', 'primary');
 
-  @media screen and (max-width: my.breakpoint('tablet__portrait') - 0.01) {
+  @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+    box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
+  }
+
+  @media screen and (max-width: my.breakpoint('toggle-sidebar-position') - 0.01) {
     @include my.full-width;
 
     max-width: none;
-  }
-
-  @media screen and (min-width: my.breakpoint('tablet__portrait')) {
-    box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
   }
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     grid-row-start: 1;
     grid-row-end: 3;
 
+    width: my.$cover-max-width;
     margin-bottom: 0;
   }
 
@@ -61,8 +61,12 @@ $_preamble-bg: hsl(247, 67%, 48%);
   }
 }
 
-.intro__image {
+.intro__image,
+.intro__video {
   display: block;
+
+  width: 100%;
+  height: auto;
 }
 
 .intro__video {
