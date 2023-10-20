@@ -28,8 +28,6 @@
                 </abbr>
               </div>
             </div>
-
-            <a href="/XYZ/links" class="links-central">Central de links</a>
           </div>
         </div>
 
