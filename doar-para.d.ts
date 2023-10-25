@@ -20,12 +20,17 @@ interface PoliticalParty {
   abbreviation: string;
 }
 
+type Image = string | { url: string; width: number; height: number };
+
 interface LegalEntity {
   name: string;
   legal_entities_id: string;
 
   city: string;
   state: BrazilianState;
+
+  logotype: Image;
+  slug: string;
 }
 
 interface Candidate {
@@ -39,6 +44,9 @@ interface Candidate {
 
   office: string;
   ballot_number: string;
+
+  logotype: Image;
+  slug: string;
 }
 
 type FundRaiser = Required<Partial<Candidate> & Partial<LegalEntity>>;
@@ -91,7 +99,7 @@ export interface Campaign {
   payment_method_list: PaymentMethod[];
   reward_list: Reward[];
 
-  cover: string;
+  cover: Image;
   video: string;
   theme: Theme;
   preamble: string;
