@@ -60,7 +60,7 @@
             class="tooltip"
             title="Something small enough to escape casual notice."
           >
-            Campanha flexível
+            {{ $t('flexibleFunding') }}
           </span>
         </p>
 

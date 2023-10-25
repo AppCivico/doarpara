@@ -3,25 +3,32 @@
   "campaignBy": "Por",
   "chooseThisReward": "Selecionar essa recompensa",
   "credits": {
-    "juridicalPersonLabel": "Organização responsável por esta página",
+    "fundraiserLabel": "Responsável por esta página",
     "poweredBy": "Campanha proporcionada por"
   },
   "donateWithoutReward": "Doe sem recompensa",
-  "juridicalPersonIdentification": "CNPJ",
+  "flexibleFunding": "Campanha flexível",
+  "legalEntityIdentification": "CNPJ",
   "loadVideo": "Carregar vídeo",
   "minimumRewardOrMore": "ou mais",
   "nSupporters": {
     "plural": "Nenhum apoio | 1 apoio | {n} apoios"
   },
+  "naturalPersonIdentification": "CPF",
   "nav": {
     "description": "Campanha",
     "donations": "Transparência",
     "faq": "FAQ",
     "goals": "Meta | Metas",
-    "testimonies": "Testemunho | Testemunhos",
-    "rewards": "Recompensa"
+    "rewards": "Recompensa",
+    "testimonies": "Testemunho | Testemunhos"
   },
   "of": "de",
+  "paymentMethods": {
+    "credit_card": "Cartão de crédito",
+    "instant_payment_platform": "PIX",
+    "pro_forma_invoice": "Boleto"
+  },
   "pledges": {
     "custom": "outro valor"
   },

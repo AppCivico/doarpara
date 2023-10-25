@@ -172,8 +172,16 @@
       </div>
       <div class="container main-footer__juridical-data">
         <div class="juridical-person-identification">
-          {{ $t('credits.juridicalPersonLabel') }}: Comunidade Solidária Ltda.
-          {{ $t('juridicalPersonIdentification') }}: 08.746.641/0001-00
+          {{ $t('credits.fundraiserLabel') }}: {{ campaign.fundraiser.name }}
+
+          <template v-if="campaign.fundraiser.legal_entities_id">
+            {{ $t('legalEntityIdentification') }}:
+            {{ campaign.fundraiser.legal_entities_id }}
+          </template>
+          <template v-else-if="campaign.fundraiser.natural_person_id">
+            {{ $t('naturalPersonIdentification') }}:
+            {{ campaign.fundraiser.natural_person_id }}
+          </template>
         </div>
       </div>
     </footer>
