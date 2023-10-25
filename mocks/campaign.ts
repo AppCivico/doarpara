@@ -68,10 +68,12 @@ const campaign: Campaign = {
   goal_list: [
     {
       amount: 2101234,
+      title: 'Lorem ipsum',
       description: 'Reach <strong>more</strong> supporters', // already parsed to save a dependency
     },
     {
       amount: 3210123,
+      title: 'Lorem ipsum',
       description: 'Reach <strong>even more</strong> supporters', // already parsed to save a dependency
     },
   ],

@@ -4,7 +4,7 @@ type Date = string;
 
 type Theme = 'default' | 'blue' | 'green' | 'orange' | 'red';
 
-interface subnationalEntities {
+interface subNationalEntities {
   name: string;
   abbr: string;
 };
@@ -30,7 +30,7 @@ interface LegalEntity {
   legal_entities_id: string;
 
   city: string;
-  state: subnationalEntities;
+  state: subNationalEntities;
 
   logotype: Image;
   slug: string;
@@ -43,7 +43,7 @@ interface Candidate {
   gender: Gender;
 
   city: string;
-  state: subnationalEntities;
+  state: subNationalEntities;
 
   office: string;
   ballot_number: string;
@@ -54,7 +54,7 @@ interface Candidate {
 
 type FundRaiser = Required<Partial<Candidate> & Partial<LegalEntity>>;
 
-type ContactService =  'instagram' | 'mastodon' | 'tiktok' | 'website' | 'twitter' | 'whatsapp';
+type ContactService = 'instagram' | 'mastodon' | 'tiktok' | 'website' | 'twitter' | 'whatsapp';
 
 export interface ContactMethods {
   [ContactService: string]: string; // Dictionary with contact methods as keys and URLs as values
@@ -62,6 +62,7 @@ export interface ContactMethods {
 
 export interface Goal {
   amount: number;
+  title: string;
   description: string;
 }
 
