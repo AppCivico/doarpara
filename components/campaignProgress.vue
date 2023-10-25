@@ -2,37 +2,43 @@
   <div class="campaign-progress">
     <data class="campaign-progress__total" value="11650">
       <output for="progress-bar" class="campaign-progress__total-value">
-        {{ $n(11650, 'currency', { maximumFractionDigits: 0 }) }}
+        {{ $n(totalAmount / 100, 'currency', { maximumFractionDigits: 0 }) }}
       </output>
       {{ $t('totalAmount').toLowerCase() }}
     </data>
-
     <progress
       id="progress-bar"
       class="campaign-progress__bar"
-      value="46"
+      :value="totalAmount / currentGoal * 100"
       max="100"
-      aria-label="Progresso da campanha"
+      :aria-label="$t('progressOfCampaign')"
     >
-      {{ $n(0.46, 'percent') }}
+      {{ $n(totalAmount / currentGoal, 'percent') }}
     </progress>
     <div class="campaign-progress__progress">
-      <data value="0.46" class="campaign-progress__progress-percentage">
-        {{ $n(0.46, 'percent') }}
+      <data value="totalAmount / currentGoal" class="campaign-progress__progress-percentage">
+        {{ $n(totalAmount / currentGoal, 'percent') }}
       </data>
-      de
-      <data value="25000" class="campaign-progress__progress-total">
-        {{ $n(25000, 'currency', { maximumFractionDigits: 0 }) }}
+      {{ $t('of') }}
+      <data :value="currentGoal / 100" class="campaign-progress__progress-total">
+        {{ $n(currentGoal / 100, 'currency', { maximumFractionDigits: 0 }) }}
       </data>
     </div>
     <div class="campaign-progress__donations">
-      <data value="710" class="campaign-progress__donations-number">
-        {{ $n(710) }}
+      <data :value="totalDonations" class="campaign-progress__donations-number">
+        {{ $n(totalDonations) }}
       </data>
       {{ $t('totalDonations').toLowerCase() }}
     </div>
   </div>
 </template>
+<script setup lang="ts">
+defineProps<{
+  currentGoal: number,
+  totalAmount: number,
+  totalDonations: number,
+}>();
+</script>
 <style lang="scss">
 .campaign-progress {
   display: flex;

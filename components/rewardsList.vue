@@ -8,37 +8,38 @@
     >
       <dd class="rewards__value">
         {{
-          $n(reward.minimum_reward, 'currency', { maximumFractionDigits: 0 })
+          $n(reward.minimum_value / 100, 'currency', { maximumFractionDigits: 0 })
         }}
         {{ $t('minimumRewardOrMore') }}
       </dd>
-      <dt class="rewards__title">{{ reward.title }}</dt>
+      <dt class="rewards__title">
+        {{ reward.name }}
+      </dt>
       <dd class="rewards__picture">
-        <img alt="" width="300" height="150" :src="reward.picture" />
+        <img alt="" width="300" height="150" :src="reward.image" />
       </dd>
       <dd class="rewards__description" v-html="reward.description" />
       <dd class="rewards__donors-and-call-to-action">
         <i18n-t
           keypath="nSupporters.plural"
-          :plural="reward.supporters"
+          :plural="reward.total_of_supporters"
           tag="p"
           class="rewards__donors"
         >
           <template #n>
             <data
-              :value="reward.supporters"
-              :title="reward.supporters ? $n(reward.supporters) : undefined"
-              >{{
-                $n(reward.supporters, {
-                  notation: 'compact',
-                  maximumFractionDigits: 0,
-                })
-              }}</data
-            >
+              :value="reward.total_of_supporters"
+              :title="reward.total_of_supporters ? $n(reward.total_of_supporters) : undefined"
+            >{{
+              $n(reward.total_of_supporters, {
+                notation: 'compact',
+                maximumFractionDigits: 0,
+              })
+            }}</data>
           </template>
         </i18n-t>
         <p class="rewards__call-to-action-wrapper">
-          <a href="#doar?recompensa=123" class="rewards__call-to-action">
+          <a :href="`#doar?recompensa=${reward.id}`" class="rewards__call-to-action">
             {{ $t('chooseThisReward') }}
           </a>
         </p>
@@ -47,20 +48,12 @@
   </dl>
 </template>
 <script setup lang="ts">
-interface Reward {
-  id: number | string;
-  minimum_reward: number;
-  title: string;
-  picture: string;
-  description: string;
-  supporters: number;
-}
+import type { Reward } from '../doar-para.d.ts';
 
 defineProps<{
   rewards: Reward[];
 }>();
 </script>
-
 <style lang="scss">
 @use 'sass:color';
 
@@ -91,9 +84,7 @@ defineProps<{
   &:focus {
     grid-row-start: span 99;
 
-    box-shadow:
-      0 60px 24px -36px my.palette('effects', 'shadow'),
-      0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
+    box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
   }
 }
 

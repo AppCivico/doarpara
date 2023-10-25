@@ -4,39 +4,56 @@
     <header class="main-header">
       <div class="container">
         <div class="title-and-colophon">
-          <h1 class="campaign-title">Projeto Espuma nas Escolas</h1>
+          <h1 class="campaign-title">
+            {{ campaign.name }}
+          </h1>
 
           <div class="colophon">
             <img
+              v-if="campaign.fundraiser.logotype"
               class="colophon__creator-avatar"
-              width="40"
-              height="40"
-              src="/assets/img/logo-placeholder.svg"
+              :width="typeof campaign.fundraiser.logotype === 'object'
+                ? campaign.fundraiser.logotype.width
+                : undefined"
+              :height="typeof campaign.fundraiser.logotype === 'object'
+                ? campaign.fundraiser.logotype.height
+                : undefined"
+              :src="typeof campaign.fundraiser.logotype === 'object'
+                ? campaign.fundraiser.logotype.url
+                : campaign.fundraiser.logotype"
               alt=""
             />
 
             <div class="colophon__campaign">
               <div class="colophon__campaign-creator">
                 {{ $t('campaignBy') }}
-                <a href="/arrecadadoras/XYZ">Comunidade Solidária</a>
+                <a
+                  v-if="campaign.fundraiser.slug"
+                  :href="campaign.fundraiser.slug"
+                >
+                  {{ campaign.fundraiser.name }}
+                </a>
+                <template v-else>
+                  {{ campaign.fundraiser.name }}
+                </template>
               </div>
 
               <div class="colophon__campaign-location">
-                <span class="colophon__campaign-location-city">Curitiba</span>
-                <abbr class="colophon__campaign-location-state" title="Paraná">
-                  PR
+                <span class="colophon__campaign-location-city">{{ campaign.fundraiser.city }}</span>
+                <abbr class="colophon__campaign-location-state" :title="states[campaign.fundraiser.state]">
+                  {{ campaign.fundraiser.state }}
                 </abbr>
               </div>
             </div>
           </div>
         </div>
 
-        <socialNetworks />
+        <socialNetworks :contact-methods="campaign.contact_methods" />
       </div>
     </header>
 
     <article role="main">
-      <campaignIntro />
+      <campaignIntro :campaign="campaign" />
       <div class="text-body">
         <div class="container text-body__container">
           <nav
@@ -77,14 +94,12 @@
                 class="tab-list__item"
                 :aria-selected="tab.id === currentTab"
                 v-html="tab.content"
-              ></article>
+              />
 
               <footer class="text-body__call-to-faq">
                 <p>
                   Dúvidas sobre esse projeto?
-                  <a href="#faq"
-                    >Confira as respostas às perguntas Frequentes</a
-                  >
+                  <a href="#faq">Confira as respostas às perguntas Frequentes</a>
                 </p>
               </footer>
             </section>
@@ -142,7 +157,7 @@
           </ul>
         </nav>
 
-        <socialNetworks />
+        <socialNetworks :contact-methods="campaign.contact_methods" />
 
         <div class="powered-by">
           {{ $t('credits.poweredBy') }}
@@ -165,6 +180,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import states from './data/states.json';
+import campaign from './mocks/campaign.ts';
 import rewards from './mocks/rewards.ts';
 import tabs from './mocks/tabs.ts';
 

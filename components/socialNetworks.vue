@@ -1,44 +1,27 @@
 <template>
   <ul class="social-networks">
-    <li class="social-networks__item">
+    <li v-for="method in contactMethodsArray" :key="method.name" class="social-networks__item">
       <a
-        class="social-networks__link social-networks__link--linkedin"
-        href="https://linkedin.com"
+        class="social-networks__link"
+        :class="`social-networks__link--${method.name}`"
+        :href="method.link"
         target="_blank"
         rel="noopener noreferrer"
       >
-        LinkedIn
-      </a>
-    </li>
-    <li class="social-networks__item">
-      <a
-        class="social-networks__link social-networks__link--twitter"
-        href="https://twitter.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Twitter
-      </a>
-    </li>
-    <li class="social-networks__item">
-      <a
-        class="social-networks__link social-networks__link--instagram"
-        href="https://instagram.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Instagram
-      </a>
-    </li>
-    <li class="social-networks__item">
-      <a
-        class="social-networks__link social-networks__link--facebook"
-        href="https://facebook.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Facebook
+        {{ method.name }}
       </a>
     </li>
   </ul>
 </template>
+<script setup lang="ts">
+import { computed } from 'vue';
+import type { ContactMethods } from '../doar-para.d.ts';
+
+const props = defineProps<{
+  contactMethods: ContactMethods;
+}>();
+
+const contactMethodsArray = computed(() => Object.entries(props.contactMethods)
+  .filter(([, link]) => link)
+  .map(([method, link]) => ({ name: method, link })));
+</script>

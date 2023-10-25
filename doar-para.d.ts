@@ -53,23 +53,24 @@ type FundRaiser = Required<Partial<Candidate> & Partial<LegalEntity>>;
 
 type ContactService =  'instagram' | 'mastodon' | 'tiktok' | 'website' | 'twitter' | 'whatsapp';
 
-interface ContactMethods {
+export interface ContactMethods {
   [ContactService: string]: string; // Dictionary with contact methods as keys and URLs as values
 }
 
-interface Goal {
+export interface Goal {
   amount: number;
   description: string;
 }
 
 type PledgeValue = number | 'custom';
 
-interface Reward {
+export interface Reward {
   id: id;
   name: string;
   description: string;
-  minimumValue: number;
-  totalAvailable: number;
+  minimum_value: number;
+  total_available: number;
+  total_of_supporters: number;
   image: string;
 }
 
@@ -92,7 +93,8 @@ export interface Campaign {
 
   contact_methods: ContactMethods;
 
-  recurrence: boolean;
+  is_recurrent: boolean;
+  is_flexible_funding: boolean;
   total_amount: number;
   total_donations: number;
   pledge_list: PledgeValue[];

@@ -14,13 +14,19 @@
     "plural": "Nenhum apoio | 1 apoio | {n} apoios"
   },
   "nav": {
-    "campaign": "Campanha",
+    "description": "Campanha",
+    "donations": "Transparência",
     "faq": "FAQ",
-    "shows": "Shows",
-    "testimony": "Testemunho | Testemunhos",
-    "transparency": "Transparência"
+    "goals": "Meta | Metas",
+    "testimonies": "Testemunho | Testemunhos",
+    "rewards": "Recompensa"
+  },
+  "of": "de",
+  "pledges": {
+    "custom": "outro valor"
   },
   "privacyPolicy": "Política de privacidade",
+  "progressOfCampaign": "Progresso da campanha",
   "totalAmount": "Arrecadados",
   "totalDonations": "Doações recebidas",
   "useTerms": "Termos de uso"
