@@ -12,7 +12,7 @@ export default (
   url: string,
   quality: Quality = 'max',
   format: 'webp' | 'jpg' = 'jpg',
-): string | null => {
+): string => {
   if (url) {
     const videoId = getYoutubeId(url);
 
@@ -41,5 +41,5 @@ export default (
       return `https://i.ytimg.com/vi/${videoId}/${qualityKey}.${format}`;
     }
   }
-  return null;
+  return '';
 };
