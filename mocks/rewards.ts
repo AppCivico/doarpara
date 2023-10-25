@@ -1,18 +1,11 @@
-export interface CampaignItem {
-  id: number;
-  minimum_reward: number;
-  title: string;
-  picture: string;
-  description: string;
-  supporters: number;
-}
+import type { Reward } from '../doar-para.d.ts';
 
-const campaignData: CampaignItem[] = [
+const rewardList: Reward[] = [
   {
     id: 1,
-    minimum_reward: 10,
-    title: 'Kit de brindes Espuma',
-    picture: '/assets/img/brindes-espuma.png',
+    minimum_value: 10,
+    name: 'Kit de brindes Espuma',
+    image: '/assets/img/brindes-espuma.png',
     description: `<p>
           Como agradecimento pela sua incrível doação, você receberá um kit de
           brindes Espuma para guardar ou presentear um amigo ou familiar. Além
@@ -39,13 +32,14 @@ const campaignData: CampaignItem[] = [
           mauris, sodales eros curae vivamus risus cum curabitur habitasse
           litora, condimentum lectus nam dignissim lacus non pharetra pretium.
         </p>`,
-    supporters: 215,
+    total_of_supporters: 215,
+    total_available: 57,
   },
   {
     id: 2,
-    minimum_reward: 60,
-    title: 'Kit banho + guloseimas',
-    picture: '/assets/img/banho+guloseimas.png',
+    minimum_value: 60,
+    name: 'Kit banho + guloseimas',
+    image: '/assets/img/banho+guloseimas.png',
     description: `<p>
           Muito obrigado! Pela sua doação, você será incluído em nosso muro da
           fama de Espuma em nosso site, ganhe um pano de prato edição limitada e
@@ -125,13 +119,14 @@ const campaignData: CampaignItem[] = [
           quisque. Morbi non arcu risus quis. Ipsum dolor sit amet consectetur.
           Maecenas sed enim ut sem.
         </p>`,
-    supporters: 48,
+    total_of_supporters: 48,
+    total_available: 57,
   },
   {
     id: 3,
-    minimum_reward: 110,
-    title: 'Toalha de banho bordada',
-    picture: '/assets/img/toalha-bordada.png',
+    minimum_value: 110,
+    name: 'Toalha de banho bordada',
+    image: '/assets/img/toalha-bordada.png',
     description: `<p>
           UAU, obrigado! Você receberá uma toalha de banho impressa com a marca
           da campanha (edição limitada) com sua doação, além de se tornar...
@@ -166,13 +161,14 @@ const campaignData: CampaignItem[] = [
           pulvinar elementum integer enim. Sed odio morbi quis commodo odio
           aenean sed adipiscing.
         </p>`,
-    supporters: 0,
+    total_of_supporters: 0,
+    total_available: 57,
   },
   {
     id: 4,
-    minimum_reward: 60,
-    title: 'Kit banho + guloseimas',
-    picture: '/assets/img/banho+guloseimas.png',
+    minimum_value: 60,
+    name: 'Kit banho + guloseimas',
+    image: '/assets/img/banho+guloseimas.png',
     description: `<p>
           Massa eget egestas purus viverra accumsan in. Iaculis eu non diam
           phasellus vestibulum. Varius duis at consectetur lorem donec massa
@@ -199,13 +195,14 @@ const campaignData: CampaignItem[] = [
           quisque. Morbi non arcu risus quis. Ipsum dolor sit amet consectetur.
           Maecenas sed enim ut sem.
         </p>`,
-    supporters: 1,
+    total_of_supporters: 1,
+    total_available: 57,
   },
   {
     id: 5,
-    minimum_reward: 110,
-    title: 'Toalha de banho bordada',
-    picture: '/assets/img/toalha-bordada.png',
+    minimum_value: 110,
+    name: 'Toalha de banho bordada',
+    image: '/assets/img/toalha-bordada.png',
     description: `<p>
           Ultrices vitae auctor eu augue ut lectus arcu. Fermentum dui faucibus
           in ornare. Arcu felis bibendum ut tristique et egestas quis. Egestas
@@ -222,13 +219,14 @@ const campaignData: CampaignItem[] = [
           pulvinar elementum integer enim. Sed odio morbi quis commodo odio
           aenean sed adipiscing.
         </p>`,
-    supporters: 48275758,
+    total_of_supporters: 48275758,
+    total_available: 57,
   },
   {
     id: 6,
-    minimum_reward: 627870,
-    title: 'Kit banho + guloseimas',
-    picture: '/assets/img/banho+guloseimas.png',
+    minimum_value: 627870,
+    name: 'Kit banho + guloseimas',
+    image: '/assets/img/banho+guloseimas.png',
     description: `<p>
           In nibh mauris cursus mattis molestie. Blandit cursus risus at
           ultrices mi. Tempor commodo ullamcorper a lacus. Ullamcorper a lacus
@@ -267,13 +265,14 @@ const campaignData: CampaignItem[] = [
           quisque. Morbi non arcu risus quis. Ipsum dolor sit amet consectetur.
           Maecenas sed enim ut sem.
         </p>`,
-    supporters: 87867848,
+    total_of_supporters: 87867848,
+    total_available: 57,
   },
   {
     id: 7,
-    minimum_reward: 110,
-    title: 'Toalha de banho bordada',
-    picture: '/assets/img/toalha-bordada.png',
+    minimum_value: 110,
+    name: 'Toalha de banho bordada',
+    image: '/assets/img/toalha-bordada.png',
     description: `<p>
           Ultrices vitae auctor eu augue ut lectus arcu. Fermentum dui faucibus
           in ornare. Arcu felis bibendum ut tristique et egestas quis. Egestas
@@ -290,13 +289,14 @@ const campaignData: CampaignItem[] = [
           pulvinar elementum integer enim. Sed odio morbi quis commodo odio
           aenean sed adipiscing.
         </p>`,
-    supporters: 44558,
+    total_of_supporters: 44558,
+    total_available: 57,
   },
   {
     id: 8,
-    minimum_reward: 60,
-    title: 'Kit banho + guloseimas',
-    picture: '/assets/img/banho+guloseimas.png',
+    minimum_value: 60,
+    name: 'Kit banho + guloseimas',
+    image: '/assets/img/banho+guloseimas.png',
     description: `<p>
           In nibh mauris cursus mattis molestie. Blandit cursus risus at
           ultrices mi. Tempor commodo ullamcorper a lacus. Ullamcorper a lacus
@@ -335,8 +335,9 @@ const campaignData: CampaignItem[] = [
           quisque. Morbi non arcu risus quis. Ipsum dolor sit amet consectetur.
           Maecenas sed enim ut sem.
         </p>`,
-    supporters: 9938348,
+    total_of_supporters: 9938348,
+    total_available: 57,
   },
 ];
 
-export default campaignData;
+export default rewardList;
