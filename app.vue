@@ -40,8 +40,8 @@
 
               <div class="colophon__campaign-location">
                 <span class="colophon__campaign-location-city">{{ campaign.fundraiser.city }}</span>
-                <abbr class="colophon__campaign-location-state" :title="states[campaign.fundraiser.state]">
-                  {{ campaign.fundraiser.state }}
+                <abbr class="colophon__campaign-location-state" :title="campaign.fundraiser.state.name">
+                  {{ campaign.fundraiser.state.abbr }}
                 </abbr>
               </div>
             </div>
@@ -180,7 +180,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import states from './data/states.json';
 import campaign from './mocks/campaign.ts';
 import rewards from './mocks/rewards.ts';
 import tabs from './mocks/tabs.ts';

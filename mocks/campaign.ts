@@ -38,7 +38,10 @@ const campaign: Campaign = {
     legal_entities_id: '22955591000193', // CNPJ
 
     gender: 'male',
-    state: 'BA',
+    state: {
+      name: 'Bahia',
+      abbr: 'BA',
+    },
     city: 'Caraguataí',
 
     office: 'câmara municipal',

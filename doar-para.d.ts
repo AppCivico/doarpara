@@ -4,7 +4,10 @@ type Date = string;
 
 type Theme = 'default' | 'blue' | 'green' | 'orange' | 'red';
 
-type BrazilianState = 'AC' | 'AL' | 'AP' | 'AM' | 'BA' | 'CE' | 'DF' | 'ES' | 'GO' | 'MA' | 'MT' | 'MS' | 'MG' | 'PA' | 'PB' | 'PR' | 'PE' | 'PI' | 'RJ' | 'RN' | 'RS' | 'RO' | 'RR' | 'SC' | 'SP' | 'SE' | 'TO';
+interface subnationalEntities {
+  name: string;
+  abbr: string;
+};
 
 type Office = 'câmara municipal' | 'prefeitura' | 'câmara estadual' | 'governo estadual' | 'câmara federal' | 'senado' | 'presidência';
 
@@ -27,7 +30,7 @@ interface LegalEntity {
   legal_entities_id: string;
 
   city: string;
-  state: BrazilianState;
+  state: subnationalEntities;
 
   logotype: Image;
   slug: string;
@@ -40,7 +43,7 @@ interface Candidate {
   gender: Gender;
 
   city: string;
-  state: BrazilianState;
+  state: subnationalEntities;
 
   office: string;
   ballot_number: string;
