@@ -75,11 +75,11 @@ interface Reward {
 
 interface Donation {
   id: id;
-  creationDate: Date;
-  paymentMethod: PaymentMethod;
+  creation_date: Date;
+  payment_method: PaymentMethod;
   amount: number;
-  donorName: string;
-  donorNaturalPersonId: string;
+  donor_name: string;
+  donor_natural_person_id: string;
 }
 
 // /////////////////////////////////////////////////////////////////////////////
