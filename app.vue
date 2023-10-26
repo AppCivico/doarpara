@@ -126,18 +126,18 @@
           >
             <ul class="tab-navigation__list">
               <li
-                v-for="tab in tabs"
-                :key="tab.id"
+                v-for="tab, i in campaign.campaign_section_list"
+                :key="i"
                 class="tab-navigation__item"
               >
                 <a
                   class="tab-navigation__link"
-                  :href="`#${tab.id}`"
-                  :aria-controls="`#${tab.id}`"
+                  :href="`#${tab}`"
+                  :aria-controls="`#${tab}`"
                   role="tab"
                   @click.prevent="changeTab($event)"
                 >
-                  {{ tab.title }}
+                  {{ $t(`nav.${tab}`) }}
                 </a>
               </li>
             </ul>
@@ -155,7 +155,7 @@
                 :key="tab.id"
                 role="tab"
                 class="tab-list__item"
-                :aria-selected="tab.id === currentTab"
+                :aria-selected="tab.id === currentTab.id"
                 v-html="tab.content"
               />
 
@@ -251,13 +251,26 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ref, Ref } from 'vue';
+import type { Campaign } from './doar-para.d.ts';
 import campaign from './mocks/campaign.ts';
 import rewards from './mocks/rewards.ts';
-import tabs from './mocks/tabs.ts';
 
-const currentTab = ref('');
+const currentTab: Ref<{ id: string; content: string }> = ref({
+  id: '',
+  content: '',
+});
 
-currentTab.value = tabs[0]?.id;
+currentTab.value.id = 'description';
+currentTab.value.content = campaign.description;
+
+const tabs = campaign.campaign_section_list
+  .reduce((acc, cur) => {
+    if (campaign[cur as keyof Campaign]) {
+      acc.push({ id: cur, content: campaign[cur as keyof Campaign] });
+    }
+    return acc;
+  }, [] as { id: string, content: any }[]);
 
 function changeTab(event: Event): void {
   const { target } = event as MouseEvent;
@@ -270,7 +283,12 @@ function changeTab(event: Event): void {
 
       if (hash) {
         event.preventDefault();
-        currentTab.value = hash;
+        currentTab.value.id = hash;
+
+        if (campaign[hash as keyof Campaign]) {
+          currentTab.value.content = String(campaign[hash as keyof Campaign] || '');
+        }
+
         if (window.history) {
           window.history.pushState({}, '', href);
         }

@@ -15,7 +15,7 @@ type Gender = 'male' | 'female' | 'other' | 'prefer not to say';
 
 type PaymentMethod = 'pro_forma_invoice' | 'credit_card' | 'instant_payment_platform';
 
-type CampaignSections = 'description' | 'donations' | 'faq' | 'goals' | 'rewards' | 'testimonies';
+export type CampaignSections = 'description' | 'donations' | 'faq' | 'goals' | 'rewards' | 'testimonies';
 
 interface PoliticalParty {
   ballot_number: string;
