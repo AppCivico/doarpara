@@ -137,7 +137,7 @@ $_preamble-bg: hsl(247, 67%, 48%);
     content: '';
 
     background-color: my.palette('brand', 'primary');
-    opacity: 0;
+    opacity: 0.3;
 
     transition-duration: 300ms;
     transition-property: opacity;
@@ -154,7 +154,7 @@ $_preamble-bg: hsl(247, 67%, 48%);
     }
 
     &::before {
-      opacity: 0.3;
+      opacity: 0;
     }
   }
 }
