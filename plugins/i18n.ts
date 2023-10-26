@@ -1,6 +1,6 @@
 import { createI18n } from 'vue-i18n';
 import datetimeFormats from '../datetime-formats/pt-BR.ts';
-import ptBR from '../locales/pt-BR.json';
+import ptBR from '../locales/pt-BR.ts';
 import numberFormats from '../number-formats/pt-BR.ts';
 
 type MessageSchema = typeof ptBR;
