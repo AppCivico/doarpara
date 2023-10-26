@@ -25,6 +25,7 @@ const campaign: Campaign = {
     50000,
   ],
   is_recurrent: true,
+  is_election_campaign: true,
   is_flexible_funding: false,
   fundraiser: {
     name: 'John Doe',

@@ -99,6 +99,7 @@ export interface Campaign {
 
   is_recurrent: boolean;
   is_flexible_funding: boolean;
+  is_election_campaign: boolean;
   total_amount: number;
   total_donations: number;
   pledge_list: PledgeValue[];
