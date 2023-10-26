@@ -17,12 +17,12 @@ export default {
   donateWithoutReward: 'Doe sem recompensa',
   electionCampaign: {
     ballotNumber: 'Número',
-    runningForLocation: 'Concorre por',
+    runningForLocation: 'Concorre em',
     runningForOffice: ({ values: { gender } }: GenderData) => showGenderVersion(
       {
-        female: 'Candidata',
-        male: 'Candidato',
-        other: 'Concorre',
+        female: 'Candidata a',
+        male: 'Candidato a',
+        other: 'Concorre para',
       },
       gender,
     ),
