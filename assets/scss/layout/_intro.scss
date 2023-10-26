@@ -145,6 +145,8 @@ $_preamble-bg: hsl(247, 67%, 48%);
 
   &:hover,
   &:focus {
+    position: absolute;
+
     background: none;
     border: 0;
     box-shadow: none;
