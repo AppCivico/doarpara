@@ -122,7 +122,7 @@
           <nav
             role="tablist"
             class="tab-navigation text-body__tab-navigation"
-            aria-label="Seções dessa campanha"
+            :aria-label="$t('navigationLabel')"
           >
             <ul class="tab-navigation__list">
               <li
@@ -184,7 +184,7 @@
       <div class="container main-footer__navigation-social-and-credits">
         <nav
           class="footer-nav"
-          aria-label="Menu da campanha, termos de uso e política de privacidade"
+          :aria-label="$t('footerMenuLabel')"
         >
           <ul class="footer-nav__list">
             <li class="footer-nav__item">

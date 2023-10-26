@@ -29,6 +29,7 @@ export default {
     ),
   },
   flexibleFunding: 'Campanha flexível',
+  footerMenuLabel: 'Menu da campanha, termos de uso e política de privacidade',
   legalEntityIdentification: 'CNPJ',
   loadVideo: 'Carregar vídeo',
   minimumRewardOrMore: 'ou mais',
@@ -44,6 +45,7 @@ export default {
     rewards: 'Recompensa',
     testimonies: 'Testemunho | Testemunhos',
   },
+  navigationLabel: 'Seções dessa campanha',
   of: 'De',
   governmentOffices: {
     municipal_council: ({ values: { gender } }: GenderData) => showGenderVersion(
