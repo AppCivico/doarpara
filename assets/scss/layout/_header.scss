@@ -19,7 +19,7 @@
   background-color: my.palette('brand', 'primary');
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
-    min-height: 246px;
+    min-height: 242px;
 
     background-image: my.image('themes/blue/header.svg');
     background-position: calc(max(my.$cover-max-width + my.$gutter, 50vw + my.$cover-max-width - my.$max-width / 2 + my.$gutter)) 0;

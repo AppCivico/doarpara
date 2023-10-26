@@ -20,7 +20,7 @@ $_preamble-bg: hsl(247, 67%, 48%);
 
     grid-template-columns: minmax(my.$cover-max-width, 1fr) 1fr;
 
-    gap: my.$gutter;
+    gap: my.$gutter * 2;
   }
 }
 
@@ -174,13 +174,13 @@ $_preamble-bg: hsl(247, 67%, 48%);
     justify-content: center;
 
     min-height: 100px;
-    padding-top: my.$gutter;
+    padding-top: my.$gutter * 2;
     padding-right: my.$gutter;
-    padding-bottom: my.$gutter;
-    padding-left: my.$gutter;
+    padding-bottom: my.$gutter * 2;
+    padding-left: my.$gutter * 2;
     margin-right: my.$gutter * -1;
     margin-bottom: 0;
-    margin-left: my.$gutter * -1;
+    margin-left: my.$gutter * -2;
 
     color: my.palette('text', 'light');
 
@@ -245,7 +245,6 @@ $_preamble-bg: hsl(247, 67%, 48%);
 
   justify-content: space-between;
 
-  overflow: hidden;
 
   font-size: my.ms-step(-1);
 
