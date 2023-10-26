@@ -9,7 +9,7 @@ interface subNationalEntities {
   abbr: string;
 };
 
-type Office = 'câmara municipal' | 'prefeitura' | 'câmara estadual' | 'governo estadual' | 'câmara federal' | 'senado' | 'presidência';
+type Office = 'municipal_council' | 'city_hall' | 'state_legislature' | 'state_government' | 'federal_chamber' | 'senate' | 'presidency';
 
 type Gender = 'male' | 'female' | 'other' | 'prefer not to say';
 

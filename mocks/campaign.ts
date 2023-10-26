@@ -45,7 +45,7 @@ const campaign: Campaign = {
     },
     city: 'Caraguataí',
 
-    office: 'câmara municipal',
+    office: 'municipal_council',
     ballot_number: '1234',
     political_party: {
       ballot_number: '99',
