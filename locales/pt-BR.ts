@@ -17,6 +17,7 @@ export default {
   donateWithoutReward: 'Doe sem recompensa',
   electionCampaign: {
     ballotNumber: 'Número',
+    politicalParty: 'Partido',
     runningForLocation: 'Concorre em',
     runningForOffice: ({ values: { gender } }: GenderData) => showGenderVersion(
       {

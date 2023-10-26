@@ -13,7 +13,7 @@ const campaign: Campaign = {
     tiktok: '',
     website: 'https://foradoplastico.com.br/',
     twitter: 'https://twitter.com/foradoplastico',
-    whatsapp: '',
+    whatsapp: 'https://wa.me/55112360873',
   },
   pledge_list: [
     5000,
@@ -38,7 +38,7 @@ const campaign: Campaign = {
     natural_person_id: '90420112030', // CPF
     legal_entities_id: '22955591000193', // CNPJ
 
-    gender: 'male',
+    gender: 'female',
     state: {
       name: 'Bahia',
       abbr: 'BA',
@@ -46,7 +46,7 @@ const campaign: Campaign = {
     city: 'Caraguataí',
 
     office: 'municipal_council',
-    ballot_number: '1234',
+    ballot_number: '12345',
     political_party: {
       ballot_number: '99',
       name: 'Partido das coisas',

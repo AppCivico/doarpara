@@ -24,7 +24,60 @@
               alt=""
             />
 
-            <div class="colophon__campaign">
+            <dl v-if="campaign.is_election_campaign" class="colophon__campaign">
+              <div class="colophon__campaign-creator">
+                <dt>
+                  {{ $t('electionCampaign.runningForOffice', { gender: campaign.fundraiser.gender }) }}
+                </dt>
+                <dd>
+                  {{ $t(`governmentOffices.${campaign.fundraiser.office}`, { gender: campaign.fundraiser.gender }) }}
+                </dd>
+              </div>
+
+              <div v-if="campaign.fundraiser.political_party" class="colophon__campaign-party">
+                <dt>
+                  {{ $t('electionCampaign.politicalParty') }}
+                </dt>
+                <dd>
+                  <abbr :title="campaign.fundraiser.political_party.name">
+                    {{ campaign.fundraiser.political_party.abbreviation }}
+                  </abbr>
+                </dd>
+              </div>
+
+              <div v-if="campaign.fundraiser.ballot_number" class="colophon__campaign-ballot-number">
+                <dt>
+                  {{ $t('electionCampaign.ballotNumber') }}
+                </dt>
+                <dd>
+                  {{ campaign.fundraiser.ballot_number }}
+                </dd>
+              </div>
+
+              <div
+                v-if="campaign.fundraiser.city && campaign.fundraiser.state"
+                class="colophon__campaign-location colophon__campaign-location--election"
+              >
+                <dt>
+                  {{ $t('electionCampaign.runningForLocation') }}
+                </dt>
+                <dd>
+                  <template v-if="campaign.fundraiser.city">
+                    <span class="colophon__campaign-location-city">
+                      {{ campaign.fundraiser.city }}
+                    </span>
+                    <abbr class="colophon__campaign-location-state" :title="campaign.fundraiser.state.name">
+                      {{ campaign.fundraiser.state.abbr }}
+                    </abbr>
+                  </template>
+                  <span v-else class="colophon__campaign-location-state">
+                    {{ campaign.fundraiser.state.name }}
+                  </span>
+                </dd>
+              </div>
+            </dl>
+
+            <div v-else class="colophon__campaign">
               <div class="colophon__campaign-creator">
                 {{ $t('campaignBy') }}
                 <a
@@ -38,11 +91,21 @@
                 </template>
               </div>
 
-              <div class="colophon__campaign-location">
-                <span class="colophon__campaign-location-city">{{ campaign.fundraiser.city }}</span>
-                <abbr class="colophon__campaign-location-state" :title="campaign.fundraiser.state.name">
-                  {{ campaign.fundraiser.state.abbr }}
-                </abbr>
+              <div
+                v-if="campaign.fundraiser.city || campaign.fundraiser.state"
+                class="colophon__campaign-location"
+              >
+                <template v-if="campaign.fundraiser.city">
+                  <span class="colophon__campaign-location-city">
+                    {{ campaign.fundraiser.city }}
+                  </span>
+                  <abbr class="colophon__campaign-location-state" :title="campaign.fundraiser.state.name">
+                    {{ campaign.fundraiser.state.abbr }}
+                  </abbr>
+                </template>
+                <span v-else class="colophon__campaign-location-state">
+                  {{ campaign.fundraiser.state.name }}
+                </span>
               </div>
             </div>
           </div>
