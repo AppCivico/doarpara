@@ -19,7 +19,7 @@
       <data value="totalAmount / currentGoal" class="campaign-progress__progress-percentage">
         {{ $n(totalAmount / currentGoal, 'percent') }}
       </data>
-      {{ $t('of') }}
+      {{ $t('of').toLowerCase() }}
       <data :value="currentGoal / 100" class="campaign-progress__progress-total">
         {{ $n(currentGoal / 100, 'currency', { maximumFractionDigits: 0 }) }}
       </data>
