@@ -270,11 +270,14 @@ $_preamble-bg: hsl(247, 67%, 48%);
   flex-basis: 0;
   flex-grow: 1;
 
-  max-width: max-content;
   margin: 0;
 }
 
 .call-to-action-values__intro {
+  flex-basis: 100%;
+
+  max-width: none;
+
   color: my.palette('neutral', 'base');
   text-transform: uppercase;
 }
