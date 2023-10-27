@@ -51,7 +51,7 @@
         :total-donations="campaign.total_donations"
       />
       <div class="call-to-action-values">
-        <p class="call-to-action-values__intro">
+        <p v-if="campaign?.reward_list?.length" class="call-to-action-values__intro">
           {{ $t('donateWithoutReward') }}
         </p>
 
