@@ -9,6 +9,7 @@ const showGenderedVersion = (terms: Record<string, string>, gender: string = 'ot
 export default {
   _currencySymbol: 'R$',
   campaignBy: 'Por',
+  callToFaq: 'Dúvidas sobre esse projeto? <a href="#faq">Confira as respostas às perguntas Frequentes</a>',
   chooseThisReward: 'Selecionar essa recompensa',
   credits: {
     fundraiserLabel: 'Responsável por esta página',

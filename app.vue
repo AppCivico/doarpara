@@ -166,11 +166,8 @@
                 v-html="tab.content"
               />
 
-              <footer class="text-body__call-to-faq">
-                <p>
-                  Dúvidas sobre esse projeto?
-                  <a href="#faq">Confira as respostas às perguntas Frequentes</a>
-                </p>
+              <footer v-if="campaign?.campaign_section_list.includes('faq')" class="text-body__call-to-faq">
+                <p v-html="$t('callToFaq')" />
               </footer>
             </section>
 
