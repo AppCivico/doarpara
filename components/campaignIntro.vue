@@ -114,15 +114,17 @@ const currentGoal = computed(() => {
 const sortedPledgeList = computed(() => {
   const { pledge_list: pledgeList } = props.campaign;
 
-  return [...pledgeList].sort((a, b) => {
-    if (a === 'custom') {
-      return 1;
-    }
-    if (b === 'custom') {
-      return -1;
-    }
+  return !Array.isArray(pledgeList)
+    ? []
+    : [...pledgeList].sort((a, b) => {
+      if (a === 'custom') {
+        return 1;
+      }
+      if (b === 'custom') {
+        return -1;
+      }
 
-    return a - (b as number);
-  });
+      return a - (b as number);
+    });
 });
 </script>
