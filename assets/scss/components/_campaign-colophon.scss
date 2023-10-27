@@ -13,9 +13,12 @@
 }
 
 .colophon__creator-avatar {
+  width: my.$gutter * 2.5;
+  height: my.$gutter * 2.5;
   margin-right: my.$gutter * 0.5;
+  object-fit: cover;
 
-  filter: brightness(0) invert(1);
+  border-radius: 100%;
 }
 
 .colophon__campaign {

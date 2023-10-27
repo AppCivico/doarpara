@@ -32,7 +32,7 @@ interface LegalEntity {
   city: string;
   state: subNationalEntities;
 
-  logotype: Image;
+  avatar: Image;
   slug: string;
 }
 
@@ -48,7 +48,7 @@ interface Candidate {
   office: string;
   ballot_number: string;
 
-  logotype: Image;
+  avatar: Image;
   slug: string;
 }
 

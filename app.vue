@@ -10,17 +10,17 @@
 
           <div class="colophon">
             <img
-              v-if="campaign?.fundraiser.logotype"
+              v-if="campaign?.fundraiser.avatar"
               class="colophon__creator-avatar"
-              :width="typeof campaign.fundraiser.logotype === 'object'
-                ? campaign.fundraiser.logotype.width
+              :width="typeof campaign.fundraiser.avatar === 'object'
+                ? campaign.fundraiser.avatar.width
                 : undefined"
-              :height="typeof campaign.fundraiser.logotype === 'object'
-                ? campaign.fundraiser.logotype.height
+              :height="typeof campaign.fundraiser.avatar === 'object'
+                ? campaign.fundraiser.avatar.height
                 : undefined"
-              :src="typeof campaign.fundraiser.logotype === 'object'
-                ? campaign.fundraiser.logotype.url
-                : campaign.fundraiser.logotype"
+              :src="typeof campaign.fundraiser.avatar === 'object'
+                ? campaign.fundraiser.avatar.url
+                : campaign.fundraiser.avatar"
               alt=""
             />
 
