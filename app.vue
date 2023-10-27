@@ -174,11 +174,10 @@
               </footer>
             </section>
 
-            <section class="rewards text-body__rewards">
-              <h2>Recompensas</h2>
+            <section v-if="rewards.length" class="rewards text-body__rewards">
+              <h2>{{ $t('rewards') }}</h2>
               <p>
-                Este projeto oferece recompensas em troca do seu apoio.
-                Selecione uma recompensa abaixo.
+                {{ $t('rewardsIntro') }}
               </p>
               <rewardsList :rewards="rewards" />
             </section>

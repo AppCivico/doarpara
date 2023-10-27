@@ -97,6 +97,8 @@ export default {
   },
   privacyPolicy: 'Política de privacidade',
   progressOfCampaign: 'Progresso da campanha',
+  rewards: 'Rewards',
+  rewardsIntro: 'Este projeto oferece recompensas em troca do seu apoio. Selecione uma recompensa abaixo.',
   totalAmount: 'Arrecadados',
   totalDonations: 'Doações recebidas',
   useTerms: 'Termos de uso',
