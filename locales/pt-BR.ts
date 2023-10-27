@@ -81,8 +81,8 @@ export default {
       male: 'Senador',
       other: 'Senado',
     }, gender),
-      female: 'Presidência',
     presidency: ({ values: { gender } }: GenderData) => showGenderedVersion({
+      female: 'Presidenta',
       male: 'Presidente',
       other: 'Presidência',
     }, gender),
