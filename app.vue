@@ -4,13 +4,13 @@
     <header class="main-header">
       <div class="container">
         <div class="title-and-colophon">
-          <h1 class="campaign-title">
+          <h1 v-if="campaign?.name" class="campaign-title">
             {{ campaign.name }}
           </h1>
 
           <div class="colophon">
             <img
-              v-if="campaign.fundraiser.logotype"
+              v-if="campaign?.fundraiser.logotype"
               class="colophon__creator-avatar"
               :width="typeof campaign.fundraiser.logotype === 'object'
                 ? campaign.fundraiser.logotype.width
@@ -24,7 +24,7 @@
               alt=""
             />
 
-            <dl v-if="campaign.is_election_campaign" class="colophon__campaign">
+            <dl v-if="campaign?.is_election_campaign" class="colophon__campaign">
               <div class="colophon__campaign-creator">
                 <dt>
                   {{ $t('electionCampaign.runningForOffice', { gender: campaign.fundraiser.gender }) }}
@@ -81,18 +81,18 @@
               <div class="colophon__campaign-creator">
                 {{ $t('campaignBy') }}
                 <a
-                  v-if="campaign.fundraiser.slug"
+                  v-if="campaign?.fundraiser.slug"
                   :href="campaign.fundraiser.slug"
                 >
                   {{ campaign.fundraiser.name }}
                 </a>
                 <template v-else>
-                  {{ campaign.fundraiser.name }}
+                  {{ campaign?.fundraiser.name }}
                 </template>
               </div>
 
               <div
-                v-if="campaign.fundraiser.city || campaign.fundraiser.state"
+                v-if="campaign?.fundraiser.city || campaign?.fundraiser.state"
                 class="colophon__campaign-location"
               >
                 <template v-if="campaign.fundraiser.city">
@@ -111,12 +111,15 @@
           </div>
         </div>
 
-        <socialNetworks :contact-methods="campaign.contact_methods" />
+        <socialNetworks
+          v-if="campaign?.contact_methods"
+          :contact-methods="campaign.contact_methods"
+        />
       </div>
     </header>
 
     <article role="main">
-      <campaignIntro :campaign="campaign" />
+      <campaignIntro v-if="campaign" :campaign="campaign" />
       <div class="text-body">
         <div class="container text-body__container">
           <nav
@@ -124,7 +127,11 @@
             class="tab-navigation text-body__tab-navigation"
             :aria-label="$t('navigationLabel')"
           >
-            <ul class="tab-navigation__list">
+            <ul
+              v-if="Array.isArray(campaign?.campaign_section_list)
+                && campaign?.campaign_section_list.length"
+              class="tab-navigation__list"
+            >
               <li
                 v-for="tab, i in campaign.campaign_section_list"
                 :key="i"
@@ -188,7 +195,7 @@
         >
           <ul class="footer-nav__list">
             <li
-              v-for="tab, i in campaign.campaign_section_list"
+              v-for="tab, i in campaign?.campaign_section_list"
               :key="i"
               class="footer-nav__item"
             >
@@ -215,7 +222,10 @@
           </ul>
         </nav>
 
-        <socialNetworks :contact-methods="campaign.contact_methods" />
+        <socialNetworks
+          v-if="campaign?.contact_methods"
+          :contact-methods="campaign.contact_methods"
+        />
 
         <div class="powered-by">
           {{ $t('credits.poweredBy') }}
@@ -229,7 +239,7 @@
         </div>
       </div>
       <div class="container main-footer__juridical-data">
-        <div class="juridical-person-identification">
+        <div v-if="campaign?.fundraiser" class="juridical-person-identification">
           {{ $t('credits.fundraiserLabel') }}: {{ campaign.fundraiser.name }}
 
           <template v-if="campaign.fundraiser.legal_entities_id">
@@ -257,15 +267,17 @@ const currentTab: Ref<{ id: string; content: string }> = ref({
 });
 
 currentTab.value.id = 'description';
-currentTab.value.content = campaign.description;
+currentTab.value.content = campaign?.value?.description || ''; // Access .value property
 
-const tabs = campaign.campaign_section_list
-  .reduce((acc, cur) => {
-    if (campaign[cur as keyof Campaign]) {
-      acc.push({ id: cur, content: campaign[cur as keyof Campaign] });
-    }
-    return acc;
-  }, [] as { id: string, content: any }[]);
+const tabs = Array.isArray(campaign?.value?.campaign_section_list)
+  ? campaign?.value?.campaign_section_list
+    .reduce((acc, cur) => {
+      if (campaign?.value?.[cur as keyof Campaign]) {
+        acc.push({ id: cur, content: campaign.value[cur as keyof Campaign] });
+      }
+      return acc;
+    }, [] as { id: string, content: any }[])
+  : [];
 
 function changeTab(event: Event): void {
   const { target } = event as MouseEvent;
@@ -280,8 +292,8 @@ function changeTab(event: Event): void {
         event.preventDefault();
         currentTab.value.id = hash;
 
-        if (campaign[hash as keyof Campaign]) {
-          currentTab.value.content = String(campaign[hash as keyof Campaign] || '');
+        if (campaign?.value?.[hash as keyof Campaign]) {
+          currentTab.value.content = String(campaign.value[hash as keyof Campaign] || '');
         }
 
         if (window.history) {
