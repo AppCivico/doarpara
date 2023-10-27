@@ -257,14 +257,16 @@
 </template>
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
-import type { Campaign } from './doar-para.d.ts';
-import campaign from './mocks/campaign.ts';
-import rewards from './mocks/rewards.ts';
+import type { Campaign, Reward } from './doar-para.d.ts';
+
+const { data: campaign } = await useFetch<Campaign>('https://dapi.votolegal.com.br/public-api/campaign/fills');
 
 const currentTab: Ref<{ id: string; content: string }> = ref({
   id: '',
   content: '',
 });
+
+const rewards: Reward[] = (campaign.value?.reward_list || []) as Reward[];
 
 currentTab.value.id = 'description';
 currentTab.value.content = campaign?.value?.description || ''; // Access .value property
