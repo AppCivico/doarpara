@@ -4,7 +4,7 @@ interface GenderData {
   };
 }
 
-const showGenderVersion = (terms: Record<string, string>, gender: string = 'other') => terms[gender] || terms.other;
+const showGenderedVersion = (terms: Record<string, string>, gender: string = 'other') => terms[gender] || terms.other;
 
 export default {
   _currencySymbol: 'R$',
@@ -19,7 +19,7 @@ export default {
     ballotNumber: 'Número',
     politicalParty: 'Partido',
     runningForLocation: 'Concorre em',
-    runningForOffice: ({ values: { gender } }: GenderData) => showGenderVersion(
+    runningForOffice: ({ values: { gender } }: GenderData) => showGenderedVersion(
       {
         female: 'Candidata a',
         male: 'Candidato a',
@@ -48,7 +48,7 @@ export default {
   navigationLabel: 'Seções dessa campanha',
   of: 'De',
   governmentOffices: {
-    municipal_council: ({ values: { gender } }: GenderData) => showGenderVersion(
+    municipal_council: ({ values: { gender } }: GenderData) => showGenderedVersion(
       {
         female: 'Vereadora',
         male: 'Vereador',
@@ -56,33 +56,33 @@ export default {
       },
       gender,
     ),
-    city_hall: ({ values: { gender } }: GenderData) => showGenderVersion({
+    city_hall: ({ values: { gender } }: GenderData) => showGenderedVersion({
       female: 'Prefeita',
       male: 'Prefeito',
       other: 'Prefeitura',
     }, gender),
-    state_legislature: ({ values: { gender } }: GenderData) => showGenderVersion({
+    state_legislature: ({ values: { gender } }: GenderData) => showGenderedVersion({
       female: 'Deputada estadual',
       male: 'Deputado estadual',
       other: 'Câmara estadual',
     }, gender),
-    state_government: ({ values: { gender } }: GenderData) => showGenderVersion({
+    state_government: ({ values: { gender } }: GenderData) => showGenderedVersion({
       female: 'Governadora',
       male: 'Governador',
       other: 'Governo estadual',
     }, gender),
-    federal_chamber: ({ values: { gender } }: GenderData) => showGenderVersion({
+    federal_chamber: ({ values: { gender } }: GenderData) => showGenderedVersion({
       female: 'Deputada federal',
       male: 'Deputado federal',
       other: 'Câmara federal',
     }, gender),
-    senate: ({ values: { gender } }: GenderData) => showGenderVersion({
+    senate: ({ values: { gender } }: GenderData) => showGenderedVersion({
       female: 'Senadora',
       male: 'Senador',
       other: 'Senado',
     }, gender),
-    presidency: ({ values: { gender } }: GenderData) => showGenderVersion({
       female: 'Presidência',
+    presidency: ({ values: { gender } }: GenderData) => showGenderedVersion({
       male: 'Presidente',
       other: 'Presidência',
     }, gender),
