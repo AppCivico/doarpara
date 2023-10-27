@@ -33,11 +33,23 @@
   </div>
 </template>
 <script setup lang="ts">
-defineProps<{
-  currentGoal: number,
-  totalAmount: number,
-  totalDonations: number,
-}>();
+defineProps({
+  currentGoal: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  totalAmount: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  totalDonations: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+});
 </script>
 <style lang="scss">
 .campaign-progress {
