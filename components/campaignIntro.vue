@@ -39,8 +39,8 @@
         />
       </figure>
 
-      <div v-if="campaign.preamble" class="intro__campaign-preamble">
-        <p>
+      <div class="intro__campaign-preamble">
+        <p v-if="campaign.preamble">
           {{ campaign.preamble }}
         </p>
       </div>
