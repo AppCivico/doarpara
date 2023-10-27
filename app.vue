@@ -187,24 +187,19 @@
           :aria-label="$t('footerMenuLabel')"
         >
           <ul class="footer-nav__list">
-            <li class="footer-nav__item">
-              <a class="footer-nav__link" href="#campanha">
-                {{ $t('nav.campaign') }}
-              </a>
-            </li>
-            <li class="footer-nav__item">
-              <a class="footer-nav__link" href="#transparência">
-                {{ $t('nav.transparency') }}
-              </a>
-            </li>
-            <li class="footer-nav__item">
-              <a class="footer-nav__link" href="#testemunhos">
-                {{ $t('nav.testimony', 0) }}
-              </a>
-            </li>
-            <li class="footer-nav__item">
-              <a class="footer-nav__link" href="#faq">
-                {{ $t('nav.faq') }}
+            <li
+              v-for="tab, i in campaign.campaign_section_list"
+              :key="i"
+              class="footer-nav__item"
+            >
+              <a
+                class="footer-nav__link"
+                :href="`#${tab}`"
+                :aria-controls="`#${tab}`"
+                role="tab"
+                @click.prevent="changeTab($event)"
+              >
+                {{ $t(`nav.${tab}`) }}
               </a>
             </li>
             <li class="footer-nav__item">
