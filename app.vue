@@ -128,12 +128,11 @@
             :aria-label="$t('navigationLabel')"
           >
             <ul
-              v-if="Array.isArray(campaign?.campaign_section_list)
-                && campaign?.campaign_section_list.length"
+              v-if="Array.isArray(tabs) && tabs?.length"
               class="tab-navigation__list"
             >
               <li
-                v-for="tab, i in campaign.campaign_section_list"
+                v-for="tab, i in tabs"
                 :key="i"
                 class="tab-navigation__item"
               >
@@ -166,7 +165,7 @@
                 v-html="tab.content"
               />
 
-              <footer v-if="campaign?.campaign_section_list.includes('faq')" class="text-body__call-to-faq">
+              <footer v-if="campaign?.campaign_section_list" class="text-body__call-to-faq">
                 <p v-html="$t('callToFaq')" />
               </footer>
             </section>
@@ -190,21 +189,23 @@
           :aria-label="$t('footerMenuLabel')"
         >
           <ul class="footer-nav__list">
-            <li
-              v-for="tab, i in campaign?.campaign_section_list"
-              :key="i"
-              class="footer-nav__item"
-            >
-              <a
-                class="footer-nav__link"
-                :href="`#${tab}`"
-                :aria-controls="`#${tab}`"
-                role="tab"
-                @click.prevent="changeTab($event)"
+            <template v-if="Array.isArray(tabs)">
+              <li
+                v-for="tab, i in tabs"
+                :key="i"
+                class="footer-nav__item"
               >
-                {{ $t(`nav.${tab}`) }}
-              </a>
-            </li>
+                <a
+                  class="footer-nav__link"
+                  :href="`#${tab}`"
+                  :aria-controls="`#${tab}`"
+                  role="tab"
+                  @click.prevent="changeTab($event)"
+                >
+                  {{ $t(`nav.${tab}`) }}
+                </a>
+              </li>
+            </template>
             <li class="footer-nav__item">
               <a class="footer-nav__link" href="/termos-de-uso">
                 {{ $t('useTerms') }}
