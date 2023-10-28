@@ -138,6 +138,18 @@ body {
   }
 }
 
+body > *:first-child {
+  min-height: 100%;
+}
+
+
+.page-wrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  min-height: 100%;
+}
 
 /**
  * 1. Set sticky footer
