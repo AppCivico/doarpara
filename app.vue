@@ -256,6 +256,7 @@
 import { ref, Ref } from 'vue';
 import type { Campaign, Reward } from './doar-para.d.ts';
 
+const appConfig = useAppConfig();
 const runtimeConfig = useRuntimeConfig();
 
 const { data: campaign } = await useFetch<Campaign>(`${runtimeConfig.public.apiBase}/campaign/fills`);
@@ -279,6 +280,28 @@ const tabs = Array.isArray(campaign?.value?.campaign_section_list)
       return acc;
     }, [] as { id: string, content: any }[])
   : [];
+
+if (campaign.value) {
+  const meta = {
+    title: campaign.value?.name
+      ? `${campaign.value?.name} • ${appConfig.title}`
+      : `${appConfig.title}`,
+    meta: [
+      { name: 'description', content: campaign.value?.preamble },
+    ],
+    link: Object.values(campaign.value?.contact_methods)
+      .filter((x) => !!x)
+      .map((x) => ({
+        rel: 'me',
+        href: x,
+      })),
+    htmlAttrs: {
+      class: `theme--${campaign.value.theme || 'default'}`,
+    },
+  };
+
+  useHead(meta);
+}
 
 function changeTab(event: Event): void {
   const { target } = event as MouseEvent;
