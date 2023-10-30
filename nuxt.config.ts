@@ -10,6 +10,11 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   css: ['@/assets/scss/index.scss'],
+  runtimeConfig: {
+    public: {
+      apiBase: 'https://dapi.votolegal.com.br/public-api',
+    },
+  },
   vite: {
     css: {
       preprocessorOptions: {

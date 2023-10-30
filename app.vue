@@ -256,7 +256,9 @@
 import { ref, Ref } from 'vue';
 import type { Campaign, Reward } from './doar-para.d.ts';
 
-const { data: campaign } = await useFetch<Campaign>('https://dapi.votolegal.com.br/public-api/campaign/fills');
+const runtimeConfig = useRuntimeConfig();
+
+const { data: campaign } = await useFetch<Campaign>(`${runtimeConfig.public.apiBase}/campaign/fills`);
 
 const currentTab: Ref<{ id: string; content: string }> = ref({
   id: '',
