@@ -7,9 +7,10 @@
           class="intro__image"
           width="780"
           height="440"
-          :src="typeof campaign.cover === 'object'
-            ? campaign.cover.url
-            : campaign.cover || youtubeThumbnail"
+          :src="campaignDefaultCover || youtubeThumbnail"
+          :srcset="Array.isArray(campaign.cover)
+            ? campaign.cover.map((x) => `${x.url} ${x.width}w`).join(', ')
+            : undefined"
         />
         <button
           class="intro__figure-switcher"
@@ -109,6 +110,19 @@ const currentGoal = computed(() => {
   return (goals.find((x: Goal) => x.amount > totalAmount) || goals[goals.length - 1])?.amount
     || totalAmount
     || 0;
+});
+
+const campaignDefaultCover = computed(() => {
+  switch (true) {
+    case props.campaign.cover:
+      return props.campaign.cover;
+    case Array.isArray(props.campaign.cover):
+      return typeof props.campaign.cover?.[0] === 'string'
+        ? props.campaign.cover[0]
+        : props.campaign.cover[0]?.url || undefined;
+    default:
+      return '';
+  }
 });
 
 const sortedPledgeList = computed(() => {

@@ -25,6 +25,8 @@ interface PoliticalParty {
 
 type Image = string | { url: string; width: number; height: number };
 
+type ImageOrSet = image | Image[];
+
 interface LegalEntity {
   name: string;
   legal_entities_id: string;
@@ -106,7 +108,7 @@ export interface Campaign {
   payment_method_list: PaymentMethod[];
   reward_list: Reward[];
 
-  cover: Image;
+  cover: ImageOrSet;
   video: string;
   theme: Theme;
   preamble: string;
