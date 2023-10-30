@@ -283,12 +283,6 @@ const tabs = Array.isArray(campaign?.value?.campaign_section_list)
 
 if (campaign.value) {
   const meta = {
-    title: campaign.value?.name
-      ? `${campaign.value?.name} • ${appConfig.title}`
-      : `${appConfig.title}`,
-    meta: [
-      { name: 'description', content: campaign.value?.preamble },
-    ],
     link: Object.values(campaign.value?.contact_methods)
       .filter((x) => !!x)
       .map((x) => ({
@@ -301,6 +295,21 @@ if (campaign.value) {
   };
 
   useHead(meta);
+
+  useSeoMeta({
+    title: campaign.value?.name
+      ? `${campaign.value?.name} • ${appConfig.title}`
+      : `${appConfig.title}`,
+    description: campaign.value?.preamble,
+    ogImage: typeof campaign.value?.sharingImage === 'object'
+      ? {
+        url: campaign.value?.sharingImage?.url,
+        width: campaign.value?.sharingImage?.width,
+        height: campaign.value?.sharingImage?.height,
+      }
+      : campaign.value?.sharingImage
+      || '',
+  });
 }
 
 function changeTab(event: Event): void {
