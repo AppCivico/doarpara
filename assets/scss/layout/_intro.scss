@@ -67,11 +67,11 @@ $_preamble-bg: hsl(247, 67%, 48%);
 
   width: 100%;
   height: auto;
+  aspect-ratio: 780 / 440;
 }
 
 .intro__video {
   height: auto;
-  aspect-ratio: 780 / 440;
 
   animation: fadeIn 1.2s;
 
