@@ -253,8 +253,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
 import type { Campaign, Reward } from '../../doar-para.d.ts';
+import { ref, type Ref } from 'vue';
 
 const appConfig = useAppConfig();
 const route = useRoute();
