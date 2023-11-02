@@ -1,29 +1,18 @@
-require('@rushstack/eslint-patch/modern-module-resolution');
-
 module.exports = {
   root: true,
   env: {
     browser: true,
     node: true,
   },
-  globals: {
-    defineNuxtConfig: 'readonly',
-    defineNuxtPlugin: 'readonly',
-    vue: 'readonly',
-  },
+  extends: [
+    'airbnb-base',
+    'plugin:vue/vue3-recommended',
+    '@vue/eslint-config-airbnb-with-typescript',
+  ],
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
   },
-  extends: [
-    '@nuxt/eslint-config',
-    '@nuxtjs/eslint-config-typescript',
-    'plugin:vue/vue3-recommended',
-    '@vue/eslint-config-airbnb',
-    'prettier',
-    'plugin:prettier/recommended',
-  ],
-  plugins: ['prettier'],
   rules: {
     'import/extensions': [
       'error',
