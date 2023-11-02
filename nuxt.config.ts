@@ -10,6 +10,9 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   css: ['@/assets/scss/index.scss'],
+  modules: [
+    '@nuxtjs/i18n',
+  ],
   runtimeConfig: {
     public: {
       apiBase: 'https://dapi.votolegal.com.br/public-api',
@@ -26,7 +29,7 @@ export default defineNuxtConfig({
     plugins: [
       VueI18nVitePlugin({
         include: [
-          resolve(dirname(fileURLToPath(import.meta.url)), './locales/*.json'),
+          resolve(dirname(fileURLToPath(import.meta.url)), './locales/**'),
         ],
       }),
     ],
