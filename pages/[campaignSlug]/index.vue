@@ -253,7 +253,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Campaign, CampaignSection, Reward } from '../../doar-para.d.ts';
+import type { Campaign, CampaignSection, Reward } from '@/doar-para.d.ts';
 import { ref, type Ref } from 'vue';
 
 const appConfig = useAppConfig();

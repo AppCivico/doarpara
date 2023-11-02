@@ -86,10 +86,10 @@
   </section>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { Campaign, Goal } from '../doar-para.d.ts';
-import getVideoId from '../utils/getYoutubeId.ts';
-import getYoutubeThumbnail from '../utils/getYoutubeThumbnail.ts';
+import type { Campaign, Goal } from '@/doar-para.d.ts';
+import getVideoId from '@/utils/getYoutubeId.ts';
+import getYoutubeThumbnail from '@/utils/getYoutubeThumbnail.ts';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
   campaign: Campaign;

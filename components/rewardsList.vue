@@ -48,7 +48,7 @@
   </dl>
 </template>
 <script setup lang="ts">
-import type { Reward } from '../doar-para.d.ts';
+import type { Reward } from '@/doar-para.d.ts';
 
 defineProps<{
   rewards: Reward[];

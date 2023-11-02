@@ -14,8 +14,8 @@
   </ul>
 </template>
 <script setup lang="ts">
+import type { ContactMethods } from '@/doar-para.d.ts';
 import { computed } from 'vue';
-import type { ContactMethods } from '../doar-para.d.ts';
 
 const props = defineProps<{
   contactMethods: ContactMethods;
