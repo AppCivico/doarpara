@@ -25,7 +25,13 @@ module.exports = {
   ],
   plugins: ['prettier'],
   rules: {
-    'prettier/prettier': 'error',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        ts: 'always',
+      },
+    ],
   },
   settings: {
     'import/core-modules': [ // these modules are included in nuxt.js
