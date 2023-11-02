@@ -8,9 +8,7 @@
           width="780"
           height="440"
           :src="campaignDefaultCover || youtubeThumbnail"
-          :srcset="Array.isArray(campaign.cover)
-            ? campaign.cover.map((x) => `${x.url} ${x.width}w`).join(', ')
-            : undefined"
+          :srcset="campaignCoverSrcset"
         />
         <button
           class="intro__figure-switcher"
@@ -113,15 +111,32 @@ const currentGoal = computed(() => {
 });
 
 const campaignDefaultCover = computed(() => {
-  switch (true) {
-    case props.campaign.cover:
-      return props.campaign.cover;
-    case Array.isArray(props.campaign.cover):
-      return typeof props.campaign.cover?.[0] === 'string'
-        ? props.campaign.cover[0]
-        : props.campaign.cover[0]?.url || undefined;
-    default:
-      return '';
+  if (typeof props.campaign.cover == 'string') {
+    return props.campaign.cover;
+  } else if (Array.isArray(props.campaign.cover)) {
+    return typeof props.campaign.cover?.[0] === 'string'
+      ? props.campaign.cover[0]
+      : props.campaign.cover[0]?.url || undefined;
+  } else {
+    return '';
+  }
+});
+
+const campaignCoverSrcset = computed(() => {
+  if (typeof props.campaign.cover == 'string') {
+    return undefined;
+  } else if (Array.isArray(props.campaign.cover)) {
+    return props.campaign.cover
+      .reduce((acc, cur) => {
+        if (typeof cur === 'object' && cur.url && cur.width) {
+          acc.push(`${cur.url} ${cur.width}w`);
+        }
+        return acc;
+      }, [] as String[])
+      .join(', ')
+      || undefined;
+  } else {
+    return undefined;
   }
 });
 
