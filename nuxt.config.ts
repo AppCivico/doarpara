@@ -1,4 +1,3 @@
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   build: {
@@ -26,5 +25,13 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
     typeCheck: true,
+    tsConfig: {
+      compilerOptions: {
+        allowImportingTsExtensions: true,
+      },
+      include: [
+        '.eslintrc.cjs',
+      ],
+    },
   },
 });
