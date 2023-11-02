@@ -1,13 +1,13 @@
-type id = string|number;
+type Id = string | number;
 
 type Date = string;
 
 type Theme = 'default' | 'blue' | 'green' | 'orange' | 'red';
 
-interface subNationalEntities {
+interface SubNationalEntities {
   name: string;
   abbr: string;
-};
+}
 
 type Office = 'municipal_council' | 'city_hall' | 'state_legislature' | 'state_government' | 'federal_chamber' | 'senate' | 'presidency';
 
@@ -25,14 +25,14 @@ interface PoliticalParty {
 
 type Image = string | { url: string; width: number; height: number };
 
-type ImageOrSet = image | Image[];
+type ImageOrSet = Image | Image[];
 
 interface LegalEntity {
   name: string;
   legal_entities_id: string;
 
   city: string;
-  state: subNationalEntities;
+  state: SubNationalEntities;
 
   avatar: Image;
   slug: string;
@@ -45,7 +45,7 @@ interface Candidate {
   gender: Gender;
 
   city: string;
-  state: subNationalEntities;
+  state: SubNationalEntities;
 
   office: string;
   ballot_number: string;
@@ -71,7 +71,7 @@ export interface Goal {
 type PledgeValue = number | 'custom';
 
 export interface Reward {
-  id: id;
+  id: Id;
   name: string;
   description: string;
   minimum_value: number;
@@ -81,7 +81,7 @@ export interface Reward {
 }
 
 interface Donation {
-  id: id;
+  id: Id;
   creation_date: Date;
   payment_method: PaymentMethod;
   amount: number;
