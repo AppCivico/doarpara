@@ -275,7 +275,8 @@ currentTab.value.id = 'description';
 currentTab.value.content = campaign?.value?.description || ''; // Access .value property
 
 const tabs = (Array.isArray(campaign?.value?.campaign_section_list)
-  ? campaign.value.campaign_section_list
+  // https://github.com/microsoft/TypeScript/issues/53395
+  ? (campaign.value?.campaign_section_list || [])
     .filter((t: CampaignSection) => !requireSections.includes(t))
     .concat(requireSections)
   : requireSections)
