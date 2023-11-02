@@ -27,4 +27,9 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
   },
+  settings: {
+    'import/core-modules': [ // these modules are included in nuxt.js
+      'vue',
+    ],
+  },
 };
