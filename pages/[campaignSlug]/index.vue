@@ -138,12 +138,12 @@
               >
                 <a
                   class="tab-navigation__link"
-                  :href="`#${tab}`"
-                  :aria-controls="`#${tab}`"
+                  :href="`#${tab.id}`"
+                  :aria-controls="`#${tab.id}`"
                   role="tab"
                   @click.prevent="changeTab($event)"
                 >
-                  {{ $t(`nav.${tab}`) }}
+                  {{ $t(`nav.${tab.id}`) }}
                 </a>
               </li>
             </ul>
@@ -197,12 +197,12 @@
               >
                 <a
                   class="footer-nav__link"
-                  :href="`#${tab}`"
-                  :aria-controls="`#${tab}`"
+                  :href="`#${tab.id}`"
+                  :aria-controls="`#${tab.id}`"
                   role="tab"
                   @click.prevent="changeTab($event)"
                 >
-                  {{ $t(`nav.${tab}`) }}
+                  {{ $t(`nav.${tab.id}`) }}
                 </a>
               </li>
             </template>
@@ -253,12 +253,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Campaign, Reward } from '../../doar-para.d.ts';
+import type { Campaign, CampaignSection, Reward } from '../../doar-para.d.ts';
 import { ref, type Ref } from 'vue';
 
 const appConfig = useAppConfig();
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
+
+const requireSections: CampaignSection[] = ['description', 'donations'];
 
 const { data: campaign } = await useFetch<Campaign>(`${runtimeConfig.public.apiBase}/campaign/${route.params.campaignSlug}`);
 
@@ -272,15 +274,17 @@ const rewards: Reward[] = (campaign.value?.reward_list || []) as Reward[];
 currentTab.value.id = 'description';
 currentTab.value.content = campaign?.value?.description || ''; // Access .value property
 
-const tabs = Array.isArray(campaign?.value?.campaign_section_list)
-  ? campaign?.value?.campaign_section_list
-    .reduce((acc, cur) => {
-      if (campaign?.value?.[cur as keyof Campaign]) {
-        acc.push({ id: cur, content: campaign.value[cur as keyof Campaign] });
-      }
-      return acc;
-    }, [] as { id: string, content: any }[])
-  : [];
+const tabs = (Array.isArray(campaign?.value?.campaign_section_list)
+  ? campaign.value.campaign_section_list
+    .filter((t: CampaignSection) => !requireSections.includes(t))
+    .concat(requireSections)
+  : requireSections)
+  .reduce((acc: { id: string, content: any }[], cur: string) => {
+    if (campaign?.value?.[cur as keyof Campaign]) {
+      acc.push({ id: cur, content: campaign.value[cur as keyof Campaign] ?? '' });
+    }
+    return acc;
+  }, [] as { id: string, content: any }[]);
 
 if (campaign.value) {
   const meta = {
