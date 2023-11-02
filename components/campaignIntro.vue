@@ -97,7 +97,9 @@ const props = defineProps<{
 
 const showVideo = ref(false);
 
-const origin: String = process.browser ? window.location.origin : '';
+const origin: String = typeof window !== 'undefined'
+  ? window.location.origin
+  : '';
 
 const videoId = computed(() => getVideoId(props.campaign.video));
 const youtubeThumbnail = computed(() => getYoutubeThumbnail(props.campaign.video));
