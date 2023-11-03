@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      noscript: [
+        { children: 'JavaScript is required' },
+      ],
+    },
+  },
   build: {
     transpile: ['vue-i18n'],
   },
