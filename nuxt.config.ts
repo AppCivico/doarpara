@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     typeCheck: true,
     tsConfig: {
       compilerOptions: {
+        allowJs: true,
         allowImportingTsExtensions: true,
       },
       include: [
