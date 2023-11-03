@@ -87,8 +87,6 @@
 </template>
 <script setup lang="ts">
 import type { Campaign, Goal } from '@/doar-para.d.ts';
-import getVideoId from '@/utils/getYoutubeId.ts';
-import getYoutubeThumbnail from '@/utils/getYoutubeThumbnail.ts';
 import { computed, ref } from 'vue';
 
 const props = defineProps<{
@@ -101,7 +99,7 @@ const origin: String = typeof window !== 'undefined'
   ? window.location.origin
   : '';
 
-const videoId = computed(() => getVideoId(props.campaign.video));
+const videoId = computed(() => getYoutubeId(props.campaign.video));
 const youtubeThumbnail = computed(() => getYoutubeThumbnail(props.campaign.video));
 
 const currentGoal = computed(() => {
