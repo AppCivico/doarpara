@@ -26,12 +26,11 @@
 
   color: my.palette('text', 'dark');
 
+  appearance: none; /* 1 */
   cursor: text;
 
-  background-color: my.palette('text', 'light');
+  background-color: my.palette('neutral', 'white');
   border: solid my.$stroke my.palette('border');
-
-  appearance: none; /* 1 */
 
   &:placeholder-shown ~ label {
     color: my.palette('neutral', 'base');
@@ -154,10 +153,10 @@
 [type='search'] {
   @extend %text-field-reset;
 
-  outline-offset: -2px; /* 1 */
-
   // stylelint-disable-next-line property-no-vendor-prefix
   -webkit-appearance: none; /* 2 */
+
+  outline-offset: -2px; /* 1 */
 }
 
 /**
