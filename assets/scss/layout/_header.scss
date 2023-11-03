@@ -14,6 +14,8 @@
  * Within any `document` or `application`, the author **SHOULD** mark no more than one element with the `banner` role.
  */
 .main-header {
+  $header-bg-width: 593px;
+
   color: my.palette('text', 'light');
 
   background-color: my.palette('brand', 'primary');
@@ -22,7 +24,8 @@
     min-height: 242px;
 
     background-image: my.image('themes/blue/header.svg');
-    background-position: calc(max(my.$cover-max-width + my.$gutter, 50vw + my.$cover-max-width - my.$max-width / 2 + my.$gutter)) 0;
+    // using half the image width to deal with percentage alignment algorithm
+    background-position: max(my.$cover-max-width + my.$gutter, 50% + (my.$cover-max-width - my.$max-width / 2 + my.$gutter) + $header-bg-width / 2) 0;
   }
 
   .container {

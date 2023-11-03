@@ -245,7 +245,6 @@ $_preamble-bg: hsl(247, 67%, 48%);
 
   justify-content: space-between;
 
-
   font-size: my.ms-step(-1);
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
@@ -261,6 +260,8 @@ $_preamble-bg: hsl(247, 67%, 48%);
     grid-column-start: 2;
 
     align-items: flex-start;
+
+    margin-top: auto;
   }
 }
 
