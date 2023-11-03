@@ -94,7 +94,8 @@ export default {
     pro_forma_invoice: 'Boleto',
   },
   pledges: {
-    custom: 'outro valor',
+    custom: 'Outro valor',
+    toChoose: 'Escolher',
   },
   privacyPolicy: 'Política de privacidade',
   progressOfCampaign: 'Progresso da campanha',

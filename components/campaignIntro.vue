@@ -80,6 +80,52 @@
                 : $t(`pledges.${pledge}`) }}
             </a>
           </li>
+          <li
+            v-for="pledge in customPledges"
+            :key="pledge"
+            class="donation-values__item"
+          >
+            <button
+              v-if="!chosenCustomPledge"
+              type="button"
+              class="donation-values__value donation-values__value--custom-button like-a__button"
+              @click="$event => chosenCustomPledge = pledge"
+            >
+              {{ $t(`pledges.${pledge}`) }}
+            </button>
+            <div
+              v-else
+              class="donation-values__value donation-values__value--custom-group like-a__button"
+              role="group"
+            >
+              <label
+                class="donation-values__custom-currency"
+                for="foobar"
+              >
+                {{ $t('_currencySymbol') }}
+              </label>
+              <input
+                id="foobar"
+                v-model="pledgeValue"
+                v-focus.select
+                type="number"
+                class="donation-values__custom-input"
+                :aria-label="$t(`pledges.${pledge}`)"
+                :min="minimumDonation
+                  ? minimumDonation as number / 100
+                  : undefined"
+                :max="maximumDonation
+                  ? maximumDonation as number / 100
+                  : undefined"
+              />
+              <a
+                :href="`#doar?valor=${pledgeValue}`"
+                class="donation-values__custom-submit like-a__button"
+              >
+                {{ $t(`pledges.toChoose`) }}
+              </a>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -93,6 +139,7 @@ const props = defineProps<{
   campaign: Campaign;
 }>();
 
+const chosenCustomPledge: Ref<string> = ref('');
 const showVideo = ref(false);
 
 const origin: String = typeof window !== 'undefined'
@@ -138,20 +185,29 @@ const campaignCoverSrcset = computed(() => {
   return undefined;
 });
 
-const sortedPledgeList = computed(() => {
-  const { pledge_list: pledgeList } = props.campaign;
+const sortedPledgeList = computed(({ pledge_list } = props.campaign) => (!Array.isArray(pledge_list)
+  ? []
+  : pledge_list
+    .filter((x) => (typeof x === 'number'))
+    .sort((a, b) => (a as number) - (b as number))));
 
-  return !Array.isArray(pledgeList)
-    ? []
-    : [...pledgeList].sort((a, b) => {
-      if (a === 'custom') {
-        return 1;
-      }
-      if (b === 'custom') {
-        return -1;
-      }
+const customPledges = computed(({ pledge_list } = props.campaign) => (!Array.isArray(pledge_list)
+  ? []
+  : pledge_list.filter((x) => typeof x === 'string') as string[]));
 
-      return a - (b as number);
-    });
-});
+const minimumDonation = computed(() => (typeof props.campaign.minimum_donation === 'number'
+  ? props.campaign.minimum_donation
+  : sortedPledgeList.value[0] as number
+  || undefined));
+
+const maximumDonation = computed(() => (typeof props.campaign.maximum_donation === 'number'
+  ? props.campaign.maximum_donation
+  : sortedPledgeList.value[sortedPledgeList.value.length - 1] as number
+  || undefined));
+
+const pledgeValue: Ref<number> = ref(
+  minimumDonation.value
+    ? minimumDonation.value / 100
+    : 0,
+);
 </script>

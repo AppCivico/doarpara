@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 @use '../abstracts' as my;
 
 .donation-values__list {
@@ -36,5 +38,93 @@
 .donation-values__value {
   &[class] {
     width: 100%;
+  }
+}
+
+.donation-values__value--custom-group {
+  display: flex;
+
+  flex-wrap: nowrap;
+
+  gap: my.$gutter * 0.25;
+
+  align-items: stretch;
+
+  padding: 0;
+
+  &:hover {
+    color: inherit;
+
+    background-color: inherit;
+    box-shadow: none;
+  }
+}
+
+.donation-values__value--custom-button {
+}
+
+.donation-values__custom-input,
+.donation-values__custom-submit {
+  height: auto;
+  margin: 0;
+}
+
+.donation-values__custom-currency {
+  display: flex;
+
+  flex-basis: 100%;
+  flex-grow: 1;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  height: auto;
+  padding: 0;
+  margin: 0;
+
+  font-size: 1em;
+  color: inherit;
+  text-align: right;
+}
+
+.donation-values__custom-input {
+  font-weight: inherit;
+  text-align: left;
+
+  border: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+
+  &:not(:focus) {
+    appearance: textfield;
+  }
+
+  &:not(:focus)::-webkit-outer-spin-button,
+  &:not(:focus)::-webkit-inner-spin-button {
+    margin: 0;
+
+    appearance: none;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.donation-values__custom-submit[class] {
+  @include my.image-replacement;
+
+  text-indent: calc(101% + my.$gutter);
+
+  background-color: my.palette('button', 'focus');
+  background-image: my.image('icons/icon-arrow-triangle-fill-right.svg');
+  background-position: 50%;
+  border: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 20px 24px -10px my.palette('effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2);
   }
 }
