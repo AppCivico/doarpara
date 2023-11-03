@@ -50,7 +50,6 @@
 
   [role='group'] > &,
   fieldset > & {
-    margin-right: my.$gutter * 0.5;
 
     &:only-child {
       display: flex;
