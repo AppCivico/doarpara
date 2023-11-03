@@ -1,6 +1,6 @@
 <template>
-  <!-- required by NUXT page transitions -->
   <div class="page-wrapper">
+    <!-- required by NUXT page transitions -->
     <header class="main-header">
       <div class="container">
         <div class="title-and-colophon">
