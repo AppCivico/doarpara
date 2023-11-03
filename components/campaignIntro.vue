@@ -45,9 +45,7 @@
       </div>
       <campaignProgress
         class="intro__campaign-progress"
-        :current-goal="currentGoal"
-        :total-amount="campaign.total_amount"
-        :total-donations="campaign.total_donations"
+        :campaign="campaign"
       />
       <div class="call-to-action-values">
         <p v-if="campaign?.reward_list?.length" class="call-to-action-values__intro">
@@ -132,7 +130,7 @@
   </section>
 </template>
 <script setup lang="ts">
-import type { Campaign, Goal } from '@/doar-para.d.ts';
+import type { Campaign } from '@/doar-para.d.ts';
 import { computed, ref } from 'vue';
 
 const props = defineProps<{
@@ -148,14 +146,6 @@ const origin: String = typeof window !== 'undefined'
 
 const videoId = computed(() => getYoutubeId(props.campaign.video));
 const youtubeThumbnail = computed(() => getYoutubeThumbnail(props.campaign.video));
-
-const currentGoal = computed(() => {
-  const { total_amount: totalAmount, goal_list: goals } = props.campaign;
-
-  return (goals.find((x: Goal) => x.amount > totalAmount) || goals[goals.length - 1])?.amount
-    || totalAmount
-    || 0;
-});
 
 const campaignDefaultCover = computed(() => {
   if (typeof props.campaign.cover === 'string') {

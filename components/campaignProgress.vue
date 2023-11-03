@@ -25,30 +25,33 @@
       </data>
     </div>
     <div class="campaign-progress__donations">
-      <data :value="totalDonations" class="campaign-progress__donations-number">
-        {{ $n(totalDonations) }}
+      <data :value="campaign.total_donations" class="campaign-progress__donations-number">
+        {{ $n(campaign.total_donations) }}
       </data>
       {{ $t('totalDonations').toLowerCase() }}
     </div>
   </div>
 </template>
 <script setup lang="ts">
-defineProps({
-  currentGoal: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  totalAmount: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  totalDonations: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+import type { Campaign, Goal, RaisedAmount } from '@/doar-para.d.ts';
+
+const props = defineProps<{
+  campaign: Campaign;
+}>();
+
+const totalAmount = computed(({ total_amount } = props.campaign) => (Array.isArray(total_amount)
+  ? total_amount
+    .reduce((acc: number, cur: RaisedAmount | number) => acc + (typeof cur === 'number'
+      ? cur
+      : cur.value), 0)
+  : total_amount));
+
+const currentGoal = computed(() => {
+  const { goal_list: goals } = props.campaign;
+
+  return (goals.find((x: Goal) => x.amount > totalAmount.value) || goals[goals.length - 1])?.amount
+    || totalAmount.value
+    || 0;
 });
 </script>
 <style lang="scss">

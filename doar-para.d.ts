@@ -80,6 +80,11 @@ export interface Reward {
   image: string;
 }
 
+export interface RaisedAmount {
+  source: string;
+  value: number;
+}
+
 interface Donation {
   id: Id;
   creation_date: Date;
@@ -102,7 +107,7 @@ export interface Campaign {
   is_recurrent: boolean;
   is_flexible_funding: boolean;
   is_election_campaign: boolean;
-  total_amount: number;
+  total_amount: number | RaisedAmount[];
   total_donations: number;
   pledge_list: PledgeValue[];
   minimum_donation: number;
