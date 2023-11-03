@@ -105,6 +105,8 @@ export interface Campaign {
   total_amount: number;
   total_donations: number;
   pledge_list: PledgeValue[];
+  minimum_donation: number;
+  maximum_donation: number;
   payment_method_list: PaymentMethod[];
   reward_list: Reward[];
 
