@@ -17,12 +17,17 @@
     @content;
   }
 
+  display: flex;
+
+  flex-wrap: nowrap;
+
   > div {
     @include my.hide-text;
 
     display: block;
 
-    float: left;
+    flex-grow: 1;
+
     max-width: 100%;
     height: 100%;
 
@@ -33,13 +38,21 @@
     @content;
 
     &:first-child {
-      border-top-left-radius: my.$rounded-corner;
-      border-bottom-left-radius: my.$rounded-corner;
+      border-top-left-radius: 999em;
+      border-bottom-left-radius: 999em;
     }
 
     &:last-child {
-      border-top-right-radius: my.$rounded-corner;
-      border-bottom-right-radius: my.$rounded-corner;
+      border-top-right-radius: 999em;
+      border-bottom-right-radius: 999em;
+    }
+
+    &[title] {
+      cursor: help;
+
+      &:hover {
+        @include my.focused;
+      }
     }
   }
 }
@@ -61,11 +74,11 @@ progress,
 
   @include progress-bar-fg {
     background: my.palette('brand', 'tertiary');
-    border-radius: 0.25rem * 0.5;
+    border-radius: 999em;
   }
 
   @include progress-bar-bg {
     background: my.palette('neutral', 'light');
-    border-radius: 0.25rem * 0.5;
+    border-radius: 999em;
   }
 }
