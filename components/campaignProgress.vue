@@ -65,17 +65,6 @@ const props = defineProps<{
   campaign: Campaign;
 }>();
 
-const donation_sources = [
-  {
-    name: 'foo',
-    value: 10000000,
-  },
-  {
-    name: 'bar',
-    value: 15000000,
-  },
-];
-
 const currentGoal = computed(() => {
   const { goal_list: goals, total_amount: totalAmount } = props.campaign;
 
@@ -84,8 +73,7 @@ const currentGoal = computed(() => {
     || 0;
 });
 
-// const donationSources = computed(({ donation_sources } = props.campaign) => {
-const donationSources = computed(() => {
+const donationSources = computed(({ donation_sources } = props.campaign) => {
   let opacity = 0;
   return !Array.isArray(donation_sources)
     ? []
