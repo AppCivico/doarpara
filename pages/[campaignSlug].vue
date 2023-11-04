@@ -125,14 +125,12 @@
         <div class="text-body">
           <div class="container text-body__container">
             <nav
+              v-if="Array.isArray(campaignSections) && campaignSections?.length > 1"
               role="tablist"
               class="tab-navigation text-body__tab-navigation"
               :aria-label="$t('navigationLabel')"
             >
-              <ul
-                v-if="campaignSections?.length"
-                class="tab-navigation__list"
-              >
+              <ul class="tab-navigation__list">
                 <li
                   v-for="sectionId in campaignSections"
                   :key="sectionId"
@@ -183,7 +181,7 @@
             :aria-label="$t('footerMenuLabel')"
           >
             <ul class="footer-nav__list">
-              <template v-if="Array.isArray(campaignSections)">
+              <template v-if="Array.isArray(campaignSections) && campaignSections.length > 1">
                 <li
                   v-for="sectionId in campaignSections"
                   :key="sectionId"
