@@ -14,6 +14,7 @@ export default defineNuxtConfig({
   css: ['@/assets/scss/index.scss'],
   modules: [
     '@nuxtjs/i18n',
+    '@pinia/nuxt',
   ],
   runtimeConfig: {
     public: {

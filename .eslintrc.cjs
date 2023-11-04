@@ -9,6 +9,18 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     '@vue/eslint-config-airbnb-with-typescript',
   ],
+  overrides: [
+    {
+      files: [
+        'store/*.js',
+        'store/*.ts'
+      ],
+      rules: {
+        'import/prefer-default-export': 'off',
+      },
+    },
+  ],
+
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
@@ -24,6 +36,7 @@ module.exports = {
   },
   settings: {
     'import/core-modules': [ // these modules are included in nuxt.js
+      'pinia',
       'vue',
     ],
   },
