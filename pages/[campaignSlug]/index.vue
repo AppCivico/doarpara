@@ -166,7 +166,9 @@
               />
 
               <footer v-if="campaign?.campaign_section_list" class="text-body__call-to-faq">
-                <p v-html="$t('callToFaq')" />
+                <i18n-t keypath="callToFAQ.message" tag="p">
+                  <a href="#faq">{{ $t('callToFAQ.textLink') }}</a>
+                </i18n-t>
               </footer>
             </section>
 
