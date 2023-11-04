@@ -134,16 +134,16 @@
                 class="tab-navigation__list"
               >
                 <li
-                  v-for="section, i in campaignSections"
-                  :key="i"
+                  v-for="sectionId in campaignSections"
+                  :key="sectionId"
                   class="tab-navigation__item"
                 >
                   <a
                     class="tab-navigation__link"
-                    :href="`#${section.id}`"
-                    :aria-controls="`#${section.id}`"
+                    :href="`#${sectionId}`"
+                    :aria-controls="`#${sectionId}`"
                   >
-                    {{ $t(`nav.${section.id}`) }}
+                    {{ $t(`nav.${sectionId}`) }}
                   </a>
                 </li>
               </ul>
@@ -156,12 +156,10 @@
                 class="tab-list text-body__tab-list"
               >
                 <article
-                  v-for="tab in campaignSections"
-                  :id="tab.id"
-                  :key="tab.id"
+                  v-if="campaign?.description"
                   role="tab"
                   class="tab-list__item"
-                  v-html="tab.content"
+                  v-html="campaign.description"
                 />
 
                 <footer v-if="campaign?.campaign_section_list" class="text-body__call-to-faq">
@@ -192,16 +190,16 @@
             <ul class="footer-nav__list">
               <template v-if="Array.isArray(campaignSections)">
                 <li
-                  v-for="item, i in campaignSections"
-                  :key="i"
+                  v-for="sectionId in campaignSections"
+                  :key="sectionId"
                   class="footer-nav__item"
                 >
                   <a
                     class="footer-nav__link"
-                    :href="`#${item.id}`"
-                    :aria-controls="`#${item.id}`"
+                    :href="`#${sectionId}`"
+                    :aria-controls="`#${sectionId}`"
                   >
-                    {{ $t(`nav.${item.id}`) }}
+                    {{ $t(`nav.${sectionId}`) }}
                   </a>
                 </li>
               </template>

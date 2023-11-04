@@ -45,18 +45,13 @@ export const useCampaignStore = defineStore('campaign', {
   getters: {
     isCampaignLoaded: (state) => state.campaign !== null,
 
-    campaignSections: (({ campaign, requireSections }) => {
-      const campaignSectionList = campaign?.campaign_section_list || [];
-
-      return (Array.isArray(campaignSectionList)
-        ? (campaignSectionList)
+    campaignSections: (({ campaign, requireSections }):CampaignSection[] => (
+      Array.isArray(campaign?.campaign_section_list)
+        ? (campaign?.campaign_section_list || [])
           .filter((s: CampaignSection) => !requireSections.includes(s))
           .filter((s: CampaignSection) => !!campaign?.[s as keyof Campaign])
           .concat(requireSections)
-        : requireSections)
-        .map((s) => ({
-          id: s, content: campaign?.[s as keyof Campaign] ?? '',
-        }));
-    }),
+        : requireSections
+    )),
   },
 });
