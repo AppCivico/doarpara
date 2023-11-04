@@ -23,6 +23,8 @@ export const useCampaignStore = defineStore('campaign', {
       const route = useRoute();
       const runtimeConfig = useRuntimeConfig();
 
+      this.error = null;
+
       const {
         data, error, pending,
       } = await useFetch<Campaign>(
@@ -31,7 +33,6 @@ export const useCampaignStore = defineStore('campaign', {
       );
 
       this.pending = pending.value;
-      this.error = error.value;
 
       if (data.value) {
         this.campaign = data.value;
@@ -39,6 +40,11 @@ export const useCampaignStore = defineStore('campaign', {
         if (data.value.reward_list) {
           this.rewards = data.value?.reward_list;
         }
+      }
+
+      if (error.value) {
+        this.error = error.value;
+        throw createError(error.value);
       }
     },
   },
