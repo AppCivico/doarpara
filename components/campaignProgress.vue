@@ -1,6 +1,6 @@
 <template>
   <div class="campaign-progress">
-    <data class="campaign-progress__total" value="11650">
+    <data class="campaign-progress__total" :value="campaign.total_amount">
       <output for="progress-bar" class="campaign-progress__total-value">
         {{ $n(campaign.total_amount / 100, 'currency', { maximumFractionDigits: 0 }) }}
       </output>
