@@ -148,6 +148,7 @@
                 </li>
               </ul>
             </nav>
+            <NuxtLoadingIndicator />
             <NuxtPage />
           </div>
         </div>
