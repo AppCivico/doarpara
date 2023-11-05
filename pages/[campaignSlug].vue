@@ -148,7 +148,7 @@
                 </li>
               </ul>
             </nav>
-            <NuxtLoadingIndicator />
+            <NuxtLoadingIndicator color="black" />
             <NuxtPage />
           </div>
         </div>
