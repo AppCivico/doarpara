@@ -78,7 +78,10 @@ const { campaign } = storeToRefs(campaignStore);
 
 const { list: donationsList } = storeToRefs(donationsStore);
 
-await donationsStore.fetchDonations(String(route.params.campaignSlug));
+await donationsStore.fetchDonations(String(route.params.campaignSlug), {
+  lazy: true,
+  server: false,
+});
 </script>
 <style lang="scss">
 @mixin centralized {
