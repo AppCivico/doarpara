@@ -23,6 +23,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: 'https://dapi.votolegal.com.br/public-api',
+      receiptsBase: 'foo://bar',
     },
   },
   vite: {

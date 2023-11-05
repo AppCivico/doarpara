@@ -27,14 +27,14 @@
   }
 }
 
-.tab-list__item {
-  display: none;
+// .tab-list__item {
+//   display: none;
 
-  &[aria-selected='true'],
-  &:target {
-    display: block;
-  }
-}
+//   &[aria-selected='true'],
+//   &:target {
+//     display: block;
+//   }
+// }
 
 .text-body__call-to-faq {
   padding-top: my.$gutter * 2;

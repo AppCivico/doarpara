@@ -36,6 +36,19 @@ export default {
   footerMenuLabel: 'Menu da campanha, termos de uso e política de privacidade',
   legalEntityIdentification: 'CNPJ',
   loadVideo: 'Carregar vídeo',
+
+  indicators: {
+    donorsToCampaign: 'Pessoas doaram para {campaignName}',
+    newDonors: {
+      title: 'Novos doadores',
+      description: 'Pessoas que nunca doaram para esse projeto',
+    },
+    oldDonors: {
+      title: 'Doadores recorrentes',
+      description: 'Pessoas que já doaram pelo menos 1 vez para esse projeto',
+    },
+  },
+
   minimumRewardOrMore: 'ou mais',
   nSupporters: {
     plural: 'Nenhum apoio | 1 apoio | {n} apoios',
@@ -102,6 +115,24 @@ export default {
   },
   privacyPolicy: 'Política de privacidade',
   progressOfCampaign: 'Progresso da campanha',
+
+  receipt: 'Recibo | Recibos',
+  receipts: {
+    amount: 'Valor',
+    donorName: 'Nome',
+    creationDate: 'Data',
+    paymentMethod: 'Método',
+
+    linkTo: 'Ver transação',
+
+    titles: 'Comprovantes de doação e sua importância',
+    description: `<p>A Candidatura Monica Seixas e a Bancada Pretas do PSOL registra todas suas doações em um cartório cívico digital para comprovar e manter a autenticidade da sua doação. Essa rede de informações é vinculada a uma das mais seguras e confiáveis redes do mundo, que é a <a href="https://dcrdata.decred.org/" target="_blank">Blockchain do DECRED</a>. Esses números são a referência sobre as doações realizadas.</p>
+
+<p>É fundamental que as plataformas de financiamento coletivo, sociedade e o TSE tenham garantias que as informações ofereçam integridade e confiabilidade de maneira descentralizada para garantir controle social.</p>
+
+<p>Por isso, a Candidatura Monica Seixas e a Bancada Pretas do PSOL está registrando todas suas doações financeiras para comprovar a integridade e honestidade do processo de captação de recursos.</p>`,
+  },
+
   rewards: 'Rewards',
   rewardsIntro: 'Este projeto oferece recompensas em troca do seu apoio. Selecione uma recompensa abaixo.',
   totalAmount: 'Arrecadados',
