@@ -564,6 +564,9 @@ a {
   &:link {
     color: my.palette('anchor', 'link');
     text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-style: dotted;
+    text-underline-offset: 0.125em;
 
     cursor: pointer;
     // stylelint-disable-next-line property-no-vendor-prefix
