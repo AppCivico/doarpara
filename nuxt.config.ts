@@ -7,7 +7,7 @@ export default defineNuxtConfig({
       ],
     },
     pageTransition: {
-      name: 'page',
+      name: 'page-slide-right',
       mode: 'out-in',
     },
   },
@@ -42,6 +42,9 @@ export default defineNuxtConfig({
       compilerOptions: {
         allowJs: true,
         allowImportingTsExtensions: true,
+        forceConsistentCasingInFileNames: true,
+        strict: true,
+        strictNullChecks: true,
       },
       include: [
         '.eslintrc.cjs',
