@@ -271,3 +271,7 @@ textarea {
 .full-width {
   @include my.full-width;
 }
+
+.nowrap {
+  @include my.truncate;
+}
