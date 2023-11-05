@@ -26,7 +26,9 @@
             <th>{{ $t('naturalPersonIdentification') }}</th>
             <th>{{ $t('receipts.creationDate') }}</th>
             <th>{{ $t('receipts.paymentMethod') }}</th>
-            <th>{{ $t('receipts.amount') }}</th>
+            <th class="cell--number">
+              {{ $t('receipts.amount') }}
+            </th>
             <th />
           </tr>
         </thead>
