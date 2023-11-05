@@ -6,6 +6,10 @@ export default defineNuxtConfig({
         { children: 'JavaScript is required' },
       ],
     },
+    pageTransition: {
+      name: 'page',
+      mode: 'out-in',
+    },
   },
   build: {
     transpile: ['vue-i18n'],
