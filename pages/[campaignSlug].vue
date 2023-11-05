@@ -136,40 +136,19 @@
                   :key="sectionId"
                   class="tab-navigation__item"
                 >
-                  <a
+                  <NuxtLink
                     class="tab-navigation__link"
-                    :href="`#${sectionId}`"
-                    :aria-controls="`#${sectionId}`"
+                    :to="sectionId === 'description'
+                      ? `/${campaign?.slug}`
+                      : `/${campaign?.slug}/${sectionId}`
+                    "
                   >
                     {{ $t(`nav.${sectionId}`) }}
-                  </a>
+                  </NuxtLink>
                 </li>
               </ul>
             </nav>
-
-            <div class="text-body__tabs-and-rewards" role="tabpanel">
-              <section
-                aria-live="polite"
-                role="region"
-                class="tab-list text-body__tab-list"
-              >
-                <NuxtPage />
-
-                <footer v-if="campaign?.campaign_section_list" class="text-body__call-to-faq">
-                  <i18n-t keypath="callToFAQ.message" tag="p">
-                    <a href="#faq">{{ $t('callToFAQ.textLink') }}</a>
-                  </i18n-t>
-                </footer>
-              </section>
-
-              <section v-if="rewards.length" class="rewards text-body__rewards">
-                <h2>{{ $t('rewards') }}</h2>
-                <p>
-                  {{ $t('rewardsIntro') }}
-                </p>
-                <rewardsList :rewards="rewards" />
-              </section>
-            </div>
+            <NuxtPage />
           </div>
         </div>
       </article>
@@ -187,13 +166,15 @@
                   :key="sectionId"
                   class="footer-nav__item"
                 >
-                  <a
+                  <NuxtLink
                     class="footer-nav__link"
-                    :href="`#${sectionId}`"
-                    :aria-controls="`#${sectionId}`"
+                    :to="sectionId === 'description'
+                      ? `/${campaign?.slug}`
+                      : `/${campaign?.slug}/${sectionId}`
+                    "
                   >
                     {{ $t(`nav.${sectionId}`) }}
-                  </a>
+                  </NuxtLink>
                 </li>
               </template>
               <li class="footer-nav__item">
@@ -251,7 +232,7 @@ const route = useRoute();
 
 const campaignStore = useCampaignStore();
 const {
-  campaign, rewards, campaignSections, error,
+  campaign, campaignSections, error,
 } = storeToRefs(campaignStore);
 
 await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
