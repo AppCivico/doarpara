@@ -37,7 +37,6 @@ export const useDonationsStore = defineStore('donation', {
       this.pending = pending.value;
 
       if (data.value) {
-        console.debug('data.value', data.value);
         if (Array.isArray(data.value.list)) {
           this.list = data.value.list;
         }
