@@ -246,4 +246,8 @@ tfoot td {
 
 .cell--number {
   text-align: right;
+  
+  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+    text-align: left;
+  }
 }
