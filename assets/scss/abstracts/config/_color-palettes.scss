@@ -123,7 +123,7 @@ $palette: map.set($palette, 'feedback', $feedback);
 /// @colors border
 ///
 $border: (
-  'base': map.get($neutral, 'x-light'),
+  'base': map.get($neutral, 'light'),
   'focus': map.get($base, 'accent'),
 );
 $palette: map.set($palette, 'border', $border);
