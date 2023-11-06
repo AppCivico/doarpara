@@ -32,7 +32,19 @@
             <th />
           </tr>
         </thead>
-        <tbody>
+        <tbody
+          v-if="pending"
+        >
+          <tr>
+            <td colspan="6" :aria-busy="pending">
+              {{ $t('waiting') }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody
+          v-else
+          :aria-busy="pending"
+        >
           <tr v-for="donation in donationsList" :key="donation.id">
             <td :aria-label="$t('receipts.donorName')">
               {{ donation.donor_name }}
@@ -78,7 +90,7 @@ const donationsStore = useDonationsStore();
 
 const { campaign } = storeToRefs(campaignStore);
 
-const { list: donationsList } = storeToRefs(donationsStore);
+const { list: donationsList, pending } = storeToRefs(donationsStore);
 
 donationsStore.fetchDonations(String(route.params.campaignSlug), {
   lazy: true,

@@ -23,7 +23,7 @@ export const useDonationsStore = defineStore('donation', {
     async fetchDonations(campaignSlug = '', params = {}): Promise<void> {
       const route = useRoute();
       // const runtimeConfig = useRuntimeConfig();
-
+      this.pending = true;
       this.error = null;
 
       const {
