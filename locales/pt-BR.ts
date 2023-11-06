@@ -63,6 +63,7 @@ export default {
     testimonies: 'Testemunho | Testemunhos',
   },
   navigationLabel: 'Seções dessa campanha',
+  noDonations: 'Não há doações',
   of: 'De',
   governmentOffices: {
     municipal_council: ({ values: { gender } }: GenderData) => showGenderedVersion(
@@ -137,5 +138,5 @@ Por isso, a Candidatura Monica Seixas e a Bancada Pretas do PSOL está registran
   totalAmount: 'Arrecadados',
   totalDonations: 'Doações recebidas',
   useTerms: 'Termos de uso',
-  waiting: 'Aguardando',
+  waiting: 'Aguardando...',
 };

@@ -30,16 +30,7 @@
           </tr>
         </thead>
         <tbody
-          v-if="pending"
-        >
-          <tr>
-            <td colspan="6" :aria-busy="pending">
-              {{ $t('waiting') }}
-            </td>
-          </tr>
-        </tbody>
-        <tbody
-          v-else
+          v-if="donationsList.length"
           :aria-busy="pending"
         >
           <tr v-for="donation in donationsList" :key="donation.id">
@@ -68,6 +59,16 @@
               >
                 {{ $t('receipts.linkTo').toLowerCase() }}
               </a>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td v-if="pending" colspan="6" :aria-busy="pending">
+              {{ $t('waiting') }}
+            </td>
+            <td v-else colspan="6">
+              {{ $t('noDonations') }}
             </td>
           </tr>
         </tbody>
