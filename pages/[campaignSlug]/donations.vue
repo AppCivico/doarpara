@@ -80,7 +80,7 @@ const { campaign } = storeToRefs(campaignStore);
 
 const { list: donationsList } = storeToRefs(donationsStore);
 
-await donationsStore.fetchDonations(String(route.params.campaignSlug), {
+donationsStore.fetchDonations(String(route.params.campaignSlug), {
   lazy: true,
   server: false,
 });
