@@ -11,9 +11,8 @@
 %loading-bg {
   background-color: my.palette('loading', 'background');
   // TODO: set loading icon
-  // background-image: my.image('loading.svg');
+  background-image: my.image('SvgSpinners3DotsMove.svg');
   background-repeat: no-repeat;
-  background-attachment: fixed;
   background-position: 50% 50%;
 }
 
@@ -59,7 +58,7 @@
 ///
 [aria-busy='true'] {
   > body,
-  &:not(html):not(.skeleton) {
+  &:not(html):not(.skeleton):not(table) {
     @extend %loading-el;
 
     position: relative;

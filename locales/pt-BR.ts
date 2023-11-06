@@ -132,10 +132,10 @@ export default {
 
 <p>Por isso, a Candidatura Monica Seixas e a Bancada Pretas do PSOL está registrando todas suas doações financeiras para comprovar a integridade e honestidade do processo de captação de recursos.</p>`,
   },
-
   rewards: 'Rewards',
   rewardsIntro: 'Este projeto oferece recompensas em troca do seu apoio. Selecione uma recompensa abaixo.',
   totalAmount: 'Arrecadados',
   totalDonations: 'Doações recebidas',
   useTerms: 'Termos de uso',
+  waiting: 'Aguardando',
 };
