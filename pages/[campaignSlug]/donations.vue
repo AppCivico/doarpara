@@ -10,10 +10,7 @@
     <section class="donations-page__receipts">
       <h2>{{ $t('receipts.titles') }}</h2>
 
-      <div
-        class="donations-page__receipts-intro"
-        v-html="$t('receipts.description')"
-      />
+      <MDC :value="$t('receipts.description')" tag="div" class="donations-page__receipts-intro" />
 
       <table
         class="donations-page__receipts-table"
@@ -78,7 +75,7 @@
     </section>
   </article>
 </template>
-<script setup lang = "ts">
+<script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonationsStore } from '@/store/donations.ts';
 

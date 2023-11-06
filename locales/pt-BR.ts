@@ -126,11 +126,11 @@ export default {
     linkTo: 'Ver transação',
 
     titles: 'Comprovantes de doação e sua importância',
-    description: `<p>A Candidatura Monica Seixas e a Bancada Pretas do PSOL registra todas suas doações em um cartório cívico digital para comprovar e manter a autenticidade da sua doação. Essa rede de informações é vinculada a uma das mais seguras e confiáveis redes do mundo, que é a <a href="https://dcrdata.decred.org/" target="_blank">Blockchain do DECRED</a>. Esses números são a referência sobre as doações realizadas.</p>
+    description: `A Candidatura Monica Seixas e a Bancada Pretas do PSOL registra todas suas doações em um cartório cívico digital para comprovar e manter a autenticidade da sua doação. Essa rede de informações é vinculada a uma das mais seguras e confiáveis redes do mundo, que é a [Blockchain do DECRED](https://dcrdata.decred.org/). Esses números são a referência sobre as doações realizadas.
 
-<p>É fundamental que as plataformas de financiamento coletivo, sociedade e o TSE tenham garantias que as informações ofereçam integridade e confiabilidade de maneira descentralizada para garantir controle social.</p>
+É fundamental que as plataformas de financiamento coletivo, sociedade e o TSE tenham garantias que as informações ofereçam integridade e confiabilidade de maneira descentralizada para garantir controle social.
 
-<p>Por isso, a Candidatura Monica Seixas e a Bancada Pretas do PSOL está registrando todas suas doações financeiras para comprovar a integridade e honestidade do processo de captação de recursos.</p>`,
+Por isso, a Candidatura Monica Seixas e a Bancada Pretas do PSOL está registrando todas suas doações financeiras para comprovar a integridade e honestidade do processo de captação de recursos.`,
   },
   rewards: 'Rewards',
   rewardsIntro: 'Este projeto oferece recompensas em troca do seu apoio. Selecione uma recompensa abaixo.',
