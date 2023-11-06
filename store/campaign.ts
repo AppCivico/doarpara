@@ -23,6 +23,7 @@ export const useCampaignStore = defineStore('campaign', {
       const route = useRoute();
       const runtimeConfig = useRuntimeConfig();
 
+      this.pending = true;
       this.error = null;
 
       const {
