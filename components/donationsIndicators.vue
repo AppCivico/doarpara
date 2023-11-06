@@ -71,7 +71,6 @@ defineProps<{
 .donation-indicators__title {
   font-size: my.ms-step(48px);
   font-weight: inherit;
-  text-align: center;
 
   :first-child > * {
     font-size: my.ms-step(61px);
@@ -80,6 +79,8 @@ defineProps<{
 
 .donation-indicators__description {
   .donation-indicators__title + & {
+    margin-bottom: 0;
+
     font-weight: my.font-weight('bold');
   }
 }
