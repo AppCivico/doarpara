@@ -16,10 +16,7 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   css: ['@/assets/scss/index.scss'],
-  modules: [
-    '@nuxtjs/i18n',
-    '@pinia/nuxt',
-  ],
+  modules: ['@nuxtjs/i18n', '@pinia/nuxt', "@nuxtjs/mdc"],
   runtimeConfig: {
     public: {
       apiBase: 'https://dapi.votolegal.com.br/public-api',
