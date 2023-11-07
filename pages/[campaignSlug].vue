@@ -225,7 +225,7 @@
     </template>
   </div>
 </template>
-<script setup lang = "ts">
+<script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
 
 const appConfig = useAppConfig();
