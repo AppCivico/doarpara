@@ -31,7 +31,7 @@
         </thead>
         <tbody
           v-if="donationsList.length"
-          :aria-busy="pending"
+          :aria-live="pending ? 'polite' : 'off'"
         >
           <tr v-for="donation in donationsList" :key="donation.id">
             <td :aria-label="$t('receipts.donorName')">
