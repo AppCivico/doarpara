@@ -253,19 +253,21 @@ if (campaign.value) {
 
   useHead(meta);
 
-  useSeoMeta({
-    title: campaign.value?.name
-      ? `${campaign.value?.name} • ${appConfig.title}`
-      : `${appConfig.title}`,
-    description: campaign.value?.preamble,
-    ogImage: typeof campaign.value?.sharingImage === 'object'
-      ? {
-        url: campaign.value?.sharingImage?.url,
-        width: campaign.value?.sharingImage?.width,
-        height: campaign.value?.sharingImage?.height,
-      }
-      : campaign.value?.sharingImage
-      || '',
-  });
+  if (process.dev || process.server) {
+    useSeoMeta({
+      title: campaign.value?.name
+        ? `${campaign.value?.name} • ${appConfig.title}`
+        : `${appConfig.title}`,
+      description: campaign.value?.preamble,
+      ogImage: typeof campaign.value?.sharingImage === 'object'
+        ? {
+          url: campaign.value?.sharingImage?.url,
+          width: campaign.value?.sharingImage?.width,
+          height: campaign.value?.sharingImage?.height,
+        }
+        : campaign.value?.sharingImage
+        || null,
+    });
+  }
 }
 </script>
