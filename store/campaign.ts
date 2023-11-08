@@ -29,7 +29,7 @@ export const useCampaignStore = defineStore('campaign', {
       const {
         data, error, pending,
       } = await useFetch<Campaign>(
-        `${runtimeConfig.public.apiBase}/campaign/${campaignSlug || route.params.campaignSlug}`,
+        `${runtimeConfig.public.publicApiBase}/campaign/${campaignSlug || route.params.campaignSlug}`,
         params,
       );
 

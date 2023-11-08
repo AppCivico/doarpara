@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@nuxtjs/mdc'],
   runtimeConfig: {
     public: {
-      apiBase: 'https://dapi.votolegal.com.br/public-api',
+      publicApiBase: 'https://dapi.votolegal.com.br/public-api',
       receiptsBase: 'foo://bar',
     },
   },
