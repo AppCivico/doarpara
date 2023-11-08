@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "maska": "^2.1.10",
     "vue-i18n": "^9.6.4"
   },
   "overrides": {
