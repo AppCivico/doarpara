@@ -20,7 +20,12 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       publicApiBase: 'https://dapi.votolegal.com.br/public-api',
+      privateApiBase: 'https://dapi.votolegal.com.br',
       receiptsBase: 'foo://bar',
+      postalService: {
+        queryUrl: 'https://dapi.votolegal.com.br/api/cep?cep=',
+        helperWebsiteUrl: 'https://buscacepinter.correios.com.br/',
+      },
     },
   },
   vite: {

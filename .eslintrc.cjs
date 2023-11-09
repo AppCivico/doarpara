@@ -4,6 +4,10 @@ module.exports = {
     browser: true,
     node: true,
   },
+  globals: {
+    Iugu: 'readonly',
+    VotolegalFP: 'readonly',
+  },
   extends: [
     'airbnb-base',
     'plugin:vue/vue3-recommended',

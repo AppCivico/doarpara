@@ -164,6 +164,10 @@ form p {
   }
 }
 
+form p {
+  font-size: my.ms-step(13px);
+}
+
 form br {
   clear: both;
 }

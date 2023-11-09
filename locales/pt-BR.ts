@@ -8,17 +8,45 @@ const showGenderedVersion = (terms: Record<string, string>, gender: string = 'ot
 
 export default {
   _currencySymbol: 'R$',
-  campaignBy: 'Por',
   callToFAQ: {
     message: 'Dúvidas sobre esse projeto? {0}',
     textLink: 'Confira as respostas às Perguntas Frequentes',
   },
+  campaignBy: 'Por',
   chooseThisReward: 'Selecionar essa recompensa',
   credits: {
     fundraiserLabel: 'Responsável por esta página',
     poweredBy: 'Campanha proporcionada por',
   },
+  creditCard: {
+    fullName: 'Nome impresso no cartão de crédito',
+    number: 'Número do cartão',
+    expirationDate: 'Vencimento',
+    name: 'Nome no cartão',
+    validationCode: 'CVV',
+  },
   donateWithoutReward: 'Doe sem recompensa',
+  donationForm: {
+    street: 'Endereço',
+    city: 'Cidade',
+    number: 'Número',
+    state: 'Estado',
+    extendedAddress: 'Complemento',
+    postalCode: 'CEP',
+    iDoNotKnowMyPostalCode: 'Não sei o meu CEP',
+    familyName: 'Sobrenome',
+    name: 'Nome',
+    email: 'E-mail',
+    birthDate: 'Data de nascimento',
+    phoneNumber: 'Telefone',
+
+    declaration: `Ao completar essa transação, declaro que minhas doações não ultrapassam 10% dos meus rendimentos brutos do ano anterior, a origem do dinheiro não é estrangeira, não sou concessionário ou permissionário de serviço público.
+
+Declaro estar ciente, que ao realizar uma doação, por conta da legislação eleitoral, os seus dados (nome completo, CPF, valor individual de cada doação, forma de pagamento, data das doações) poderão ser visualizados de forma pública no site do candidato, na aba transparência, e concordo com os [termos de doação](https://participe.votolegal.com.br/files/Termo%20de%20uso%20e%20Politica%20de%20privacidade%20(unificado)%20-%20Voto%20Legal%20-%202020%402020-09-23.pdf).`,
+    donationPaymentSummary: 'Resumo da doação',
+    safeTransaction: 'Ambiente seguro. © DoarPara',
+    submit: 'Doar {amount}',
+  },
   electionCampaign: {
     ballotNumber: 'Número',
     politicalParty: 'Partido',
