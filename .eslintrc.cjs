@@ -9,6 +9,9 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     '@vue/eslint-config-airbnb-with-typescript',
   ],
+  ignorePatterns: [
+    '**/vendor/*.*'
+  ],
   overrides: [
     {
       files: [
