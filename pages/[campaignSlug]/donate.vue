@@ -318,9 +318,7 @@
 <script setup lang="ts">
 import states from '@/data/states.json';
 import { useCampaignStore } from '@/store/campaign.ts';
-import { useDonateStore } from '@/store/donate.js';
-
-import creditCardType from 'credit-card-type';
+import { useDonateStore } from '@/store/donate.ts';
 import taxes from '~/data/taxes.ts';
 
 declare const Iugu: any;
@@ -333,9 +331,19 @@ const campaignStore = useCampaignStore();
 const donateStore = useDonateStore();
 
 const { campaign } = storeToRefs(campaignStore);
+
+const amount = ref(0);
+const creditCard = ref({
+  full_name: '',
+  number: '',
+  expiration: '',
+  verification_value: '',
+});
+const paymentMethod = ref('');
+
 const {
-  amount, creditCard, deviceAuthorizationTokenId, donor, donorAddress, error,
-  paymentMethod, pending, referral,
+  donor, donorAddress, error,
+  pending, referral,
 } = storeToRefs(donateStore);
 
 const instantPaymentPlatformAggrement = ref(false);
@@ -388,10 +396,10 @@ function getReferral() {
 }
 
 async function submitDonation() {
-  await donateStore.createBackEndDonation();
+  await donateStore.createBackEndDonation(amount.value * 100, paymentMethod.value);
 
   if (paymentMethod.value === 'credit_card') {
-    const payload = await donateStore.validateCard();
+    const payload = await donateStore.validateCard(creditCard.value);
     console.debug('payload@submitDonation', payload);
     donateStore.concludeDonation(payload);
   }
