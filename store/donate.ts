@@ -210,9 +210,9 @@ export const useDonateStore = defineStore('toDonate', {
 
       const payload = this.payloadForCreationOfDonationOnBackEnd;
       const { email, cpf = '' } = payload;
-      if (!this.deviceAuthorizationTokenId) {
-        await this.getDeviceAuthorizationToken();
-      }
+
+      const deviceAuthorizationTokenId = this.deviceAuthorizationTokenId
+        || String(await this.getDeviceAuthorizationToken());
 
       const nonce = randomString(13);
       const str = `${nonce}${Number.parseInt(cpf.replace(/[^0-9]+/g, ''), 10) * -1}/\u00A0${amount}${email.toUpperCase()}`;
@@ -237,7 +237,7 @@ export const useDonateStore = defineStore('toDonate', {
           donation_fp: donationFp,
           nc: nonce,
           sv: hash,
-          device_authorization_token_id: this.deviceAuthorizationTokenId,
+          device_authorization_token_id: deviceAuthorizationTokenId,
         },
       });
 
@@ -311,7 +311,14 @@ export const useDonateStore = defineStore('toDonate', {
 
       const {
         data, error,
-      } = await useFetch<CreatedDonation>(`${runtimeConfig.public.privateApiBase}/api2/donations/${donation?.id}?device_authorization_token_id=${token}&credit_card_token=${payload.id}&cc_hash=${payload.cc_hash}`, { method: 'POST' });
+      } = await useFetch<CreatedDonation>(`${runtimeConfig.public.privateApiBase}/api2/donations/${donation?.id}`, {
+        method: 'POST',
+        query: {
+          device_authorization_token_id: token,
+          credit_card_token: payload.id,
+          cc_hash: payload.cc_hash,
+        },
+      });
 
       this.pending.concludingDonation = false;
 
