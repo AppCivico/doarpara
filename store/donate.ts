@@ -58,6 +58,7 @@ type Message = {
   account_id?: string;
   is_testing?: 0 | 1;
   ref?: string;
+  href?: string;
   text?: string;
   type: string;
 };
@@ -197,7 +198,7 @@ export const useDonateStore = defineStore('toDonate', {
       return data.value?.device_authorization_token_id;
     },
 
-    async createBackEndDonation(amount: number, paymentMethod:string) {
+    async createDonationOnBackEnd(amount: number, paymentMethod:string) {
       if (typeof VotolegalFP !== 'function') {
         throw new Error('VotolegalFP is not loaded yet');
       }
@@ -300,7 +301,7 @@ export const useDonateStore = defineStore('toDonate', {
       });
     },
 
-    async concludeDonation(payload: ValidatedCard) {
+    async payCreditCardDonation(payload: ValidatedCard) {
       this.pending.concludingDonation = true;
       this.error.concludingDonation = null;
 

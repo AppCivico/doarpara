@@ -92,7 +92,7 @@
           autocomplete="tel-national"
           placeholder="(00) 00000-0000"
           minlength="14"
-          :required="paymentMethod !== 'credit_card'"
+          :required="mappedPaymentMethod !== 'credit_card'"
         />
       </p>
 
@@ -200,13 +200,13 @@
       </ul>
     </fieldset>
 
-    <fieldset id="payment__credit-card">
+    <fieldset v-if="mappedPaymentMethod === 'credit_card'" id="payment__credit-card">
       <p data-size="50">
         <label for="full-name">
           {{ $t('creditCard.fullName') }}
         </label>
 
-        <input id="full-name" v-model="creditCard.full_name" type="text" name="full_name" autocomplete="cc-name" :required="paymentMethod === 'credit_card'" />
+        <input id="full-name" v-model="creditCard.full_name" type="text" name="full_name" autocomplete="cc-name" :required="mappedPaymentMethod === 'credit_card'" />
       </p>
 
       <p data-size="50">
@@ -222,7 +222,7 @@
           inputmode="numeric"
           name="credit_card_number"
           autocomplete="cc-number"
-          :required="paymentMethod === 'credit_card'"
+          :required="mappedPaymentMethod === 'credit_card'"
         />
       </p>
 
@@ -241,7 +241,7 @@
           inputmode="numeric"
           autocomplete="cc-exp"
           placeholder="MM/YY"
-          :required="paymentMethod === 'credit_card'"
+          :required="mappedPaymentMethod === 'credit_card'"
         >
       </p>
 
@@ -262,15 +262,15 @@
           autocomplete="cc-csc"
           maxlength="4"
           minlength="3"
-          :required="paymentMethod === 'credit_card'"
+          :required="mappedPaymentMethod === 'credit_card'"
         >
       </p>
     </fieldset>
-    <fieldset v-if="paymentMethod === 'pix'" id="payment__instant-payment-platform">
+    <fieldset v-if="mappedPaymentMethod === 'pix'" id="payment__instant-payment-platform">
       <ul class="">
         <li class="">
-          <input id="pix-agreement" v-model="instantPaymentPlatformAggrement" type="checkbox" class="" />
-          <label for="pix-agreement" class="">
+          <input id="pix-agreement" v-model="instantPaymentPlatformAggrement" type="checkbox" />
+          <label for="pix-agreement">
             Estou ciente de que o pagamento desta doação deve ser realizado por
             conta corrente do <strong>mesmo CPF</strong> informado a seguir e
             caso ocorram divergências a doação poderá ser estornada e a
@@ -318,19 +318,50 @@
 
     <MDC :value="$t('donationForm.declaration')" tag="fieldset" />
 
-    <fieldset v-if="amount">
-      <!--      <p v-if="error.paymentGateway || error.firstPartyApi" class="">
-        {{ error.paymentGateway || error.firstPartyApi }}
-      </p>
--->
+    <fieldset v-if="messages.length">
+      <legend>Messages</legend>
+      <template v-for="message, i in donateStore.messages">
+        <p v-if="message.type === 'link'" :key="`message__${i}--link`">
+          <NuxtLink :to="message.href">
+            {{ message.text }}
+          </NuxtLink>
+        </p>
 
-      <fieldset>
-        <p>{{ $t('donationForm.safeTransaction') }}</p>
+        <template v-else-if="message.type === 'msg'">
+          <template v-if="instantPaymentPlatformKey">
+            <div v-if="isClipboardInaccessible" :key="i + '--copy-field'" class="input-wrapper field-for-copy__wrapper">
+              <label class="field-for-copy__label" :for="`to-copy--${i}`">
+                Selecione e copie
+              </label>
+              <input
+                :id="`to-copy--${i}`"
+                v-focus.select
+                class="field-for-copy"
+                type="text"
+                readonly
+                :value="instantPaymentPlatformKey"
+                @click="selectContent($event)"
+              />
+            </div>
+            <div
+              v-else
+              :key="`message__${i}--text`"
+              @click="delegation($event)"
+              @keydown="delegation($event)"
+              v-html="message.text"
+            />
+          </template>
+          <div v-else :key="`message__${i}--text`" v-html="message.text" />
+        </template>
+      </template>
+    </fieldset>
 
-        <button type="submit">
-          {{ $t('donationForm.submit', { amount: $n(amount, 'currency') }) }}
-        </button>
-      </fieldset>
+    <fieldset>
+      <p>{{ $t('donationForm.safeTransaction') }}</p>
+
+      <button type="submit" :disabled="!amount">
+        {{ $t('donationForm.submit', { amount: $n(amount, 'currency') }) }}
+      </button>
     </fieldset>
   </form>
 </template>
@@ -358,16 +389,66 @@ const creditCard = ref({
   expiration: '',
   verification_value: '',
 });
+const isClipboardInaccessible = ref(!navigator.clipboard);
 const toDonateTaxes = ref(false);
 const paymentMethod = ref('');
 const totalTaxes = ref(0);
 
 const {
-  donor, donorAddress, error,
-  pending, referral,
+  donor, donorAddress, error, messages, pending, referral,
 } = storeToRefs(donateStore);
 
 const instantPaymentPlatformAggrement = ref(false);
+
+const amountMinusTaxes = computed(() => amount.value - totalTaxes.value);
+
+// TODO: remove dumb mapping. It was a bad decision.
+const mappedPaymentMethod = computed(() => {
+  switch (paymentMethod.value) {
+    case 'instant_payment_platform':
+      return 'pix';
+
+    case 'pro_forma_invoice':
+      return 'boleto';
+
+    default:
+      return paymentMethod.value;
+  }
+});
+
+const instantPaymentPlatformKey = computed(() => {
+  let key = '';
+
+  messages.value.every((x) => {
+    const found = x.text?.match(/(?:data-pix='(.+)')/i);
+    if (found?.[1]) {
+      [key] = found.slice(1, 2);
+      return false;
+    }
+    return true;
+  });
+
+  return key;
+});
+
+function delegation(event: Event) {
+  const target = event.target as HTMLElement;
+
+  if (target && target.hasAttribute('data-pix')) {
+    const textToCopy = target.getAttribute('data-pix');
+
+    if (textToCopy) {
+      navigator.clipboard
+        .writeText(textToCopy)
+        .then(() => {
+          alert('Chave PIX copiada');
+        }).catch((err) => {
+          isClipboardInaccessible.value = true;
+          throw err;
+        });
+    }
+  }
+}
 
 function fillAddress(event: Event) {
   const { target: el } = event;
@@ -417,12 +498,12 @@ function getReferral() {
 }
 
 async function submitDonation() {
-  await donateStore.createBackEndDonation(amount.value * 100, paymentMethod.value);
+  await donateStore.createDonationOnBackEnd(amount.value * 100, mappedPaymentMethod.value);
 
-  if (paymentMethod.value === 'credit_card') {
+  if (mappedPaymentMethod.value === 'credit_card') {
     const payload = await donateStore.validateCard(creditCard.value);
-    console.debug('payload@submitDonation', payload);
-    donateStore.concludeDonation(payload);
+
+    donateStore.payCreditCardDonation(payload);
   }
 }
 
