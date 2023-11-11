@@ -7,33 +7,38 @@
  * All checkboxes and readio buttons as list-items
  * <li><label for="id">label</label> <input type="checkbox" id="id" /></li>
  */
-fieldset ol,
-fieldset ul {
+fieldset .list-of-options {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: my.$gutter;
+
+  width: 100%;
   padding: 0;
   margin: 0;
-}
 
-fieldset ol li,
-fieldset ul li {
-  display: block;
+  .list-of-options__item {
+    display: block;
 
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 
-  white-space: nowrap;
-  list-style-type: none;
+    white-space: nowrap;
+    list-style-type: none;
 
-  &::before {
-    content: none;
+    &::before {
+      content: none;
+    }
+
+    label {
+      display: inline;
+
+      padding: 0 0.5em;
+
+      white-space: normal;
+    }
   }
-}
-
-li label {
-  display: inline;
-
-  padding: 0 0.5em;
-
-  white-space: normal;
 }
 
 /**
@@ -52,6 +57,7 @@ li label {
   width: my.$gutter;
   height: my.$gutter;
   padding: 0; /* 2 */
+  margin: auto;
 
   vertical-align: middle;
 
@@ -93,7 +99,7 @@ li label {
   }
 }
 
-li:hover {
+.list-of-options__item:hover {
   > input,
   > label {
     color: my.palette('black');

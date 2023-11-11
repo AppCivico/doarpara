@@ -184,8 +184,13 @@
       <ul
         v-if="Array.isArray(campaign?.payment_method_list)
           && campaign?.payment_method_list.length"
+        class="list-of-options"
       >
-        <li v-for="method in campaign?.payment_method_list" :key="method">
+        <li
+          v-for="method in campaign?.payment_method_list"
+          :key="method"
+          class="list-of-options__item"
+        >
           <input
             :id="`method__${method}`"
             v-model="paymentMethod"
@@ -267,10 +272,14 @@
       </p>
     </fieldset>
     <fieldset v-if="mappedPaymentMethod === 'pix'" id="payment__instant-payment-platform">
-      <ul class="">
-        <li class="">
-          <input id="pix-agreement" v-model="instantPaymentPlatformAggrement" type="checkbox" />
-          <label for="pix-agreement">
+      <ul class="list-of-options">
+        <li class="list-of-options__item">
+          <input
+            id="instant-payment-platform-agreement"
+            v-model="instantPaymentPlatformAgreement"
+            type="checkbox"
+          />
+          <label for="instant-payment-platform-agreement">
             Estou ciente de que o pagamento desta doação deve ser realizado por
             conta corrente do <strong>mesmo CPF</strong> informado a seguir e
             caso ocorram divergências a doação poderá ser estornada e a
@@ -398,7 +407,7 @@ const {
   donor, donorAddress, error, messages, pending, referral,
 } = storeToRefs(donateStore);
 
-const instantPaymentPlatformAggrement = ref(false);
+const instantPaymentPlatformAgreement = ref(false);
 
 const amountMinusTaxes = computed(() => amount.value - totalTaxes.value);
 
