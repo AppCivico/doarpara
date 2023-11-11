@@ -140,10 +140,15 @@ button,
     background-color: my.palette('disabled', 'foreground');
   }
 
+  fieldset > &,
   p > & {
     margin-top: my.$gutter;
     margin-right: auto;
     margin-left: auto;
+
+    &:only-child {
+      width: 85%;
+    }
   }
 }
 

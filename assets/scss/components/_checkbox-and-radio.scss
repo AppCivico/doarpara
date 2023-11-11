@@ -49,13 +49,18 @@ li label {
 [type='radio'] {
   box-sizing: border-box; /* 1 */
 
-  width: auto;
-  height: auto; /* 3 */
+  width: my.$gutter;
+  height: my.$gutter;
   padding: 0; /* 2 */
 
   vertical-align: middle;
 
+  appearance: none;
   cursor: pointer;
+
+  background-clip: padding-box;
+  border: my.$stroke solid my.palette('border', 'base');
+  box-shadow: inset 0 0 0 my.$gutter * 0.25 my.palette('neutral', 'white');
 
   &:hover {
   }
@@ -65,9 +70,15 @@ li label {
 
     outline-style: auto; /* 4 */
   }
+
+  &:checked {
+    background-color: my.palette('brand', 'primary');
+  }
 }
 
 [type='radio'] {
+  border-radius: 100%;
+
   &:indeterminate {
   }
 
@@ -87,10 +98,6 @@ li:hover {
   > label {
     color: my.palette('black');
   }
-}
-
-li :checked + label {
-  font-weight: bold;
 }
 
 [disabled] + label,
