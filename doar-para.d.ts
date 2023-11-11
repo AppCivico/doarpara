@@ -99,6 +99,7 @@ interface Donation {
 export interface Campaign {
   slug: string;
   name: string;
+  id: string | number;
 
   fundraiser: FundRaiser;
 

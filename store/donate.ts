@@ -3,6 +3,8 @@ import removeAccented from '@/utils/removeAccented.js';
 import getDonationFP from '@/vendor/donationFp.js';
 import type { CreditCard } from '~/iugu.d.ts';
 
+import { useCampaignStore } from './campaign.ts';
+
 declare const VotolegalFP: any;
 declare const Iugu: any;
 
@@ -143,10 +145,6 @@ export const useDonateStore = defineStore('toDonate', {
       validatingCreditCard: null,
       concludingDonation: null,
     },
-
-    /// /////////////////////////////////////////////////////////////////////////
-
-    candidateId: 1020, // TODO: change to id of the campaign and set it!
   }),
   actions: {
     async fillAddressFromPostalCode(postalCode:string) {
@@ -224,6 +222,7 @@ export const useDonateStore = defineStore('toDonate', {
       });
       const hash = fp.x64hash128(str);
       const donationFp = await getDonationFP();
+      const campaignStore = useCampaignStore();
 
       const {
         data, error,
@@ -233,7 +232,7 @@ export const useDonateStore = defineStore('toDonate', {
           ...payload,
           payment_method: paymentMethod,
           amount,
-          candidate_id: this.candidateId,
+          candidate_id: campaignStore.campaign?.id || 0,
           donation_fp: donationFp,
           nc: nonce,
           sv: hash,
