@@ -254,6 +254,7 @@
           id="credit-card-validation"
           v-model="creditCard.verification_value"
           v-maska
+          class="credit-card-validation-field"
           data-maska="['###', '####']"
           type="text"
           inputmode="numeric"
@@ -458,6 +459,12 @@ if (process.client) {
   });
 }
 </script>
+<style lang="scss">
+.credit-card-validation-field {
+  background-image: my.image('icons/back-of-card.svg');
+  background-position: right my.$gutter * 0.5 top 50%;
+}
+</style>
 <style lang="scss">
 @use 'sass:color';
 
