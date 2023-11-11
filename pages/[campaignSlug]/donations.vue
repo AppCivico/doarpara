@@ -62,7 +62,7 @@
             </td>
           </tr>
         </tbody>
-        <tbody>
+        <tbody v-if="pending || !donationsList.length">
           <tr>
             <td v-if="pending" colspan="6" :aria-busy="pending">
               {{ $t('waiting') }}
