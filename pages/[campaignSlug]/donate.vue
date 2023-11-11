@@ -282,19 +282,37 @@
     <fieldset>
       <legend>{{ $t('donationForm.donationPaymentSummary') }}</legend>
 
-      <div v-if="amount" class="candidate-amount">
-        <p>
-          Valor doado
-          <output>
-            R${{ amount }}
-          </output>
-        </p>
-        <p v-if="paymentMethod" class="helper-text form__disclaimer">
-          Taxa de {{ taxes[paymentMethod]?.text }}.
-          Esse valor é destinado a taxas de operação financeira, sistemas de
-          controle anti-fraude, impostos e infraestrutura.
-        </p>
-      </div>
+      <dl class="donation-summary">
+        <div class="donation-summary__item">
+          <dt class="donation-summary__term">
+            {{ $t('donationForm.donationTo', { campaignName: campaign?.name }) }}
+          </dt>
+          <dd class="donation-summary__description">
+            <output>
+              {{ $n(amountMinusTaxes, 'currency') }}
+            </output>
+          </dd>
+        </div>
+        <div class="donation-summary__item">
+          <dt class="donation-summary__term">
+            <label for="include-donation-taxes" class="donation-summary__label">
+              <input
+                id="include-donation-taxes"
+                v-model="toDonateTaxes"
+                type="checkbox"
+                name="include-donation-taxes"
+                class="donation-summary__input"
+              />
+              {{ $t('donationForm.donateTaxes') }}
+            </label>
+          </dt>
+          <dd class="donation-summary__description">
+            <output>
+              {{ $n(totalTaxes, 'currency') }}
+            </output>
+          </dd>
+        </div>
+      </dl>
     </fieldset>
 
     <MDC :value="$t('donationForm.declaration')" tag="fieldset" />
@@ -339,7 +357,9 @@ const creditCard = ref({
   expiration: '',
   verification_value: '',
 });
+const toDonateTaxes = ref(false);
 const paymentMethod = ref('');
+const totalTaxes = ref(0);
 
 const {
   donor, donorAddress, error,
@@ -438,3 +458,43 @@ if (process.client) {
   });
 }
 </script>
+<style lang="scss">
+@use 'sass:color';
+
+.donation-summary {
+  flex-basis: 100%;
+
+  border: my.$stroke solid my.palette('border');
+  border-radius: my.$rounded-corner;
+}
+
+.donation-summary__item {
+  display: flex;
+
+  padding: my.$gutter * 0.75;
+
+  &:nth-child(odd) {
+    background-color: my.palette('neutral', 'x-light');
+  }
+}
+
+.donation-summary__term {
+  flex-basis: 50%;
+
+  font-weight: my.font-weight('text');
+}
+
+.donation-summary__description {
+  flex-basis: 50%;
+
+  font-weight: my.font-weight('bold');
+  text-align: right;
+}
+
+.donation-summary__label {
+  font-weight: inherit;
+  color: inherit;
+}
+
+.donation-summary__input {}
+</style>
