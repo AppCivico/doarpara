@@ -14,42 +14,50 @@ fieldset .list-of-options {
 
   gap: my.$gutter;
 
-  width: 100%;
+  align-items: top;
+
+  padding: 0;
+  margin: 0;
+}
+
+.list-of-options__item {
+  display: flex;
+
+  gap: my.$gutter;
+
+  align-items: center;
+
   padding: 0;
   margin: 0;
 
-  .list-of-options__item {
-    display: block;
+  white-space: nowrap;
+  list-style-type: none;
+
+  &::before {
+    content: none;
+  }
+
+  label {
+    display: inline;
+
+    flex-basis: 0;
+    flex-grow: 1;
 
     padding: 0;
-    margin: 0;
 
-    white-space: nowrap;
-    list-style-type: none;
-
-    &::before {
-      content: none;
-    }
-
-    label {
-      display: inline;
-
-      padding: 0 0.5em;
-
-      white-space: normal;
-    }
+    white-space: normal;
   }
 }
 
 /**
- * It's recommended that you don't attempt to style these elements.
- * Firefox's implementation doesn't respect box-sizing, padding, or width.
- *
- * 1. Address box sizing set to `content-box` in IE 8/9/10.
- * 2. Remove excess padding in IE 8/9/10.
- * 3. Reset height (applied by a rule above).
- * 4. Revert the webkit blur effect on focus in Safari for better visual effect.
- */
+  * It's recommended that you don't attempt to style these elements.
+  * Firefox's implementation doesn't respect box-sizing, padding, or width.
+  *
+  * 1. Address box sizing set to `content-box` in IE 8/9/10.
+  * 2. Remove excess padding in IE 8/9/10.
+  * 3. Reset height (applied by a rule above).
+  * 4. Revert the webkit blur effect on focus in Safari for better visual effect.
+  */
 [type='checkbox'],
 [type='radio'] {
   box-sizing: border-box; /* 1 */
@@ -57,7 +65,7 @@ fieldset .list-of-options {
   width: my.$gutter;
   height: my.$gutter;
   padding: 0; /* 2 */
-  margin: auto;
+  margin: 0;
 
   vertical-align: middle;
 

@@ -14,22 +14,19 @@ form {
 
 [role='group'],
 fieldset {
-  display: flex;
-
-  flex-wrap: wrap;
-
-  align-content: flex-start;
-  align-items: stretch;
-
   min-width: 0;
   max-width: none;
-  padding: my.$gutter 0;
-  margin-top: 0;
-  margin-right: my.$gutter * -0.5;
-  margin-bottom: 0;
-  margin-left: my.$gutter * -0.5;
+  padding: 0;
+  margin: 0;
+  margin-right: 0;
+  margin-bottom: my.$gutter;
+  margin-left: 0;
 
   border: 0;
+
+  @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+    margin-bottom: my.$gutter * 2;
+  }
 
   + [role='group'],
   + fieldset {
@@ -38,11 +35,6 @@ fieldset {
 
       border: 0;
     }
-  }
-
-  > * {
-    margin-right: my.$gutter * 0.5;
-    margin-left: my.$gutter * 0.5;
   }
 }
 
@@ -103,67 +95,105 @@ label * {
   font-size: 1em;
 }
 
+label small {
+  font-size: my.ms-step(-1);
+  font-weight: my.font-weight('text');
+}
+
 /* paragraphs inside forms
 ---------------------------------------------------------------------------- */
-fieldset,
-form p {
+
+.flexible-fieldset {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: my.$gutter;
+
+  align-content: flex-start;
+  align-items: stretch;
+}
+
+[data-field-size] {
   position: relative;
+
+  display: flex;
 
   flex-basis: 100%;
   flex-grow: 1;
+  flex-wrap: wrap;
 
+  align-content: flex-start;
+
+  // min-width: my.$max-width * 0.2; /* 256px */
   max-width: none;
-  margin-bottom: my.$gutter;
+  margin-bottom: 0;
 
   &:last-child {
     margin-bottom: 0;
   }
 
-  &[data-size] {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    align-content: flex-start;
-
-    min-width: my.$max-width * 0.2; /* 256px */
+  &[data-field-size='10'] {
+    flex-basis: calc(10% - #{my.$gutter});
   }
 
-  &[data-size='20'] {
+  &[data-field-size='15'] {
+    flex-basis: calc(15% - #{my.$gutter});
+  }
+
+  &[data-field-size='20'] {
     flex-basis: calc(20% - #{my.$gutter});
 
-    min-width: my.$max-width * 0.125; /* 160px */
+    // min-width: my.$max-width * 0.125; /* 160px */
   }
 
-  &[data-size='25'] {
+  &[data-field-size='25'] {
     flex-basis: calc(25% - #{my.$gutter});
 
-    min-width: my.$max-width * 0.15; /* 192px */
+    // min-width: my.$max-width * 0.15; /* 192px */
   }
 
-  &[data-size='33'] {
+  &[data-field-size='30'] {
+    flex-basis: calc(30% - #{my.$gutter});
+  }
+
+  &[data-field-size='33'] {
     flex-basis: calc(33% - #{my.$gutter});
 
-    min-width: my.$max-width * 0.175; /* 224px */
+    // min-width: my.$max-width * 0.175; /* 224px */
   }
 
-  &[data-size='40'] {
+  &[data-field-size='35'] {
+    flex-basis: calc(33% - #{my.$gutter});
+
+    // min-width: my.$max-width * 0.175; /* 224px */
+  }
+
+  &[data-field-size='40'] {
     flex-basis: calc(40% - #{my.$gutter});
   }
 
-  &[data-size='50'] {
+  &[data-field-size='50'] {
     flex-basis: calc(50% - #{my.$gutter});
   }
 
-  &[data-size='60'] {
+  &[data-field-size='60'] {
     flex-basis: calc(60% - #{my.$gutter});
   }
 
-  &[data-size='75'] {
+  &[data-field-size='65'] {
+    flex-basis: calc(65% - #{my.$gutter});
+  }
+
+  &[data-field-size='70'] {
+    flex-basis: calc(70% - #{my.$gutter});
+  }
+
+  &[data-field-size='75'] {
     flex-basis: calc(75% - #{my.$gutter});
   }
 
-  &[data-size='80'] {
+  &[data-field-size='80'] {
     flex-basis: calc(80% - #{my.$gutter});
   }
 }

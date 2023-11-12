@@ -149,6 +149,10 @@ button,
     &:only-child {
       width: 85%;
     }
+
+    &:only-of-type {
+      display: block;
+    }
   }
 }
 
