@@ -28,7 +28,7 @@
             </NuxtLink>
           </nav>
         </header>
-
+        <NuxtLoadingIndicator color="black" />
         <slot />
       </div>
     </Body>

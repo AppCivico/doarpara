@@ -161,6 +161,7 @@
                 </li>
               </ul>
             </nav>
+            <NuxtLoadingIndicator color="black" />
             <slot />
           </div>
         </div>

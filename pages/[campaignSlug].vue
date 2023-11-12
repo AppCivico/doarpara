@@ -3,7 +3,6 @@
     <!-- required by NUXT page transitions -->
     <pre v-if="error">{{ error }}</pre>
     <template v-else>
-      <NuxtLoadingIndicator color="black" />
       <NuxtPage />
     </template>
   </div>
