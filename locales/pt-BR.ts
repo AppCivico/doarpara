@@ -8,6 +8,7 @@ const showGenderedVersion = (terms: Record<string, string>, gender: string = 'ot
 
 export default {
   _currencySymbol: 'R$',
+  backToCampaign: 'Voltar à campanha',
   callToFAQ: {
     message: 'Dúvidas sobre esse projeto? {0}',
     textLink: 'Confira as respostas às Perguntas Frequentes',
@@ -40,6 +41,7 @@ Declaro estar ciente, que ao realizar uma doação, por conta da legislação el
     familyName: 'Sobrenome',
     iDoNotKnowMyPostalCode: 'Não sei o meu CEP',
     name: 'Nome',
+    naturalPersonIdentificationAgreement: 'Estou ciente de que o pagamento desta doação deve ser realizado por conta do **mesmo CPF** informado e, caso ocorram divergências, a doação poderá ser cancelada e seu valor estornado.',
     number: 'Número',
     phoneNumber: 'Telefone',
     postalCode: 'CEP',
@@ -134,6 +136,7 @@ Declaro estar ciente, que ao realizar uma doação, por conta da legislação el
       other: 'Presidência',
     }, gender),
   },
+  paymentMethod: 'Meio de pagamento',
   paymentMethods: {
     credit_card: 'Cartão de crédito',
     instant_payment_platform: 'PIX',

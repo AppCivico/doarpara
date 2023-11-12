@@ -69,14 +69,19 @@
             :key="i"
             class="donation-values__item"
           >
-            <a
-              :href="`#doar?valor=${pledge}`"
+            <NuxtLink
+              :to="{
+                name: 'donate',
+                query: {
+                  [appConfig.queryStringSpecialParameters.amount]: pledge,
+                },
+              }"
               class="donation-values__value like-a__button"
             >
               {{ typeof pledge === 'number'
                 ? $n(pledge / 100, 'currency', { maximumFractionDigits: 0 })
                 : $t(`pledges.${pledge}`) }}
-            </a>
+            </NuxtLink>
           </li>
           <li
             v-for="pledge in customPledges"
@@ -98,15 +103,16 @@
             >
               <label
                 class="donation-values__custom-currency"
-                for="foobar"
+                :for="appConfig.queryStringSpecialParameters.amount"
               >
                 {{ $t('_currencySymbol') }}
               </label>
               <input
-                id="foobar"
+                :id="appConfig.queryStringSpecialParameters.amount"
                 v-model="pledgeValue"
                 v-focus.select
                 type="number"
+                step=".01"
                 class="donation-values__custom-input"
                 :aria-label="$t(`pledges.${pledge}`)"
                 :min="minimumDonation
@@ -116,12 +122,19 @@
                   ? maximumDonation as number / 100
                   : undefined"
               />
-              <a
-                :href="`#doar?valor=${pledgeValue}`"
+              <NuxtLink
+                :to="pledgeValue
+                  ? {
+                    name: 'donate',
+                    query: {
+                      [appConfig.queryStringSpecialParameters.amount]: pledgeValue,
+                    },
+                  }
+                  : `#${appConfig.queryStringSpecialParameters.amount}`"
                 class="donation-values__custom-submit like-a__button"
               >
                 {{ $t(`pledges.toChoose`) }}
-              </a>
+              </NuxtLink>
             </div>
           </li>
         </ul>
@@ -133,6 +146,7 @@
 import type { Campaign } from '@/doar-para.d.ts';
 import { computed, ref } from 'vue';
 
+const appConfig = useAppConfig();
 const props = defineProps<{
   campaign: Campaign;
 }>();
