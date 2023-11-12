@@ -19,10 +19,6 @@ const {
   campaign, campaignSections, error,
 } = storeToRefs(campaignStore);
 
-definePageMeta({
-  name: 'campaign',
-});
-
 await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
 
 if (campaign.value) {

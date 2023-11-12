@@ -32,6 +32,10 @@
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
 
+definePageMeta({
+  name: 'campaign',
+});
+
 const campaignStore = useCampaignStore();
 const { campaign, campaignSections, rewards } = storeToRefs(campaignStore);
 
