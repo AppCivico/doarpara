@@ -12,7 +12,7 @@
         v-html="campaign.description"
       />
 
-      <footer v-if="campaign?.campaign_section_list" class="text-body__call-to-faq">
+      <footer v-if="hasFaq" class="text-body__call-to-faq">
         <i18n-t keypath="callToFAQ.message" tag="p">
           <a href="#faq">{{ $t('callToFAQ.textLink') }}</a>
         </i18n-t>
@@ -33,5 +33,7 @@
 import { useCampaignStore } from '@/store/campaign.ts';
 
 const campaignStore = useCampaignStore();
-const { campaign, rewards } = storeToRefs(campaignStore);
+const { campaign, campaignSections, rewards } = storeToRefs(campaignStore);
+
+const hasFaq = computed(() => campaignSections.value.indexOf('faq') > -1);
 </script>
