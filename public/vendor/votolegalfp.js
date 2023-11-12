@@ -1,4 +1,4 @@
-/* eslint-disable */
+// @ts-nocheck
 (function (p, a, c) { "function" === typeof window.define && window.define.amd ? window.define(c) : "undefined" !== typeof module && module.exports ? module.exports = c() : a.exports ? a.exports = c() : a[p] = c() })("VotolegalFP", this, function () {
   var p = function (a) {
     if (!(this instanceof p)) { return new p(a) }

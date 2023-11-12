@@ -1,3 +1,4 @@
+// @ts-nocheck
 (function(p,a,c){"function"===typeof window.define&&window.define.amd?window.define(c):"undefined"!==typeof module&&module.exports?module.exports=c():a.exports?a.exports=c():a[p]=c()})("VotolegalFP",this,function(){var p=function(a){if(!(this instanceof p)){return new p(a)}
 this.options=this.extend(a,{swfContainerId:"fingerprintjs2",swfPath:"flash/compiled/FontList.swf",detectScreenOrientation:!0,sortPluginsFor:[/palemoon/i],userDefinedFonts:[],excludeDoNotTrack:!0,excludePixelRatio:!0});this.nativeForEach=Array.prototype.forEach;this.nativeMap=Array.prototype.map};p.prototype={extend:function(a,c){if(null==a){return c}
 for(var b in a){null!=a[b]&&c[b]!==a[b]&&(c[b]=a[b])}

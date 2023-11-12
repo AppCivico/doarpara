@@ -48,9 +48,6 @@ export default defineNuxtConfig({
         strict: true,
         strictNullChecks: true,
       },
-      exclude: [
-        'vendor/**/*.*',
-      ],
       include: [
         '.eslintrc.cjs',
       ],
