@@ -539,6 +539,14 @@ function getReferral() {
   }
 }
 
+function selectContent(event: Event) {
+  const { target: el } = event;
+
+  if (el instanceof HTMLInputElement) {
+    el.select();
+  }
+}
+
 async function submitDonation() {
   await donateStore.createDonationOnBackEnd(amount.value * 100, mappedPaymentMethod.value);
 
