@@ -45,8 +45,13 @@ fieldset .list-of-options {
 
     padding: 0;
 
+    font-size: 1em;
     white-space: normal;
   }
+}
+
+.list-of-options__item--long-text {
+  font-size: my.ms-step(-1);
 }
 
 /**
