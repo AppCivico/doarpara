@@ -1,24 +1,24 @@
 <template>
-  <Html :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir">
-    <Head>
-      <Title>{{ title }}</Title>
-      <template v-for="link in head.link" :key="link.id">
-        <Link :id="link.id" :rel="link.rel" :href="link.href" :hreflang="link.hreflang" />
-      </template>
-      <template v-for="meta in head.meta" :key="meta.id">
-        <Meta :id="meta.id" :property="meta.property" :content="meta.content" />
-      </template>
+  <div class="page-wrapper page-wrapper--like-a-dialog container">
+    <Html :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir">
+      <Head>
+        <Title>{{ title }}</Title>
+        <template v-for="link in head.link" :key="link.id">
+          <Link :id="link.id" :rel="link.rel" :href="link.href" :hreflang="link.hreflang" />
+        </template>
+        <template v-for="meta in head.meta" :key="meta.id">
+          <Meta :id="meta.id" :property="meta.property" :content="meta.content" />
+        </template>
 
-      <Link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-      <Link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-      <Link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-      <Link rel="manifest" href="/site.webmanifest" />
-      <Link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00d182" />
-      <Meta name="msapplication-TileColor" content="#00aba9" />
-      <Meta name="theme-color" content="#ffffff" />
-    </Head>
-    <Body>
-      <div class="page-wrapper page-wrapper--like-a-dialog container">
+        <Link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <Link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <Link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <Link rel="manifest" href="/site.webmanifest" />
+        <Link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00d182" />
+        <Meta name="msapplication-TileColor" content="#00aba9" />
+        <Meta name="theme-color" content="#ffffff" />
+      </Head>
+      <Body>
         <header>
           <h1>{{ campaign?.name }}</h1>
 
@@ -30,9 +30,9 @@
         </header>
         <NuxtLoadingIndicator color="black" />
         <slot />
-      </div>
-    </Body>
-  </Html>
+      </Body>
+    </Html>
+  </div>
 </template>
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';

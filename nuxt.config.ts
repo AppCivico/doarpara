@@ -6,6 +6,10 @@ export default defineNuxtConfig({
         { children: 'JavaScript is required' },
       ],
     },
+    layoutTransition: {
+      name: 'page-slide-right',
+      mode: 'out-in',
+    },
     pageTransition: {
       name: 'page-slide-right',
       mode: 'out-in',
