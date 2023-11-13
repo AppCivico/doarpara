@@ -168,6 +168,7 @@ Por isso, a Candidatura Monica Seixas e a Bancada Pretas do PSOL está registran
   rewards: 'Rewards',
   rewardsIntro: 'Este projeto oferece recompensas em troca do seu apoio. Selecione uma recompensa abaixo.',
   totalAmount: 'Arrecadados',
+  totalAmountByDonationsPerSource: '{percentage}% por {numberOfDonations} doações ({source})',
   totalDonations: 'Doações recebidas',
   useTerms: 'Termos de uso',
   waiting: 'Aguardando...',

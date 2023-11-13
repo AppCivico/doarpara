@@ -82,7 +82,11 @@ export interface Reward {
 
 export interface RaisedAndSource {
   name: string;
-  value: number;
+  total_donated: number;
+  total_donations: number;
+  cnpj: string;
+  type: string;
+  social_name: string;
 }
 
 interface Donation {
@@ -108,9 +112,7 @@ export interface Campaign {
   is_recurrent: boolean;
   is_flexible_funding: boolean;
   is_election_campaign: boolean;
-  donation_sources: RaisedAndSource[];
-  total_amount: number;
-  total_donations: number;
+  platforms: RaisedAndSource[];
   pledge_list: PledgeValue[];
   minimum_donation: number;
   maximum_donation: number;

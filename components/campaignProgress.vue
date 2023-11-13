@@ -1,19 +1,19 @@
 <template>
   <div class="campaign-progress">
-    <data class="campaign-progress__total" :value="campaign.total_amount">
+    <data class="campaign-progress__total" :value="totalAmount">
       <output for="progress-bar" class="campaign-progress__total-value">
-        {{ $n(campaign.total_amount / 100, 'currency', { maximumFractionDigits: 0 }) }}
+        {{ $n(totalAmount / 100, 'currency', { maximumFractionDigits: 0 }) }}
       </output>
       {{ $t('totalAmount').toLowerCase() }}
     </data>
 
     <div
-      v-if="donationSources.length > 1"
+      v-if="donationSources.length > 0"
       id="progress-bar"
       class="campaign-progress__bar"
       role="progressbar"
       aria-valuemin="0"
-      :aria-valuenow="campaign.total_amount"
+      :aria-valuenow="totalAmount"
       :aria-valuemax="currentGoal"
       :aria-label="$t('progressOfCampaign')"
     >
@@ -21,25 +21,29 @@
         v-for="(source, i) in donationSources"
         :key="i"
         :style="progressBarStyle(source)"
-        :title="`${percentage(source.value)}% (${source.name})`"
+        :title="$t('totalAmountByDonationsPerSource', {
+          percentage: $n(percentage(source.total_donated)),
+          numberOfDonations: source.total_donations,
+          source: source.name,
+        })"
       >
-        {{ percentage(source.value) }}
+        {{ percentage(source.total_donated) }}
       </div>
     </div>
     <progress
-      v-else-if="campaign.total_amount"
+      v-else-if="totalAmount !== undefined"
       id="progress-bar"
       class="campaign-progress__bar"
-      :value="campaign.total_amount / currentGoal * 100"
+      :value="percentage()"
       max="100"
       :aria-label="$t('progressOfCampaign')"
     >
-      {{ $n(campaign.total_amount / currentGoal, 'percent') }}
+      {{ $n(totalAmount / currentGoal, 'percent') }}
     </progress>
 
     <div class="campaign-progress__progress">
-      <data value="campaign.total_amount / currentGoal" class="campaign-progress__progress-percentage">
-        {{ $n(campaign.total_amount / currentGoal, 'percent') }}
+      <data value="totalAmount / currentGoal" class="campaign-progress__progress-percentage">
+        {{ $n(totalAmount / currentGoal, 'percent') }}
       </data>
       {{ $t('of').toLowerCase() }}
       <data :value="currentGoal / 100" class="campaign-progress__progress-total">
@@ -47,8 +51,8 @@
       </data>
     </div>
     <div class="campaign-progress__donations">
-      <data :value="campaign.total_donations" class="campaign-progress__donations-number">
-        {{ $n(campaign.total_donations) }}
+      <data :value="totalDonations" class="campaign-progress__donations-number">
+        {{ $n(totalDonations) }}
       </data>
       {{ $t('totalDonations').toLowerCase() }}
     </div>
@@ -65,20 +69,13 @@ const props = defineProps<{
   campaign: Campaign;
 }>();
 
-const currentGoal = computed(() => {
-  const { goal_list: goals, total_amount: totalAmount } = props.campaign;
-
-  return (goals.find((x: Goal) => x.amount > totalAmount) || goals[goals.length - 1])?.amount
-    || totalAmount
-    || 0;
-});
-
-const donationSources = computed(({ donation_sources } = props.campaign) => {
+const donationSources = computed(() => {
+  const { platforms } = props.campaign;
   let opacity = 0;
-  return !Array.isArray(donation_sources)
+  return !Array.isArray(platforms)
     ? []
-    : donation_sources
-      .filter((x) => x.value !== undefined && x.name)
+    : platforms
+      .filter((x) => x.total_donated !== undefined && x.name)
       .map((x: RaisedAndSource) => {
         const y = x as SourceOnProgressBar;
         y.opacity = opacity;
@@ -87,9 +84,29 @@ const donationSources = computed(({ donation_sources } = props.campaign) => {
       });
 });
 
-function percentage(amount = props.campaign.total_amount, expected = currentGoal.value) {
+const totalAmount = computed(() => donationSources.value.reduce((acc, cur) => {
+  // eslint-disable-next-line no-param-reassign
+  acc += cur.total_donated;
+  return acc;
+}, 0));
+
+const totalDonations = computed(() => donationSources.value.reduce((acc, cur) => {
+  // eslint-disable-next-line no-param-reassign
+  acc += cur.total_donations;
+  return acc;
+}, 0));
+
+const currentGoal = computed(() => {
+  const { goal_list: goals } = props.campaign;
+
+  return (goals.find((x: Goal) => x.amount > totalAmount.value) || goals[goals.length - 1])?.amount
+    || totalAmount.value
+    || 0;
+});
+
+function percentage(amount = totalAmount.value, expected = currentGoal.value) {
   return Math.floor(
-    ((typeof amount === 'string' ? parseFloat(amount) : amount) * 100) / Math.max(props.campaign.total_amount, expected),
+    (amount * 100) / Math.max(totalAmount.value, expected),
   );
 }
 
