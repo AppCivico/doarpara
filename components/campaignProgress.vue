@@ -96,10 +96,9 @@ function percentage(amount = props.campaign.total_amount, expected = currentGoal
 function progressBarStyle(source: SourceOnProgressBar) {
   return {
     backgroundImage: `linear-gradient(rgba(0, 0, 0, ${source.opacity}), rgba(0, 0, 0, ${source.opacity}))`,
-    width: `${percentage(source.value)}%`,
+    width: `${percentage(source.total_donated)}%`,
   };
 }
-
 </script>
 <style lang="scss">
 .campaign-progress {
@@ -116,6 +115,7 @@ function progressBarStyle(source: SourceOnProgressBar) {
   display: block;
 
   width: 100%;
+  margin-bottom: my.$gutter * 0.5;
   overflow: hidden;
 
   font-size: my.ms-step(20px);
@@ -131,7 +131,6 @@ function progressBarStyle(source: SourceOnProgressBar) {
 
 .campaign-progress__bar {
   width: 100%;
-  margin-top: my.$gutter * 0.5;
   margin-bottom: my.$gutter * 0.5;
 }
 
