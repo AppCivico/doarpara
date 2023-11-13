@@ -52,7 +52,7 @@
         >
       </p>
 
-      <ul class="list-of-options" data-field-size="100">
+      <ul class="list-of-options" data-field-size="70">
         <li class="list-of-options__item list-of-options__item--long-text">
           <!-- eslint-disable-next-line vuejs-accessibility/form-control-has-label -->
           <input
