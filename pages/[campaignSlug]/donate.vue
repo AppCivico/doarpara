@@ -416,6 +416,7 @@ definePageMeta({
 });
 
 const appConfig = useAppConfig();
+const { $i18n } = useNuxtApp();
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
@@ -525,9 +526,8 @@ function getDonationAmount() {
 
   if (amountFromUrl) {
     amountFromUrl = String(amountFromUrl)
-      .replace(/(?:^[a-z]*\$\s*)|(?:(?:,\d{1,2})*(?:\s*[a-z])*$)/gi, '');
-
-    amount.value = (Number.parseInt(amountFromUrl, 10) || 0);
+      .replace(/(?:^[a-z]*\$\s*)|(?:(?:\s*[a-z])*$)/gi, '');
+    amount.value = (localeParseFloat(amountFromUrl, $i18n?.locale.value) || 0);
   }
 }
 

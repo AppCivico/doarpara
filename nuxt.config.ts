@@ -20,6 +20,9 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   css: ['@/assets/scss/index.scss'],
+  i18n: {
+    defaultLocale: 'pt',
+  },
   modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@nuxtjs/mdc'],
   runtimeConfig: {
     public: {
