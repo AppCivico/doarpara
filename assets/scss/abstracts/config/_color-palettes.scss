@@ -134,7 +134,7 @@ $palette: map.set($palette, 'border', $border);
 ///
 $disabled: (
   'foreground': map.get($text, 'faded'),
-  'background': map.get($neutral, 'white'),
+  'background': map.get($neutral, 'x-light'),
 );
 $palette: map.set($palette, 'disabled', $disabled);
 

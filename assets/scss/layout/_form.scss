@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../abstracts' as my;
 
 /* FORMS
@@ -133,68 +134,68 @@ label small {
     margin-bottom: 0;
   }
 
-  &[data-field-size='10'] {
-    flex-basis: calc(10% - #{my.$gutter});
-  }
+  $sizes: (
+    (
+      'percent': 10,
+    ),
+    (
+      'percent': 15,
+    ),
+    (
+      'percent': 20,
+      'min-width': 10rem, /* 160px */
+    ),
+    (
+      'percent': 25,
+    ),
+    (
+      'percent': 30,
+    ),
+    (
+      'percent': 33,
+      'min-width': 12.5rem, /* 200px */
+    ),
+    (
+      'percent': 35,
+      'min-width': 12.5rem, /* 200px */
+    ),
+    (
+      'percent': 40,
+      'min-width': 12.5rem, /* 200px */
+    ),
+    (
+      'percent': 50,
+      'min-width': 12.5rem, /* 200px */
+    ),
+    (
+      'percent': 60,
+      'min-width': 15rem, /* 240px */
+    ),
+    (
+      'percent': 65,
+    ),
+    (
+      'percent': 70,
+    ),
+    (
+      'percent': 75,
+    ),
+    (
+      'percent': 80,
+    ),
+  );
 
-  &[data-field-size='15'] {
-    flex-basis: calc(15% - #{my.$gutter});
-  }
+  @each $size in $sizes {
+    $percent: map.get($size, 'percent');
+    $min-width: map.get($size, 'min-width');
 
-  &[data-field-size='20'] {
-    flex-basis: calc(20% - #{my.$gutter});
+    &[data-field-size='#{$percent}'] {
+      flex-basis: calc(#{$percent * 1%} - #{my.$gutter});
 
-    // min-width: my.$max-width * 0.125; /* 160px */
-  }
-
-  &[data-field-size='25'] {
-    flex-basis: calc(25% - #{my.$gutter});
-
-    // min-width: my.$max-width * 0.15; /* 192px */
-  }
-
-  &[data-field-size='30'] {
-    flex-basis: calc(30% - #{my.$gutter});
-  }
-
-  &[data-field-size='33'] {
-    flex-basis: calc(33% - #{my.$gutter});
-
-    // min-width: my.$max-width * 0.175; /* 224px */
-  }
-
-  &[data-field-size='35'] {
-    flex-basis: calc(33% - #{my.$gutter});
-
-    // min-width: my.$max-width * 0.175; /* 224px */
-  }
-
-  &[data-field-size='40'] {
-    flex-basis: calc(40% - #{my.$gutter});
-  }
-
-  &[data-field-size='50'] {
-    flex-basis: calc(50% - #{my.$gutter});
-  }
-
-  &[data-field-size='60'] {
-    flex-basis: calc(60% - #{my.$gutter});
-  }
-
-  &[data-field-size='65'] {
-    flex-basis: calc(65% - #{my.$gutter});
-  }
-
-  &[data-field-size='70'] {
-    flex-basis: calc(70% - #{my.$gutter});
-  }
-
-  &[data-field-size='75'] {
-    flex-basis: calc(75% - #{my.$gutter});
-  }
-
-  &[data-field-size='80'] {
-    flex-basis: calc(80% - #{my.$gutter});
+      @if ($min-width) {
+        min-width: $min-width;
+      }
+    }
   }
 }
 
@@ -245,6 +246,10 @@ form br {
   -webkit-font-smoothing: inherit;
 
   &:hover {
+  // border-color: rgba(0,0,0,0.1);
+  // background-color: #fff;
+  // -webkit-box-shadow: 0 0 0 4px rgba(234,100,217,0.1);
+  // box-shadow: 0 0 0 4px rgba(234,100,217,0.1);
   }
 
   &:focus {
