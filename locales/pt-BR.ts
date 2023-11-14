@@ -43,6 +43,13 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     name: 'Nome',
     naturalPersonIdentificationAgreement: 'Estou ciente de que o pagamento deve ser realizado por este CPF e divergências podem causar seu cancelamento e estorno.',
     number: 'Número',
+    pendingMessages: {
+      gettingAddress: 'Buscando endereço...',
+      validatingDevice: 'Validando dispositivo...',
+      creatingDonation: 'Criando doação...',
+      validatingCreditCard: 'Validando cartão de crédito...',
+      payingDonation: 'Pagando doação',
+    },
     phoneNumber: 'Telefone',
     postalCode: 'CEP',
     safeTransaction: 'Ambiente seguro. © DoarPara',

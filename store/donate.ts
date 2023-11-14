@@ -1,34 +1,19 @@
 import randomString from '@/utils/randomString.ts';
 import removeAccented from '@/utils/removeAccented.js';
 import getDonationFP from '@/vendor/donationFp.js';
-import type { CreditCard } from '~/iugu.d.ts';
-
+import type { CreatedDonation, DonationMessage } from '~/doar-para.d.ts';
+import type { CreditCard, PaymentToken } from '~/iugu.d.ts';
 import { useCampaignStore } from './campaign.ts';
 
 declare const VotolegalFP: any;
 declare const Iugu: any;
 
-type CreatedDonation = {
-  id: string;
-  state: string;
-  amount: number;
-  captured_at: string | null;
-  donor: {
-    cpf: string;
-    name: string;
-  }
-} | null;
-
 type DonationResponse = {
   donation: CreatedDonation;
   ui: {
-    messages: Message[]
+    messages: DonationMessage[]
   }
   errors?: unknown;
-};
-
-type Errors = {
-  errors: unknown
 };
 
 type DonorData = {
@@ -54,29 +39,6 @@ type DonorData = {
   billing_address_complement: string;
 };
 
-type Message = {
-  account_id?: string;
-  is_testing?: 0 | 1;
-  ref?: string;
-  href?: string;
-  text?: string;
-  type: string;
-};
-
-type PaymentToken = {
-  id: string;
-  method: string;
-  extra_info: {
-    bin: string;
-    year: number;
-    month: number;
-    brand: string;
-    holder_name: string;
-    display_number: string;
-  },
-  test: boolean;
-} | Errors;
-
 type PostalServiceQueryResult = {
   state: string;
   cep: string;
@@ -90,7 +52,7 @@ type StateErrors = {
   validatingDevice: unknown,
   creatingDonation: unknown,
   validatingCreditCard: unknown,
-  concludingDonation: unknown,
+  payingDonation: unknown,
 };
 
 type ValidatedCard = {
@@ -124,27 +86,20 @@ export const useDonateStore = defineStore('toDonate', {
 
       complement: '',
     },
-    donation: null,
-
-    createdDonation: <CreatedDonation> null,
-    concludedDonation: <CreatedDonation> null,
-
-    iugu: <Message | null> null,
-    messages: <Message[]> [],
 
     pending: {
       gettingAddress: false,
       validatingDevice: false,
       creatingDonation: false,
       validatingCreditCard: false,
-      concludingDonation: false,
+      payingDonation: false,
     },
     error: <StateErrors> {
       gettingAddress: null,
       validatingDevice: null,
       creatingDonation: null,
       validatingCreditCard: null,
-      concludingDonation: null,
+      payingDonation: null,
     },
   }),
   actions: {
@@ -243,33 +198,18 @@ export const useDonateStore = defineStore('toDonate', {
 
       this.pending.creatingDonation = false;
 
-      if (data.value) {
-        this.createdDonation = data.value.donation;
-
-        if (data.value.ui) {
-          [this.iugu] = data.value.ui.messages.slice(1, 2);
-          this.messages = data.value.ui.messages;
-
-          if (this.iugu) {
-            Iugu.setAccountID(this.iugu.account_id);
-            Iugu.setTestMode(this.iugu.is_testing === 1);
-          }
-        }
-      }
-
       if (error.value) {
         this.error.creatingDonation = error.value;
       }
+
+      return { data: data.value, error: error.value };
     },
 
     async validateCard(card: CreditCard): Promise<ValidatedCard> {
       this.pending.validatingCreditCard = true;
       this.error.validatingCreditCard = null;
-      const { donor, iugu } = this;
+      const { donor } = this;
       const [validityMonth, validityYear] = card.expiration.split('/');
-
-      Iugu.setAccountID(iugu?.account_id);
-      Iugu.setTestMode(!!iugu?.is_testing);
 
       const cc = Iugu.CreditCard(
         card.number,
@@ -301,17 +241,17 @@ export const useDonateStore = defineStore('toDonate', {
       });
     },
 
-    async payCreditCardDonation(payload: ValidatedCard) {
-      this.pending.concludingDonation = true;
-      this.error.concludingDonation = null;
+    async payCreditCardDonation(donationId: string | number, payload: ValidatedCard) {
+      this.pending.payingDonation = true;
+      this.error.payingDonation = null;
 
       const runtimeConfig = useRuntimeConfig();
 
-      const { createdDonation: donation, deviceAuthorizationTokenId: token } = this;
+      const { deviceAuthorizationTokenId: token } = this;
 
       const {
         data, error,
-      } = await useFetch<CreatedDonation>(`${runtimeConfig.public.privateApiBase}/api2/donations/${donation?.id}`, {
+      } = await useFetch< DonationResponse >(`${runtimeConfig.public.privateApiBase}/api2/donations/${donationId}`, {
         method: 'POST',
         query: {
           device_authorization_token_id: token,
@@ -320,15 +260,13 @@ export const useDonateStore = defineStore('toDonate', {
         },
       });
 
-      this.pending.concludingDonation = false;
-
-      if (data.value) {
-        this.concludedDonation = data.value;
-      }
+      this.pending.payingDonation = false;
 
       if (error.value) {
-        this.error.concludingDonation = error.value;
+        this.error.payingDonation = error.value;
       }
+
+      return { data: data.value, error: error.value };
     },
   },
   getters: {
@@ -358,5 +296,8 @@ export const useDonateStore = defineStore('toDonate', {
     })),
 
     consolidatedPending: (({ pending }) => Object.values(pending).some((value) => value === true)),
+
+    pendingMessage: (({ pending }) => Object.keys(pending)
+      .find((x) => pending[x as keyof typeof pending] !== false)),
   },
 });

@@ -141,6 +141,26 @@ export interface Campaign {
   goal_list: Goal[];
 }
 
+export type CreatedDonation = {
+  id: string;
+  amount: number;
+  captured_at: string | null;
+  donor: {
+    cpf: string;
+    name: string;
+  }
+  state: 'boleto_authentication' | 'certificate_refused' | 'credit_card_form' | 'pix_expired' | 'wait_for_compensation' | 'waiting_pix_payment';
+} | null;
+
+export type DonationMessage = {
+  account_id?: string;
+  href?: string;
+  is_testing?: 0 | 1;
+  ref?: string;
+  text?: string;
+  type: string;
+};
+
 export interface DonationList {
   donations: Donation[];
   has_more: boolean;

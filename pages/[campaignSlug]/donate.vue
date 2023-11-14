@@ -1,9 +1,9 @@
 <template>
-  <form action="" class="donation-form" @submit.prevent="submitDonation">
+  <form v-if="!isDonationConcluded" action="" class="donation-form" @submit.prevent="submitDonation">
     <fieldset>
       <label for="">
         campo para testes! Será removido posteriormente
-        <input v-model="amount" type="number">
+        <input v-model="amount" type="number" step="0.01">
       </label>
     </fieldset>
 
@@ -36,7 +36,7 @@
         >
       </p>
 
-      <p data-field-size="30">
+      <p data-field-size="100">
         <label for="natural-person-identification">
           {{ $t('naturalPersonIdentification') }}
         </label>
@@ -50,21 +50,11 @@
           name="cpf"
           required
         >
-      </p>
 
-      <ul class="list-of-options" data-field-size="70">
-        <li class="list-of-options__item list-of-options__item--long-text">
-          <!-- eslint-disable-next-line vuejs-accessibility/form-control-has-label -->
-          <input
-            id="natural-person-identification-agreement"
-            v-model="naturalPersonIdentificationAgreement"
-            type="checkbox"
-          />
-          <label for="natural-person-identification-agreement">
-            {{ $t('donationForm.naturalPersonIdentificationAgreement') }}
-          </label>
-        </li>
-      </ul>
+        <small>
+          {{ $t('donationForm.naturalPersonIdentificationAgreement') }}
+        </small>
+      </p>
 
       <p data-field-size="50">
         <label for="email">
@@ -342,7 +332,7 @@
     <fieldset v-if="messages.length">
       <legend>Messages</legend>
       <p>A serem revisadas com o backend.</p>
-      <template v-for="message, i in donateStore.messages">
+      <template v-for="message, i in messages">
         <p v-if="message.type === 'link'" :key="`message__${i}--link`">
           <NuxtLink :to="message.href">
             {{ message.text }}
@@ -379,7 +369,11 @@
     </fieldset>
 
     <fieldset>
-      <button type="submit" :disabled="!amount" class="donation-form__submit">
+      <p v-if="pendingMessage" class="pending-request-message">
+        {{ $t(`donationForm.pendingMessages.${pendingMessage}`) }}
+      </p>
+
+      <button type="submit" :disabled="!amount || consolidatedPending" class="donation-form__submit">
         <img
           src="~/assets/images/icons/lock-closed.svg"
           alt=""
@@ -394,22 +388,50 @@
         {{ $t('donationForm.safeTransaction') }}
       </p>
     </fieldset>
-
-    <pre>createdDonation: {{ donateStore.createdDonation }}</pre>
-    <pre>concludedDonation: {{ donateStore.concludedDonation }}</pre>
-    <hr />
-    <pre>deviceAuthorizationTokenId: {{ donateStore.deviceAuthorizationTokenId }}</pre>
-    <pre>iugu: {{ donateStore.iugu }}</pre>
-    <!--pre>pending: {{ pending }}</pre-->
-    <pre>consolidatedPending: {{ donateStore.consolidatedPending }}</pre>
-    <hr />
-    <pre>messages: {{ messages }}</pre>
   </form>
+
+  <div v-else>
+    <template v-for="message, i in messages">
+      <p v-if="message.type === 'link'" :key="`message__${i}--link`">
+        <NuxtLink :to="message.href">
+          {{ message.text }}
+        </NuxtLink>
+      </p>
+
+      <template v-else-if="message.type === 'msg'">
+        <template v-if="instantPaymentPlatformKey">
+          <div v-if="isClipboardInaccessible" :key="i + '--copy-field'" class="input-wrapper field-for-copy__wrapper">
+            <label class="field-for-copy__label" :for="`to-copy--${i}`">
+              Selecione e copie
+            </label>
+            <input
+              :id="`to-copy--${i}`"
+              v-focus.select
+              class="field-for-copy"
+              type="text"
+              readonly
+              :value="instantPaymentPlatformKey"
+              @click="selectContent($event)"
+            />
+          </div>
+          <div
+            v-else
+            :key="`message__${i}--text`"
+            @click="delegation($event)"
+            @keydown="delegation($event)"
+            v-html="message.text"
+          />
+        </template>
+        <div v-else :key="`message__${i}--text`" v-html="message.text" />
+      </template>
+    </template>
+  </div>
 </template>
 <script setup lang="ts">
 import states from '@/data/states.json';
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
+import type { CreatedDonation, DonationMessage } from '~/doar-para.d.ts';
 
 declare const Iugu: any;
 
@@ -435,16 +457,17 @@ const creditCard = ref({
   expiration: '',
   verification_value: '',
 });
+
+const createdDonation: Ref<CreatedDonation> = ref(null);
 const isClipboardInaccessible = ref(true);
-const toDonateTaxes = ref(false);
+const messages: Ref<DonationMessage[]> = ref([]);
 const paymentMethod = ref('');
+const toDonateTaxes = ref(false);
 const totalTaxes = ref(0);
 
 const {
-  donor, donorAddress, error, messages, pending, referral,
+  consolidatedPending, donor, donorAddress, pending, pendingMessage, referral,
 } = storeToRefs(donateStore);
-
-const naturalPersonIdentificationAgreement = ref(false);
 
 const amountMinusTaxes = computed(() => amount.value - totalTaxes.value);
 
@@ -462,6 +485,8 @@ const mappedPaymentMethod = computed(() => {
   }
 });
 
+const isDonationConcluded = computed(() => createdDonation.value?.state !== undefined && createdDonation.value.state !== 'credit_card_form');
+
 const instantPaymentPlatformKey = computed(() => {
   let key = '';
 
@@ -476,6 +501,14 @@ const instantPaymentPlatformKey = computed(() => {
 
   return key;
 });
+
+function addMessages(messageOrMessages: DonationMessage[] | DonationMessage) {
+  if (Array.isArray(messageOrMessages)) {
+    messages.value = messages.value.concat(messageOrMessages);
+  } else {
+    messages.value.push(messageOrMessages);
+  }
+}
 
 function delegation(event: Event) {
   const target = event.target as HTMLElement;
@@ -551,12 +584,59 @@ function selectContent(event: Event) {
 }
 
 async function submitDonation() {
-  await donateStore.createDonationOnBackEnd(amount.value * 100, mappedPaymentMethod.value);
+  const { data: donationData, error: donationError } = await donateStore
+    .createDonationOnBackEnd(amount.value * 100, mappedPaymentMethod.value);
 
-  if (mappedPaymentMethod.value === 'credit_card') {
-    const payload = await donateStore.validateCard(creditCard.value);
+  if (donationData) {
+    if (donationData.donation) {
+      createdDonation.value = donationData.donation;
+    }
 
-    donateStore.payCreditCardDonation(payload);
+    if (donationData.ui) {
+      const [iugu] = donationData.ui.messages.slice(1, 2);
+      if (iugu) {
+        Iugu.setAccountID(iugu.account_id);
+        Iugu.setTestMode(iugu.is_testing === 1);
+      }
+
+      if (paymentMethod.value !== 'credit_card') {
+        if (donationData.ui.messages) {
+          addMessages(donationData.ui.messages);
+        }
+      }
+    }
+  }
+
+  if (donationError) {
+    console.debug('donationError', donationError);
+    throw new Error(donationError.message);
+  }
+
+  if (mappedPaymentMethod.value !== 'credit_card') {
+    return;
+  }
+
+  const validCreditCard = await donateStore.validateCard(creditCard.value);
+  if (!createdDonation.value?.id) {
+    throw new Error('Propoerty `id` is missing');
+  }
+
+  const { data: paymentData, error: paymentError } = await donateStore
+    .payCreditCardDonation(createdDonation.value.id, validCreditCard);
+
+  if (paymentData) {
+    if (paymentData?.donation) {
+      createdDonation.value = paymentData.donation;
+    }
+
+    if (paymentData?.ui?.messages) {
+      addMessages(paymentData?.ui?.messages);
+    }
+  }
+
+  if (paymentError) {
+    console.debug('paymentError', paymentError);
+    throw new Error(paymentError.message);
   }
 }
 
@@ -617,7 +697,7 @@ if (process.client) {
 }
 
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 @use 'sass:color';
 
 .donation-summary {
@@ -656,4 +736,18 @@ if (process.client) {
 }
 
 .donation-summary__input {}
+
+.pending-request-message {
+  position: sticky;
+  bottom: my.$gutter;
+
+  width: max-content;
+  max-width: 100%;
+  padding: my.$gutter;
+  margin-right: auto;
+  margin-left: auto;
+
+  background-color: my.palette('neutral','white');
+  border: my.$stroke solid my.palette('brand','primary');
+}
 </style>
