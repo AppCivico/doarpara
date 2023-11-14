@@ -41,7 +41,7 @@
               {{ donation.donor_natural_person_id }}
             </td>
             <td :aria-label="$t('receipts.creationDate')">
-              {{ $d(new Date(donation.creation_date), 'medium') }}
+              {{ $d(new Date(donation.captured_at), 'medium') }}
             </td>
             <td :aria-label="$t('receipts.paymentMethod')">
               {{ $t(`paymentMethods.${donation.payment_method}`) }}
@@ -51,7 +51,8 @@
             </td>
             <td class="cell--action">
               <a
-                :href="`${runtimeConfig.public.receiptsBase}/${donation.id}`"
+                v-if="donation.transaction_link"
+                :href="donation.transaction_link"
                 class="nowrap"
                 target="_blank"
                 rel="noopener noreferrer"

@@ -91,11 +91,21 @@ export interface RaisedAndSource {
 
 interface Donation {
   id: Id;
-  creation_date: Date;
+  captured_at: Date;
   payment_method: PaymentMethod;
+  payment_method_human: string;
   amount: number;
   donor_name: string;
+  name: string;
   donor_natural_person_id: string;
+
+  platform: string;
+  from_votolegal: boolean;
+  is_irregular: boolean;
+  cpf: string;
+  transaction_link: string | null;
+  digest: string;
+  hash: string | null;
 }
 
 // API endpoints ///////////////////////////////////////////////////////////////
@@ -132,7 +142,7 @@ export interface Campaign {
 }
 
 export interface DonationList {
-  list: Donation[];
+  donations: Donation[];
   has_more: boolean;
   pagination_marker?: string;
 }
