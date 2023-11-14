@@ -49,7 +49,7 @@
       cursor: help;
 
       &:hover {
-        @include my.focused;
+        @include my.hovered;
       }
     }
   }

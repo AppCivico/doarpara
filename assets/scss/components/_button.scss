@@ -94,6 +94,10 @@ button,
     box-shadow: 0 20px 24px -10px my.palette('effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2);
   }
 
+  &:hover:not(:disabled) {
+    @include my.hovered;
+  }
+
   &:focus-visible {
     @include my.focused;
   }

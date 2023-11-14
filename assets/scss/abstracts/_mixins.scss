@@ -1042,9 +1042,17 @@ $no-viewport: false !default;
   overflow-wrap: break-word;
 }
 
+@mixin hovered {
+  box-decoration-break: clone;
+
+  outline: 4px solid f.palette('effects', 'tap-highlight');
+}
+
 @mixin focused {
-  outline: 1px dotted f.palette('effects', 'tap-highlight');
-  outline-offset: 0.25rem;
+  border-color: f.palette('border','focus');
+  box-decoration-break: clone;
+
+  outline: 4px solid f.palette('effects', 'tap-highlight');
 }
 
 @mixin shadow {

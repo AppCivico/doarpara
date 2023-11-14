@@ -589,6 +589,8 @@ a {
   }
 
   &:hover {
+    @include my.hovered;
+
     color: my.palette('anchor', 'hover');
   }
 

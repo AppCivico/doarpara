@@ -165,7 +165,7 @@ $palette: map.set($palette, 'placeholder', $placeholder);
 $effects: ( // TO-DO
   'backdrop': rgba(0, 0, 0, 0.5),
   'shadow': color.adjust($_dark-blue, $alpha: -0.8),
-  'tap-highlight': rgb(255, 94, 153),
+  'tap-highlight': color.adjust($_dark-blue, $alpha: -0.9),
   'target-highlight': rgb(255, 255, 102),
 );
 $palette: map.set($palette, 'effects', $effects);
