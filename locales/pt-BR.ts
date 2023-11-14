@@ -41,7 +41,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     familyName: 'Sobrenome',
     iDoNotKnowMyPostalCode: 'Não sei o meu CEP',
     name: 'Nome',
-    naturalPersonIdentificationAgreement: 'Estou ciente de que o pagamento deve ser realizado por conta deste CPF e divergências podem causar seu cancelamento e estorno.',
+    naturalPersonIdentificationAgreement: 'Estou ciente de que o pagamento deve ser realizado por este CPF e divergências podem causar seu cancelamento e estorno.',
     number: 'Número',
     phoneNumber: 'Telefone',
     postalCode: 'CEP',
