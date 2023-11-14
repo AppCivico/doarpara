@@ -132,6 +132,7 @@
           id="street"
           v-model="donorAddress.street"
           type="text"
+          disabled
         />
       </p>
 
@@ -154,6 +155,7 @@
           id="city"
           v-model="donorAddress.city"
           type="text"
+          disabled
         />
       </p>
 
@@ -166,6 +168,7 @@
           id="state"
           v-model="donorAddress.state"
           name="state"
+          disabled
         >
           <option value="" />
           <option
@@ -200,7 +203,7 @@
           autocomplete="tel-national"
           placeholder="(00) 00000-0000"
           minlength="14"
-          :required="mappedPaymentMethod !== 'credit_card'"
+          required
         />
       </p>
     </fieldset>
