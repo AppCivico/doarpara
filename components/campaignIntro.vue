@@ -209,9 +209,9 @@ const maximumDonation = computed(() => (typeof props.campaign.maximum_donation =
   : sortedPledgeList.value[sortedPledgeList.value.length - 1] as number
   || undefined));
 
-const pledgeValue: Ref<number> = ref(
-  minimumDonation.value
-    ? minimumDonation.value / 100
-    : 0,
-);
+const pledgeValue = ref('');
+
+if (minimumDonation.value) {
+  pledgeValue.value = String(minimumDonation.value / 100);
+}
 </script>
