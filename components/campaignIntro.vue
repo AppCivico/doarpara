@@ -73,7 +73,7 @@
               :to="{
                 name: 'donate',
                 query: {
-                  [appConfig.queryStringSpecialParameters.amount]: pledge,
+                  [appConfig.queryStringSpecialParameters.amount]: $n(pledge / 100),
                 },
               }"
               class="donation-values__value like-a__button"
