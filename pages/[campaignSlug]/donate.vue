@@ -432,7 +432,7 @@ const creditCard = ref({
   expiration: '',
   verification_value: '',
 });
-const isClipboardInaccessible = ref(!navigator.clipboard);
+const isClipboardInaccessible = ref(true);
 const toDonateTaxes = ref(false);
 const paymentMethod = ref('');
 const totalTaxes = ref(0);
@@ -573,6 +573,8 @@ if (process.client) {
     ],
   });
   onMounted(() => {
+    isClipboardInaccessible.value = !navigator.clipboard;
+
     if (!donateStore.deviceAuthorizationTokenId) {
       donateStore.getDeviceAuthorizationToken();
     }
