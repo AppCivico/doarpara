@@ -149,8 +149,6 @@ donationsStore.fetchDonations(String(route.params.campaignSlug), {
     tr {
       flex-basis: calc(50% - my.$gutter);
       flex-grow: 1;
-
-      min-width: 20em;
     }
   }
 }
