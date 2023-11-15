@@ -32,7 +32,7 @@ if (process.client) {
   });
 }
 </script>
-<style>
+<style lang="scss">
 .page-slide-left-enter-active,
 .page-slide-left-leave-active,
 .page-slide-right-enter-active,
@@ -62,5 +62,9 @@ if (process.client) {
   opacity: 0;
 
   transform: translate(50px, 0);
+}
+
+.nuxt-loading-indicator {
+  background: linear-gradient(to right, my.palette('brand', 'secondary'), my.palette('brand', 'tertiary')) !important;
 }
 </style>
