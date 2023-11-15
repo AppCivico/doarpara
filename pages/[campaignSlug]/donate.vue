@@ -338,33 +338,7 @@
             {{ message.text }}
           </NuxtLink>
         </p>
-
-        <template v-else-if="message.type === 'msg'">
-          <template v-if="instantPaymentPlatformKey">
-            <div v-if="isClipboardInaccessible" :key="i + '--copy-field'" class="input-wrapper field-for-copy__wrapper">
-              <label class="field-for-copy__label" :for="`to-copy--${i}`">
-                Selecione e copie
-              </label>
-              <input
-                :id="`to-copy--${i}`"
-                v-focus.select
-                class="field-for-copy"
-                type="text"
-                readonly
-                :value="instantPaymentPlatformKey"
-                @click="selectContent($event)"
-              />
-            </div>
-            <div
-              v-else
-              :key="`message__${i}--text`"
-              @click="delegation($event)"
-              @keydown="delegation($event)"
-              v-html="message.text"
-            />
-          </template>
-          <div v-else :key="`message__${i}--text`" v-html="message.text" />
-        </template>
+        <div v-else-if="message.type === 'msg'" :key="`message__${i}--text`" v-html="message.text" />
       </template>
     </fieldset>
 
