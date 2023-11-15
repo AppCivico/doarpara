@@ -301,7 +301,7 @@
           </dt>
           <dd class="donation-summary__description">
             <output>
-              {{ $n(amountMinusTaxes, 'currency') }}
+              {{ $n(toDonateTaxes ? amount : amountMinusTaxes, 'currency') }}
             </output>
           </dd>
         </div>
@@ -347,7 +347,7 @@
         {{ $t(`donationForm.pendingMessages.${pendingMessage}`) }}
       </p>
 
-      <button type="submit" :disabled="!amount || consolidatedPending" class="donation-form__submit">
+      <button type="submit" :disabled="!finalAmount || consolidatedPending" class="donation-form__submit">
         <img
           src="~/assets/images/icons/lock-closed.svg"
           alt=""
@@ -355,7 +355,7 @@
           height="20"
           aria-hidden="true"
         />
-        {{ $t('donationForm.submit', { amount: $n(amount, 'currency') }) }}
+        {{ $t('donationForm.submit', { amount: $n(finalAmount, 'currency') }) }}
       </button>
 
       <p class="safe-transaction">
@@ -403,6 +403,7 @@
 </template>
 <script setup lang="ts">
 import states from '@/data/states.json';
+import taxes from '@/data/taxes.ts';
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
 import type { CreatedDonation, DonationMessage } from '~/doar-para.d.ts';
@@ -437,13 +438,10 @@ const isClipboardInaccessible = ref(true);
 const messages: Ref<DonationMessage[]> = ref([]);
 const paymentMethod = ref('');
 const toDonateTaxes = ref(false);
-const totalTaxes = ref(0);
 
 const {
   consolidatedPending, donor, donorAddress, pending, pendingMessage,
 } = storeToRefs(donateStore);
-
-const amountMinusTaxes = computed(() => amount.value - totalTaxes.value);
 
 // TODO: remove dumb mapping. It was a bad decision.
 const mappedPaymentMethod = computed(() => {
@@ -458,6 +456,13 @@ const mappedPaymentMethod = computed(() => {
       return paymentMethod.value;
   }
 });
+
+const currentTaxes = computed(() => taxes[mappedPaymentMethod.value]);
+
+const amountDonatingTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
+  && typeof currentTaxes.value?.tax === 'number')
+  ? (amount.value + currentTaxes.value.tax / 100) / (1 - currentTaxes.value.percent / 100)
+  : 0));
 
 const isDonationConcluded = computed(() => createdDonation.value?.state !== undefined && createdDonation.value.state !== 'credit_card_form');
 
@@ -475,6 +480,17 @@ const instantPaymentPlatformKey = computed(() => {
 
   return key;
 });
+
+const totalTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
+  && typeof currentTaxes.value?.tax === 'number')
+  ? amount.value * (currentTaxes.value.percent / 100) + (currentTaxes.value.tax / 100)
+  : 0));
+
+const amountMinusTaxes = computed(() => amount.value - totalTaxes.value);
+
+const finalAmount = computed(() => (toDonateTaxes.value
+  ? amountDonatingTaxes.value
+  : amount.value));
 
 function addMessages(messageOrMessages: DonationMessage[] | DonationMessage) {
   if (Array.isArray(messageOrMessages)) {
@@ -551,7 +567,7 @@ function selectContent(event: Event) {
 
 async function submitDonation() {
   const { data: donationData, error: donationError } = await donateStore
-    .createDonationOnBackEnd(amount.value * 100, mappedPaymentMethod.value);
+    .createDonationOnBackEnd(finalAmount.value * 100, mappedPaymentMethod.value);
 
   if (donationData) {
     if (donationData.donation) {
