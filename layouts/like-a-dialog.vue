@@ -80,6 +80,7 @@ header {
   position: absolute;
   top: my.$gutter;
   right: my.$gutter;
+  z-index: my.layer('modal');
 
   width: my.$gutter * 1.5;
   height: my.$gutter * 1.5;
