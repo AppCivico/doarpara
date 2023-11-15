@@ -466,7 +466,7 @@ const toDonateTaxes = ref(false);
 const totalTaxes = ref(0);
 
 const {
-  consolidatedPending, donor, donorAddress, pending, pendingMessage, referral,
+  consolidatedPending, donor, donorAddress, pending, pendingMessage,
 } = storeToRefs(donateStore);
 
 const amountMinusTaxes = computed(() => amount.value - totalTaxes.value);
@@ -567,14 +567,6 @@ function getDonationAmount() {
   }
 }
 
-function getReferral() {
-  const referralCode = route.query[appConfig.queryStringSpecialParameters.referrer];
-
-  if (referralCode) {
-    referral.value = String(referralCode);
-  }
-}
-
 function selectContent(event: Event) {
   const { target: el } = event;
 
@@ -663,7 +655,6 @@ if (process.client) {
     }
 
     getDonationAmount();
-    getReferral();
 
     window.addEventListener('load', () => {
       nextTick(() => {

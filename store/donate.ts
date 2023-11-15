@@ -20,7 +20,7 @@ type DonorData = {
   email: string;
   cpf: string;
   name: string;
-  referral_code: string;
+  referral_code: string | undefined;
   address_zipcode: string;
   address_state: string;
   address_city: string;
@@ -47,6 +47,10 @@ type PostalServiceQueryResult = {
   street: string;
 };
 
+type ReferralCodes = {
+  [key: string]: string;
+};
+
 type StateErrors = {
   gettingAddress: unknown,
   validatingDevice: unknown,
@@ -63,7 +67,7 @@ type ValidatedCard = {
 export const useDonateStore = defineStore('toDonate', {
   state: () => ({
     deviceAuthorizationTokenId: '',
-    referral: '',
+    referral: <ReferralCodes> {},
 
     donor: {
       first_name: '',
@@ -270,35 +274,41 @@ export const useDonateStore = defineStore('toDonate', {
     },
   },
   getters: {
-    payloadForCreationOfDonationOnBackEnd: ((state): DonorData => ({
-      email: state.donor.email,
-      cpf: state.donor.cpf ? state.donor.cpf.replace(/[^0-9]/g, '') : '',
-      name: `${state.donor.first_name} ${state.donor.last_name}`,
-      referral_code: state.referral,
-      address_zipcode: state.donorAddress.zip_code,
-      address_state: state.donorAddress.state,
-      address_city: state.donorAddress.city,
-      address_street: state.donorAddress.street,
-      address_district: state.donorAddress.district,
-      address_house_number: state.donorAddress.number,
-      address_complement: state.donorAddress.complement,
-      phone: state.donor.phone_number
-        ? state.donor.phone_number.replace(/[^0-9]+/g, '')
-        : '',
-      birthdate: state.donor.birthdate,
-      billing_address_zipcode: state.donorAddress.zip_code,
-      billing_address_state: state.donorAddress.state,
-      billing_address_city: state.donorAddress.city,
-      billing_address_street: state.donorAddress.street,
-      billing_address_district: state.donorAddress.district,
-      billing_address_house_number: state.donorAddress.number,
-      billing_address_complement: state.donorAddress.complement,
-    })),
-
     consolidatedPending: (({ pending }) => Object.values(pending).some((value) => value === true)),
 
     pendingMessage: (({ pending }) => Object.keys(pending)
       .find((x) => pending[x as keyof typeof pending] !== false)),
+
+    payloadForCreationOfDonationOnBackEnd: ((state): DonorData => {
+      const campaignStore = useCampaignStore();
+
+      return {
+        email: state.donor.email,
+        cpf: state.donor.cpf ? state.donor.cpf.replace(/[^0-9]/g, '') : '',
+        name: `${state.donor.first_name} ${state.donor.last_name}`,
+        referral_code: campaignStore.campaign?.id
+          ? state.referral[campaignStore.campaign?.id as keyof typeof state.referral]
+          : undefined,
+        address_zipcode: state.donorAddress.zip_code,
+        address_state: state.donorAddress.state,
+        address_city: state.donorAddress.city,
+        address_street: state.donorAddress.street,
+        address_district: state.donorAddress.district,
+        address_house_number: state.donorAddress.number,
+        address_complement: state.donorAddress.complement,
+        phone: state.donor.phone_number
+          ? state.donor.phone_number.replace(/[^0-9]+/g, '')
+          : '',
+        birthdate: state.donor.birthdate,
+        billing_address_zipcode: state.donorAddress.zip_code,
+        billing_address_state: state.donorAddress.state,
+        billing_address_city: state.donorAddress.city,
+        billing_address_street: state.donorAddress.street,
+        billing_address_district: state.donorAddress.district,
+        billing_address_house_number: state.donorAddress.number,
+        billing_address_complement: state.donorAddress.complement,
+      };
+    }),
   },
   persist: {
     storage: persistedState.cookiesWithOptions({
