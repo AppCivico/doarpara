@@ -300,4 +300,11 @@ export const useDonateStore = defineStore('toDonate', {
     pendingMessage: (({ pending }) => Object.keys(pending)
       .find((x) => pending[x as keyof typeof pending] !== false)),
   },
+  persist: {
+    storage: persistedState.cookiesWithOptions({
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: true,
+    }),
+  },
 });

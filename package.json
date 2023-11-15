@@ -18,6 +18,7 @@
     "@nuxt/devtools": "latest",
     "@nuxtjs/i18n": "^8.0.0-rc.5",
     "@nuxtjs/mdc": "^0.2.6",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.7.2",
     "@vue/cli-service": "^5.0.8",

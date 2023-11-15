@@ -23,7 +23,12 @@ export default defineNuxtConfig({
   i18n: {
     defaultLocale: 'pt',
   },
-  modules: ['@nuxtjs/i18n', '@pinia/nuxt', '@nuxtjs/mdc'],
+  modules: [
+    '@nuxtjs/i18n',
+    '@pinia/nuxt',
+    '@nuxtjs/mdc',
+    '@pinia-plugin-persistedstate/nuxt',
+  ],
   runtimeConfig: {
     public: {
       publicApiBase: 'https://dapi.votolegal.com.br/public-api',
