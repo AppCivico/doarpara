@@ -310,6 +310,7 @@
             <input
               id="include-donation-taxes"
               v-model="toDonateTaxes"
+              :disabled="amountDonatingTaxes > maxDonation / 100"
               type="checkbox"
               name="include-donation-taxes"
               class="donation-summary__input"
@@ -435,6 +436,7 @@ const creditCard = ref({
 
 const createdDonation: Ref<CreatedDonation> = ref(null);
 const isClipboardInaccessible = ref(true);
+const maxDonation = 106410;
 const messages: Ref<DonationMessage[]> = ref([]);
 const paymentMethod = ref('');
 const toDonateTaxes = ref(false);
@@ -491,6 +493,12 @@ const amountMinusTaxes = computed(() => amount.value - totalTaxes.value);
 const finalAmount = computed(() => (toDonateTaxes.value
   ? amountDonatingTaxes.value
   : amount.value));
+
+watch(paymentMethod, () => {
+  if (amountDonatingTaxes.value > maxDonation / 100) {
+    toDonateTaxes.value = false;
+  }
+});
 
 function addMessages(messageOrMessages: DonationMessage[] | DonationMessage) {
   if (Array.isArray(messageOrMessages)) {
