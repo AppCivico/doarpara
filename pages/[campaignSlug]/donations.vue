@@ -10,7 +10,7 @@
     <section class="donations-page__receipts">
       <h2>{{ $t('receipts.titles') }}</h2>
 
-      <MDC :value="$t('receipts.description')" tag="div" class="donations-page__receipts-intro" />
+      <MDC :value="$t('receipts.description', { campaignName: campaign?.name })" tag="div" class="donations-page__receipts-intro" />
 
       <table
         class="donations-page__receipts-table"
