@@ -164,7 +164,15 @@ label small {
       'min-width': 12.5rem, /* 200px */
     ),
     (
+      'percent': 45,
+      'min-width': 12.5rem, /* 200px */
+    ),
+    (
       'percent': 50,
+      'min-width': 12.5rem, /* 200px */
+    ),
+    (
+      'percent': 55,
       'min-width': 12.5rem, /* 200px */
     ),
     (
@@ -182,6 +190,12 @@ label small {
     ),
     (
       'percent': 80,
+    ),
+    (
+      'percent': 85,
+    ),
+    (
+      'percent': 90,
     ),
   );
 
@@ -227,7 +241,7 @@ form br {
   overflow: visible;
 
   font-family: inherit; /* 1 */
-  font-size: inherit; /* 1 */
+  font-size: my.ms-step(0); /* 1 */
   line-height: inherit; /* 1 */
   color: inherit;
   text-align: inherit;

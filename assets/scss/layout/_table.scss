@@ -28,7 +28,7 @@ td {
 table {
   @include my.zebra-table ($even-bg: my.palette('neutral', 'x-light'));
 
-  margin-top: my.$leading * 1.5em;
+  margin-top: 0;
   margin-right: 0;
   margin-bottom: my.$leading * 1.5em;
   margin-left: 0;
@@ -79,7 +79,7 @@ tr {
   border-color: my.palette('neutral','light');
   border-style: solid;
   border-width: my.$stroke my.$stroke my.$stroke * 3 my.$stroke;
-  border-radius: my.$rounded-corner * 2;
+  border-radius: my.$rounded-corner;
 
   @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
     @include my.fallback('margin', 0 0 1.5rem);
@@ -246,7 +246,7 @@ tfoot td {
 
 .cell--number {
   text-align: right;
-  
+
   @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
     text-align: left;
   }

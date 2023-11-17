@@ -16,14 +16,19 @@ fieldset .list-of-options {
 
   align-items: top;
 
-  padding: 0;
+  width: 100%;
+  padding: my.$gutter * 0.75;
   margin: 0;
+
+  background-color: my.palette('neutral','x-light');
+  border: my.$stroke solid my.palette('border');
+  border-radius: my.$rounded-corner;
 }
 
 .list-of-options__item {
   display: flex;
 
-  gap: my.$gutter;
+  gap: my.$gutter * 0.5;
 
   align-items: center;
 
