@@ -82,6 +82,7 @@ fieldset .list-of-options {
   appearance: none;
   cursor: pointer;
 
+  background-color: my.palette('neutral', 'white');
   background-clip: padding-box;
   border: my.$stroke solid my.palette('border', 'base');
   box-shadow: inset 0 0 0 my.$gutter * 0.25 my.palette('neutral', 'white');
@@ -110,7 +111,7 @@ fieldset .list-of-options {
 }
 
 [type='checkbox'] {
-  border-radius: my.$rounded-corner;
+  border-radius: my.$rounded-corner * 0.25;
 
   &:checked {
   }
