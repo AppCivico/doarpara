@@ -36,7 +36,7 @@
         >
       </p>
 
-      <p data-field-size="100">
+      <p data-field-size="50">
         <label for="natural-person-identification">
           {{ $t('naturalPersonIdentification') }}
         </label>
@@ -57,6 +57,21 @@
       </p>
 
       <p data-field-size="50">
+        <label for="birthdate">
+          {{ $t('donationForm.birthDate') }}
+        </label>
+        <input
+          id="birthdate"
+          v-model="donor.birthdate"
+          type="date"
+          name="birthdate"
+          autocomplete="bday"
+          required
+          inputmode="numeric"
+        />
+      </p>
+
+      <p data-field-size="50">
         <label for="email">
           {{ $t('donationForm.email') }}
         </label>
@@ -71,17 +86,20 @@
       </p>
 
       <p data-field-size="50">
-        <label for="birthdate">
-          {{ $t('donationForm.birthDate') }}
+        <label for="phone">
+          {{ $t('donationForm.phoneNumber') }}
         </label>
         <input
-          id="birthdate"
-          v-model="donor.birthdate"
-          type="date"
-          name="birthdate"
-          autocomplete="bday"
+          id="phone"
+          v-model="donor.phone_number"
+          v-maska
+          data-maska="['(##) ####-####', '(##) #####-####']"
+          type="tel"
+          name="phone"
+          autocomplete="tel-national"
+          placeholder="(00) 00000-0000"
+          minlength="14"
           required
-          inputmode="numeric"
         />
       </p>
     </fieldset>
@@ -137,7 +155,14 @@
         />
       </p>
 
-      <p data-field-size="75">
+      <p data-field-size="40">
+        <label for="extended-address">
+          {{ $t('donationForm.extendedAddress') }}
+        </label>
+        <input id="extended-address" v-model="donorAddress.complement" type="text" name="extended-address" autocomplete="address-level4" />
+      </p>
+
+      <p data-field-size="45">
         <label for="city">
           {{ $t('donationForm.city') }}
         </label>
@@ -149,7 +174,7 @@
         />
       </p>
 
-      <p data-field-size="10">
+      <p data-field-size="15">
         <label for="state">
           {{ $t('donationForm.state') }}
         </label>
@@ -170,31 +195,6 @@
             {{ state.abbr }}
           </option>
         </select>
-      </p>
-
-      <p data-field-size="65">
-        <label for="extended-address">
-          {{ $t('donationForm.extendedAddress') }}
-        </label>
-        <input id="extended-address" v-model="donorAddress.complement" type="text" name="extended-address" autocomplete="address-level4" />
-      </p>
-
-      <p data-field-size="35">
-        <label for="phone">
-          {{ $t('donationForm.phoneNumber') }}
-        </label>
-        <input
-          id="phone"
-          v-model="donor.phone_number"
-          v-maska
-          data-maska="['(##) ####-####', '(##) #####-####']"
-          type="tel"
-          name="phone"
-          autocomplete="tel-national"
-          placeholder="(00) 00000-0000"
-          minlength="14"
-          required
-        />
       </p>
     </fieldset>
 

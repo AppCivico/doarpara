@@ -81,7 +81,6 @@
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonationsStore } from '@/store/donations.ts';
 
-const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 
 const campaignStore = useCampaignStore();
