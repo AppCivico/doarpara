@@ -83,7 +83,7 @@
 
   &:invalid {
     border-radius: my.$rounded-corner;
-    box-shadow: 0 0 5px my.palette('feedback', 'danger');
+    box-shadow: 0 0 0 my.$stroke my.palette('feedback', 'danger');
   }
 
   &.error:invalid {
