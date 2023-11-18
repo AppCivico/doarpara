@@ -294,38 +294,66 @@
     <fieldset class="flexible-fieldset">
       <legend>{{ $t('donationForm.donationPaymentSummary') }}</legend>
 
-      <dl class="donation-summary">
-        <div class="donation-summary__item">
-          <dt class="donation-summary__term">
-            {{ $t('donationForm.donationTo', { campaignName: campaign?.name }) }}
-          </dt>
-          <dd class="donation-summary__description">
-            <output>
-              {{ $n(toDonateTaxes ? amount : amountMinusTaxes, 'currency') }}
-            </output>
-          </dd>
+      <div class="donation-summary">
+        <div class="donation-summary__item donation-summary__item--final-amount">
+          <label class="donation-summary__term" for="donation-gross-value">
+            {{ $t('donationForm.donationExpenses.grossAmount') }}
+          </label>
+          <div class="donation-summary__intermediate-control">
+            <a href="#">{{ $t('donationForm.editValue') }}</a>
+          </div>
+          <output id="donation-gross-value" class="donation-summary__description">
+            {{ $n(grossValue, 'currency', { maximumFractionDigits: 2 }) }}
+          </output>
         </div>
-        <div class="donation-summary__item">
-          <dt class="donation-summary__term list-of-options__item">
-            <input
-              id="include-donation-taxes"
-              v-model="toDonateTaxes"
-              :disabled="amountDonatingTaxes > maxDonation / 100"
-              type="checkbox"
-              name="include-donation-taxes"
-              class="donation-summary__input"
-            />
-            <label for="include-donation-taxes" class="donation-summary__label">
-              {{ $t('donationForm.donateTaxes') }}
-            </label>
-          </dt>
-          <dd class="donation-summary__description">
-            <output>
-              {{ $n(totalTaxes, 'currency') }}
-            </output>
-          </dd>
+      </div>
+
+      <template v-if="!maxDonation || amountDonatingTaxes <= maxDonation / 100">
+        <MDC
+          :value="$t(
+            'donationForm.donationExpenses.message',
+            { campaignName: campaign?.name },
+          )"
+        />
+        <div class="list-of-options__item">
+          <input
+            id="include-donation-taxes"
+            v-model="toDonateTaxes"
+            type="checkbox"
+            name="include-donation-taxes"
+            class="donation-summary__input"
+          />
+          <label for="include-donation-taxes" class="donation-summary__label">
+            {{ $t('donationForm.donationExpenses.label') }}
+          </label>
         </div>
-      </dl>
+      </template>
+
+      <div class="donation-summary">
+        <div class="donation-summary__item">
+          <label class="donation-summary__term" for="donation-total-taxes">
+            {{ $t('donationForm.donationExpenses.expenses') }}
+          </label>
+          <output
+            id="donation-total-taxes"
+            class="donation-summary__description"
+          >
+            {{ $n(totalTaxes, 'currency', { maximumFractionDigits: 2 }) }}
+          </output>
+        </div>
+
+        <div class="donation-summary__item">
+          <label class="donation-summary__term" for="donation-net-value">
+            {{ $t('donationForm.donationExpenses.netAmount', {
+              campaignName:
+                campaign?.name,
+            }) }}
+          </label>
+          <output id="donation-net-value" class="donation-summary__description">
+            {{ $n(netValue, 'currency', { maximumFractionDigits: 2 }) }}
+          </output>
+        </div>
+      </div>
     </fieldset>
 
     <MDC :value="$t('donationForm.declaration')" tag="fieldset" />
@@ -348,7 +376,7 @@
         {{ $t(`donationForm.pendingMessages.${pendingMessage}`) }}
       </p>
 
-      <button type="submit" :disabled="!finalAmount || consolidatedPending" class="donation-form__submit">
+      <button type="submit" :disabled="!grossValue || consolidatedPending" class="donation-form__submit">
         <img
           src="~/assets/images/icons/lock-closed.svg"
           alt=""
@@ -356,7 +384,7 @@
           height="20"
           aria-hidden="true"
         />
-        {{ $t('donationForm.submit', { amount: $n(finalAmount, 'currency') }) }}
+        {{ $t('donationForm.submit', { amount: $n(grossValue, 'currency', { maximumFractionDigits: 2 }) }) }}
       </button>
 
       <p class="safe-transaction">
@@ -436,7 +464,6 @@ const creditCard = ref({
 
 const createdDonation: Ref<CreatedDonation> = ref(null);
 const isClipboardInaccessible = ref(true);
-const maxDonation = 106410;
 const messages: Ref<DonationMessage[]> = ref([]);
 const paymentMethod = ref('');
 const toDonateTaxes = ref(false);
@@ -459,7 +486,12 @@ const mappedPaymentMethod = computed(() => {
   }
 });
 
-const currentTaxes = computed(() => taxes[mappedPaymentMethod.value]);
+const currentTaxes = computed(() => (taxes[mappedPaymentMethod.value]
+  ? taxes[mappedPaymentMethod.value]
+  : {
+    percent: 0,
+    tax: 0,
+  }));
 
 const amountDonatingTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
   && typeof currentTaxes.value?.tax === 'number')
@@ -483,19 +515,26 @@ const instantPaymentPlatformKey = computed(() => {
   return key;
 });
 
-const totalTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
-  && typeof currentTaxes.value?.tax === 'number')
-  ? amount.value * (currentTaxes.value.percent / 100) + (currentTaxes.value.tax / 100)
-  : 0));
-
-const amountMinusTaxes = computed(() => amount.value - totalTaxes.value);
-
-const finalAmount = computed(() => (toDonateTaxes.value
+const grossValue = computed(() => (toDonateTaxes.value
   ? amountDonatingTaxes.value
   : amount.value));
 
+const maxDonation = computed(() => campaign.value?.max_donation_value || 0);
+
+const totalTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
+  && typeof currentTaxes.value?.tax === 'number')
+  ? grossValue.value * (currentTaxes.value.percent / 100) + (currentTaxes.value.tax / 100)
+  : 0));
+
+const netValue = computed(() => grossValue.value - totalTaxes.value);
+
+const totalDonatedTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
+  && typeof currentTaxes.value?.tax === 'number')
+  ? amountDonatingTaxes.value * (currentTaxes.value.percent / 100) + (currentTaxes.value.tax / 100)
+  : 0));
+
 watch(paymentMethod, () => {
-  if (amountDonatingTaxes.value > maxDonation / 100) {
+  if (maxDonation.value && amountDonatingTaxes.value > maxDonation.value / 100) {
     toDonateTaxes.value = false;
   }
 });
@@ -575,7 +614,7 @@ function selectContent(event: Event) {
 
 async function submitDonation() {
   const { data: donationData, error: donationError } = await donateStore
-    .createDonationOnBackEnd(finalAmount.value * 100, mappedPaymentMethod.value);
+    .createDonationOnBackEnd(grossValue.value * 100, mappedPaymentMethod.value);
 
   if (donationData) {
     if (donationData.donation) {
@@ -654,6 +693,8 @@ if (process.client) {
 
     getDonationAmount();
 
+    paymentMethod.value = 'instant_payment_platform';
+
     window.addEventListener('load', () => {
       nextTick(() => {
         if (Iugu.utils.isBlockedByAdBlock()) {
@@ -684,13 +725,14 @@ if (process.client) {
     filter: invert(1);
   }
 }
-
 </style>
 <style lang="scss" scoped>
 @use 'sass:color';
 
 .donation-summary {
   flex-basis: 100%;
+
+  overflow: hidden;
 
   border: my.$stroke solid my.palette('border');
   border-radius: my.$rounded-corner;
@@ -699,24 +741,51 @@ if (process.client) {
 .donation-summary__item {
   display: flex;
 
+  flex-wrap: wrap;
+
+  gap: my.$gutter * 0.75;
+
   padding: my.$gutter * 0.75;
 
-  &:nth-child(odd) {
-    background-color: my.palette('neutral', 'x-light');
+  border-radius: 0;
+
+  & + & {
+    border-top: my.$stroke solid my.palette('border');
   }
+}
+
+.donation-summary__item--final-amount {
+  background-color: my.palette('neutral', 'x-light');
 }
 
 .donation-summary__term {
   flex-basis: 50%;
+  flex-grow: 1;
+
+  margin-right: auto;
+  margin-left: 0;
 
   font-weight: my.font-weight('text');
+  text-align: left;
+
+  border-radius: 0;
+}
+
+.donation-summary__intermediate-control {
+  text-align: right;
+
+  border-radius: 0;
 }
 
 .donation-summary__description {
-  flex-basis: 50%;
+  margin-right: 0;
+  margin-left: auto;
+  // flex-basis: 50%;
 
   font-weight: my.font-weight('bold');
   text-align: right;
+
+  border-radius: 0;
 }
 
 .donation-summary__label {

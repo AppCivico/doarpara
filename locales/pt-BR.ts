@@ -33,10 +33,19 @@ export default {
     declaration: `Ao completar essa transação, declaro que minhas doações não ultrapassam 10% dos meus rendimentos brutos do ano anterior, a origem do dinheiro não é estrangeira, não sou concessionário ou permissionário de serviço público.
 
 Declaro estar ciente que, ao realizar uma doação, por conta da legislação eleitoral, os seus dados (nome completo, CPF, valor individual de cada doação, forma de pagamento, data das doações) poderão ser visualizados de forma pública no site do candidato, na aba transparência, e concordo com os [termos de doação](https://participe.votolegal.com.br/files/Termo%20de%20uso%20e%20Politica%20de%20privacidade%20(unificado)%20-%20Voto%20Legal%20-%202020%402020-09-23.pdf).`,
-    donateTaxes: 'Incluir as taxas de operação',
+
+    donationExpenses: {
+      expenses: 'Custos de operação',
+      grossAmount: 'Valor da doação',
+      label: 'Doar os custos de operação',
+      message: 'Nem toda a sua doação vai para **{campaignName}**. Para maximizar seu impacto, você pode doar também o valor dos custos de operação.',
+      netAmount: 'Recebido por {campaignName}',
+    },
+
     donationPaymentSummary: 'Resumo da doação',
     donationTo: 'Doação {campaignName}',
     email: 'E-mail',
+    editValue: 'Editar valor',
     extendedAddress: 'Complemento',
     familyName: 'Sobrenome',
     iDoNotKnowMyPostalCode: 'Não sei o meu CEP',

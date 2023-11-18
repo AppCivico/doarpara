@@ -2,7 +2,7 @@ type Taxes = {
   [key: string]: {
     percent: number;
     tax: number;
-    [key: string]: string | number
+    [key: string]: number;
   };
 };
 
