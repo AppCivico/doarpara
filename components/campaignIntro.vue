@@ -199,13 +199,13 @@ const customPledges = computed(({ pledge_list } = props.campaign) => (!Array.isA
   ? []
   : pledge_list.filter((x) => typeof x === 'string') as string[]));
 
-const minimumDonation = computed(() => (typeof props.campaign.minimum_donation === 'number'
+const minimumDonation = ref(0)/* computed(() => (typeof props.campaign?.minimum_donation === 'number'
   ? props.campaign.minimum_donation
   : sortedPledgeList.value[0] as number
-  || undefined));
+  || undefined)) */;
 
-const maximumDonation = computed(() => (typeof props.campaign.maximum_donation === 'number'
-  ? props.campaign.maximum_donation
+const maximumDonation = computed(() => (typeof props.campaign.max_donation_value === 'number'
+  ? props.campaign.max_donation_value
   : sortedPledgeList.value[sortedPledgeList.value.length - 1] as number
   || undefined));
 
