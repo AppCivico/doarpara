@@ -1042,17 +1042,22 @@ $no-viewport: false !default;
   overflow-wrap: break-word;
 }
 
-@mixin hovered {
-  box-decoration-break: clone;
-
+@mixin _focus-and-hover-basis {
   outline: 4px solid f.palette('effects', 'tap-highlight');
+
+  transition-duration: 100ms;
+  transition-property: outline-width;
+  box-decoration-break: clone;
+}
+
+@mixin hovered {
+  @include _focus-and-hover-basis;
 }
 
 @mixin focused {
-  border-color: f.palette('border','focus');
-  box-decoration-break: clone;
+  @include _focus-and-hover-basis;
 
-  outline: 4px solid f.palette('effects', 'tap-highlight');
+  border-color: f.palette('border','focus');
 }
 
 @mixin shadow {

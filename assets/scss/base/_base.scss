@@ -557,6 +557,8 @@ a {
   color: my.palette('anchor', 'base');
   vertical-align: baseline;
 
+  outline-width: 0;
+
   @include my.on-event {
     text-decoration: underline;
   }

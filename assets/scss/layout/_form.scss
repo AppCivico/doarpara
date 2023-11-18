@@ -259,15 +259,20 @@ form br {
   // stylelint-disable-next-line property-no-vendor-prefix
   -webkit-font-smoothing: inherit;
 
-  &:hover {
-  // border-color: rgba(0,0,0,0.1);
-  // background-color: #fff;
-  // -webkit-box-shadow: 0 0 0 4px rgba(234,100,217,0.1);
-  // box-shadow: 0 0 0 4px rgba(234,100,217,0.1);
+  outline-width: 0;
+
+  &:not(:disabled):hover {
+    @include my.hovered;
   }
 
-  &:focus {
+  &:focus-visible {
     @include my.focused;
+  }
+
+  @supports not selector(:focus-visible) {
+    &:focus {
+      @include my.focused;
+    }
   }
 
   &:disabled {

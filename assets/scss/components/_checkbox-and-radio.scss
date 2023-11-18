@@ -87,13 +87,7 @@ fieldset .list-of-options {
   border: my.$stroke solid my.palette('border', 'base');
   box-shadow: inset 0 0 0 my.$gutter * 0.25 my.palette('neutral', 'white');
 
-  &:hover:not(:disabled) {
-    @include my.hovered;
-  }
 
-  &:focus {
-    @include my.focused;
-  }
 
   &:checked {
     background-color: my.palette('brand', 'primary');
