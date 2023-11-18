@@ -71,7 +71,7 @@ label {
 
   font-size: my.ms-step(0);
   font-weight: my.font-weight('bold');
-  line-height: inherit;
+  line-height: my.$gutter * 1;
   color: my.palette('text', 'faded');
 
   cursor: pointer;
@@ -99,6 +99,7 @@ label * {
 label small {
   font-size: my.ms-step(-1);
   font-weight: my.font-weight('text');
+  line-height: 1.5;
 }
 
 /* paragraphs inside forms
@@ -214,6 +215,8 @@ label small {
 }
 
 form p {
+  margin-bottom: 0;
+
   font-size: my.ms-step(13px);
 }
 
