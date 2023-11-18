@@ -315,6 +315,7 @@
             { campaignName: campaign?.name },
           )"
         />
+
         <div class="list-of-options__item">
           <input
             id="include-donation-taxes"
@@ -325,6 +326,17 @@
           />
           <label for="include-donation-taxes" class="donation-summary__label">
             {{ $t('donationForm.donationExpenses.label') }}
+            <small>
+              (<template v-if="currentTaxes.percent">
+                {{ $n(currentTaxes.percent / 100, 'percent', { maximumFractionDigits: 2 }) }}
+              </template>
+              <template v-if="currentTaxes.percent && currentTaxes.tax">
+                +
+              </template>
+              <template v-if="currentTaxes.tax">
+                {{ $n(currentTaxes.tax / 100, 'currency', { maximumFractionDigits: 2 }) }}
+              </template>)
+            </small>
           </label>
         </div>
       </template>
