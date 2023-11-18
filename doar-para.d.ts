@@ -124,8 +124,12 @@ export interface Campaign {
   is_election_campaign: boolean;
   platforms: RaisedAndSource[];
   pledge_list: PledgeValue[];
-  minimum_donation: number;
-  maximum_donation: number;
+  min_donation_values: [
+    method: string,
+    value: number,
+  ];
+
+  max_donation_value: number;
   payment_method_list: PaymentMethod[];
   reward_list: Reward[];
 
