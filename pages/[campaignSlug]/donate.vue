@@ -540,11 +540,6 @@ const totalTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'numb
 
 const netValue = computed(() => grossValue.value - totalTaxes.value);
 
-const totalDonatedTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
-  && typeof currentTaxes.value?.tax === 'number')
-  ? amountDonatingTaxes.value * (currentTaxes.value.percent / 100) + (currentTaxes.value.tax / 100)
-  : 0));
-
 watch(paymentMethod, () => {
   if (maxDonation.value && amountDonatingTaxes.value > maxDonation.value / 100) {
     toDonateTaxes.value = false;
