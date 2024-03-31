@@ -65,6 +65,13 @@ type ValidatedCard = {
 };
 
 export const useDonateStore = defineStore('toDonate', {
+  persist: {
+    storage: persistedState.cookiesWithOptions({
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: true,
+    }),
+  },
   state: () => ({
     deviceAuthorizationTokenId: '',
     referral: <ReferralCodes> {},
@@ -308,13 +315,6 @@ export const useDonateStore = defineStore('toDonate', {
         billing_address_house_number: state.donorAddress.number,
         billing_address_complement: state.donorAddress.complement,
       };
-    }),
-  },
-  persist: {
-    storage: persistedState.cookiesWithOptions({
-      httpOnly: true,
-      sameSite: 'strict',
-      secure: true,
-    }),
+    },
   },
 });
