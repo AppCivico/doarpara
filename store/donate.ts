@@ -1,8 +1,8 @@
+import type { CreatedDonation, DonationMessage } from '@/doar-para.d.ts';
+import type { CreditCard, PaymentToken } from '@/iugu.d.ts';
 import randomString from '@/utils/randomString.ts';
 import removeAccented from '@/utils/removeAccented.js';
 import getDonationFP from '@/vendor/donationFp.js';
-import type { CreatedDonation, DonationMessage } from '~/doar-para.d.ts';
-import type { CreditCard, PaymentToken } from '~/iugu.d.ts';
 import { useCampaignStore } from './campaign.ts';
 
 declare const VotolegalFP: any;
