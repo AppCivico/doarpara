@@ -1,6 +1,6 @@
 <template>
+  <!-- required by NUXT page transitions -->
   <div class="page-wrapper">
-    <!-- required by NUXT page transitions -->
     <pre v-if="error">{{ error }}</pre>
     <template v-else>
       <NuxtPage />
@@ -14,9 +14,7 @@ const appConfig = useAppConfig();
 const route = useRoute();
 
 const campaignStore = useCampaignStore();
-const {
-  campaign, campaignSections, error,
-} = storeToRefs(campaignStore);
+const { campaign, error } = storeToRefs(campaignStore);
 
 await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
 
