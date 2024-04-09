@@ -258,6 +258,6 @@ const title = computed(() => (route.meta.title
 
 const campaignStore = useCampaignStore();
 const {
-  campaign, campaignSections, error,
+  campaign, campaignSections,
 } = storeToRefs(campaignStore);
 </script>
