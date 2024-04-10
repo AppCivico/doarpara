@@ -1043,7 +1043,9 @@ $no-viewport: false !default;
 }
 
 @mixin _focus-and-hover-basis {
-  outline: 4px solid f.palette('effects', 'tap-highlight');
+  outline-width: 4px;
+  outline-style: solid;
+  outline-color: f.palette('effects', 'tap-highlight');
 
   transition-duration: 100ms;
   transition-property: outline-width;
