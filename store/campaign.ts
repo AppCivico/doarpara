@@ -1,4 +1,10 @@
-import type { Campaign, CampaignSection, Reward } from '@/doar-para.d.ts';
+import type {
+  Campaign, CampaignSection, PaymentMethod, Reward,
+} from '@/doar-para.d.ts';
+
+type MinimumDonationPerMethod = {
+  [key in PaymentMethod]?: number
+};
 
 interface State {
   campaign: Campaign | null;
@@ -60,5 +66,27 @@ export const useCampaignStore = defineStore('campaign', {
           .concat(requireSections)
         : requireSections
     )),
+    minimumDonationPerMethod: (({ campaign }) => {
+      const {
+        min_donation_values: minDonationValues = [],
+      } = campaign || {};
+
+      return minDonationValues.reduce((acc:MinimumDonationPerMethod, cur) => {
+        acc[cur.method] = cur.value;
+        return acc;
+      }, {});
+    }),
+
+    minimumDonation({ campaign }):number {
+      const {
+        payment_method_list: paymentMethodList = [],
+      } = campaign || {};
+      const { minimumDonationPerMethod } = this;
+
+      return paymentMethodList
+        .reduce((acc:number, cur: PaymentMethod) => (typeof minimumDonationPerMethod?.[cur] === 'number'
+          ? Math.min(minimumDonationPerMethod[cur] || 0, acc)
+          : acc), Infinity);
+    },
   },
 });

@@ -92,7 +92,7 @@
               v-if="!chosenCustomPledge"
               type="button"
               class="donation-values__value donation-values__value--custom-button like-a__button"
-              @click="$event => chosenCustomPledge = pledge"
+              @click="() => { chosenCustomPledge = pledge; }"
             >
               {{ $t(`pledges.${pledge}`) }}
             </button>
@@ -144,12 +144,15 @@
 </template>
 <script setup lang="ts">
 import type { Campaign } from '@/doar-para.d.ts';
-import { computed, ref } from 'vue';
+import { useCampaignStore } from '@/store/campaign.ts';
 
 const appConfig = useAppConfig();
 const props = defineProps<{
   campaign: Campaign;
 }>();
+
+const campaignStore = useCampaignStore();
+const { minimumDonation } = storeToRefs(campaignStore); // TODO: move from using props to store
 
 const chosenCustomPledge: Ref<string> = ref('');
 const showVideo = ref(false);
@@ -189,20 +192,23 @@ const campaignCoverSrcset = computed(() => {
   return undefined;
 });
 
-const sortedPledgeList = computed(({ pledge_list } = props.campaign) => (!Array.isArray(pledge_list)
-  ? []
-  : pledge_list
-    .filter((x) => (typeof x === 'number'))
-    .sort((a, b) => (a as number) - (b as number))));
+const sortedPledgeList = computed(() => {
+  const { pledge_list: pledgeList } = props.campaign;
 
-const customPledges = computed(({ pledge_list } = props.campaign) => (!Array.isArray(pledge_list)
-  ? []
-  : pledge_list.filter((x) => typeof x === 'string') as string[]));
+  return !Array.isArray(pledgeList)
+    ? []
+    : pledgeList
+      .filter((x): x is number => typeof x === 'number')
+      .sort((a, b) => (a as number) - (b as number));
+});
 
-const minimumDonation = ref(0)/* computed(() => (typeof props.campaign?.minimum_donation === 'number'
-  ? props.campaign.minimum_donation
-  : sortedPledgeList.value[0] as number
-  || undefined)) */;
+const customPledges = computed(() => {
+  const { pledge_list: pledgeList } = props.campaign;
+
+  return !Array.isArray(pledgeList)
+    ? []
+    : pledgeList.filter((x) => typeof x === 'string') as string[];
+});
 
 const maximumDonation = computed(() => (typeof props.campaign.max_donation_value === 'number'
   ? props.campaign.max_donation_value

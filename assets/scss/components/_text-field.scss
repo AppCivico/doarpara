@@ -86,7 +86,7 @@
     box-shadow: 0 0 0 my.$stroke my.palette('feedback', 'danger');
   }
 
-  &.error:invalid {
+  &.field--error:invalid {
     border-color: my.palette('feedback', 'danger');
     box-shadow: 0 0 0 4px color.scale(my.palette('feedback', 'danger'), $alpha: 50%);
   }
@@ -110,6 +110,10 @@
   &[list]::-webkit-calendar-picker-indicator {
     opacity: 0; /* 3 */
   }
+}
+
+.field--pending {
+  @include my.pulsing-outline;
 }
 
 [type='email'] {

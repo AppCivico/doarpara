@@ -1,445 +1,520 @@
 <template>
-  <form v-if="!isDonationConcluded" action="" class="donation-form" @submit.prevent="submitDonation">
-    <fieldset>
-      <label for="">
-        campo para testes! Será removido posteriormente
-        <input v-model="amount" type="number" step="0.01">
-      </label>
-    </fieldset>
-
-    <fieldset class="flexible-fieldset">
-      <p data-field-size="50">
-        <label for="first-name">
-          {{ $t('donationForm.name') }}
+  <div class="donation-form-and-messages">
+    <form v-if="!isDonationConcluded" action="" class="donation-form" @submit.prevent="submitDonation">
+      <fieldset v-debug>
+        <label for="">
+          campo para testes! Será removido posteriormente
+          <input v-model.number="amount" type="number" step="0.01">
         </label>
-        <input
-          id="first-name"
-          v-model="donor.first_name"
-          type="text"
-          name="first_name"
-          autocomplete="given-name"
-          required
-        >
-      </p>
+      </fieldset>
 
-      <p data-field-size="50">
-        <label for="last-name">
-          {{ $t('donationForm.familyName') }}
-        </label>
-        <input
-          id="last-name"
-          v-model="donor.last_name"
-          type="text"
-          name="last_name"
-          autocomplete="family-name"
-          required
-        >
-      </p>
+      <fieldset class="flexible-fieldset">
+        <p data-field-size="50">
+          <label for="first-name">
+            {{ $t('donationForm.name') }}
+          </label>
+          <input
+            id="first-name"
+            v-model.trim="donor.first_name"
+            v-focus
+            type="text"
+            name="first_name"
+            autocomplete="given-name"
+            required
+          >
+        </p>
 
-      <p data-field-size="50">
-        <label for="natural-person-identification">
-          {{ $t('naturalPersonIdentification') }}
-        </label>
-        <input
-          id="natural-person-identification"
-          v-model="donor.cpf"
-          v-maska
-          type="text"
-          data-maska="###.###.###-##"
-          inputmode="numeric"
-          name="cpf"
-          required
-        >
+        <p data-field-size="50">
+          <label for="last-name">
+            {{ $t('donationForm.familyName') }}
+          </label>
+          <input
+            id="last-name"
+            v-model="donor.last_name"
+            type="text"
+            name="last_name"
+            autocomplete="family-name"
+            required
+          >
+        </p>
 
-        <small>
-          {{ $t('donationForm.naturalPersonIdentificationAgreement') }}
-        </small>
-      </p>
+        <p data-field-size="50">
+          <label for="natural-person-identification">
+            {{ $t('naturalPersonIdentification') }}
+          </label>
+          <input
+            id="natural-person-identification"
+            v-model="donor.cpf"
+            v-maska
+            type="text"
+            data-maska="###.###.###-##"
+            inputmode="numeric"
+            name="cpf"
+            required
+          >
 
-      <p data-field-size="50">
-        <label for="birthdate">
-          {{ $t('donationForm.birthDate') }}
-        </label>
-        <input
-          id="birthdate"
-          v-model="donor.birthdate"
-          type="date"
-          name="birthdate"
-          autocomplete="bday"
-          required
-          inputmode="numeric"
-        />
-      </p>
-
-      <p data-field-size="50">
-        <label for="email">
-          {{ $t('donationForm.email') }}
-        </label>
-        <input
-          id="email"
-          v-model="donor.email"
-          type="email"
-          name="email"
-          autocomplete="email"
-          required
-        >
-      </p>
-
-      <p data-field-size="50">
-        <label for="phone">
-          {{ $t('donationForm.phoneNumber') }}
-        </label>
-        <input
-          id="phone"
-          v-model="donor.phone_number"
-          v-maska
-          data-maska="['(##) ####-####', '(##) #####-####']"
-          type="tel"
-          name="phone"
-          autocomplete="tel-national"
-          placeholder="(00) 00000-0000"
-          minlength="14"
-          required
-        />
-      </p>
-    </fieldset>
-
-    <fieldset class="flexible-fieldset">
-      <p data-field-size="50">
-        <label for="postal-code">
-          {{ $t('donationForm.postalCode') }}
           <small>
-            <NuxtLink
-              v-if="runtimeConfig.public.postalService.helperWebsiteUrl"
-              :href="runtimeConfig.public.postalService.helperWebsiteUrl"
-              class="like-a__link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ({{ $t('donationForm.iDoNotKnowMyPostalCode').toLowerCase() }})
-            </NuxtLink>
-
+            {{ $t('donationForm.naturalPersonIdentificationAgreement') }}
           </small>
-        </label>
-        <input
-          id="postal-code"
-          v-model="donorAddress.zip_code"
-          v-maska
-          name="zip_code"
-          type="text"
-          data-maska="#####-###"
-          @change="fillAddress"
-        />
-      </p>
-
-      <p data-field-size="75">
-        <label for="street">
-          {{ $t('donationForm.street') }}
-        </label>
-        <input
-          id="street"
-          v-model="donorAddress.street"
-          type="text"
-          disabled
-        />
-      </p>
-
-      <p data-field-size="25">
-        <label for="number">
-          {{ $t('donationForm.number') }}
-        </label>
-        <input
-          id="number"
-          v-model="donorAddress.number"
-          type="text"
-        />
-      </p>
-
-      <p data-field-size="40">
-        <label for="extended-address">
-          {{ $t('donationForm.extendedAddress') }}
-        </label>
-        <input id="extended-address" v-model="donorAddress.complement" type="text" name="extended-address" autocomplete="address-level4" />
-      </p>
-
-      <p data-field-size="45">
-        <label for="city">
-          {{ $t('donationForm.city') }}
-        </label>
-        <input
-          id="city"
-          v-model="donorAddress.city"
-          type="text"
-          disabled
-        />
-      </p>
-
-      <p data-field-size="15">
-        <label for="state">
-          {{ $t('donationForm.state') }}
-        </label>
-
-        <select
-          id="state"
-          v-model="donorAddress.state"
-          name="state"
-          disabled
-        >
-          <option value="" />
-          <option
-            v-for="state in states"
-            :key="state.abbr"
-            :value="state.abbr"
-            :title="state.name"
-          >
-            {{ state.abbr }}
-          </option>
-        </select>
-      </p>
-    </fieldset>
-
-    <fieldset class="flexible-fieldset">
-      <legend>{{ $t('paymentMethod') }}</legend>
-      <ul
-        v-if="Array.isArray(campaign?.payment_method_list)
-          && campaign?.payment_method_list.length"
-        class="list-of-options"
-      >
-        <li
-          v-for="method in campaign?.payment_method_list"
-          :key="method"
-          class="list-of-options__item"
-        >
-          <input
-            :id="`method__${method}`"
-            v-model="paymentMethod"
-            type="radio"
-            name="paymentMethod"
-            :value="method"
-          />
-          <label :for="`method__${method}`">
-            {{ $t(`paymentMethods.${method}`) }}
-          </label>
-        </li>
-      </ul>
-
-      <template v-if="mappedPaymentMethod === 'credit_card'">
-        <p data-field-size="50">
-          <label for="full-name">
-            {{ $t('creditCard.fullName') }}
-          </label>
-
-          <input id="full-name" v-model="creditCard.full_name" type="text" name="full_name" autocomplete="cc-name" :required="mappedPaymentMethod === 'credit_card'" />
         </p>
 
         <p data-field-size="50">
-          <label for="credit-card-number">
-            {{ $t('creditCard.number') }}
+          <label for="birthdate">
+            {{ $t('donationForm.birthDate') }}
           </label>
           <input
-            id="credit-card-number"
-            v-model="creditCard.number"
-            v-maska
-            data-maska="['#### #### #### ####', '#### #### #### ##']"
-            type="text"
+            id="birthdate"
+            v-model.trim="donor.birthdate"
+            type="date"
+            name="birthdate"
+            autocomplete="bday"
+            required
             inputmode="numeric"
-            name="credit_card_number"
-            autocomplete="cc-number"
-            :required="mappedPaymentMethod === 'credit_card'"
           />
         </p>
 
-        <p data-field-size="25">
-          <label for="credit-card-expiration-date">
-            {{ $t('creditCard.expirationDate') }}
+        <p data-field-size="50">
+          <label for="email">
+            {{ $t('donationForm.email') }}
           </label>
-
           <input
-            id="credit-card-expiration-date"
-            v-model="creditCard.expiration"
-            v-maska
-            data-maska="['##/##', '##/####']"
-            type="text"
-            name="credit_card_expiration_date"
-            inputmode="numeric"
-            autocomplete="cc-exp"
-            placeholder="MM/YY"
-            :required="mappedPaymentMethod === 'credit_card'"
+            id="email"
+            v-model.trim="donor.email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            required
           >
         </p>
 
-        <p data-field-size="25">
-          <label for="credit-card-validation">
-            {{ $t('creditCard.validationCode') }}
+        <p data-field-size="50">
+          <label for="phone">
+            {{ $t('donationForm.phoneNumber') }}
           </label>
-
           <input
-            id="credit-card-validation"
-            v-model="creditCard.verification_value"
+            id="phone"
+            v-model.trim="donor.phone_number"
             v-maska
-            class="credit-card-validation-field"
-            data-maska="['###', '####']"
-            type="text"
-            inputmode="numeric"
-            name="credit_card_validation"
-            autocomplete="cc-csc"
-            maxlength="4"
-            minlength="3"
-            :required="mappedPaymentMethod === 'credit_card'"
-          >
-        </p>
-      </template>
-    </fieldset>
-
-    <fieldset class="flexible-fieldset">
-      <legend>{{ $t('donationForm.donationPaymentSummary') }}</legend>
-
-      <div class="donation-summary">
-        <div class="donation-summary__item donation-summary__item--final-amount">
-          <label class="donation-summary__term" for="donation-gross-value">
-            {{ $t('donationForm.donationExpenses.grossAmount') }}
-          </label>
-          <div class="donation-summary__intermediate-control">
-            <a href="#">{{ $t('donationForm.editValue') }}</a>
-          </div>
-          <output id="donation-gross-value" class="donation-summary__description">
-            {{ $n(grossValue, 'currency', { maximumFractionDigits: 2 }) }}
-          </output>
-        </div>
-      </div>
-
-      <template v-if="!maxDonation || amountDonatingTaxes <= maxDonation / 100">
-        <MDC
-          :value="$t(
-            'donationForm.donationExpenses.message',
-            { campaignName: campaign?.name },
-          )"
-        />
-
-        <div class="list-of-options__item">
-          <input
-            id="include-donation-taxes"
-            v-model="toDonateTaxes"
-            type="checkbox"
-            name="include-donation-taxes"
-            class="donation-summary__input"
+            data-maska="['(##) ####-####', '(##) #####-####']"
+            type="tel"
+            name="phone"
+            autocomplete="tel-national"
+            placeholder="(00) 00000-0000"
+            minlength="14"
+            required
           />
-          <label for="include-donation-taxes" class="donation-summary__label">
-            {{ $t('donationForm.donationExpenses.label') }}
+        </p>
+      </fieldset>
+
+      <pre v-debug>donor:{{ donor }}</pre>
+
+      <fieldset class="flexible-fieldset">
+        <p data-field-size="50">
+          <label for="postal-code">
+            {{ $t('donationForm.postalCode') }}
             <small>
-              (<template v-if="currentTaxes.percent">
-                {{ $n(currentTaxes.percent / 100, 'percent', { maximumFractionDigits: 2 }) }}
-              </template>
-              <template v-if="currentTaxes.percent && currentTaxes.tax">
-                +
-              </template>
-              <template v-if="currentTaxes.tax">
-                {{ $n(currentTaxes.tax / 100, 'currency', { maximumFractionDigits: 2 }) }}
-              </template>)
+              <NuxtLink
+                v-if="runtimeConfig.public.postalService.helperWebsiteUrl"
+                :href="runtimeConfig.public.postalService.helperWebsiteUrl"
+                class="like-a__link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ({{ $t('donationForm.iDoNotKnowMyPostalCode').toLowerCase() }})
+              </NuxtLink>
+
             </small>
           </label>
-        </div>
-      </template>
+          <input
+            id="postal-code"
+            v-model.trim="donorAddress.zip_code"
+            v-maska
+            name="zip_code"
+            type="text"
+            data-maska="#####-###"
+            :class="{
+              'field--error': errors.gettingAddress,
+              'field--pending': pending.gettingAddress,
+            }"
+            @blur="fillAddress"
+          />
+          <small v-if="errors.gettingAddress" class="field__error">
+            {{ errors.gettingAddress?.data?.error || errors.gettingAddress }}
+          </small>
+        </p>
 
-      <div class="donation-summary">
-        <div class="donation-summary__item">
-          <label class="donation-summary__term" for="donation-total-taxes">
-            {{ $t('donationForm.donationExpenses.expenses') }}
+        <p data-field-size="75">
+          <label for="street">
+            {{ $t('donationForm.street') }}
           </label>
-          <output
-            id="donation-total-taxes"
-            class="donation-summary__description"
+          <input
+            id="street"
+            v-model.trim="donorAddress.street"
+            type="text"
+            disabled
+            :class="{
+              'field--pending': pending.gettingAddress,
+            }"
+          />
+        </p>
+
+        <p data-field-size="25">
+          <label for="number">
+            {{ $t('donationForm.number') }}
+          </label>
+          <input
+            id="number"
+            v-model.trim="donorAddress.number"
+            type="text"
+          />
+        </p>
+
+        <p data-field-size="40">
+          <label for="extended-address">
+            {{ $t('donationForm.extendedAddress') }}
+          </label>
+          <input
+            id="extended-address"
+            v-model.trim="donorAddress.complement"
+            type="text"
+            name="extended-address"
+            autocomplete="address-level4"
+          />
+        </p>
+
+        <p data-field-size="45">
+          <label for="city">
+            {{ $t('donationForm.city') }}
+          </label>
+          <input
+            id="city"
+            v-model.trim="donorAddress.city"
+            type="text"
+            disabled
+            :class="{
+              'field--pending': pending.gettingAddress,
+            }"
+          />
+        </p>
+
+        <p data-field-size="15">
+          <label for="state">
+            {{ $t('donationForm.state') }}
+          </label>
+
+          <select
+            id="state"
+            v-model.trim="donorAddress.state"
+            name="state"
+            disabled
+            :class="{
+              'field--pending': pending.gettingAddress,
+            }"
           >
-            {{ $n(totalTaxes, 'currency', { maximumFractionDigits: 2 }) }}
-          </output>
+            <option value="" />
+            <option
+              v-for="state in states"
+              :key="state.abbr"
+              :value="state.abbr"
+              :title="state.name"
+            >
+              {{ state.abbr }}
+            </option>
+          </select>
+        </p>
+      </fieldset>
+
+      <pre v-debug>donorAddress: {{ donorAddress }}</pre>
+
+      <fieldset class="flexible-fieldset">
+        <legend>{{ $t('paymentMethod') }}</legend>
+        <ul
+          v-if="Array.isArray(campaign?.payment_method_list)
+            && campaign?.payment_method_list.length"
+          class="list-of-options"
+        >
+          <li
+            v-for="method in campaign?.payment_method_list"
+            :key="method"
+            class="list-of-options__item"
+          >
+            <input
+              :id="`method__${method}`"
+              v-model.trim="paymentMethod"
+              type="radio"
+              name="paymentMethod"
+              :value="method"
+            />
+            <label :for="`method__${method}`">
+              {{ $t(`paymentMethods.${method}`) }}
+            </label>
+          </li>
+        </ul>
+
+        <template v-if="mappedPaymentMethod === 'credit_card'">
+          <p data-field-size="50">
+            <label for="full-name">
+              {{ $t('creditCard.fullName') }}
+            </label>
+
+            <input
+              id="full-name"
+              v-model.trim="creditCard.full_name"
+              type="text"
+              name="full_name"
+              autocomplete="cc-name"
+              :required="mappedPaymentMethod === 'credit_card'"
+            />
+            <small v-if="errors.validatingCreditCard?.first_name" class="field__error">
+              {{ $t(`errors.${errors.validatingCreditCard.first_name}`) }}
+            </small>
+            <small v-else-if="errors.validatingCreditCard?.last_name" class="field__error">
+              {{ $t(`errors.${errors.validatingCreditCard.last_name}`) }}
+            </small>
+          </p>
+
+          <p data-field-size="50">
+            <label for="credit-card-number">
+              {{ $t('creditCard.number') }}
+            </label>
+            <input
+              id="credit-card-number"
+              v-model.trim="creditCard.number"
+              v-maska
+              data-maska="['#### #### #### ####', '#### #### #### ##']"
+              type="text"
+              inputmode="numeric"
+              name="credit_card_number"
+              autocomplete="cc-number"
+              :required="mappedPaymentMethod === 'credit_card'"
+            />
+            <small v-if="errors.validatingCreditCard?.number" class="field__error">
+              {{ $t(`errors.${errors.validatingCreditCard.number}`) }}
+            </small>
+          </p>
+
+          <p data-field-size="25">
+            <label for="credit-card-expiration-date">
+              {{ $t('creditCard.expirationDate') }}
+            </label>
+
+            <input
+              id="credit-card-expiration-date"
+              v-model.trim="creditCard.expiration"
+              v-maska
+              data-maska="['##/##', '##/####']"
+              type="text"
+              name="credit_card_expiration_date"
+              inputmode="numeric"
+              autocomplete="cc-exp"
+              placeholder="MM/YY"
+              :required="mappedPaymentMethod === 'credit_card'"
+            >
+            <small v-if="errors.validatingCreditCard?.expiration" class="field__error">
+              {{ $t(`errors.${errors.validatingCreditCard.expiration}`) }}
+            </small>
+          </p>
+
+          <p data-field-size="25">
+            <label for="credit-card-validation">
+              {{ $t('creditCard.validationCode') }}
+            </label>
+
+            <input
+              id="credit-card-validation"
+              v-model.trim="creditCard.verification_value"
+              v-maska
+              class="credit-card-validation-field"
+              data-maska="['###', '####']"
+              type="text"
+              inputmode="numeric"
+              name="credit_card_validation"
+              autocomplete="cc-csc"
+              maxlength="4"
+              minlength="3"
+              :required="mappedPaymentMethod === 'credit_card'"
+            >
+            <small v-if="errors.validatingCreditCard?.verification_value" class="field__error">
+              {{ $t(`errors.${errors.validatingCreditCard.verification_value}`) }}
+            </small>
+          </p>
+        </template>
+      </fieldset>
+
+      <fieldset class="flexible-fieldset">
+        <legend>{{ $t('donationForm.donationPaymentSummary') }}</legend>
+
+        <div class="donation-summary">
+          <div class="donation-summary__item donation-summary__item--final-amount">
+            <label class="donation-summary__term" for="donation-gross-value">
+              {{ $t('donationForm.donationExpenses.grossAmount') }}
+            </label>
+            <div class="donation-summary__intermediate-control">
+              <a href="#">{{ $t('donationForm.editValue') }}</a>
+            </div>
+            <output id="donation-gross-value" class="donation-summary__description">
+              {{ $n(grossValue, 'currency', { maximumFractionDigits: 2 }) }}
+            </output>
+          </div>
         </div>
 
-        <div class="donation-summary__item">
-          <label class="donation-summary__term" for="donation-net-value">
-            {{ $t('donationForm.donationExpenses.netAmount', {
-              campaignName:
-                campaign?.name,
-            }) }}
-          </label>
-          <output id="donation-net-value" class="donation-summary__description">
-            {{ $n(netValue, 'currency', { maximumFractionDigits: 2 }) }}
-          </output>
+        <template v-if="!maxDonation || amountDonatingTaxes <= maxDonation / 100">
+          <MDC
+            :value="$t(
+              'donationForm.donationExpenses.message',
+              { campaignName: campaign?.name },
+            )"
+          />
+
+          <div class="list-of-options__item">
+            <input
+              id="include-donation-taxes"
+              v-model="toDonateTaxes"
+              type="checkbox"
+              name="include-donation-taxes"
+              class="donation-summary__input"
+            />
+            <label for="include-donation-taxes" class="donation-summary__label">
+              {{ $t('donationForm.donationExpenses.label') }}
+              <small>
+                (<template v-if="currentTaxes.percent">
+                  {{ $n(currentTaxes.percent / 100, 'percent', { maximumFractionDigits: 2 }) }}
+                </template>
+                <template v-if="currentTaxes.percent && currentTaxes.tax">
+                  +
+                </template>
+                <template v-if="currentTaxes.tax">
+                  {{ $n(currentTaxes.tax / 100, 'currency', { maximumFractionDigits: 2 }) }}
+                </template>)
+              </small>
+            </label>
+          </div>
+        </template>
+
+        <div class="donation-summary">
+          <div class="donation-summary__item">
+            <label class="donation-summary__term" for="donation-total-taxes">
+              {{ $t('donationForm.donationExpenses.expenses') }}
+            </label>
+            <output
+              id="donation-total-taxes"
+              class="donation-summary__description"
+            >
+              {{ $n(totalTaxes, 'currency', { maximumFractionDigits: 2 }) }}
+            </output>
+          </div>
+
+          <div class="donation-summary__item">
+            <label class="donation-summary__term" for="donation-net-value">
+              {{ $t('donationForm.donationExpenses.netAmount', {
+                campaignName:
+                  campaign?.name,
+              }) }}
+            </label>
+            <output id="donation-net-value" class="donation-summary__description">
+              {{ $n(netValue, 'currency', { maximumFractionDigits: 2 }) }}
+            </output>
+          </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
 
-    <MDC :value="$t('donationForm.declaration')" tag="fieldset" />
+      <pre v-debug>currentTaxes: {{ currentTaxes }}</pre>
+      <pre v-debug>amount: {{ amount }}</pre>
+      <pre v-debug>amountDonatingTaxes: {{ amountDonatingTaxes }}</pre>
 
-    <fieldset v-if="messages.length">
-      <legend>Messages</legend>
-      <p>A serem revisadas com o backend.</p>
+      <MDC :value="$t('donationForm.declaration')" tag="fieldset" />
+
+      <fieldset v-if="messages.length">
+        <legend>Messages</legend>
+        <p>A serem revisadas com o backend.</p>
+        <template v-for="message, i in messages">
+          <p v-if="message.type === 'link'" :key="`message__${i}--link`">
+            <NuxtLink :to="message.href">
+              {{ message.text }}
+            </NuxtLink>
+          </p>
+          <div
+            v-else-if="message.type === 'msg'"
+            :key="`message__${i}--text`"
+            v-html="message.text"
+          />
+        </template>
+      </fieldset>
+
+      <fieldset>
+        <p v-if="pendingMessage" class="pending-request-message">
+          {{ $t(`donationForm.pendingMessages.${pendingMessage}`) }}
+        </p>
+        <pre v-debug>
+Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
+- rendered on server: (not rendered)
+- expected on client: disabled="true"
+</pre>
+
+        <button type="submit" :disabled="!grossValue || combinedPending" class="donation-form__submit">
+          <img
+            src="~/assets/images/icons/lock-closed.svg"
+            alt=""
+            width="20"
+            height="20"
+            aria-hidden="true"
+          />
+          {{ $t('donationForm.submit', { amount: $n(grossValue, 'currency', { maximumFractionDigits: 2 }) }) }}
+        </button>
+
+        <p class="safe-transaction">
+          {{ $t('donationForm.safeTransaction') }}
+        </p>
+      </fieldset>
+    </form>
+
+    <div v-else>
       <template v-for="message, i in messages">
         <p v-if="message.type === 'link'" :key="`message__${i}--link`">
           <NuxtLink :to="message.href">
             {{ message.text }}
           </NuxtLink>
         </p>
-        <div v-else-if="message.type === 'msg'" :key="`message__${i}--text`" v-html="message.text" />
-      </template>
-    </fieldset>
 
-    <fieldset>
-      <p v-if="pendingMessage" class="pending-request-message">
-        {{ $t(`donationForm.pendingMessages.${pendingMessage}`) }}
-      </p>
-
-      <button type="submit" :disabled="!grossValue || consolidatedPending" class="donation-form__submit">
-        <img
-          src="~/assets/images/icons/lock-closed.svg"
-          alt=""
-          width="20"
-          height="20"
-          aria-hidden="true"
-        />
-        {{ $t('donationForm.submit', { amount: $n(grossValue, 'currency', { maximumFractionDigits: 2 }) }) }}
-      </button>
-
-      <p class="safe-transaction">
-        {{ $t('donationForm.safeTransaction') }}
-      </p>
-    </fieldset>
-  </form>
-
-  <div v-else>
-    <template v-for="message, i in messages">
-      <p v-if="message.type === 'link'" :key="`message__${i}--link`">
-        <NuxtLink :to="message.href">
-          {{ message.text }}
-        </NuxtLink>
-      </p>
-
-      <template v-else-if="message.type === 'msg'">
-        <template v-if="instantPaymentPlatformKey">
-          <div v-if="isClipboardInaccessible" :key="i + '--copy-field'" class="input-wrapper field-for-copy__wrapper">
-            <label class="field-for-copy__label" :for="`to-copy--${i}`">
-              Selecione e copie
-            </label>
-            <input
-              :id="`to-copy--${i}`"
-              v-focus.select
-              class="field-for-copy"
-              type="text"
-              readonly
-              :value="instantPaymentPlatformKey"
-              @click="selectContent($event)"
+        <template v-else-if="message.type === 'msg'">
+          <template v-if="instantPaymentPlatformKey">
+            <div v-if="isClipboardInaccessible" :key="i + '--copy-field'" class="input-wrapper field-for-copy__wrapper">
+              <label class="field-for-copy__label" :for="`to-copy--${i}`">
+                Selecione e copie
+              </label>
+              <input
+                :id="`to-copy--${i}`"
+                v-focus.select
+                class="field-for-copy"
+                type="text"
+                readonly
+                :value="instantPaymentPlatformKey"
+                @click="($e) => { selectContent($e.target) }"
+              />
+            </div>
+            <div
+              v-else
+              :key="`message__${i}--text`"
+              @click="delegation($event)"
+              @keydown="delegation($event)"
+              v-html="message.text"
             />
-          </div>
-          <div
-            v-else
-            :key="`message__${i}--text`"
-            @click="delegation($event)"
-            @keydown="delegation($event)"
-            v-html="message.text"
-          />
+          </template>
+          <div v-else :key="`message__${i}--text`" v-html="message.text" />
         </template>
-        <div v-else :key="`message__${i}--text`" v-html="message.text" />
       </template>
-    </template>
+    </div>
+    <div v-debug>
+      <pre>errors:{{ errors }}</pre>
+      <hr />
+      <pre>messages: {{ messages }}</pre>
+      <hr />
+      <pre>createdDonation: {{ createdDonation }}</pre>
+      <hr />
+      <pre>deviceAuthorizationTokenId: {{ donateStore.deviceAuthorizationTokenId }}</pre>
+      <pre>pending: {{ pending }}</pre>
+      <pre>combinedPending: {{ combinedPending }}</pre>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -450,6 +525,7 @@ import { useDonateStore } from '@/store/donate.ts';
 import type { CreatedDonation, DonationMessage } from '~/doar-para.d.ts';
 
 declare const Iugu: any;
+// const { Iugu } = (window || {} as any);
 
 definePageMeta({
   layout: 'like-a-dialog',
@@ -468,10 +544,10 @@ const { campaign } = storeToRefs(campaignStore);
 
 const amount = ref(0);
 const creditCard = ref({
-  full_name: '',
-  number: '',
-  expiration: '',
-  verification_value: '',
+  full_name: 'Lorem Ipsum',
+  number: '4111 1111 1111 1111',
+  expiration: '12/30',
+  verification_value: '123',
 });
 
 const createdDonation: Ref<CreatedDonation> = ref(null);
@@ -481,7 +557,7 @@ const paymentMethod = ref('');
 const toDonateTaxes = ref(false);
 
 const {
-  consolidatedPending, donor, donorAddress, pending, pendingMessage,
+  combinedPending, donor, donorAddress, errors, pending, pendingMessage,
 } = storeToRefs(donateStore);
 
 // TODO: remove dumb mapping. It was a bad decision.
@@ -527,9 +603,11 @@ const instantPaymentPlatformKey = computed(() => {
   return key;
 });
 
-const grossValue = computed(() => (toDonateTaxes.value
+const grossValue = computed(() => ((toDonateTaxes.value
   ? amountDonatingTaxes.value
-  : amount.value));
+  : amount.value)
+  || 0
+));
 
 const maxDonation = computed(() => campaign.value?.max_donation_value || 0);
 
@@ -577,12 +655,25 @@ function delegation(event: Event) {
   }
 }
 
+function selectContent(el: HTMLInputElement | EventTarget | null) {
+  if (el instanceof HTMLInputElement) {
+    el.select();
+  }
+}
+
 function fillAddress(event: Event) {
   const { target: el } = event;
   const cleanPostalCode = (el as HTMLInputElement).value.replace(/\D/g, '');
 
   if (cleanPostalCode.length === 8) {
-    donateStore.fillAddressFromPostalCode(cleanPostalCode);
+    donateStore.fillAddressFromPostalCode(cleanPostalCode)
+      .catch(() => {
+        console.debug('deu erro');
+        if (el) {
+          (el as HTMLInputElement).focus();
+          selectContent(el as HTMLInputElement);
+        }
+      });
   }
 }
 
@@ -612,14 +703,6 @@ function getDonationAmount() {
     amountFromUrl = String(amountFromUrl)
       .replace(/(?:^[a-z]*\$\s*)|(?:(?:\s*[a-z])*$)/gi, '');
     amount.value = (localeParseFloat(amountFromUrl, $i18n?.locale.value) || 0);
-  }
-}
-
-function selectContent(event: Event) {
-  const { target: el } = event;
-
-  if (el instanceof HTMLInputElement) {
-    el.select();
   }
 }
 
@@ -658,10 +741,10 @@ async function submitDonation() {
 
   const validCreditCard = await donateStore.validateCard(creditCard.value);
   if (!createdDonation.value?.id) {
-    throw new Error('Propoerty `id` is missing');
+    throw new Error('Property `id` is missing');
   }
 
-  const { data: paymentData, error: paymentError } = await donateStore
+  const { data: paymentData, error: paymentError = null } = await donateStore
     .payCreditCardDonation(createdDonation.value.id, validCreditCard);
 
   if (paymentData) {
@@ -676,7 +759,7 @@ async function submitDonation() {
 
   if (paymentError) {
     console.debug('paymentError', paymentError);
-    throw new Error(paymentError.message);
+    throw new Error(JSON.stringify(paymentError));
   }
 }
 
@@ -699,7 +782,10 @@ if (process.client) {
     isClipboardInaccessible.value = !navigator.clipboard;
 
     if (!donateStore.deviceAuthorizationTokenId) {
-      donateStore.getDeviceAuthorizationToken();
+      donateStore.getDeviceAuthorizationToken({
+        lazy: true,
+        server: false,
+      });
     }
 
     getDonationAmount();
@@ -807,6 +893,8 @@ if (process.client) {
 .donation-summary__input {}
 
 .pending-request-message {
+  @include my.pulsing-outline;
+
   position: sticky;
   bottom: my.$gutter;
 
@@ -814,9 +902,9 @@ if (process.client) {
   max-width: 100%;
   padding: my.$gutter;
   margin-right: auto;
+  margin-bottom: my.$gutter;
   margin-left: auto;
 
-  background-color: my.palette('neutral','white');
-  border: my.$stroke solid my.palette('brand','primary');
+  background-color: my.palette('neutral', 'white');
 }
 </style>

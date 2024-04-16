@@ -79,6 +79,9 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
       gender,
     ),
   },
+  errors: {
+    is_invalid: 'Valor inválido',
+  },
   flexibleFunding: 'Campanha flexível',
   footerMenuLabel: 'Menu da campanha, termos de uso e política de privacidade',
   legalEntityIdentification: 'CNPJ',

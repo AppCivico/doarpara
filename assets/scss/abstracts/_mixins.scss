@@ -1052,6 +1052,33 @@ $no-viewport: false !default;
   box-decoration-break: clone;
 }
 
+@mixin pulsing-outline {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: f.palette('brand', 'secondary');
+
+  animation-name: pulsing-outline;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+
+  @at-root {
+    @keyframes pulsing-outline {
+      0% {
+        outline-color: f.palette('brand', 'tertiary');
+      }
+
+      50% {
+        outline-color: f.palette('brand', 'secondary');
+      }
+
+      100% {
+        outline-color: f.palette('brand', 'tertiary');
+      }
+    }
+  }
+}
+
 @mixin hovered {
   @include _focus-and-hover-basis;
 }

@@ -42,7 +42,10 @@
                 />
 
                 <dl v-if="campaign?.is_election_campaign" class="colophon__campaign">
-                  <div class="colophon__campaign-creator">
+                  <div
+                    v-if="campaign?.fundraiser?.office"
+                    class="colophon__campaign-creator"
+                  >
                     <dt>
                       {{ $t('electionCampaign.runningForOffice', { gender: campaign.fundraiser.gender }) }}
                     </dt>

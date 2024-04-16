@@ -57,11 +57,12 @@ export default defineNuxtConfig({
         allowJs: true,
         allowImportingTsExtensions: true,
         forceConsistentCasingInFileNames: true,
+        noImplicitAny: true,
         strict: true,
         strictNullChecks: true,
       },
       include: [
-        '.eslintrc.cjs',
+        './.eslintrc.cjs',
       ],
     },
   },

@@ -1,9 +1,5 @@
 declare const Iugu: any;
 
-type Errors = {
-  errors: unknown
-};
-
 export type CreditCard = {
   number: string,
   verification_value: string,
@@ -12,15 +8,16 @@ export type CreditCard = {
 };
 
 export type PaymentToken = {
-  id: string;
-  method: string;
+  id: string,
+  method: string,
   extra_info: {
-    bin: string;
-    year: number;
-    month: number;
-    brand: string;
-    holder_name: string;
-    display_number: string;
+    bin: string,
+    year: number,
+    month: number,
+    brand: string,
+    holder_name: string,
+    display_number: string,
   },
-  test: boolean;
-} | Errors;
+  test: boolean,
+  errors?: unknown,
+};

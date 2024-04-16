@@ -1,4 +1,4 @@
-import type { CreatedDonation, DonationMessage } from '@/doar-para.d.ts';
+import type { ApiError, CreatedDonation, DonationMessage } from '@/doar-para.d.ts';
 import type { CreditCard, PaymentToken } from '@/iugu.d.ts';
 import randomString from '@/utils/randomString.ts';
 import removeAccented from '@/utils/removeAccented.js';
@@ -13,7 +13,7 @@ type DonationResponse = {
   ui: {
     messages: DonationMessage[]
   }
-  errors?: unknown;
+  errors?: ApiError | Error | null;
 };
 
 type DonorData = {
@@ -51,12 +51,20 @@ type ReferralCodes = {
   [key: string]: string;
 };
 
+type CreditCardError = {
+  expiration?: string,
+  number?: string,
+  first_name?: string,
+  last_name?: string,
+  verification_value?: string,
+};
+
 type StateErrors = {
-  gettingAddress: unknown,
-  validatingDevice: unknown,
-  creatingDonation: unknown,
-  validatingCreditCard: unknown,
-  payingDonation: unknown,
+  gettingAddress: ApiError | null ;
+  validatingDevice: ApiError | null ;
+  creatingDonation: ApiError | null ;
+  validatingCreditCard: CreditCardError | null ;
+  payingDonation: ApiError | null ;
 };
 
 type ValidatedCard = {
@@ -73,6 +81,7 @@ export const useDonateStore = defineStore('toDonate', {
     }),
   },
   state: () => ({
+    // be careful to what you add here! Do not save sensitive information!
     deviceAuthorizationTokenId: '',
     referral: <ReferralCodes> {},
 
@@ -105,7 +114,7 @@ export const useDonateStore = defineStore('toDonate', {
       validatingCreditCard: false,
       payingDonation: false,
     },
-    error: <StateErrors> {
+    errors: <StateErrors> {
       gettingAddress: null,
       validatingDevice: null,
       creatingDonation: null,
@@ -114,42 +123,46 @@ export const useDonateStore = defineStore('toDonate', {
     },
   }),
   actions: {
-    async fillAddressFromPostalCode(postalCode:string) {
+    async fillAddressFromPostalCode(postalCode: string): Promise<void> {
       this.pending.gettingAddress = true;
-      this.error.gettingAddress = null;
+      this.errors.gettingAddress = null;
 
-      const {
-        data, error,
-      } = await useFetch<PostalServiceQueryResult>(`${useRuntimeConfig().public.postalService.queryUrl}${postalCode}`);
+      return useFetch<PostalServiceQueryResult>(
+        `${useRuntimeConfig().public.postalService.queryUrl}${postalCode}`,
+      ).then((response) => {
+        const { data, error } = response;
 
-      this.pending.gettingAddress = false;
+        if (data.value) {
+          const {
+            street, city, state, district,
+          } = data.value;
 
-      if (data.value) {
-        const {
-          street, city, state, district,
-        } = data.value;
+          // not using `$patch()` to keep reactivity of sibling properties under `address.`
+          this.donorAddress.street = street;
+          this.donorAddress.city = city;
+          this.donorAddress.state = state;
+          this.donorAddress.district = district;
+        }
 
-        // not using `$patch()` to keep reactivity of sibling properties under `address.`
-        this.donorAddress.street = street;
-        this.donorAddress.city = city;
-        this.donorAddress.state = state;
-        this.donorAddress.district = district;
-      }
-
-      if (error.value) {
-        this.error.gettingAddress = error.value;
-      }
+        if (error.value) {
+          throw error.value;
+        }
+      }).catch((err) => {
+        this.errors.gettingAddress = err;
+      }).finally(() => {
+        this.pending.gettingAddress = false;
+      });
     },
 
-    async getDeviceAuthorizationToken() {
+    async getDeviceAuthorizationToken(params = {}) {
       this.pending.validatingDevice = true;
-      this.error.validatingDevice = null;
+      this.errors.validatingDevice = null;
 
       const runtimeConfig = useRuntimeConfig();
 
       const {
         data, error,
-      } = await useFetch<{ device_authorization_token_id: string }>(`${runtimeConfig.public.privateApiBase}/api2/device-authentication`, { method: 'POST' });
+      } = await useFetch<{ device_authorization_token_id: string }>(`${runtimeConfig.public.privateApiBase}/api2/device-authentication`, { method: 'POST', ...params });
 
       this.pending.validatingDevice = false;
 
@@ -158,19 +171,19 @@ export const useDonateStore = defineStore('toDonate', {
       }
 
       if (error.value) {
-        this.error.validatingDevice = error.value;
+        this.errors.validatingDevice = error.value;
       }
 
       return data.value?.device_authorization_token_id;
     },
 
-    async createDonationOnBackEnd(amount: number, paymentMethod:string) {
+    async createDonationOnBackEnd(amount: number, paymentMethod: string) {
       if (typeof VotolegalFP !== 'function') {
         throw new Error('VotolegalFP is not loaded yet');
       }
 
       this.pending.creatingDonation = true;
-      this.error.creatingDonation = null;
+      this.errors.creatingDonation = null;
 
       const runtimeConfig = useRuntimeConfig();
 
@@ -210,7 +223,7 @@ export const useDonateStore = defineStore('toDonate', {
       this.pending.creatingDonation = false;
 
       if (error.value) {
-        this.error.creatingDonation = error.value;
+        this.errors.creatingDonation = error.value;
       }
 
       return { data: data.value, error: error.value };
@@ -218,7 +231,7 @@ export const useDonateStore = defineStore('toDonate', {
 
     async validateCard(card: CreditCard): Promise<ValidatedCard> {
       this.pending.validatingCreditCard = true;
-      this.error.validatingCreditCard = null;
+      this.errors.validatingCreditCard = null;
       const { donor } = this;
       const [validityMonth, validityYear] = card.expiration.split('/');
 
@@ -233,9 +246,9 @@ export const useDonateStore = defineStore('toDonate', {
 
       return new Promise((resolve, reject) => {
         Iugu.createPaymentToken(cc, (response: PaymentToken) => {
-          if ('errors' in response) {
-            this.error.validatingCreditCard = response.errors;
-            reject(new Error(`Error creating payment token: ${response.errors}`));
+          if (response.errors) {
+            this.errors.validatingCreditCard = response.errors as CreditCardError;
+            reject(response.errors);
           } else {
             const payload = {
               cc_hash: new VotolegalFP({
@@ -252,41 +265,52 @@ export const useDonateStore = defineStore('toDonate', {
       });
     },
 
-    async payCreditCardDonation(donationId: string | number, payload: ValidatedCard) {
+    async payCreditCardDonation(donationId: string | number, payload: ValidatedCard):
+    Promise<{ data?: DonationResponse | null; error?: Error | ApiError | unknown }> {
       this.pending.payingDonation = true;
-      this.error.payingDonation = null;
+      this.errors.payingDonation = null;
 
-      const runtimeConfig = useRuntimeConfig();
+      try {
+        const runtimeConfig = useRuntimeConfig();
 
-      const { deviceAuthorizationTokenId: token } = this;
+        const { deviceAuthorizationTokenId: token } = this;
 
-      const {
-        data, error,
-      } = await useFetch< DonationResponse >(`${runtimeConfig.public.privateApiBase}/api2/donations/${donationId}`, {
-        method: 'POST',
-        query: {
-          device_authorization_token_id: token,
-          credit_card_token: payload.id,
-          cc_hash: payload.cc_hash,
-        },
-      });
+        const {
+          data, error,
+        } = await useFetch< DonationResponse >(`${runtimeConfig.public.privateApiBase}/api2/donations/${donationId}`, {
+          method: 'POST',
+          query: {
+            device_authorization_token_id: token,
+            credit_card_token: payload.id,
+            cc_hash: payload.cc_hash,
+          },
+        });
 
-      this.pending.payingDonation = false;
+        if (error.value) {
+          throw error.value;
+        }
 
-      if (error.value) {
-        this.error.payingDonation = error.value;
+        this.pending.payingDonation = false;
+
+        return {
+          data: data.value,
+        };
+      } catch (error) {
+        this.errors.payingDonation = error as ApiError;
+        this.pending.payingDonation = false;
+        return {
+          error,
+        };
       }
-
-      return { data: data.value, error: error.value };
     },
   },
   getters: {
-    consolidatedPending: (({ pending }) => Object.values(pending).some((value) => value === true)),
+    combinedPending: ({ pending }) => Object.values(pending).some((value) => value === true),
 
-    pendingMessage: (({ pending }) => Object.keys(pending)
-      .find((x) => pending[x as keyof typeof pending] !== false)),
+    pendingMessage: ({ pending }) => Object.keys(pending)
+      .find((x) => pending[x as keyof typeof pending] !== false),
 
-    payloadForCreationOfDonationOnBackEnd: ((state): DonorData => {
+    payloadForCreationOfDonationOnBackEnd: (state): DonorData => {
       const campaignStore = useCampaignStore();
 
       return {

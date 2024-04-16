@@ -13,7 +13,17 @@ type Office = 'municipal_council' | 'city_hall' | 'state_legislature' | 'state_g
 
 type Gender = 'male' | 'female' | 'other' | 'prefer not to say';
 
-type PaymentMethod = 'pro_forma_invoice' | 'credit_card' | 'instant_payment_platform';
+export type PaymentMethod = 'pro_forma_invoice' | 'credit_card' | 'instant_payment_platform';
+
+export type ApiError = {
+  message?: string,
+  statusCode?: number,
+  data?: {
+    message?: string,
+    msg_id?: string,
+    error?: string,
+  } | any,
+};
 
 export type CampaignSection = 'description' | 'donations' | 'faq' | 'goals' | 'rewards' | 'testimonies';
 
@@ -68,7 +78,12 @@ export interface Goal {
   description: string;
 }
 
-type PledgeValue = number | 'custom';
+export type MinDonationValue = {
+  method: PaymentMethod,
+  value: number,
+};
+
+export type PledgeValue = number | 'custom';
 
 export interface Reward {
   id: Id;
@@ -124,10 +139,7 @@ export interface Campaign {
   is_election_campaign: boolean;
   platforms: RaisedAndSource[];
   pledge_list: PledgeValue[];
-  min_donation_values: [
-    method: string,
-    value: number,
-  ];
+  min_donation_values: MinDonationValue[];
 
   max_donation_value: number;
   payment_method_list: PaymentMethod[];
