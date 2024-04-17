@@ -33,7 +33,7 @@ if (campaign.value) {
 
   useHead(meta);
 
-  if (process.dev || process.server) {
+  if (import.meta.dev || import.meta.server) {
     useSeoMeta({
       title: campaign.value?.name
         ? `${campaign.value?.name} • ${appConfig.title}`

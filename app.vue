@@ -26,7 +26,7 @@ function storeReferral() {
 
 await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
 
-if (process.client) {
+if (import.meta.client) {
   onMounted(() => {
     storeReferral();
   });

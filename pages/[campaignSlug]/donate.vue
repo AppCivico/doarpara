@@ -763,7 +763,7 @@ async function submitDonation() {
   }
 }
 
-if (process.client) {
+if (import.meta.client) {
   useHead({
     script: [
       {
