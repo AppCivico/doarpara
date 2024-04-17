@@ -65,6 +65,7 @@ if (process.client) {
 }
 
 .nuxt-loading-indicator {
-  background: linear-gradient(to right, my.palette('brand', 'secondary'), my.palette('brand', 'tertiary')) !important;
+  background: my.palette('neutral', 'white') linear-gradient(to right,
+        my.palette('loading', 'gradient-list'));
 }
 </style>

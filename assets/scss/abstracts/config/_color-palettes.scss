@@ -145,6 +145,8 @@ $palette: map.set($palette, 'disabled', $disabled);
 $loading: (
   'foreground': map.get($neutral, 'x-dark'),
   'background': map.get($neutral, 'x-light'),
+  'gradient-list': ($_red, $_light-red, $_light-blue, $_blue, $_purple, $_dark-blue),
+  'pulsing-list': ($tertiary, $primary, $tertiary),
 );
 $palette: map.set($palette, 'loading', $loading);
 

@@ -28,7 +28,7 @@
             </NuxtLink>
           </nav>
         </header>
-        <NuxtLoadingIndicator :color="false" />
+        <NuxtLoadingIndicator :color="false" :height="3" />
         <slot />
       </Body>
     </Html>

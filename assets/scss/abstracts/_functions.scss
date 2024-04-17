@@ -556,6 +556,8 @@ $_default-text-color--light: palette('text', 'light');
     @return map.get($color, 'base');
   } @else if meta.type-of($color) == 'map' and map.has-key($color, 'medium') {
     @return map.get($color, 'medium');
+  } @else if meta.type-of($color)  == 'list' {
+    @return $color;
   } @else {
     @error '`#{$color}` is not a real color';
   }

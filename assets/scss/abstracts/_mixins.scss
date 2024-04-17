@@ -1063,17 +1063,18 @@ $no-viewport: false !default;
   animation-iteration-count: infinite;
 
   @at-root {
+    $list: f.palette('loading', 'pulsing-list');
+    $length: list.length($list);
+    $i: 0;
+    $step: math.div(100, $length);
+
     @keyframes pulsing-outline {
-      0% {
-        outline-color: f.palette('brand', 'tertiary');
-      }
+      @for $i from 0 through ($length) {
+        $color: if($i < $length, list.nth($list, $i + 1), list.nth($list, 1));
 
-      50% {
-        outline-color: f.palette('brand', 'secondary');
-      }
-
-      100% {
-        outline-color: f.palette('brand', 'tertiary');
+        #{$i * $step}% {
+          outline-color: $color;
+        }
       }
     }
   }
