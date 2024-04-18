@@ -285,6 +285,11 @@ form br {
 
     background-color: my.palette('disabled', 'background');
   }
+
+  &[aria-busy='true'] {
+    @include my.pulsing-outline;
+    cursor: wait;
+  }
 }
 
 :enabled {

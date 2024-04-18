@@ -96,6 +96,7 @@ textarea {
   &[aria-busy='true'] {
     @extend %loading-bg;
 
+    background-image: none;
     background-size: auto;
   }
 }

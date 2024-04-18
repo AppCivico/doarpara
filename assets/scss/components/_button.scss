@@ -70,6 +70,10 @@
   &:disabled {
     cursor: not-allowed;
   }
+
+  &[aria-busy='true'] {
+   @include my.pulsing-outline;
+  }
 }
 
 .like-a__button,

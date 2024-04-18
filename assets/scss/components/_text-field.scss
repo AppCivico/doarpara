@@ -112,10 +112,6 @@
   }
 }
 
-.field--pending {
-  @include my.pulsing-outline;
-}
-
 [type='email'] {
   @extend %text-field-reset;
 }

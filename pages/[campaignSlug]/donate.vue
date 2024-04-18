@@ -8,7 +8,7 @@
         </label>
       </fieldset>
 
-      <fieldset class="flexible-fieldset">
+      <fieldset class="flexible-fieldset" :disabled="combinedPending">
         <p data-field-size="50">
           <label for="first-name">
             {{ $t('donationForm.name') }}
@@ -108,7 +108,7 @@
 
       <pre v-debug>donor:{{ donor }}</pre>
 
-      <fieldset class="flexible-fieldset">
+      <fieldset class="flexible-fieldset" :disabled="combinedPending || pending.gettingAddress">
         <p data-field-size="50">
           <label for="postal-code">
             {{ $t('donationForm.postalCode') }}
@@ -131,10 +131,12 @@
             v-maska
             name="zip_code"
             type="text"
+            aria-live="assertive"
+            required
             data-maska="#####-###"
+            :aria-busy="pending.gettingAddress"
             :class="{
               'field--error': errors.gettingAddress,
-              'field--pending': pending.gettingAddress,
             }"
             @blur="fillAddress"
           />
@@ -150,10 +152,12 @@
           <input
             id="street"
             v-model.trim="donorAddress.street"
+            aria-live="assertive"
             type="text"
+            required
+            :aria-busy="pending.gettingAddress"
             disabled
             :class="{
-              'field--pending': pending.gettingAddress,
             }"
           />
         </p>
@@ -166,6 +170,7 @@
             id="number"
             v-model.trim="donorAddress.number"
             type="text"
+            required
           />
         </p>
 
@@ -191,9 +196,8 @@
             v-model.trim="donorAddress.city"
             type="text"
             disabled
-            :class="{
-              'field--pending': pending.gettingAddress,
-            }"
+            required
+            :aria-busy="pending.gettingAddress"
           />
         </p>
 
@@ -207,9 +211,8 @@
             v-model.trim="donorAddress.state"
             name="state"
             disabled
-            :class="{
-              'field--pending': pending.gettingAddress,
-            }"
+            required
+            :aria-busy="pending.gettingAddress"
           >
             <option value="" />
             <option
@@ -226,7 +229,7 @@
 
       <pre v-debug>donorAddress: {{ donorAddress }}</pre>
 
-      <fieldset class="flexible-fieldset">
+      <fieldset class="flexible-fieldset" :disabled="combinedPending">
         <legend>{{ $t('paymentMethod') }}</legend>
         <ul
           v-if="Array.isArray(campaign?.payment_method_list)
@@ -241,6 +244,7 @@
             <input
               :id="`method__${method}`"
               v-model.trim="paymentMethod"
+              required
               type="radio"
               name="paymentMethod"
               :value="method"
@@ -341,7 +345,7 @@
         </template>
       </fieldset>
 
-      <fieldset class="flexible-fieldset">
+      <fieldset class="flexible-fieldset" :disabled="combinedPending">
         <legend>{{ $t('donationForm.donationPaymentSummary') }}</legend>
 
         <div class="donation-summary">
@@ -451,7 +455,12 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 - expected on client: disabled="true"
 </pre>
 
-        <button type="submit" :disabled="!grossValue || combinedPending" class="donation-form__submit">
+        <button
+          type="submit"
+          :disabled="!grossValue || combinedPending"
+          class="donation-form__submit"
+          :aria-busy="combinedPending"
+        >
           <img
             src="~/assets/images/icons/lock-closed.svg"
             alt=""
