@@ -2,6 +2,7 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <NuxtLoadingIndicator :color="false" :height="3" />
 </template>
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';

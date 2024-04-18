@@ -165,7 +165,6 @@
                   </li>
                 </ul>
               </nav>
-              <NuxtLoadingIndicator :color="false" :height="3" />
               <slot />
             </div>
           </div>
