@@ -8,7 +8,11 @@
         </label>
       </fieldset>
 
-      <fieldset class="flexible-fieldset" :disabled="combinedPending">
+      <fieldset
+        class="flexible-fieldset"
+        name="donor"
+        :disabled="combinedPending"
+      >
         <p data-field-size="50">
           <label for="first-name">
             {{ $t('donationForm.name') }}
@@ -108,7 +112,11 @@
 
       <pre v-debug>donor:{{ donor }}</pre>
 
-      <fieldset class="flexible-fieldset" :disabled="combinedPending || pending.gettingAddress">
+      <fieldset
+        class="flexible-fieldset"
+        name="address"
+        :disabled="combinedPending || pending.gettingAddress"
+      >
         <p data-field-size="50">
           <label for="postal-code">
             {{ $t('donationForm.postalCode') }}
@@ -229,7 +237,11 @@
 
       <pre v-debug>donorAddress: {{ donorAddress }}</pre>
 
-      <fieldset class="flexible-fieldset" :disabled="combinedPending">
+      <fieldset
+        class="flexible-fieldset"
+        name="payment"
+        :disabled="combinedPending"
+      >
         <legend>{{ $t('paymentMethod') }}</legend>
         <ul
           v-if="Array.isArray(campaign?.payment_method_list)
@@ -345,7 +357,11 @@
         </template>
       </fieldset>
 
-      <fieldset class="flexible-fieldset" :disabled="combinedPending">
+      <fieldset
+        class="flexible-fieldset"
+        name="summary_and_taxes"
+        :disabled="combinedPending"
+      >
         <legend>{{ $t('donationForm.donationPaymentSummary') }}</legend>
 
         <div class="donation-summary">
@@ -428,7 +444,10 @@
 
       <MDC :value="$t('donationForm.declaration')" tag="fieldset" />
 
-      <fieldset v-if="messages.length">
+      <fieldset
+        v-if="messages.length"
+        name="messages"
+      >
         <legend>Messages</legend>
         <p>A serem revisadas com o backend.</p>
         <template v-for="message, i in messages">
@@ -445,7 +464,7 @@
         </template>
       </fieldset>
 
-      <fieldset>
+      <fieldset name="submission">
         <p v-if="pendingMessage" class="pending-request-message">
           {{ $t(`donationForm.pendingMessages.${pendingMessage}`) }}
         </p>
