@@ -176,6 +176,7 @@
           </label>
           <input
             id="number"
+            ref="addressNumber"
             v-model.trim="donorAddress.number"
             type="text"
             required
@@ -583,6 +584,7 @@ const isClipboardInaccessible = ref(true);
 const messages: Ref<DonationMessage[]> = ref([]);
 const paymentMethod = ref('');
 const toDonateTaxes = ref(false);
+const addressNumber = ref(null);
 
 const {
   combinedPending, donor, donorAddress, errors, pending, pendingMessage,
@@ -695,11 +697,19 @@ function fillAddress(event: Event) {
 
   if (cleanPostalCode.length === 8) {
     donateStore.fillAddressFromPostalCode(cleanPostalCode)
+      .then(() => {
+        if (addressNumber.value) {
+          nextTick(() => {
+            (addressNumber.value as unknown as HTMLInputElement).focus();
+          });
+        }
+      })
       .catch(() => {
-        console.debug('deu erro');
         if (el) {
-          (el as HTMLInputElement).focus();
-          selectContent(el as HTMLInputElement);
+          nextTick(() => {
+            (el as HTMLInputElement).focus();
+            selectContent(el as HTMLInputElement);
+          });
         }
       });
   }
