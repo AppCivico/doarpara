@@ -466,9 +466,10 @@
       </fieldset>
 
       <fieldset name="submission">
-        <p v-if="pendingMessage" class="pending-request-message">
+        <requestMessagePanel v-if="pendingMessage">
           {{ $t(`donationForm.pendingMessages.${pendingMessage}`) }}
-        </p>
+        </requestMessagePanel>
+
         <pre v-debug>
 Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 - rendered on server: (not rendered)
@@ -929,20 +930,4 @@ if (import.meta.client) {
 }
 
 .donation-summary__input {}
-
-.pending-request-message {
-  @include my.pulsing-outline;
-
-  position: sticky;
-  bottom: my.$gutter;
-
-  width: max-content;
-  max-width: 100%;
-  padding: my.$gutter;
-  margin-right: auto;
-  margin-bottom: my.$gutter;
-  margin-left: auto;
-
-  background-color: my.palette('neutral', 'white');
-}
 </style>

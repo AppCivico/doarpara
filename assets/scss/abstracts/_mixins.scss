@@ -1052,32 +1052,40 @@ $no-viewport: false !default;
   box-decoration-break: clone;
 }
 
-@mixin pulsing-outline {
-  outline-width: 2px;
-  outline-style: solid;
-  outline-color: f.palette('brand', 'secondary');
+@mixin pulsing-color($property: 'color') {
+  $list: f.palette('loading', 'pulsing-list');
+  $animation-name: pulsing-#{$property};
 
-  animation-name: pulsing-outline;
+  #{$property}: list.nth($list, 1);
+
+  animation-name: $animation-name;
   animation-duration: 2s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 
   @at-root {
-    $list: f.palette('loading', 'pulsing-list');
     $length: list.length($list);
     $i: 0;
     $step: math.div(100, $length);
 
-    @keyframes pulsing-outline {
+    @keyframes #{$animation-name} {
       @for $i from 0 through ($length) {
         $color: if($i < $length, list.nth($list, $i + 1), list.nth($list, 1));
 
         #{$i * $step}% {
-          outline-color: $color;
+          #{$property}: $color;
         }
       }
     }
   }
+}
+
+@mixin pulsing-outline {
+  @include pulsing-color('outline-color');
+
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: f.palette('brand', 'secondary');
 }
 
 @mixin hovered {
