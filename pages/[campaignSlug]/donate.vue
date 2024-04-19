@@ -612,9 +612,12 @@ const currentTaxes = computed(() => (taxes[mappedPaymentMethod.value]
     tax: 0,
   }));
 
-const amountDonatingTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
+const amountDonatingTaxes = computed<number>(() => ((typeof currentTaxes.value?.percent === 'number'
   && typeof currentTaxes.value?.tax === 'number')
-  ? (amount.value + currentTaxes.value.tax / 100) / (1 - currentTaxes.value.percent / 100)
+  ? Number.parseFloat((
+    (amount.value + currentTaxes.value.tax / 100)
+    / (1 - currentTaxes.value.percent / 100)
+  ).toFixed(2))
   : 0));
 
 const isDonationConcluded = computed(() => createdDonation.value?.state !== undefined && createdDonation.value.state !== 'credit_card_form');
