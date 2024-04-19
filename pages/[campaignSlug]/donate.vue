@@ -146,7 +146,7 @@
             :class="{
               'field--error': errors.gettingAddress,
             }"
-            @blur="fillAddress"
+            @input="fillAddress"
           />
           <small v-if="errors.gettingAddress" class="field__error">
             {{ errors.gettingAddress?.data?.error || errors.gettingAddress }}
