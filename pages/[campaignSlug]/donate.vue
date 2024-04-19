@@ -620,6 +620,21 @@ const amountDonatingTaxes = computed<number>(() => ((typeof currentTaxes.value?.
   ).toFixed(2))
   : 0));
 
+const grossValue = computed(() => ((toDonateTaxes.value
+  ? amountDonatingTaxes.value
+  : amount.value)
+  || 0
+));
+
+const maxDonation = computed(() => campaign.value?.max_donation_value || 0);
+
+const totalTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
+  && typeof currentTaxes.value?.tax === 'number')
+  ? grossValue.value * (currentTaxes.value.percent / 100) + (currentTaxes.value.tax / 100)
+  : 0));
+
+const netValue = computed(() => grossValue.value - totalTaxes.value);
+
 const isDonationConcluded = computed(() => createdDonation.value?.state !== undefined && createdDonation.value.state !== 'credit_card_form');
 
 const instantPaymentPlatformKey = computed(() => {
@@ -636,21 +651,6 @@ const instantPaymentPlatformKey = computed(() => {
 
   return key;
 });
-
-const grossValue = computed(() => ((toDonateTaxes.value
-  ? amountDonatingTaxes.value
-  : amount.value)
-  || 0
-));
-
-const maxDonation = computed(() => campaign.value?.max_donation_value || 0);
-
-const totalTaxes = computed(() => ((typeof currentTaxes.value?.percent === 'number'
-  && typeof currentTaxes.value?.tax === 'number')
-  ? grossValue.value * (currentTaxes.value.percent / 100) + (currentTaxes.value.tax / 100)
-  : 0));
-
-const netValue = computed(() => grossValue.value - totalTaxes.value);
 
 watch(amount, () => {
   toDonateTaxes.value = false;
