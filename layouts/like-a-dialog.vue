@@ -53,12 +53,10 @@ const title = computed(() => (route.meta.title
   : appConfig.title));
 </script>
 <style lang="scss" scoped>
-$max-width: 41.25rem;
-
 .page-wrapper--like-a-dialog {
   position: relative;
 
-  max-width: $max-width;
+  max-width: my.$max-width--dialog;
   /* 660px */
   padding-top: my.$gutter * 4;
   padding-bottom: my.$gutter * 4;
@@ -94,7 +92,7 @@ header {
     opacity: 1;
   }
 
-  @media screen and (min-width: $max-width + my.$gutter * 2) {
+  @media screen and (min-width: my.$max-width--dialog + my.$gutter * 2) {
     position: fixed;
     top: my.$gutter * 2;
     right: my.$gutter * 2;
