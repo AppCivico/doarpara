@@ -75,13 +75,15 @@ type ValidatedCard = {
 export const useDonateStore = defineStore('toDonate', {
   persist: {
     debug: !!import.meta.dev,
-    storage: persistedState.cookiesWithOptions({
-      sameSite: 'strict',
-      secure: true,
-    }),
+    // be careful to what you add here! Do not persist sensitive information!
+    paths: [
+      'deviceAuthorizationTokenId',
+      'referral',
+      'donor',
+      'donorAddress',
+    ],
   },
   state: () => ({
-    // be careful to what you add here! Do not save sensitive information!
     deviceAuthorizationTokenId: '',
     referral: <ReferralCodes> {},
 
