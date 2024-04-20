@@ -580,6 +580,7 @@ declare const Iugu: any;
 definePageMeta({
   layout: 'like-a-dialog',
   name: 'donate',
+  title: 'Doar para',
 });
 
 const appConfig = useAppConfig();

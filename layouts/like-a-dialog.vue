@@ -20,7 +20,15 @@
       </Head>
       <Body>
         <header>
-          <h1>{{ campaign?.name }}</h1>
+          <h1>
+            <span
+              v-if="route.meta.title"
+            >
+              {{ route.meta.title }}
+            </span>
+
+            {{ campaign?.name }}
+          </h1>
 
           <nav>
             <NuxtLink :to="{ name: 'campaign' }" class="link-like-a-close">
@@ -71,6 +79,9 @@ header {
   text-align: center;
 }
 
+header span {
+  color: my.palette('neutral');
+}
 .link-like-a-close {
   @include my.image-replacement;
 
