@@ -74,8 +74,8 @@ type ValidatedCard = {
 
 export const useDonateStore = defineStore('toDonate', {
   persist: {
+    debug: !!import.meta.dev,
     storage: persistedState.cookiesWithOptions({
-      httpOnly: true,
       sameSite: 'strict',
       secure: true,
     }),
