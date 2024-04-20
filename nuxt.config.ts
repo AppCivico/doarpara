@@ -31,8 +31,8 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      publicApiBase: 'https://dapi.votolegal.com.br/public-api',
-      privateApiBase: 'https://dapi.votolegal.com.br',
+      publicApiBase: 'https://votolegal-test-api.appcivico.com/public-api',
+      privateApiBase: 'https://votolegal-test-api.appcivico.com',
       receiptsBase: 'foo://bar',
       postalService: {
         queryUrl: 'https://dapi.votolegal.com.br/api/cep?cep=',
