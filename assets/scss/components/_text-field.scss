@@ -92,7 +92,6 @@
   }
 
 
-
   &:focus:required:invalid {
   }
 
@@ -121,6 +120,8 @@
 
 [type='number'] {
   @extend %text-field-reset;
+
+  text-align: right;
 
   appearance: none;
 }
