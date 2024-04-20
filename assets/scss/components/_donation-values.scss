@@ -108,7 +108,8 @@
     appearance: none;
   }
 
-  &:focus {
+  &[class]:hover,
+  &[class]:focus {
     outline: 0;
   }
 }
