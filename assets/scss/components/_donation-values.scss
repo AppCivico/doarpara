@@ -1,5 +1,4 @@
 @use 'sass:color';
-
 @use '../abstracts' as my;
 
 .donation-values__list {
@@ -21,8 +20,6 @@
 .donation-values__item {
   flex-basis: 10%;
   flex-grow: 1;
-
-  justify-content: stretch;
 
   padding: 0;
   margin: 0;
@@ -72,7 +69,7 @@
 .donation-values__custom-currency {
   display: flex;
 
-  flex-basis: 100%;
+  flex-basis: 33%;
   flex-grow: 1;
 
   align-items: center;
@@ -88,8 +85,13 @@
 }
 
 .donation-values__custom-input {
+  flex-basis: 33%;
+  flex-grow: 1;
+
   font-weight: inherit;
   text-align: left;
+
+  appearance: textfield;
 
   border: 0;
   border-top-right-radius: 0;
@@ -113,6 +115,9 @@
 
 .donation-values__custom-submit[class] {
   @include my.image-replacement;
+
+  flex-basis: 25%;
+  flex-grow: 1;
 
   text-indent: calc(101% + my.$gutter);
 
