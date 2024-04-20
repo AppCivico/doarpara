@@ -574,10 +574,10 @@ const { campaign } = storeToRefs(campaignStore);
 
 const amount = ref(0);
 const creditCard = ref({
-  full_name: 'Lorem Ipsum',
-  number: '4111 1111 1111 1111',
-  expiration: '12/30',
-  verification_value: '123',
+  full_name: '',
+  number: '',
+  expiration: '',
+  verification_value: '',
 });
 
 const createdDonation: Ref<CreatedDonation> = ref(null);
