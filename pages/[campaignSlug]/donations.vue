@@ -47,7 +47,7 @@
               {{ $t(`paymentMethods.${donation.payment_method}`) }}
             </td>
             <td :aria-label="$t('receipts.amount')" class="cell--number">
-              {{ $n(donation.amount, 'currency', { maximumFractionDigits: 0 }) }}
+              {{ $n(donation.amount / 100, 'currency', { maximumFractionDigits: 0 }) }}
             </td>
             <td class="cell--action">
               <a
