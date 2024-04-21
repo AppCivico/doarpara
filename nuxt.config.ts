@@ -18,7 +18,13 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vue-i18n'],
   },
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
+  },
   css: ['@/assets/scss/index.scss'],
   i18n: {
     defaultLocale: 'pt',
