@@ -822,7 +822,7 @@ async function submitDonation() {
   }
 }
 
-if (import.meta.client) {
+if (import.meta.server) {
   useHead({
     script: [
       {
@@ -837,6 +837,9 @@ if (import.meta.client) {
       },
     ],
   });
+}
+
+if (import.meta.client) {
   onMounted(() => {
     isClipboardInaccessible.value = !navigator.clipboard;
 
