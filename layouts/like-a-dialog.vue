@@ -82,6 +82,7 @@ header {
 header span {
   color: my.palette('neutral');
 }
+
 .link-like-a-close {
   @include my.image-replacement;
 
