@@ -102,6 +102,8 @@ export interface RaisedAndSource {
   cnpj: string;
   type: string;
   social_name: string;
+  recurring_percent: number | string;
+  new_donors_percent: number | string;
 }
 
 interface Donation {

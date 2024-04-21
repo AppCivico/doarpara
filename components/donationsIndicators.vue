@@ -2,16 +2,19 @@
   <dl class="donation-indicators">
     <div class="donation-indicators__item">
       <dt class="donation-indicators__title">
-        {{ $n(1633) }}
+        {{ $n(totals.amount) }}
       </dt>
       <dd class="donation-indicators__description">
         {{ $t('indicators.donorsToCampaign', { campaignName: campaign?.name }) }}
       </dd>
     </div>
 
-    <div class="donation-indicators__item">
+    <div
+      v-if="totals.newDonorsPercent"
+      class="donation-indicators__item"
+    >
       <dt class="donation-indicators__title">
-        {{ $n(0.69, 'percent') }}
+        {{ $n(totals.newDonorsPercent, 'percent') }}
       </dt>
       <dd class="donation-indicators__description">
         {{ $t('indicators.newDonors.title') }}
@@ -20,9 +23,12 @@
         {{ $t('indicators.newDonors.description') }}
       </dd>
     </div>
-    <div class="donation-indicators__item">
+    <div
+      v-if="totals.recurringPercent"
+      class="donation-indicators__item"
+    >
       <dt class="donation-indicators__title">
-        {{ $n(0.31, 'percent') }}
+        {{ $n(totals.recurringPercent, 'percent') }}
       </dt>
       <dd class="donation-indicators__description">
         {{ $t('indicators.oldDonors.title') }}
@@ -36,9 +42,11 @@
 <script setup lang="ts">
 import type { Campaign } from '@/doar-para.d.ts';
 
-defineProps<{
+const props = defineProps<{
   campaign: Campaign;
 }>();
+
+const totals = computed(() => consolidateTotals(props.campaign?.platforms));
 </script>
 <style lang="scss">
 .donation-indicators {
