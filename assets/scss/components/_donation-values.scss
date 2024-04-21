@@ -8,6 +8,7 @@
 
   gap: my.$gutter * 0.5;
 
+  max-width: 100%;
   padding: 0;
   margin-top: 0;
   margin-right: 0;
@@ -32,7 +33,8 @@
   }
 }
 
-.donation-values__item--custom {}
+.donation-values__item--custom {
+}
 
 .donation-values__value {
   &[class] {
