@@ -11,12 +11,9 @@
 import { useCampaignStore } from '@/store/campaign.ts';
 
 const appConfig = useAppConfig();
-const route = useRoute();
 
 const campaignStore = useCampaignStore();
 const { campaign, error } = storeToRefs(campaignStore);
-
-await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
 
 if (campaign.value) {
   const meta = {
