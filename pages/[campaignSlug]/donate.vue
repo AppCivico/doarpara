@@ -471,7 +471,11 @@
           <p>A serem revisadas com o backend.</p>
           <template v-for="message, i in messages">
             <p v-if="message.type === 'link'" :key="`message__${i}--link`">
-              <NuxtLink :to="message.href">
+              <NuxtLink
+                :to="message.href"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {{ message.text }}
               </NuxtLink>
             </p>
@@ -519,7 +523,11 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
       <div v-else>
         <template v-for="message, i in messages">
           <p v-if="message.type === 'link'" :key="`message__${i}--link`">
-            <NuxtLink :to="message.href">
+            <NuxtLink
+              :to="message.href"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {{ message.text }}
             </NuxtLink>
           </p>
