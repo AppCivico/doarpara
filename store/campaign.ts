@@ -25,9 +25,11 @@ export const useCampaignStore = defineStore('campaign', {
     error: null,
   }),
   actions: {
-    async fetchCampaignAndRewards(campaignSlug = '', params = {}): Promise<void> {
+    async fetchCampaignAndRewards(campaignSlug = '', params = {}, reducedVersion = !!import.meta?.server): Promise<void> {
       const route = useRoute();
       const runtimeConfig = useRuntimeConfig();
+
+      const fullUrl = `${runtimeConfig.public.publicApiBase}/${reducedVersion ? 'campaign-reduced' : 'campaign'}/${campaignSlug || route.params.campaignSlug}`;
 
       this.pending = true;
       this.error = null;
@@ -35,7 +37,7 @@ export const useCampaignStore = defineStore('campaign', {
       const {
         data, error, pending,
       } = await useFetch<Campaign>(
-        `${runtimeConfig.public.publicApiBase}/campaign/${campaignSlug || route.params.campaignSlug}`,
+        fullUrl,
         params,
       );
 
