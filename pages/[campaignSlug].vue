@@ -17,14 +17,16 @@ const { campaign, error } = storeToRefs(campaignStore);
 
 if (campaign.value) {
   const meta = {
-    link: Object.values(campaign.value?.contact_methods)
-      .filter((x) => !!x)
-      .map((x) => ({
-        rel: 'me',
-        href: x,
-      })),
+    link: () => (campaign.value?.contact_methods
+      ? Object.values(campaign.value?.contact_methods)
+        .filter((x) => !!x)
+        .map((x) => ({
+          rel: 'me',
+          href: x,
+        }))
+      : []),
     htmlAttrs: {
-      class: `theme--${campaign.value.theme || 'default'}`,
+      class: () => `theme--${campaign.value?.theme || 'default'}`,
     },
   };
 
@@ -32,18 +34,23 @@ if (campaign.value) {
 
   if (import.meta.dev || import.meta.server) {
     useSeoMeta({
-      title: campaign.value?.name
+      title: () => (campaign.value?.name
         ? `${campaign.value?.name} • ${appConfig.title}`
-        : `${appConfig.title}`,
-      description: campaign.value?.preamble,
-      ogImage: typeof campaign.value?.sharingImage === 'object'
+        : `${appConfig.title}`),
+      ogTitle: () => campaign.value?.name,
+      ogImage: () => (typeof campaign.value?.sharing_image === 'object'
         ? {
-          url: campaign.value?.sharingImage?.url,
-          width: campaign.value?.sharingImage?.width,
-          height: campaign.value?.sharingImage?.height,
+          url: campaign.value?.sharing_image?.url,
+          width: campaign.value?.sharing_image?.width,
+          height: campaign.value?.sharing_image?.height,
         }
-        : campaign.value?.sharingImage
-        || null,
+        : campaign.value?.sharing_image
+        || null),
+      description: () => campaign.value?.preamble,
+      ogDescription: () => campaign.value?.preamble,
+      ogType: 'website',
+      twitterCard: 'summary_large_image',
+      twitterSite: extractTwitterHandle(campaign.value?.contact_methods?.twitter),
     });
   }
 }

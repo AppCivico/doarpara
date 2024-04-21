@@ -150,7 +150,7 @@ export interface Campaign {
   theme: Theme;
   preamble: string;
   description: string;
-  sharingImage: Image;
+  sharing_image: Image;
 
   campaign_section_list: CampaignSection[];
 
