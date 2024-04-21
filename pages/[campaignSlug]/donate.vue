@@ -7,7 +7,6 @@
       <donationValues
         v-if="!amount"
         :campaign="campaign"
-        class="call-to-action-values__donation-values"
       />
 
       <form v-else-if="!isDonationConcluded" action="" class="donation-form" @submit.prevent="submitDonation">

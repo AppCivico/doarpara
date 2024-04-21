@@ -1,6 +1,6 @@
 <template>
   <ul
-    class="call-to-action-values__donation-values donation-values__list"
+    class="donation-values__list"
   >
     <li
       v-for="(pledge, i) in sortedPledgeList"
