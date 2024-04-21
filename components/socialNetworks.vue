@@ -23,5 +23,17 @@ const props = defineProps<{
 
 const contactMethodsArray = computed(() => Object.entries(props.contactMethods)
   .filter(([, link]) => link)
-  .map(([method, link]) => ({ name: method, link })));
+  .map(([method, link]) => ({ name: method, link }))
+  .sort((a, b) => {
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+
+    return 0;
+  }));
 </script>
