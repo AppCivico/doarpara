@@ -24,7 +24,7 @@
     <li
       v-for="pledge in customPledges"
       :key="pledge"
-      class="donation-values__item donation-values__item--custom-button"
+      class="donation-values__item donation-values__item--custom"
     >
       <button
         v-if="!chosenCustomPledge"

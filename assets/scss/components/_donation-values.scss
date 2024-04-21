@@ -32,9 +32,16 @@
   }
 }
 
+.donation-values__item--custom {}
+
 .donation-values__value {
   &[class] {
     width: 100%;
+  }
+
+  &:link,
+  &:visited {
+    color: inherit;
   }
 }
 
