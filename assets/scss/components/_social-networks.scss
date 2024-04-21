@@ -24,6 +24,7 @@
 
   white-space: normal;
 
+  background-image: my.image('icon-link.svg');
   background-repeat: no-repeat;
   background-position: 50%;
 
@@ -78,5 +79,4 @@
 }
 
 .social-networks__link--website {
-  background-image: my.image('icon-link.svg');
 }
