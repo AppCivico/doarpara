@@ -10,13 +10,6 @@
       />
 
       <form v-else-if="!isDonationConcluded" action="" class="donation-form" @submit.prevent="submitDonation">
-        <fieldset v-debug>
-          <label for="">
-            campo para testes! Será removido posteriormente
-            <input v-model.number="amount" type="number" step="0.01">
-          </label>
-        </fieldset>
-
         <fieldset
           class="flexible-fieldset"
           name="donor"
