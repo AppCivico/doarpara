@@ -53,7 +53,7 @@ const defaultMessage = computed(() => {
 <style scoped lang="scss">
 .request-message {
   @include my.shadow;
-  @include my.pulsing-color('background-color');
+  @include my.pulsing-color(my.palette('loading', 'pulsing-list'), 'background-color');
 
   position: fixed;
   top: 0;

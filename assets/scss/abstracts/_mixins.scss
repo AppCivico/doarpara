@@ -1052,8 +1052,7 @@ $no-viewport: false !default;
   box-decoration-break: clone;
 }
 
-@mixin pulsing-color($property: 'color') {
-  $list: f.palette('loading', 'pulsing-list');
+@mixin pulsing-color($list, $property: 'color') {
   $animation-name: pulsing-#{$property};
 
   #{$property}: list.nth($list, 1);
@@ -1080,8 +1079,8 @@ $no-viewport: false !default;
   }
 }
 
-@mixin pulsing-outline {
-  @include pulsing-color('outline-color');
+@mixin pulsing-outline($color-list) {
+  @include pulsing-color($color-list, 'outline-color');
 
   outline-width: 2px;
   outline-style: solid;

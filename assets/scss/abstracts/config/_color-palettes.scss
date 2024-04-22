@@ -169,6 +169,7 @@ $effects: ( // TO-DO
   'shadow': color.adjust($_dark-blue, $alpha: -0.8),
   'tap-highlight': color.adjust($_dark-blue, $alpha: -0.9),
   'target-highlight': rgb(255, 255, 102),
+  'error-gradient': (map.get($feedback, 'danger'), $_red),
 );
 $palette: map.set($palette, 'effects', $effects);
 
