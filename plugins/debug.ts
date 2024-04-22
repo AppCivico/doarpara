@@ -3,7 +3,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     beforeMount: (el, binding) => {
       el.classList.add('debug');
       el.setAttribute('hidden', '');
-      let shiftEnabled = false;
+      let wasShiftPressed = false;
 
       if (binding.value) {
         el.setAttribute('data-debug', binding.value);
@@ -15,21 +15,21 @@ export default defineNuxtPlugin((nuxtApp) => {
 
         if (event.getModifierState('Control')) {
           if (event.key === 'Shift') {
-            if (shiftEnabled) {
+            if (wasShiftPressed) {
               if (el.hasAttribute('hidden')) {
                 el.removeAttribute('hidden');
               } else {
                 el.setAttribute('hidden', '');
               }
-              shiftEnabled = false;
+              wasShiftPressed = false;
             } else {
-              shiftEnabled = true;
+              wasShiftPressed = true;
               setTimeout(() => {
-                shiftEnabled = false;
+                wasShiftPressed = false;
               }, 300);
             }
-          } else if (shiftEnabled) {
-            shiftEnabled = false;
+          } else if (wasShiftPressed) {
+            wasShiftPressed = false;
           }
         }
       });
