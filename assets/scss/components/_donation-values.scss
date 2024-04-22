@@ -40,17 +40,6 @@
   &[class] {
     width: 100%;
   }
-
-  &:link,
-  &:visited {
-    color: inherit;
-  }
-
-  &:hover,
-  &:active,
-  &:focus {
-    color: my.palette('text', 'light');
-  }
 }
 
 .donation-values__value--custom-group {
