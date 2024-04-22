@@ -75,7 +75,11 @@
         </tbody>
       </table>
 
-      <button type="button" @click="fetchDonations(true)">
+      <button
+        v-if="hasMore"
+        type="button"
+        @click="fetchDonations(true)"
+      >
         carregar mais
       </button>
     </section>
@@ -93,7 +97,7 @@ const donationsStore = useDonationsStore();
 const { campaign } = storeToRefs(campaignStore);
 
 const {
-  list: donationsList, paginationMarker, pending,
+  hasMore, list: donationsList, paginationMarker, pending,
 } = storeToRefs(donationsStore);
 
 function fetchDonations(more = false) {
