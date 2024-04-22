@@ -1,7 +1,9 @@
-import type { Donation, DonationList } from '@/doar-para.d.ts';
+import type { Donation, DonationResponse } from '@/doar-para.d.ts';
+import type { FetchError } from 'ofetch';
 
 type State = {
   list: Donation[];
+
   hasMore: boolean;
   paginationMarker: string;
 
@@ -20,42 +22,42 @@ export const useDonationsStore = defineStore('donation', {
     error: null,
   }),
   actions: {
-    async fetchDonations(campaignSlug = '', params = {}): Promise<void> {
+    async fetchDonations(campaignSlug = '', paginationMarker = '', params = {}): Promise<void> {
       const route = useRoute();
       const runtimeConfig = useRuntimeConfig();
-
-      const query = this.paginationMarker
-        ? {
-          pagination_marker: this.paginationMarker,
-        }
-        : {};
 
       this.pending = true;
       this.error = null;
 
-      const {
-        data, error, pending, status,
-      } = await useFetch<DonationList>(`${runtimeConfig.public.publicApiBase}/candidate-donations/${campaignSlug || route.params.campaignSlug}`, {
-        ...params,
-        query,
-      });
+      try {
+        const fullUrl = `${runtimeConfig.public.publicApiBase}/candidate-donations/${campaignSlug || route.params.campaignSlug}/${paginationMarker}`;
+        const response: DonationResponse = await $fetch(fullUrl, {
+          method: 'GET',
+          params: {
+            ...params,
+            limit: 10,
+          },
+        });
 
-      await new Promise((resolve) => { setTimeout(resolve, 5000); });
-
-      this.pending = pending.value;
-
-      if (data.value) {
-        if (Array.isArray(data.value.donations)) {
-          this.list = data.value.donations;
+        if (Array.isArray(response.donations)) {
+          if (paginationMarker) {
+            this.list = this.list.concat(response.donations);
+          } else {
+            this.list = response.donations;
+          }
         }
 
-        this.hasMore = !!data.value?.has_more || false;
-        this.paginationMarker = String(data.value?.pagination_marker) || '';
-      }
+        this.hasMore = response.has_more;
 
-      if (error.value) {
-        this.error = error.value;
-        throw createError(error.value);
+        this.paginationMarker = response.pagination_marker
+        // eslint-disable-next-line no-underscore-dangle
+        || response.donations[response.donations.length - 1]?._marker
+        || '';
+      } catch (error) {
+        this.error = (error as FetchError).data;
+        throw error;
+      } finally {
+        this.pending = false;
       }
     },
   },

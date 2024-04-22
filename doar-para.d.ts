@@ -117,12 +117,14 @@ interface Donation {
   donor_natural_person_id: string;
 
   platform: string;
-  from_votolegal: boolean;
-  is_irregular: boolean;
+  from_votolegal: boolean | number;
+  is_irregular: boolean | number;
   cpf: string;
   transaction_link: string | null;
   digest: string;
   hash: string | null;
+
+  _marker?: string;
 }
 
 // API endpoints ///////////////////////////////////////////////////////////////
@@ -179,10 +181,12 @@ export type DonationMessage = {
   type: string;
 };
 
-export interface DonationList {
+export interface DonationResponse {
   donations: Donation[];
   has_more: boolean;
   pagination_marker?: string;
+  recurring_percent?: string;
+  new_donors_percent?: string;
 }
 
 export interface FAQ {

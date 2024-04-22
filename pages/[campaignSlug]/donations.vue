@@ -74,6 +74,10 @@
           </tr>
         </tbody>
       </table>
+
+      <button type="button" @click="fetchDonations(true)">
+        carregar mais
+      </button>
     </section>
   </article>
 </template>
@@ -88,12 +92,21 @@ const donationsStore = useDonationsStore();
 
 const { campaign } = storeToRefs(campaignStore);
 
-const { list: donationsList, pending } = storeToRefs(donationsStore);
+const {
+  list: donationsList, paginationMarker, pending,
+} = storeToRefs(donationsStore);
 
-donationsStore.fetchDonations(String(route.params.campaignSlug), {
-  lazy: true,
-  server: false,
-});
+function fetchDonations(more = false) {
+  if (more) {
+    donationsStore.fetchDonations(String(route.params.campaignSlug), paginationMarker.value);
+  } else {
+    donationsStore.fetchDonations(String(route.params.campaignSlug));
+  }
+}
+
+if (import.meta.client) {
+  fetchDonations();
+}
 </script>
 <style lang="scss">
 @mixin centralized {
