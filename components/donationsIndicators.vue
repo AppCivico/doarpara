@@ -2,7 +2,7 @@
   <dl class="donation-indicators">
     <div class="donation-indicators__item">
       <dt class="donation-indicators__title">
-        {{ $n(totals.amount) }}
+        {{ $n(totalDonations.total) }}
       </dt>
       <dd class="donation-indicators__description">
         {{ $t('indicators.donorsToCampaign', { campaignName: campaign?.name }) }}
@@ -10,11 +10,11 @@
     </div>
 
     <div
-      v-if="totals.newDonorsPercent"
+      v-if="totalDonations.newDonorsPercent"
       class="donation-indicators__item"
     >
       <dt class="donation-indicators__title">
-        {{ $n(totals.newDonorsPercent, 'percent') }}
+        {{ $n(totalDonations.newDonorsPercent) }}%
       </dt>
       <dd class="donation-indicators__description">
         {{ $t('indicators.newDonors.title') }}
@@ -24,11 +24,11 @@
       </dd>
     </div>
     <div
-      v-if="totals.recurringPercent"
+      v-if="totalDonations.recurringPercent"
       class="donation-indicators__item"
     >
       <dt class="donation-indicators__title">
-        {{ $n(totals.recurringPercent, 'percent') }}
+        {{ $n(totalDonations.recurringPercent) }}%
       </dt>
       <dd class="donation-indicators__description">
         {{ $t('indicators.oldDonors.title') }}
@@ -46,7 +46,7 @@ const props = defineProps<{
   campaign: Campaign;
 }>();
 
-const totals = computed(() => consolidateTotals(props.campaign?.platforms));
+const totalDonations = computed(() => consolidateTotals(props.campaign?.platforms));
 </script>
 <style lang="scss">
 .donation-indicators {

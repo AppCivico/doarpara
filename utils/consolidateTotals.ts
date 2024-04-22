@@ -3,24 +3,24 @@ import type { RaisedAndSource } from '~/doar-para';
 type ConsolidatedTotal = {
   recurringPercent: number,
   newDonorsPercent: number,
-  amount: number,
+  total: number,
 };
 
-export default (sources: RaisedAndSource[] | undefined): ConsolidatedTotal => {
-  let totalAmount = 0;
-  let totalWeightedNewDonorsPercent = 0;
-  let totalWeightedRecurringDonorsPercent = 0;
+export default (sources: RaisedAndSource[] | undefined):ConsolidatedTotal => {
+  let totalDonations = 0;
+  let totalNewDonorsAmount = 0;
+  let totalRecurringAmount = 0;
 
   if (Array.isArray(sources)) {
     sources.forEach((source) => {
-      totalAmount += source.total_donations;
+      totalDonations += source.total_donations;
       if (source.new_donors_percent !== null && source.new_donors_percent !== undefined) {
         const parsedPercentage = typeof source.new_donors_percent === 'string'
           ? tryParseFloat(source.new_donors_percent)
           : source.new_donors_percent;
 
         if (typeof parsedPercentage === 'number') {
-          totalWeightedRecurringDonorsPercent += source.total_donations * parsedPercentage;
+          totalNewDonorsAmount += (parsedPercentage / 100) * source.total_donations;
         }
       }
       if (source.recurring_percent !== null && source.recurring_percent !== undefined) {
@@ -29,18 +29,15 @@ export default (sources: RaisedAndSource[] | undefined): ConsolidatedTotal => {
           : source.recurring_percent;
 
         if (typeof parsedPercentage === 'number') {
-          totalWeightedNewDonorsPercent += source.total_donations * parsedPercentage;
+          totalRecurringAmount += (parsedPercentage / 100) * source.total_donations;
         }
       }
     });
   }
 
-  const recurringPercent = totalWeightedNewDonorsPercent / totalAmount;
-  const newDonorsPercent = totalWeightedRecurringDonorsPercent / totalAmount;
-
   return {
-    amount: totalAmount,
-    newDonorsPercent,
-    recurringPercent,
+    total: totalDonations,
+    newDonorsPercent: (totalNewDonorsAmount / totalDonations) * 100,
+    recurringPercent: (totalRecurringAmount / totalDonations) * 100,
   };
 };
