@@ -10,7 +10,7 @@
     </div>
 
     <div
-      v-if="totalDonations.newDonorsPercent"
+      v-if="totalDonations.newDonorsPercent && totalDonations.newDonorsPercent < 100"
       class="donation-indicators__item"
     >
       <dt class="donation-indicators__title">
@@ -24,7 +24,7 @@
       </dd>
     </div>
     <div
-      v-if="totalDonations.recurringPercent"
+      v-if="totalDonations.recurringPercent && totalDonations.recurringPercent < 100"
       class="donation-indicators__item"
     >
       <dt class="donation-indicators__title">
