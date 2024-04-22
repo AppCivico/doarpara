@@ -105,6 +105,7 @@
               type="tel"
               name="phone"
               autocomplete="tel-national"
+              inputmode="numeric"
               placeholder="(00) 00000-0000"
               minlength="14"
               required
@@ -142,6 +143,7 @@
               name="zip_code"
               type="text"
               aria-live="assertive"
+              inputmode="numeric"
               required
               data-maska="#####-###"
               :aria-busy="pending.gettingAddress"
