@@ -561,7 +561,14 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
         </template>
       </div>
     </TransitionExpand>
+
+    <errorMessagePanel v-if="combinedErrors.length">
+      combinedErrors:{{ combinedErrors }}
+    </errorMessagePanel>
+
     <div v-debug>
+      <pre>combinedErrors:{{ combinedErrors }}</pre>
+      <hr />
       <pre>errors:{{ errors }}</pre>
       <hr />
       <pre>messages: {{ messages }}</pre>
@@ -615,7 +622,7 @@ const toDonateTaxes = ref(false);
 const addressNumber = ref(null);
 
 const {
-  combinedPending, donor, donorAddress, errors, pending, pendingMessage,
+  combinedErrors, combinedPending, donor, donorAddress, errors, pending, pendingMessage,
 } = storeToRefs(donateStore);
 
 // TODO: remove dumb mapping. It was a bad decision.
@@ -774,7 +781,7 @@ function fillAddress(event: Event) {
 }
 
 async function submitDonation() {
-  const { data: donationData, error: donationError } = await donateStore
+  const { data: donationData } = await donateStore
     .createDonationOnBackEnd(grossValue.value * 100, mappedPaymentMethod.value);
 
   if (donationData) {
@@ -795,11 +802,6 @@ async function submitDonation() {
         }
       }
     }
-  }
-
-  if (donationError) {
-    console.debug('donationError', donationError);
-    throw new Error(donationError.message);
   }
 
   if (mappedPaymentMethod.value !== 'credit_card') {

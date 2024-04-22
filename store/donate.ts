@@ -129,26 +129,17 @@ export const useDonateStore = defineStore('toDonate', {
       this.pending.gettingAddress = true;
       this.errors.gettingAddress = null;
 
-      return useFetch<PostalServiceQueryResult>(
+      return $fetch<PostalServiceQueryResult>(
         `${useRuntimeConfig().public.postalService.queryUrl}${postalCode}`,
       ).then((response) => {
-        const { data, error } = response;
-
-        if (data.value) {
-          const {
-            street, city, state, district,
-          } = data.value;
-
-          // not using `$patch()` to keep reactivity of sibling properties under `address.`
-          this.donorAddress.street = street;
-          this.donorAddress.city = city;
-          this.donorAddress.state = state;
-          this.donorAddress.district = district;
-        }
-
-        if (error.value) {
-          throw error.value;
-        }
+        const {
+          street, city, state, district,
+        } = response;
+        // not using `$patch()` to keep reactivity of sibling properties under `address.`
+        this.donorAddress.street = street;
+        this.donorAddress.city = city;
+        this.donorAddress.state = state;
+        this.donorAddress.district = district;
       }).catch((err) => {
         this.errors.gettingAddress = err;
       }).finally(() => {
@@ -162,21 +153,20 @@ export const useDonateStore = defineStore('toDonate', {
 
       const runtimeConfig = useRuntimeConfig();
 
-      const {
-        data, error,
-      } = await useFetch<{ device_authorization_token_id: string }>(`${runtimeConfig.public.privateApiBase}/api2/device-authentication`, { method: 'POST', ...params });
+      try {
+        const response:{ device_authorization_token_id: string } = await $fetch(`${runtimeConfig.public.privateApiBase}/api2/device-authentication`, { method: 'POST', ...params });
+        this.pending.validatingDevice = false;
 
-      this.pending.validatingDevice = false;
+        if (response?.device_authorization_token_id) {
+          this.deviceAuthorizationTokenId = response.device_authorization_token_id;
+        }
 
-      if (data.value?.device_authorization_token_id) {
-        this.deviceAuthorizationTokenId = data.value?.device_authorization_token_id;
+        return response?.device_authorization_token_id;
+      } catch (err) {
+        this.errors.validatingDevice = err as ApiError;
+        this.pending.validatingDevice = false;
+        throw err;
       }
-
-      if (error.value) {
-        this.errors.validatingDevice = error.value;
-      }
-
-      return data.value?.device_authorization_token_id;
     },
 
     async createDonationOnBackEnd(amount: number, paymentMethod: string) {
@@ -187,48 +177,48 @@ export const useDonateStore = defineStore('toDonate', {
       this.pending.creatingDonation = true;
       this.errors.creatingDonation = null;
 
-      const runtimeConfig = useRuntimeConfig();
+      try {
+        const runtimeConfig = useRuntimeConfig();
 
-      const payload = this.payloadForCreationOfDonationOnBackEnd;
-      const { email, cpf = '' } = payload;
+        const payload = this.payloadForCreationOfDonationOnBackEnd;
+        const { email, cpf = '' } = payload;
 
-      const deviceAuthorizationTokenId = this.deviceAuthorizationTokenId
+        const deviceAuthorizationTokenId = this.deviceAuthorizationTokenId
         || String(await this.getDeviceAuthorizationToken());
 
-      const nonce = randomString(13);
-      const str = `${nonce}${Number.parseInt(cpf.replace(/[^0-9]+/g, ''), 10) * -1}/\u00A0${amount}${email.toUpperCase()}`;
-      // generating nonce end hash here to avoid constant updates on getters
-      const fp = new VotolegalFP({
-        excludeUserAgent: true,
-        dontUseFakeFontInCanvas: true,
-      });
-      const hash = fp.x64hash128(str);
-      const donationFp = await getDonationFP();
-      const campaignStore = useCampaignStore();
+        const nonce = randomString(13);
+        const str = `${nonce}${Number.parseInt(cpf.replace(/[^0-9]+/g, ''), 10) * -1}/\u00A0${amount}${email.toUpperCase()}`;
+        // generating nonce end hash here to avoid constant updates on getters
+        const fp = new VotolegalFP({
+          excludeUserAgent: true,
+          dontUseFakeFontInCanvas: true,
+        });
+        const hash = fp.x64hash128(str);
+        const donationFp = await getDonationFP();
+        const campaignStore = useCampaignStore();
+        const response:DonationResponse = await $fetch(`${runtimeConfig.public.privateApiBase}/api2/donations`, {
+          method: 'POST',
+          body: {
+            ...payload,
+            payment_method: paymentMethod,
+            amount,
+            candidate_id: campaignStore.campaign?.id || 0,
+            donation_fp: donationFp,
+            nc: nonce,
+            sv: hash,
+            device_authorization_token_id: deviceAuthorizationTokenId,
+          },
+        });
 
-      const {
-        data, error,
-      } = await useFetch< DonationResponse >(`${runtimeConfig.public.privateApiBase}/api2/donations`, {
-        method: 'POST',
-        body: {
-          ...payload,
-          payment_method: paymentMethod,
-          amount,
-          candidate_id: campaignStore.campaign?.id || 0,
-          donation_fp: donationFp,
-          nc: nonce,
-          sv: hash,
-          device_authorization_token_id: deviceAuthorizationTokenId,
-        },
-      });
+        this.pending.creatingDonation = false;
+        return { data: response };
+      } catch (err) {
+        this.errors.creatingDonation = err as ApiError;
 
-      this.pending.creatingDonation = false;
+        this.pending.creatingDonation = false;
 
-      if (error.value) {
-        this.errors.creatingDonation = error.value;
+        throw err;
       }
-
-      return { data: data.value, error: error.value };
     },
 
     async validateCard(card: CreditCard): Promise<ValidatedCard> {
@@ -277,9 +267,7 @@ export const useDonateStore = defineStore('toDonate', {
 
         const { deviceAuthorizationTokenId: token } = this;
 
-        const {
-          data, error,
-        } = await useFetch< DonationResponse >(`${runtimeConfig.public.privateApiBase}/api2/donations/${donationId}`, {
+        const response = await $fetch<DonationResponse>(`${runtimeConfig.public.privateApiBase}/api2/donations/${donationId}`, {
           method: 'POST',
           query: {
             device_authorization_token_id: token,
@@ -288,26 +276,22 @@ export const useDonateStore = defineStore('toDonate', {
           },
         });
 
-        if (error.value) {
-          throw error.value;
-        }
-
         this.pending.payingDonation = false;
 
         return {
-          data: data.value,
+          data: response,
         };
       } catch (error) {
         this.errors.payingDonation = error as ApiError;
         this.pending.payingDonation = false;
-        return {
-          error,
-        };
+        throw error;
       }
     },
   },
   getters: {
     combinedPending: ({ pending }) => Object.values(pending).some((value) => value === true),
+
+    combinedErrors: ({ errors }) => Object.values(errors).filter((value) => !!value),
 
     pendingMessage: ({ pending }) => Object.keys(pending)
       .find((x) => pending[x as keyof typeof pending] !== false),
