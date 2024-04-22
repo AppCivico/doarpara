@@ -60,7 +60,7 @@ export const useCampaignStore = defineStore('campaign', {
   getters: {
     isCampaignLoaded: (state) => state.campaign !== null,
 
-    campaignSections: (({ campaign, requireSections }):CampaignSection[] => (
+    campaignSections: (({ campaign, requireSections }): CampaignSection[] => (
       Array.isArray(campaign?.campaign_section_list)
         ? (campaign?.campaign_section_list || [])
           .filter((s: CampaignSection) => !requireSections.includes(s))
@@ -68,25 +68,26 @@ export const useCampaignStore = defineStore('campaign', {
           .concat(requireSections)
         : requireSections
     )),
+
     minimumDonationPerMethod: (({ campaign }) => {
       const {
         min_donation_values: minDonationValues = [],
       } = campaign || {};
 
-      return minDonationValues.reduce((acc:MinimumDonationPerMethod, cur) => {
+      return minDonationValues.reduce((acc: MinimumDonationPerMethod, cur) => {
         acc[cur.method] = cur.value;
         return acc;
       }, {});
     }),
 
-    minimumDonation({ campaign }):number {
+    minimumDonation({ campaign }): number {
       const {
         payment_method_list: paymentMethodList = [],
       } = campaign || {};
       const { minimumDonationPerMethod } = this;
 
       return paymentMethodList
-        .reduce((acc:number, cur: PaymentMethod) => (typeof minimumDonationPerMethod?.[cur] === 'number'
+        .reduce((acc: number, cur: PaymentMethod) => (typeof minimumDonationPerMethod?.[cur] === 'number'
           ? Math.min(minimumDonationPerMethod[cur] || 0, acc)
           : acc), Infinity);
     },
