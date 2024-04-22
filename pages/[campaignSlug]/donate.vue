@@ -143,6 +143,7 @@
               name="zip_code"
               type="text"
               aria-live="assertive"
+              autocomplete="postal-code"
               inputmode="numeric"
               required
               data-maska="#####-###"
