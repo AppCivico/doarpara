@@ -59,7 +59,7 @@ const defaultMessage = computed(() => {
   top: 0;
   right: 0;
   left: 0;
-  z-index: my.layer('modal');
+  z-index: my.layer('dropdown');
 
   padding: my.$gutter;
 
