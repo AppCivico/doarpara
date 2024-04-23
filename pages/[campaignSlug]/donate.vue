@@ -4,8 +4,11 @@
     class="donation-form-and-messages"
   >
     <TransitionExpand>
+      <errorMessagePanel v-if="wasAnAdBlockerErrorFound">
+        {{ $t('errors.adBlocker') }}
+      </errorMessagePanel>
       <donationValues
-        v-if="!amount"
+        v-else-if="!amount"
         :campaign="campaign"
       />
 
@@ -616,6 +619,7 @@ const messages: Ref<DonationMessage[]> = ref([]);
 const paymentMethod = ref('');
 const toDonateTaxes = ref(false);
 const addressNumber = ref(null);
+const wasAnAdBlockerErrorFound = ref(false);
 
 const {
   combinedErrors, combinedPending, donor, donorAddress, errors, pending, pendingMessage,
@@ -861,6 +865,7 @@ if (import.meta.client) {
     window.addEventListener('load', () => {
       nextTick(() => {
         if (Iugu.utils.isBlockedByAdBlock()) {
+          wasAnAdBlockerErrorFound.value = true;
           throw new Error('AdBlocker');
         }
       });

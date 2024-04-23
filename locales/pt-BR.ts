@@ -80,6 +80,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     ),
   },
   errors: {
+    adBlocker: 'Há um bloqueador de anúncios impedindo o processador de pagamentos.',
     is_invalid: 'Valor inválido',
   },
   flexibleFunding: 'Campanha flexível',
