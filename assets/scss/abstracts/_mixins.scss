@@ -1097,8 +1097,12 @@ $no-viewport: false !default;
   border-color: f.palette('border','focus');
 }
 
-@mixin shadow {
-  box-shadow: 10px 10px 50px f.palette('effects', 'shadow');
+@mixin shadow ($inset: false) {
+  @if $inset {
+    box-shadow: inset 10px 10px 50px f.palette('effects', 'shadow');
+  } @else {
+    box-shadow: 10px 10px 50px f.palette('effects', 'shadow');
+  }
   // filter: drop-shadow(0px 4px 4px f.palette('effects', 'shadow'));
 }
 
