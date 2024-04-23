@@ -1,17 +1,13 @@
 <template>
-  <Teleport
+  <div
     v-if="slots.default"
-    to="#teleports"
+    class="error-message"
+    aria-live="assertive"
   >
-    <div
-      class="error-message"
-      aria-live="assertive"
-    >
-      <span class="error-message__container">
-        <slot />
-      </span>
-    </div>
-  </Teleport>
+    <span class="error-message__container">
+      <slot />
+    </span>
+  </div>
 </template>
 <script setup lang="ts">
 import { useSlots } from 'vue';
@@ -27,10 +23,11 @@ defineProps({
 </script>
 <style scoped lang="scss">
 .error-message {
-  @include my.shadow;
+  @include my.shadow(true);
   @include my.pulsing-color(my.palette('effects', 'error-gradient'), 'background-color');
+  @include my.full-width;
 
-  position: fixed;
+  position: sticky;
   right: 0;
   bottom: 0;
   left: 0;
