@@ -519,7 +519,10 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
         </fieldset>
       </form>
 
-      <div v-else>
+      <div
+        v-else
+        class="donation-form__conclusion-messages"
+      >
         <template v-for="message, i in messages">
           <p v-if="message.type === 'link'" :key="`message__${i}--link`">
             <NuxtLink
@@ -968,4 +971,26 @@ if (import.meta.client) {
 }
 
 .donation-summary__input {}
+
+.donation-form__conclusion-messages {
+  .pix-container {}
+
+  .pix-qrcode,
+  [data-pix] {
+    display: block;
+
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .pix-qrcode {
+    image-rendering: crisp-edges;
+  }
+
+  [data-pix] {
+    margin-top: my.$gutter;
+    margin-bottom: my.$gutter;
+  }
+}
 </style>
