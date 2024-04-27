@@ -499,7 +499,7 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 
           <button
             type="submit"
-            :disabled="!grossValue || combinedPending"
+            :aria-disabled="!grossValue || combinedPending || undefined"
             class="donation-form__submit"
             :aria-busy="combinedPending"
           >
@@ -784,6 +784,17 @@ function fillAddress(event: Event) {
 }
 
 async function submitDonation() {
+  if (!grossValue.value) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Required value is missing',
+    });
+  }
+
+  if (combinedPending.value) {
+    return;
+  }
+
   const { data: donationData } = await donateStore
     .createDonationOnBackEnd(grossValue.value * 100, mappedPaymentMethod.value);
 
