@@ -90,6 +90,9 @@
   flex-basis: 33%;
   flex-grow: 1;
 
+  // to make sure at least 4 digits are visible
+  min-width: 4.5em;
+
   font-weight: inherit;
   text-align: left;
 
