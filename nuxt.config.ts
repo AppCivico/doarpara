@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   },
   css: ['@/assets/scss/index.scss'],
   i18n: {
-    defaultLocale: 'pt',
+    defaultLocale: 'pt-BR',
   },
   modules: [
     '@nuxtjs/i18n',
