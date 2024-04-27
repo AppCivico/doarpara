@@ -47,7 +47,7 @@
         </label>
         <input
           :id="appConfig.queryStringSpecialParameters.amount"
-          v-model="pledgeValue"
+          v-model.number="pledgeValue"
           v-focus.select
           type="number"
           step=".01"
@@ -61,18 +61,25 @@
             : undefined"
         />
         <NuxtLink
-          :to="pledgeValue
-            ? {
-              name: 'donate',
-              query: {
-                [appConfig.queryStringSpecialParameters.amount]: pledgeValue,
-              },
-            }
-            : `#${appConfig.queryStringSpecialParameters.amount}`"
+          v-if="pledgeValue && isPledgeValueValid"
+          :to="{
+            name: 'donate',
+            query: {
+              [appConfig.queryStringSpecialParameters.amount]: pledgeValue,
+            },
+}"
           class="donation-values__custom-submit like-a__button"
         >
           {{ $t(`pledges.toChoose`) }}
         </NuxtLink>
+        <button
+          v-else
+          type="button"
+          aria-disabled="true"
+          class="donation-values__custom-submit like-a__button"
+        >
+          {{ $t(`pledges.toChoose`) }}
+        </button>
       </div>
     </li>
   </ul>
@@ -90,7 +97,7 @@ const appConfig = useAppConfig();
 const campaignStore = useCampaignStore();
 const { minimumDonation } = storeToRefs(campaignStore); // TODO: move from using props to store
 const chosenCustomPledge: Ref<string> = ref('');
-const pledgeValue = ref('');
+const pledgeValue = ref(0);
 
 const sortedPledgeList = computed(() => {
   const { pledge_list: pledgeList } = props.campaign;
@@ -115,7 +122,10 @@ const maximumDonation = computed(() => (typeof props.campaign.max_donation_value
   : sortedPledgeList.value[sortedPledgeList.value.length - 1] as number
   || undefined));
 
+const isPledgeValueValid = computed(() => !(pledgeValue.value < (minimumDonation?.value || 0) / 100
+  || pledgeValue.value > (maximumDonation?.value || Infinity) / 100));
+
 if (minimumDonation.value) {
-  pledgeValue.value = String(minimumDonation.value / 100);
+  pledgeValue.value = minimumDonation.value / 100;
 }
 </script>
