@@ -11,11 +11,11 @@
 ////
 
 %error {
-  outline: 5px solid my.palette('feedback', 'danger') !important;
+  outline: 5px solid my.palette('signage', 'danger') !important;
 }
 
 %warning {
-  outline: 5px solid my.palette('feedback', 'warning') !important;
+  outline: 5px solid my.palette('signage', 'warning') !important;
 }
 
 @mixin alert {
@@ -34,7 +34,7 @@
     color: my.palette('white');
     text-align: center;
 
-    background-color: my.palette('feedback', 'danger');
+    background-color: my.palette('signage', 'danger');
 
     @content;
   }

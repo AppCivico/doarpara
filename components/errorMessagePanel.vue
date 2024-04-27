@@ -35,7 +35,7 @@ defineProps({
 
   padding: my.$gutter;
 
-  color: my.text-contrast(my.palette('feedback', 'danger'), my.palette('neutral', 'white'), $level: 'AA');
+  color: my.text-contrast(my.palette('signage', 'danger'), my.palette('neutral', 'white'), $level: 'AA');
 }
 
 .error-message--idle {}

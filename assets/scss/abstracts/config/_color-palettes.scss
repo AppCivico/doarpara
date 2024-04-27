@@ -106,9 +106,9 @@ $palette: map.set($palette, 'button', $button);
 
 
 ///
-/// @colors feedback
+/// @colors signage
 ///
-$feedback: ( // TO-DO
+$signage: ( // TO-DO
   'default': rgb(119, 119, 119),
   'primary': rgb(51, 122, 183),
   'success': rgb(66, 133, 66),
@@ -116,7 +116,7 @@ $feedback: ( // TO-DO
   'warning': rgb(240, 173, 78),
   'danger': rgb(217, 83, 79),
 );
-$palette: map.set($palette, 'feedback', $feedback);
+$palette: map.set($palette, 'signage', $signage);
 
 
 ///
@@ -169,7 +169,7 @@ $effects: ( // TO-DO
   'shadow': color.adjust($_dark-blue, $alpha: -0.8),
   'tap-highlight': color.adjust($_dark-blue, $alpha: -0.9),
   'target-highlight': rgb(255, 255, 102),
-  'error-gradient': (map.get($feedback, 'danger'), $_red),
+  'error-gradient': (map.get($signage, 'danger'), $_red),
 );
 $palette: map.set($palette, 'effects', $effects);
 

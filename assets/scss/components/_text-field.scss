@@ -83,14 +83,13 @@
 
   &:invalid {
     border-radius: my.$rounded-corner;
-    box-shadow: 0 0 0 my.$stroke my.palette('feedback', 'danger');
+    box-shadow: 0 0 0 my.$stroke my.palette('signage', 'danger');
   }
 
   &.field--error:invalid {
-    border-color: my.palette('feedback', 'danger');
-    box-shadow: 0 0 0 4px color.scale(my.palette('feedback', 'danger'), $alpha: 50%);
+    border-color: my.palette('signage', 'danger');
+    box-shadow: 0 0 0 4px color.scale(my.palette('signage', 'danger'), $alpha: 50%);
   }
-
 
   &:focus:required:invalid {
   }
@@ -223,10 +222,10 @@ textarea {
   pointer-events: none;
 
   :invalid ~ & > output {
-    color: my.palette('feedback', 'danger');
+    color: my.palette('signage', 'danger');
   }
 
   > output {
-    color: my.palette('feedback', 'success');
+    color: my.palette('signage', 'success');
   }
 }
