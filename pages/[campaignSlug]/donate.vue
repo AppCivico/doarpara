@@ -149,7 +149,7 @@
               autocomplete="postal-code"
               inputmode="numeric"
               required
-              data-maska="#####-###"
+              :data-maska="appConfig.zipCodeMask"
               :aria-busy="pending.gettingAddress"
               :class="{
                 'field--error': errors.gettingAddress,
@@ -308,7 +308,7 @@
                 id="credit-card-number"
                 v-model.trim="creditCard.number"
                 v-maska
-                data-maska="['#### #### #### ####', '#### #### #### ##']"
+                :data-maska="appConfig.creditCardNumberMask"
                 type="text"
                 inputmode="numeric"
                 name="credit_card_number"
@@ -329,12 +329,12 @@
                 id="credit-card-expiration-date"
                 v-model.trim="creditCard.expiration"
                 v-maska
-                data-maska="['##/##', '##/####']"
+                :data-maska="appConfig.creditCardExpirationDate.mask"
                 type="text"
                 name="credit_card_expiration_date"
                 inputmode="numeric"
                 autocomplete="cc-exp"
-                placeholder="MM/YY"
+                :placeholder="appConfig.creditCardExpirationDate.placeholder"
                 :required="mappedPaymentMethod === 'credit_card'"
               >
               <small v-if="errors.validatingCreditCard?.expiration" class="signage__text--danger">
@@ -352,7 +352,7 @@
                 v-model.trim="creditCard.verification_value"
                 v-maska
                 class="credit-card-validation-field"
-                data-maska="['###', '####']"
+                :data-maska="appConfig.creditCardExpirationCscMask"
                 type="text"
                 inputmode="numeric"
                 name="credit_card_validation"
