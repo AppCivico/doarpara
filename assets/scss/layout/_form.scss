@@ -86,6 +86,15 @@ label {
   }
 }
 
+.label--of-required {
+  &::after {
+    font-weight: my.font-weight('text');
+    color: my.palette('signage', 'danger');
+
+    content: ' *';
+  }
+}
+
 // stylelint-disable-next-line selector-no-qualifying-type
 abbr.field__required {
   color: my.palette('signage', 'danger');

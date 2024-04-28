@@ -19,7 +19,7 @@
           :disabled="combinedPending"
         >
           <p data-field-size="50">
-            <label for="first-name">
+            <label for="first-name" class="label--of-required">
               {{ $t('donationForm.name') }}
             </label>
             <input
@@ -34,7 +34,7 @@
           </p>
 
           <p data-field-size="50">
-            <label for="last-name">
+            <label for="last-name" class="label--of-required">
               {{ $t('donationForm.familyName') }}
             </label>
             <input
@@ -48,7 +48,7 @@
           </p>
 
           <p data-field-size="50">
-            <label for="natural-person-identification">
+            <label for="natural-person-identification" class="label--of-required">
               {{ $t('naturalPersonIdentification') }}
             </label>
             <input
@@ -68,7 +68,7 @@
           </p>
 
           <p data-field-size="50">
-            <label for="birthdate">
+            <label for="birthdate" class="label--of-required">
               {{ $t('donationForm.birthDate') }}
             </label>
             <input
@@ -83,7 +83,7 @@
           </p>
 
           <p data-field-size="50">
-            <label for="email">
+            <label for="email" class="label--of-required">
               {{ $t('donationForm.email') }}
             </label>
             <input
@@ -97,7 +97,7 @@
           </p>
 
           <p data-field-size="50">
-            <label for="phone">
+            <label for="phone" class="label--of-required">
               {{ $t('donationForm.phoneNumber') }}
             </label>
             <input
@@ -124,7 +124,7 @@
           :disabled="combinedPending || pending.gettingAddress"
         >
           <p data-field-size="50">
-            <label for="postal-code">
+            <label for="postal-code" class="label--of-required">
               {{ $t('donationForm.postalCode') }}
               <small class="signage__text--primary">
                 <NuxtLink
@@ -162,7 +162,7 @@
           </p>
 
           <p data-field-size="75">
-            <label for="street">
+            <label for="street" class="label--of-required">
               {{ $t('donationForm.street') }}
             </label>
             <input
@@ -179,7 +179,7 @@
           </p>
 
           <p data-field-size="25">
-            <label for="number">
+            <label for="number" class="label--of-required">
               {{ $t('donationForm.number') }}
             </label>
             <input
@@ -205,7 +205,7 @@
           </p>
 
           <p data-field-size="45">
-            <label for="city">
+            <label for="city" class="label--of-required">
               {{ $t('donationForm.city') }}
             </label>
             <input
@@ -219,7 +219,7 @@
           </p>
 
           <p data-field-size="15">
-            <label for="state">
+            <label for="state" class="label--of-required">
               {{ $t('donationForm.state') }}
             </label>
 
@@ -251,7 +251,9 @@
           name="payment"
           :disabled="combinedPending"
         >
-          <legend>{{ $t('paymentMethod') }}</legend>
+          <legend class="label--of-required">
+            {{ $t('paymentMethod') }}
+          </legend>
           <ul
             v-if="Array.isArray(campaign?.payment_method_list)
               && campaign?.payment_method_list.length"
@@ -278,7 +280,7 @@
 
           <template v-if="mappedPaymentMethod === 'credit_card'">
             <p data-field-size="50">
-              <label for="full-name">
+              <label for="full-name" class="label--of-required">
                 {{ $t('creditCard.fullName') }}
               </label>
 
@@ -299,7 +301,7 @@
             </p>
 
             <p data-field-size="50">
-              <label for="credit-card-number">
+              <label for="credit-card-number" class="label--of-required">
                 {{ $t('creditCard.number') }}
               </label>
               <input
@@ -319,7 +321,7 @@
             </p>
 
             <p data-field-size="25">
-              <label for="credit-card-expiration-date">
+              <label for="credit-card-expiration-date" class="label--of-required">
                 {{ $t('creditCard.expirationDate') }}
               </label>
 
@@ -341,7 +343,7 @@
             </p>
 
             <p data-field-size="25">
-              <label for="credit-card-validation">
+              <label for="credit-card-validation" class="label--of-required">
                 {{ $t('creditCard.validationCode') }}
               </label>
 
