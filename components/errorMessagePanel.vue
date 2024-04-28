@@ -23,19 +23,20 @@ defineProps({
 </script>
 <style scoped lang="scss">
 .error-message {
-  @include my.shadow(true);
+  @include my.shadow;
   @include my.pulsing-color(my.palette('effects', 'error-gradient'), 'background-color');
-  @include my.full-width;
 
   position: sticky;
   right: 0;
-  bottom: 0;
+  bottom: my.$gutter;
   left: 0;
   z-index: my.layer('dropdown');
 
   padding: my.$gutter;
 
   color: my.text-contrast(my.palette('signage', 'danger'), my.palette('neutral', 'white'), $level: 'AA');
+
+  border-radius: my.$rounded-corner;
 }
 
 .error-message--idle {}
