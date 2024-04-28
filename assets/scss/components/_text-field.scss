@@ -76,19 +76,34 @@
     transform: translate(0, 0);
   }
 
-  &:-moz-ui-invalid {
-    border-radius: my.$rounded-corner;
-    box-shadow: none;
-  }
-
+  /* old browsers */
   &:invalid {
+    /* override default styles */
     border-radius: my.$rounded-corner;
     box-shadow: 0 0 0 my.$stroke my.palette('signage', 'danger');
   }
 
+  &:invalid,
   &.field--error:invalid {
     border-color: my.palette('signage', 'danger');
     box-shadow: 0 0 0 4px color.scale(my.palette('signage', 'danger'), $alpha: 50%);
+  }
+
+  @supports selector(:user-invalid) {
+    &:invalid {
+      /* override old browsers styles */
+      border: solid my.$stroke my.palette('border');
+      box-shadow: none;
+    }
+
+    &:user-invalid {
+      border-color: my.palette('signage', 'danger');
+      box-shadow: 0 0 0 my.$stroke my.palette('signage', 'danger');
+    }
+
+    &:user-valid {
+      /* Valid input UI styles */
+    }
   }
 
   &:focus:required:invalid {

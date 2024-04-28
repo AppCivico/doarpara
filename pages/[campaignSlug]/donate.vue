@@ -62,7 +62,7 @@
               required
             >
 
-            <small>
+            <small class="signage__text--warning">
               {{ $t('donationForm.naturalPersonIdentificationAgreement') }}
             </small>
           </p>
@@ -126,7 +126,7 @@
           <p data-field-size="50">
             <label for="postal-code">
               {{ $t('donationForm.postalCode') }}
-              <small>
+              <small class="signage__text--primary">
                 <NuxtLink
                   v-if="runtimeConfig.public.postalService.helperWebsiteUrl"
                   :href="runtimeConfig.public.postalService.helperWebsiteUrl"
@@ -156,7 +156,7 @@
               }"
               @input="fillAddress"
             />
-            <small v-if="errors.gettingAddress" class="field__error">
+            <small v-if="errors.gettingAddress" class="signage__text--danger">
               {{ errors.gettingAddress?.data?.error || errors.gettingAddress }}
             </small>
           </p>
@@ -290,10 +290,10 @@
                 autocomplete="cc-name"
                 :required="mappedPaymentMethod === 'credit_card'"
               />
-              <small v-if="errors.validatingCreditCard?.first_name" class="field__error">
+              <small v-if="errors.validatingCreditCard?.first_name" class="signage__text--danger">
                 {{ $t(`errors.${errors.validatingCreditCard.first_name}`) }}
               </small>
-              <small v-else-if="errors.validatingCreditCard?.last_name" class="field__error">
+              <small v-else-if="errors.validatingCreditCard?.last_name" class="signage__text--danger">
                 {{ $t(`errors.${errors.validatingCreditCard.last_name}`) }}
               </small>
             </p>
@@ -313,7 +313,7 @@
                 autocomplete="cc-number"
                 :required="mappedPaymentMethod === 'credit_card'"
               />
-              <small v-if="errors.validatingCreditCard?.number" class="field__error">
+              <small v-if="errors.validatingCreditCard?.number" class="signage__text--danger">
                 {{ $t(`errors.${errors.validatingCreditCard.number}`) }}
               </small>
             </p>
@@ -335,7 +335,7 @@
                 placeholder="MM/YY"
                 :required="mappedPaymentMethod === 'credit_card'"
               >
-              <small v-if="errors.validatingCreditCard?.expiration" class="field__error">
+              <small v-if="errors.validatingCreditCard?.expiration" class="signage__text--danger">
                 {{ $t(`errors.${errors.validatingCreditCard.expiration}`) }}
               </small>
             </p>
@@ -359,7 +359,7 @@
                 minlength="3"
                 :required="mappedPaymentMethod === 'credit_card'"
               >
-              <small v-if="errors.validatingCreditCard?.verification_value" class="field__error">
+              <small v-if="errors.validatingCreditCard?.verification_value" class="signage__text--danger">
                 {{ $t(`errors.${errors.validatingCreditCard.verification_value}`) }}
               </small>
             </p>
@@ -414,7 +414,7 @@
               />
               <label for="include-donation-taxes" class="donation-summary__label">
                 {{ $t('donationForm.donationExpenses.label') }}
-                <small>
+                <small class="signage__text--warning">
                   (<template v-if="currentTaxes.percent">
                     {{ $n(currentTaxes.percent / 100, 'percent', { maximumFractionDigits: 2 }) }}
                   </template>
