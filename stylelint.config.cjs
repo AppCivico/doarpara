@@ -20,6 +20,8 @@ module.exports = {
     'order/properties-order': recessConfigWithEmptyLine,
     'scss/at-function-pattern': '^_?[a-z]+([a-z0-9-]+[a-z0-9]+)?$',
     'scss/at-mixin-pattern': '^_?[a-z]+([a-z0-9-]+[a-z0-9]+)?$',
+    'scss/percent-placeholder-pattern':
+      '^_?[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$',
     'scss/dollar-variable-pattern':
       '^_?[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$',
     'at-rule-empty-line-before': [
