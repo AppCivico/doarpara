@@ -44,8 +44,8 @@
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
 
-const appConfig = useAppConfig();
 const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
 
 const campaignStore = useCampaignStore();
 const { campaign } = storeToRefs(campaignStore);
@@ -57,8 +57,8 @@ const head = useLocaleHead({
 });
 
 const title = computed(() => (route.meta.title
-  ? `${route.meta.title} • ${appConfig.title}`
-  : appConfig.title));
+  ? `${route.meta.title} • ${runtimeConfig.public.title}`
+  : runtimeConfig.public.title));
 </script>
 <style lang="scss" scoped>
 .page-wrapper--like-a-dialog {

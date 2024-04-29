@@ -11,7 +11,7 @@
         :to="{
           name: 'donate',
           query: {
-            [appConfig.queryStringSpecialParameters.amount]: $n(pledge / 100),
+            [runtimeConfig.public.queryStringSpecialParameters.amount]: $n(pledge / 100),
           },
         }"
         class="donation-values__value like-a__button"
@@ -41,12 +41,12 @@
       >
         <label
           class="donation-values__custom-currency"
-          :for="appConfig.queryStringSpecialParameters.amount"
+          :for="runtimeConfig.public.queryStringSpecialParameters.amount"
         >
           {{ $t('_currencySymbol') }}
         </label>
         <input
-          :id="appConfig.queryStringSpecialParameters.amount"
+          :id="runtimeConfig.public.queryStringSpecialParameters.amount"
           v-model.number="pledgeValue"
           v-focus.select
           type="number"
@@ -65,7 +65,7 @@
           :to="{
             name: 'donate',
             query: {
-              [appConfig.queryStringSpecialParameters.amount]: pledgeValue,
+              [runtimeConfig.public.queryStringSpecialParameters.amount]: pledgeValue,
             },
 }"
           class="donation-values__custom-submit like-a__button"
@@ -92,7 +92,7 @@ const props = defineProps<{
   campaign: Campaign;
 }>();
 
-const appConfig = useAppConfig();
+const runtimeConfig = useRuntimeConfig();
 
 const campaignStore = useCampaignStore();
 const { minimumDonation } = storeToRefs(campaignStore); // TODO: move from using props to store

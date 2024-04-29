@@ -37,6 +37,23 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
+      title: 'DoarPara',
+
+      masks: {
+        creditCardExpirationCsc: "['###', '####']",
+        creditCardExpirationDate: {
+          mask: "['##/##', '##/####']",
+          placeholder: 'MM/YY ou MM/YYYY',
+        },
+        creditCardNumber: "['#### #### #### ####', '#### #### #### ##']",
+        naturalPersonIdentification: '###.###.###-##',
+        zipCode: '#####-###',
+      },
+      queryStringSpecialParameters: {
+        amount: 'valor',
+        referrer: 'ref',
+      },
+
       publicApiBase: 'https://votolegal-test-api.appcivico.com/public-api',
       privateApiBase: 'https://votolegal-test-api.appcivico.com',
       receiptsBase: 'foo://bar',

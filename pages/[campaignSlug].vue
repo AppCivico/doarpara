@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
 
-const appConfig = useAppConfig();
+const runtimeConfig = useRuntimeConfig();
 
 const campaignStore = useCampaignStore();
 const { campaign, error } = storeToRefs(campaignStore);
@@ -35,8 +35,8 @@ if (campaign.value) {
   if (import.meta.dev || import.meta.server) {
     useSeoMeta({
       title: () => (campaign.value?.name
-        ? `${campaign.value?.name} • ${appConfig.title}`
-        : `${appConfig.title}`),
+        ? `${campaign.value?.name} • ${runtimeConfig.public.title}`
+        : `${runtimeConfig.public.title}`),
       ogTitle: () => campaign.value?.name,
       ogImage: () => (typeof campaign.value?.sharing_image === 'object'
         ? {

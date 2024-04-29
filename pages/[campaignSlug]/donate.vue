@@ -56,7 +56,7 @@
               v-model="donor.cpf"
               v-maska
               type="text"
-              data-maska="###.###.###-##"
+              :data-maska="runtimeConfig.public.masks.naturalPersonIdentification"
               inputmode="numeric"
               name="cpf"
               required
@@ -149,7 +149,7 @@
               autocomplete="postal-code"
               inputmode="numeric"
               required
-              :data-maska="appConfig.zipCodeMask"
+              :data-maska="runtimeConfig.public.masks.zipCode"
               :aria-busy="pending.gettingAddress"
               :class="{
                 'field--error': errors.gettingAddress,
@@ -308,7 +308,7 @@
                 id="credit-card-number"
                 v-model.trim="creditCard.number"
                 v-maska
-                :data-maska="appConfig.creditCardNumberMask"
+                :data-maska="runtimeConfig.public.masks.creditCardNumber"
                 type="text"
                 inputmode="numeric"
                 name="credit_card_number"
@@ -329,12 +329,12 @@
                 id="credit-card-expiration-date"
                 v-model.trim="creditCard.expiration"
                 v-maska
-                :data-maska="appConfig.creditCardExpirationDate.mask"
+                :data-maska="runtimeConfig.public.masks.creditCardExpirationDate.mask"
                 type="text"
                 name="credit_card_expiration_date"
                 inputmode="numeric"
                 autocomplete="cc-exp"
-                :placeholder="appConfig.creditCardExpirationDate.placeholder"
+                :placeholder="runtimeConfig.public.masks.creditCardExpirationDate.placeholder"
                 :required="mappedPaymentMethod === 'credit_card'"
               >
               <small v-if="errors.validatingCreditCard?.expiration" class="signage__text--danger">
@@ -352,7 +352,7 @@
                 v-model.trim="creditCard.verification_value"
                 v-maska
                 class="credit-card-validation-field"
-                :data-maska="appConfig.creditCardExpirationCscMask"
+                :data-maska="runtimeConfig.public.masks.creditCardExpirationCsc"
                 type="text"
                 inputmode="numeric"
                 name="credit_card_validation"
@@ -384,7 +384,7 @@
                 <NuxtLink
                   :to="{
                     query: {
-                      [appConfig.queryStringSpecialParameters.amount]: undefined,
+                      [runtimeConfig.public.queryStringSpecialParameters.amount]: undefined,
                     },
                   }"
                   class="donation-summary__change-amount"
@@ -601,7 +601,6 @@ definePageMeta({
   title: 'Doar para',
 });
 
-const appConfig = useAppConfig();
 const { $i18n } = useNuxtApp();
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
@@ -652,7 +651,7 @@ const currentTaxes = computed(() => (taxes[mappedPaymentMethod.value]
   }));
 
 const amount = computed(() => {
-  let amountFromUrl = route.query[appConfig.queryStringSpecialParameters.amount];
+  let amountFromUrl = route.query[runtimeConfig.public.queryStringSpecialParameters.amount];
 
   /*
   accepted formats:

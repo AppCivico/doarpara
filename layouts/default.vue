@@ -245,7 +245,7 @@
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
 
-const appConfig = useAppConfig();
+const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 
 const head = useLocaleHead({
@@ -255,8 +255,8 @@ const head = useLocaleHead({
 });
 
 const title = computed(() => (route.meta.title
-  ? `${route.meta.title} • ${appConfig.title}`
-  : appConfig.title));
+  ? `${route.meta.title} • ${runtimeConfig.public.title}`
+  : runtimeConfig.public.title));
 
 const campaignStore = useCampaignStore();
 const {
