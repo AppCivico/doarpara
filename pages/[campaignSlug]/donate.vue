@@ -808,7 +808,7 @@ async function submitDonation() {
       const [iugu] = donationData.ui.messages.slice(1, 2);
       if (iugu) {
         Iugu.setAccountID(iugu.account_id);
-        Iugu.setTestMode(iugu.is_testing === 1);
+        Iugu.setTestMode(iugu.is_testing === runtimeConfig.public.isIuguTesting);
       }
 
       if (paymentMethod.value !== 'credit_card') {

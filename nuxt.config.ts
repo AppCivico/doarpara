@@ -37,29 +37,44 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      title: 'DoarPara',
+      title: process.env.APP_TITLE
+        || 'DoarPara',
+
+      isIuguTesting: Number(process.env.IUGU_IS_TESTING) === 0 ? 0 : 1,
 
       masks: {
-        creditCardExpirationCsc: "['###', '####']",
+        creditCardExpirationCsc: process.env.MASKS_CREDIT_CARD_EXPIRATION_CSC
+          || "['###', '####']",
         creditCardExpirationDate: {
-          mask: "['##/##', '##/####']",
-          placeholder: 'MM/YY ou MM/YYYY',
+          mask: process.env.MASKS_CREDIT_CARD_EXPIRATION_DATE_MASK
+            || "['##/##', '##/####']",
+          placeholder: process.env.MASKS_CREDIT_CARD_EXPIRATION_DATE_PLACEHOLDER
+            || 'MM/YY ou MM/YYYY',
         },
-        creditCardNumber: "['#### #### #### ####', '#### #### #### ##']",
-        naturalPersonIdentification: '###.###.###-##',
-        zipCode: '#####-###',
+        creditCardNumber: process.env.MASKS_CREDIT_CARD_NUMBER
+          || "['#### #### #### ####', '#### #### #### ##']",
+        naturalPersonIdentification: process.env.MASKS_NATURAL_PERSON_IDENTIFICATION
+          || '###.###.###-##',
+        zipCode: process.env.MASKS_ZIP_CODE
+          || '#####-###',
       },
       queryStringSpecialParameters: {
-        amount: 'valor',
-        referrer: 'ref',
+        amount: process.env.QUERY_STRING_SPECIAL_PARAMETERS_AMOUNT
+          || 'amount',
+        referrer: process.env.QUERY_STRING_SPECIAL_PARAMETERS_REFERRER
+          || 'ref',
       },
 
-      publicApiBase: 'https://votolegal-test-api.appcivico.com/public-api',
-      privateApiBase: 'https://votolegal-test-api.appcivico.com',
-      receiptsBase: 'foo://bar',
+      publicApiBase: process.env.PUBLIC_API
+        || 'https://votolegal-test-api.appcivico.com/public-api',
+      privateApiBase: process.env.PRIVATE_API
+        || 'https://votolegal-test-api.appcivico.com',
+      receiptsBase: process.env.RECEIPTS_BASE || '',
       postalService: {
-        queryUrl: 'https://dapi.votolegal.com.br/api/cep?cep=',
-        helperWebsiteUrl: 'https://buscacepinter.correios.com.br/',
+        queryUrl: process.env.POSTAL_SERVICE_QUERY_URL
+          || 'https://dapi.votolegal.com.br/api/cep?cep=',
+        helperWebsiteUrl: process.env.POSTAL_SERVICE_HELPER_WEBSITE_URL
+          || 'https://buscacepinter.correios.com.br/',
       },
     },
   },
