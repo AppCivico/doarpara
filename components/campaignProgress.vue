@@ -2,7 +2,12 @@
   <div class="campaign-progress">
     <data class="campaign-progress__total" :value="totalAmount">
       <output for="progress-bar" class="campaign-progress__total-value">
-        {{ $n(totalAmount / 100, 'currency', { maximumFractionDigits: 0 }) }}
+        <AnimatedNumber
+          for="progress-bar"
+          class="campaign-progress__total-value"
+          :value="totalAmount / 100"
+          :formatter="($v: number) => $n($v, 'currency', { maximumFractionDigits: 0 })"
+        />
       </output>
       {{ $t('totalAmount').toLowerCase() }}
     </data>
