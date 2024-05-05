@@ -287,6 +287,9 @@
               <input
                 id="full-name"
                 v-model.trim="creditCard.full_name"
+                v-maska:[creditCardMaskOption]
+                data-maska="A"
+                data-maska-tokens="A:[A-Z ]:multiple"
                 type="text"
                 name="full_name"
                 autocomplete="cc-name"
@@ -591,6 +594,10 @@ import taxes from '@/data/taxes.ts';
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
 import type { CreatedDonation, DonationMessage } from '~/doar-para.d.ts';
+
+const creditCardMaskOption = {
+  preProcess: (val: string) => val.toUpperCase(),
+};
 
 declare const Iugu: any;
 // const { Iugu } = (window || {} as any);
