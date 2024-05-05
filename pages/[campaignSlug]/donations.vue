@@ -75,13 +75,18 @@
         </tbody>
       </table>
 
-      <button
-        v-if="hasMore"
-        type="button"
-        @click="fetchDonations(true)"
-      >
-        carregar mais
-      </button>
+      <div class="pagination">
+        <button
+          v-if="hasMore"
+          type="button"
+          class="like-a__link pagination__load-more"
+          :aria-busy="pending"
+          :aria-disabled="pending"
+          @click="fetchDonations(true)"
+        >
+          carregar mais
+        </button>
+      </div>
     </section>
   </article>
 </template>
@@ -101,6 +106,7 @@ const {
 } = storeToRefs(donationsStore);
 
 function fetchDonations(more = false) {
+  if (pending.value) return;
   if (more) {
     donationsStore.fetchDonations(String(route.params.campaignSlug), paginationMarker.value);
   } else {

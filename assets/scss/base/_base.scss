@@ -549,6 +549,23 @@ a > picture {
 
 /* links
 ============================================================================ */
+%link {
+  color: my.palette('anchor', 'link');
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.125em;
+
+  cursor: pointer;
+  // stylelint-disable-next-line property-no-vendor-prefix
+  -webkit-tap-highlight-color: my.palette('tap-highlight');
+}
+
+.like-a__link {
+  @include my.like-a;
+}
+
+.like-a__link,
 a {
   padding: 0;
   margin: 0;
@@ -564,15 +581,7 @@ a {
   }
 
   &:link {
-    color: my.palette('anchor', 'link');
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-style: dotted;
-    text-underline-offset: 0.125em;
-
-    cursor: pointer;
-    // stylelint-disable-next-line property-no-vendor-prefix
-    -webkit-tap-highlight-color: my.palette('tap-highlight');
+    @extend %link;
   }
 
   &:visited {
@@ -623,6 +632,13 @@ a {
   &[target='_blank'],
   &[rel='external'] {
   }
+}
+
+/* stylelint-disable-next-line no-duplicate-selectors */
+.like-a__link {
+  @extend %link;
+
+  border: 0;
 }
 
 /* Contact info and addresses
