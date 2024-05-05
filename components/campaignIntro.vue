@@ -53,6 +53,8 @@
         </p>
 
         <p v-if="campaign.is_flexible_funding" class="call-to-action-values__campaign-type">
+          <!-- TO-DO: Use popover -->
+          <!-- TO-DO: Update message -->
           <span
             class="tooltip"
             title="Something small enough to escape casual notice."
