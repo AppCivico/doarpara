@@ -39,6 +39,7 @@ $palette: map.set($palette, 'base', $base);
 $primary: $_blue;
 $secondary: $_dark-blue;
 $tertiary: $_light-blue;
+$quaternary: $_purple;
 
 ///
 /// @colors brand
@@ -47,6 +48,7 @@ $brand: (
   'primary': $primary,
   'secondary': $secondary,
   'tertiary': $tertiary,
+  'quaternary': $quaternary,
 );
 $palette: map.set($palette, 'brand', $brand);
 

@@ -14,6 +14,10 @@
   vertical-align: inherit; /* 2 */
 }
 
+html {
+  color: my.palette('text', 'dark');
+}
+
 /**
  * Basic typography style for copy text
  */
@@ -23,7 +27,7 @@ body {
   font-weight: my.font-weight('text');
   font-variant-numeric: oldstyle-nums proportional-nums slashed-zero;
   line-height: my.$leading;
-  color: my.palette('text', 'dark');
+  color: inherit;
 }
 
 /* HEADINGS AND TITLES */

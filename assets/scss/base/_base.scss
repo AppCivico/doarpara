@@ -131,8 +131,6 @@ body {
   margin: 0;
   overflow-x: hidden;
 
-  color: my.palette('black');
-
   > * {
     flex-shrink: 0; /* 1 */
   }

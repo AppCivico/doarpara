@@ -1,0 +1,148 @@
+@use 'sass:map';
+
+@use '../abstracts' as my;
+
+%error-page {
+  .container {
+    max-width: max-content;
+    padding-top: my.$gutter * 2;
+    padding-bottom: my.$gutter * 2;
+
+    @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+      display: grid;
+
+
+      gap: my.$gutter * 2 my.$gutter;
+
+      align-items: center;
+
+      max-width: my.$max-width--narrow;
+    }
+  }
+}
+
+.error-page--client,
+.error-page--server {
+  @extend %error-page;
+}
+
+.error-page--client {
+  .container {
+    @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+      grid-template-areas: 'a b'
+      'c b'
+      'd b'
+      'e b';
+      grid-template-rows: 1fr auto auto 1fr;
+      grid-template-columns: map.get(my.$line-lengths, 'min') 1fr;
+
+      margin-top: my.$gutter * -2;
+    }
+  }
+}
+
+.error-page--server {
+  color: my.palette('text', 'light');
+
+  background-color: my.palette('brand', 'quaternary');
+
+  .container {
+    @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+      grid-template-areas: 'a a'
+        'b c'
+        'b d'
+        'b e';
+      grid-template-rows: auto 1fr auto 1fr;
+      grid-template-columns: 1fr map.get(my.$line-lengths, 'min');
+    }
+  }
+}
+
+.error-page__logo {
+  display: block;
+
+  margin-right: auto;
+  margin-bottom: my.$gutter * 2;
+  margin-left: auto;
+
+  @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+    margin-bottom: 0;
+    margin-left: 0;
+  }
+}
+
+.error-page__title {
+  .error-page--server & {
+    color: inherit;
+  }
+
+  @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+    grid-area: c;
+
+    align-self: flex-end;
+
+    margin: 0;
+  }
+}
+
+.error-page__figure {
+  display: block;
+
+  margin-right: auto;
+  margin-bottom: my.$gutter;
+  margin-left: auto;
+
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) my.$gutter * 3);
+
+  @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+    grid-area: b;
+
+    align-self: flex-start;
+
+    width: 100%;
+    margin: 0;
+
+    mask-image: none;
+  }
+}
+
+.error-page__message {
+  font-size: my.ms-step(25px);
+
+  .error-page--server & {
+    color: inherit;
+  }
+
+  @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+    grid-area: d;
+
+    align-self: flex-start;
+
+    margin: 0;
+
+    font-size: my.ms-step(0);
+  }
+}
+
+.error-page__escape-button {
+  display: block;
+
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+
+  .error-page--server & {
+    border: 0;
+  }
+
+  @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+    grid-area: e;
+
+    align-self: flex-start;
+
+    max-width: max-content;
+    padding-right: my.$gutter * 2;
+    padding-left: my.$gutter * 2;
+    margin-left: 0;
+  }
+}

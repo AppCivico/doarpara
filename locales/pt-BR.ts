@@ -82,6 +82,21 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   errors: {
     adBlocker: 'Há um bloqueador de anúncios impedindo o processador de pagamentos.',
     is_invalid: 'Valor inválido',
+
+    404: {
+      title: 'Oops!',
+      message: 'A candidatura que você procura não foi encontrada.',
+    },
+
+    generic: {
+      title: 'Oops!',
+      message: 'Ocorreu um erro.',
+    },
+
+    server: {
+      title: 'Oops!',
+      message: 'Ocorreu um erro interno, mas não se preocupe. Estamos cientes e trabalhando na correção.',
+    },
   },
   flexibleFunding: 'Campanha flexível',
   footerMenuLabel: 'Menu da campanha, termos de uso e política de privacidade',
@@ -192,4 +207,5 @@ Por isso, **{campaignName}** está registrando todas suas doações financeiras 
   totalDonations: 'Doações recebidas',
   useTerms: 'Termos de uso',
   waiting: 'Aguardando...',
+  visitWebsite: 'Visitar página inicial',
 };

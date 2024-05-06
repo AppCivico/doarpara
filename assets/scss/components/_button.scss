@@ -104,7 +104,7 @@ button,
 
 }
 
-.like-a__button--reset:link,
+.like-a__button--reset,
 [type='reset'] {
   @extend %button-reset;
 
@@ -113,7 +113,7 @@ button,
   background-color: my.palette('button', 'reset');
 }
 
-.like-a__button--submit:link,
+.like-a__button--submit,
 [type='submit'] {
   @extend %button-reset;
 
