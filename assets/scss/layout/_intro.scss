@@ -2,7 +2,6 @@
 @use '../abstracts' as my;
 
 $_background-width-beyond-column: 70px;
-$_preamble-bg: hsl(247, 67%, 48%);
 
 .intro {
   margin-bottom: my.$gutter * 3;
@@ -209,7 +208,7 @@ $_preamble-bg: hsl(247, 67%, 48%);
 
       width: 470px;
 
-      background-image: my.image('themes/blue/preamble.svg'), linear-gradient(to bottom, transparent, $_preamble-bg);
+      background-image: my.image('themes/blue/preamble.svg'), linear-gradient(to bottom, transparent, my.palette('brand', 'quaternary'));
       background-position: 100% 0;
       border-bottom-right-radius: 60px;
     }
