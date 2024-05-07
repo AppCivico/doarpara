@@ -2,7 +2,7 @@
   <mj-body background-color="#ccd3e0">
     <mj-section background-color="#fff" padding-bottom="20px" padding-top="20px">
       <mj-column width="100%">
-        <mj-image src="https://participe.doarpara.com.br/email/vl-logo.png" alt="Logo DoarPara" align="center" border="none" width="315px" padding-left="0px" padding-right="0px" padding-bottom="10px" padding-top="10px"></mj-image>
+        <mj-image src="https://painel.doarpara.com.br/email/vl-logo.png" alt="Logo DoarPara" align="center" border="none" width="315px" padding-left="0px" padding-right="0px" padding-bottom="10px" padding-top="10px"></mj-image>
 
       </mj-column>
     </mj-section>
@@ -93,7 +93,7 @@
         </mj-text>
       </mj-column>
       <mj-column width="40%">
-        <mj-image width="300px" src="https://participe.doarpara.com.br/email/imagem-spce-cadastro.png"></mj-image>
+        <mj-image width="300px" src="https://painel.doarpara.com.br/email/imagem-spce-cadastro.png"></mj-image>
       </mj-column>
     </mj-section>
     <mj-section background-color="#FFFFFF" padding-bottom="15px" padding-top="0px">
