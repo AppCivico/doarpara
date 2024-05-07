@@ -602,15 +602,17 @@ const creditCardMaskOption = {
 declare const Iugu: any;
 // const { Iugu } = (window || {} as any);
 
+const runtimeConfig = useRuntimeConfig();
+
 definePageMeta({
   layout: 'like-a-dialog',
   name: 'donate',
   title: 'Doar para',
+  path: `/:campaignSlug/${runtimeConfig.public.customSegments.donate}/:hash`,
 });
 
 const { $i18n } = useNuxtApp();
 const route = useRoute();
-const runtimeConfig = useRuntimeConfig();
 
 const campaignStore = useCampaignStore();
 const donateStore = useDonateStore();

@@ -77,6 +77,11 @@ export default defineNuxtConfig({
         helperWebsiteUrl: process.env.POSTAL_SERVICE_HELPER_WEBSITE_URL
           || 'https://buscacepinter.correios.com.br/',
       },
+      customSegments: {
+        donate: process.env.CUSTOM_SEGMENTS_DONATE || 'donate',
+        donations: process.env.CUSTOM_SEGMENTS_DONATIONS || 'donations',
+        receipts: process.env.CUSTOM_SEGMENTS_RECEIPTS || 'receipts',
+      },
     },
   },
   vite: {

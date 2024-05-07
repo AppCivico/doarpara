@@ -10,10 +10,13 @@ import doarPara from '../../assets/images/logo-gray.svg';
 import logo from '../../assets/images/logo-receipt.svg';
 import ondas from '../../assets/images/wave.png';
 
+const runtimeConfig = useRuntimeConfig();
+
 definePageMeta({
   layout: 'receipt',
   name: 'receipt',
   title: 'Doar para',
+  path: `/:campaignSlug/${runtimeConfig.public.customSegments.receipts}`,
 });
 
 const route = useRoute();

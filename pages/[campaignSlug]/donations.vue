@@ -95,6 +95,7 @@ import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonationsStore } from '@/store/donations.ts';
 
 const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
 
 const campaignStore = useCampaignStore();
 const donationsStore = useDonationsStore();
@@ -104,6 +105,11 @@ const { campaign } = storeToRefs(campaignStore);
 const {
   hasMore, list: donationsList, paginationMarker, pending,
 } = storeToRefs(donationsStore);
+
+definePageMeta({
+  name: 'donations',
+  path: `/:campaignSlug/${runtimeConfig.public.customSegments.donations}`,
+});
 
 function fetchDonations(more = false) {
   if (pending.value) return;
