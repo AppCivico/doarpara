@@ -12,41 +12,46 @@
       {{ $t('totalAmount').toLowerCase() }}
     </data>
 
-    <div
-      v-if="donationSources.length > 0"
-      id="progress-bar"
-      class="campaign-progress__bar"
-      role="progressbar"
-      aria-valuemin="0"
-      :aria-valuenow="totalAmount"
-      :aria-valuemax="currentGoal"
-      :aria-label="$t('progressOfCampaign')"
-    >
+    <template v-if="currentGoal">
       <div
-        v-for="(source, i) in donationSources"
-        :key="i"
-        :style="progressBarStyle(source)"
-        :title="$t('totalAmountByDonationsPerSource', {
-          percentage: $n(percentage(source.total_donated)),
-          numberOfDonations: source.total_donations,
-          source: source.name,
-        })"
+        v-if="donationSources.length > 0"
+        id="progress-bar"
+        class="campaign-progress__bar"
+        role="progressbar"
+        aria-valuemin="0"
+        :aria-valuenow="totalAmount"
+        :aria-valuemax="currentGoal"
+        :aria-label="$t('progressOfCampaign')"
       >
-        {{ percentage(source.total_donated) }}
+        <div
+          v-for="(source, i) in donationSources"
+          :key="i"
+          :style="progressBarStyle(source)"
+          :title="$t('totalAmountByDonationsPerSource', {
+            percentage: $n(percentage(source.total_donated)),
+            numberOfDonations: source.total_donations,
+            source: source.name,
+          })"
+        >
+          {{ percentage(source.total_donated) }}
+        </div>
       </div>
-    </div>
-    <progress
-      v-else-if="totalAmount !== undefined"
-      id="progress-bar"
-      class="campaign-progress__bar"
-      :value="percentage()"
-      max="100"
-      :aria-label="$t('progressOfCampaign')"
-    >
-      {{ $n(totalAmount / currentGoal, 'percent') }}
-    </progress>
+      <progress
+        v-else-if="totalAmount && currentGoal"
+        id="progress-bar"
+        class="campaign-progress__bar"
+        :value="percentage()"
+        max="100"
+        :aria-label="$t('progressOfCampaign')"
+      >
+        {{ $n(totalAmount / currentGoal, 'percent') }}
+      </progress>
+    </template>
 
-    <div class="campaign-progress__progress">
+    <div
+      v-if="currentGoal"
+      class="campaign-progress__progress"
+    >
       <data value="totalAmount / currentGoal" class="campaign-progress__progress-percentage">
         {{ $n(totalAmount / currentGoal, 'percent') }}
       </data>
@@ -80,7 +85,7 @@ const donationSources = computed(() => {
   return !Array.isArray(platforms)
     ? []
     : platforms
-      .filter((x) => x.total_donated !== undefined && x.name)
+      .filter((x) => x?.name && x.total_donated !== undefined)
       .map((x: RaisedAndSource) => {
         const y = x as SourceOnProgressBar;
         y.opacity = opacity;
