@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/mdc',
     '@pinia-plugin-persistedstate/nuxt',
+    'nuxt-gtag',
   ],
   runtimeConfig: {
     public: {

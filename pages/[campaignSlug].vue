@@ -15,6 +15,8 @@ const runtimeConfig = useRuntimeConfig();
 const campaignStore = useCampaignStore();
 const { campaign, error } = storeToRefs(campaignStore);
 
+const { initialize } = useGtag();
+
 if (campaign.value) {
   const meta = {
     link: () => (campaign.value?.contact_methods
@@ -52,6 +54,12 @@ if (campaign.value) {
       twitterCard: 'summary_large_image',
       twitterSite: extractTwitterHandle(campaign.value?.contact_methods?.twitter),
     });
+  }
+
+  if (!import.meta.dev && import.meta.client) {
+    if (campaign.value.google_analytics) {
+      const foo = initialize(campaign.value.google_analytics);
+    }
   }
 }
 </script>

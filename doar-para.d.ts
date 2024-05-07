@@ -138,6 +138,9 @@ export interface Campaign {
 
   contact_methods: ContactMethods;
 
+  google_analytics?: string;
+  facebook_pixel?: string;
+
   is_recurrent: boolean;
   is_flexible_funding: boolean;
   is_election_campaign: boolean;
