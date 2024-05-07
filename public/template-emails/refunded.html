@@ -107,7 +107,7 @@
                                     <tr>
                                       <td style="width:600px;">
                                         <a href="https://google.com" target="_blank">
-                                          <img alt="Logo Voto Legal" height="auto" src="https://votolegal.com.br/template-emails/header.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="600">
+                                          <img alt="Logo Voto Legal" height="auto" src="https://doarpara.com.br/template-emails/header.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="600">
                                         </a>
                                       </td>
                                     </tr>
@@ -218,9 +218,9 @@
                                     <p><b>Nome do doador(a):</b> [% donor_name %] </p>
                                     <p><b>CPF do doador(a):</b> [% donor_cpf %] </p>
                                     <p><b>Data da confirmação do pagamento:</b> [% captured_at_human %]</p>
-                                    <p><b>Valor da contribuição:</b> R$ [% amount_human %]</p> [% IF candidate.campaign_donation_type == 'pre-campaign' %] <p><b>Nome do pré-candidato(a):</b> [% candidate.name %] </p> [% ELSIF candidate.campaign_donation_type == 'party' %] <p><b>[% candidate.name %]</b></p> [%ELSE%] <p><b>Nome do candidato(a):</b> [% candidate.name %] </p> [%END%] <p><b>Recibo cancelado:</b> <a href="https://votolegal.com.br/recibo/[% decred_data_digest %]">clique aqui para visualizar</a></p> [% IF candidate.cnpj %] <p><b>CNPJ:</b> [% candidate.cnpj %]</p> [% ELSE %] [% IF candidate.cpf %] <p><b>CPF:</b> [% candidate.cpf %]</p> [%END%] [%END%] <p><b>Forma de pagamento:</b> [% payment_method_human %]</p>
+                                    <p><b>Valor da contribuição:</b> R$ [% amount_human %]</p> [% IF candidate.campaign_donation_type == 'pre-campaign' %] <p><b>Nome do pré-candidato(a):</b> [% candidate.name %] </p> [% ELSIF candidate.campaign_donation_type == 'party' %] <p><b>[% candidate.name %]</b></p> [%ELSE%] <p><b>Nome do candidato(a):</b> [% candidate.name %] </p> [%END%] <p><b>Recibo cancelado:</b> <a href="https://doarpara.com.br/recibo/[% decred_data_digest %]">clique aqui para visualizar</a></p> [% IF candidate.cnpj %] <p><b>CNPJ:</b> [% candidate.cnpj %]</p> [% ELSE %] [% IF candidate.cpf %] <p><b>CPF:</b> [% candidate.cpf %]</p> [%END%] [%END%] <p><b>Forma de pagamento:</b> [% payment_method_human %]</p>
                                     <p><b>Identificador da doação:</b> [% id %]</p>
-                                    <p>Para fazer uma nova doação, pedimos que realize uma nova doação <a href="https://votolegal.com.br/[% candidate.username %]?ref=pix-vencido-email">por este link</a>, realizando a correção dos apontamentos para evitar uma nova devolução.</p>
+                                    <p>Para fazer uma nova doação, pedimos que realize uma nova doação <a href="https://doarpara.com.br/[% candidate.username %]?ref=pix-vencido-email">por este link</a>, realizando a correção dos apontamentos para evitar uma nova devolução.</p>
                                     <p>A equipe do Voto Legal agradece sua iniciativa.</p>
                                   </div>
                                 </td>
