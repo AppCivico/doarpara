@@ -1,0 +1,132 @@
+<mjml>
+  <mj-head>
+    <mj-title>Doação via Pix</mj-title>
+    <mj-preview>Doação via Pix</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"></mj-all>
+      <mj-text font-weight="400" font-size="16px" color="#000000" line-height="24px" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"></mj-text>
+    </mj-attributes>
+    <mj-style inline="inline">
+      .body-section {
+      -webkit-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+      box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+      }
+    </mj-style>
+    <mj-style inline="inline">
+      .text-link {
+      color: #5e6ebf
+      }
+      .pix-link { color: #FFFFFF }
+    </mj-style>
+
+
+  </mj-head>
+  <mj-body background-color="#f5f5f5" width="600px">
+    <mj-section full-width="full-width" background-color="#f5f5f5" padding-bottom="0">
+      <mj-column width="100%">
+        <mj-image src="https://votolegal.com.br/template-emails/header.png" width="600px" alt="Logo Voto Legal" padding="0" href="https://google.com" />
+      </mj-column>
+    </mj-section>
+    <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
+
+      <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
+        <mj-column width="100%">
+
+          <mj-text color="#212b35" font-weight="bold" font-size="20px">
+            Dados para realização do pagamento via Pix
+          </mj-text>
+
+          <mj-text color="#434341" font-size="16px">
+
+            <p>Olá, [% donor_name %],</p>
+
+            [% IF candidate.campaign_donation_type == 'pre-campaign' %]
+            <p>você acabou de gerar um PIX no Voto Legal para realizar uma doação a pré-candidatura do(a) <b>[% candidate.name %]</b>. </p>
+            [%ELSE%]
+            <p>você acabou de gerar um PIX no Voto Legal para realizar uma doação ao candidato(a) <b>[% candidate.name %]</b>. </p>
+            [%END%]
+
+            <p><strong>Identificador da doação:</strong> [% id %]</p>
+
+            <p>Lembramos que o PIX tem validade de 1 dia. <br />
+
+              Assim que o pagamento for confirmado, seu nome aparecerá na lista de doadores e enviaremos o recibo desta doação para o seu e-mail.<br />
+
+
+            </p>
+
+
+
+          </mj-text>
+
+        </mj-column>
+      </mj-section>
+
+      <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
+        <mj-column width="100%">
+
+          <mj-text color="#212b35" font-weight="bold" font-size="20px">
+            QrCode:
+          </mj-text>
+          <mj-text>
+            <img height="240" width="240" style="max-width: 240px; width: 240px; background-color: #ffffff;" alt="QR Code do Pix" src="[% pix_qr_code %]" />
+
+            <p>
+              Escaneie o QRCode abaixo no aplicativo do banco para realizar o pagamento do Pix
+            </p>
+
+          </mj-text>
+
+        </mj-column>
+
+      </mj-section>
+
+      <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px" padding-bottom="0">
+        <mj-column width="100%">
+          <mj-text color="#212b35" font-weight="bold" font-size="20px">
+            Copie e Cole a linha inteira:
+          </mj-text>
+        </mj-column>
+      </mj-section>
+
+      <mj-section background-color="#222222" padding-top=0 padding-bottom=0 padding-left="15px" padding-right="15px">
+        <mj-column width="100%">
+          <mj-text color="#FFFFFF">
+            <a style="color: #FFFFFF" class="pix-link">[% pix_qr_text %]</a>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+
+      <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px" padding-top="0">
+        <mj-column width="100%">
+          <mj-text>
+            Procure pela função de "Pix copia e cola", o contéudo acima <b>não é uma chave aleatória</b>.
+          </mj-text>
+        </mj-column>
+      </mj-section>
+
+
+      <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
+        <mj-column width="100%">
+
+          <mj-text>
+
+
+            <p>
+              Você também pode <a href="[% boleto_url %]" target="_blank">utilizar este link</a> para consultar a situação atual da doação e utilizar um botão para copiar o link para a Área de Transferência do celular ou computador.
+            </p>
+
+            <p>A sua doação é processada pelo AppCívico Consultoria Ltda, razão social pela qual o Voto Legal é homologado no TSE.</p>
+
+            <p>Muito obrigado pela sua iniciativa! </p>
+
+
+          </mj-text>
+
+        </mj-column>
+
+      </mj-section>
+    </mj-wrapper>
+  </mj-body>
+</mjml>

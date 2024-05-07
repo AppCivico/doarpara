@@ -1,0 +1,174 @@
+<mjml>
+    <mj-head>
+        <mj-title>Confirmação do pagamento da doação</mj-title>
+        <mj-preview>[% IF omelhorprorio %]Vamos juntos com Caetano, Maria Gadú e Pretinho da Serrinha[%ELSE%]Confirmação do pagamento da doação[% END %]</mj-preview>
+        <mj-attributes>
+            <mj-all font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"></mj-all>
+            <mj-text font-weight="400" font-size="16px" color="#000000" line-height="24px"
+                font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"></mj-text>
+        </mj-attributes>
+        <mj-style inline="inline">
+            .body-section {
+            -webkit-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+            box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+            }
+        </mj-style>
+        <mj-style inline="inline">
+            .text-link {
+            color: #5e6ebf
+            }
+        </mj-style>
+
+
+    </mj-head>
+    <mj-body background-color="#f5f5f5" width="600px">
+        <mj-section full-width="full-width" background-color="#f5f5f5" padding-bottom="0">
+            <mj-column width="100%">
+                <mj-image src="https://votolegal.com.br/template-emails/header.png" width="600px" alt="Logo Voto Legal"
+                    padding="0" href="https://google.com" />
+            </mj-column>
+        </mj-section>
+        <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
+
+
+            <mj-raw>[%IF omelhorprorio %]</mj-raw>
+
+            <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
+                <mj-column width="100%">
+
+                    <mj-text color="#212b35" font-weight="bold" font-size="20px">
+                        O Melhor pro Rio
+                    </mj-text>
+
+                    <mj-text color="#434341" font-size="16px">
+
+                        <b>Olá [% donor_name %],</b>
+                        <p>Muito obrigado pela sua doação. Estamos muito felizes de contar com você na luta para
+                            derrotar o
+                            bolsonarismo e retomar uma cadeira no Senado Federal.</p>
+
+                        <p>
+
+                            <b>Este email ainda não é o seu acesso ao show!</b> Você receberá nesse mesmo endereço
+                            e-mail, até o dia
+                            do evento, as instruções para garantir seu acesso ao evento presencial ou à live para
+                            assistir online.
+                        </p>
+
+                        <p>
+                            <b>Sobre o evento:</b><br />
+                            Data: 05/09/2022<br />
+                            Local: Circo Voador (Rio de Janeiro, RJ)<br />
+                            Abertura dos Portões: 19h<br />
+                            Início do show/transmissão: 20h<br />
+                        </p>
+
+                        <p>
+                            A gente se vê dia 05 de setembro, junto com Caetano, Maria Gadú e Pretinho da Serrinha!
+                            🎶<br />
+                            <br />
+                            Até lá,<br />
+                            <br />
+                            Equipe #OMelhorProRio<br />
+                        </p>
+                    </mj-text>
+                </mj-column>
+            </mj-section>
+
+            <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px" padding-top="0">
+                <mj-column width="100%">
+                    <mj-divider border-color="#DFE3E8" border-width="1px" />
+                </mj-column>
+            </mj-section>
+
+            <mj-raw>[% END %]</mj-raw>
+
+
+
+            <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
+                <mj-column width="100%">
+
+                    <mj-text color="#212b35" font-weight="bold" font-size="20px">
+                        [%IF omelhorprorio %]Dados da sua doação[%ELSE%]Doação confirmada[%END%]
+                    </mj-text>
+
+                    <mj-text color="#434341" font-size="16px">
+
+                        [%IF !omelhorprorio %]
+                        <p>Olá, [% donor_name %], sua doação foi confirmada!</p>
+                        [% END %]
+
+                        [% IF candidate.colective_name %]
+                        <p>Sua doação para [% candidate.colective_name %], representado(a) pela candidato(a) [%
+                            candidate.name %],
+                            foi recebida.</p>
+                        [% ELSE %]
+                            [% IF candidate.campaign_donation_type == 'pre-campaign' %]
+                            <p>Sua doação para o pre-candidato(a) [% candidate.name %] foi recebida.</p>
+                            [%ELSE%]
+                            <p>Sua doação para o candidato(a) [% candidate.name %] foi recebida.</p>
+                            [% END %]
+                        [% END %]
+
+                        <p><strong>Identificador da doação:</strong> [% id %]</p>
+                        <p><b>Nome do doador(a):</b> [% donor_name %] </p>
+                        <p><b>CPF do doador(a):</b> [% donor_cpf %] </p>
+                        <p><b>Data da confirmação do pagamento:</b> [% captured_at_human %]</p>
+                        <p><b>Valor da contribuição:</b> R$ [% amount_human %]</p>
+
+                        [% IF candidate.campaign_donation_type == 'pre-campaign' %]
+                        <p><b>Nome do pré-candidato(a):</b> [% candidate.name %] </p>
+                        [% ELSIF candidate.campaign_donation_type == 'party' %]
+                        <p><b>[% candidate.name %]</b></p>
+                        [%ELSE%]
+                        <p><b>Nome do candidato(a):</b> [% candidate.name %] </p>
+                        [%END%]
+
+                        <p><b>Recibo:</b> <a href="https://votolegal.com.br/recibo/[% decred_data_digest %]">clique aqui
+                                para visualizar</a></p>
+
+                        [% IF candidate.cnpj %]
+                        <p><b>CNPJ:</b> [% candidate.cnpj %]</p>
+                        [% ELSE %]
+                        [% IF candidate.cpf %]
+                        <p><b>CPF:</b> [% candidate.cpf %]</p>
+                        [%END%]
+                        [%END%]
+
+                        <p><b>Forma de pagamento:</b> [% payment_method_human %]</p>
+                        <p><b>Identificador da doação:</b> [% id %]</p>
+
+                        <mj-raw>[% IF candidate.campaign_donation_type == 'campaign' %]</mj-raw>
+                        <p>É obrigatório declarar no imposto de renda a doação. Existe uma seção específica chamada:
+                            Doações para
+                            Partidos Políticos, Comitês Financeiros e Candidatos a Cargos Eletivos. Basta informar o
+                            nome e o CNPJ
+                            do candidato.</p>
+                        <mj-raw>[% END %]</mj-raw>
+
+                        <p>Taxas de 5,5% via cartão de crédito, 2,99% via Pix ou 3,5% + R$3,90 via boleto. Esse valor é
+                            destinado a
+                            taxas de operação financeira, sistemas de controle anti-fraude, impostos e infraestrutura.
+                        </p>
+
+
+                        <mj-raw>[%IF !omelhorprorio %]</mj-raw>
+
+                        <mj-raw>[% IF candidate.campaign_donation_type == 'pre-campaign' %]</mj-raw>
+                        <p>Muito obrigado pela sua doação para a pré-candidatura da(o) [% candidate.name %], vamos
+                            juntos! </p>
+                        <mj-raw>[%ELSE%]</mj-raw>
+                        <p>Muito obrigado pela sua doação para a candidatura da(o) [% candidate.name %], vamos juntos!
+                        </p>
+                        <mj-raw>[% END %]</mj-raw>
+
+                        <mj-raw>[% END %]</mj-raw>
+
+                    </mj-text>
+
+                </mj-column>
+            </mj-section>
+        </mj-wrapper>
+    </mj-body>
+</mjml>

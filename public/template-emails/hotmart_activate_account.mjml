@@ -1,0 +1,51 @@
+<mjml>
+  <mj-body background-color="#ccd3e0">
+    <mj-section background-color="#fff" padding-bottom="20px" padding-top="20px">
+      <mj-column width="100%">
+        <mj-image src="https://participe.votolegal.com.br/email/vl-logo.png" alt="Logo Voto Legal" align="center" border="none" width="315px" padding-left="0px" padding-right="0px" padding-bottom="10px" padding-top="10px"></mj-image>
+
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#336666" padding-bottom="0px" padding-top="0">
+      <mj-column width="100%">
+        <mj-text align="center" font-size="14px" color="#E4E4E4" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">Olá,
+          <p style="font-size:18px; color:white"><span>Você está próximo de ativar sua conta para as eleições de 2022 com o Voto Legal</span></p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#339999" padding-bottom="5px" padding-top="0">
+      <mj-column width="100%">
+        <mj-text align="center" color="#FFF" font-size="16px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="28px" padding-top="28px"><span style="font-size:16px; font-weight: bold;">Utilize o link abaixo para iniciar a criação da sua conta.</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+
+    <mj-section background-color="#336666" padding-bottom="0px" padding-top="0px">
+      <mj-column width="100%">
+
+        <mj-button background-color="#449d44" color="#FFF" font-size="14px" align="center" font-weight="bold" border="none" padding="15px 30px" border-radius="10px" href="[% link %]" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="10px">Criar conta (Link)</mj-button>
+
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#336666" padding-bottom="5px" padding-top="0px">
+      <mj-column width="100%">
+
+
+        <mj-text align="justify" color="#FFF" font-size="14px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="20px" padding-top="20px">
+          <p><strong>ATENÇÃO:</strong>
+
+            Apenas uma conta pode ser criada através do link acima, e deve ser preenchida com os dados do(a) pré-candidato(a). O cadastro deve ser concluído em 6 horas, caso contrário, será necessário abrir novamente o link acima e reiniciar o preenchimento.
+          </p>
+
+
+        </mj-text>
+
+      </mj-column>
+    </mj-section>
+
+
+
+  </mj-body>
+</mjml>

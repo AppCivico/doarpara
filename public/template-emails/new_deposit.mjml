@@ -1,0 +1,193 @@
+<mjml>
+  <mj-body background-color="#ccd3e0">
+    <mj-section background-color="#fff" padding-bottom="20px" padding-top="20px">
+      <mj-column width="100%">
+        <mj-image src="https://participe.votolegal.com.br/email/vl-logo.png" alt="Logo Voto Legal" align="center" border="none" width="315px" padding-left="0px" padding-right="0px" padding-bottom="10px" padding-top="10px"></mj-image>
+
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#336666" padding-bottom="0px" padding-top="0">
+      <mj-column width="100%">
+        <mj-text align="center" font-size="14px" color="#E4E4E4" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">Olá,
+          <p style="font-size:20px; color:white">[% name %]</p>
+          <p style="font-size:18px; color:white"><span>Existe um novo repasse para você!</span></p>
+          <span>[% bank %]</span>, <span>Agência: [% bank_ag %]</span> <span>Conta: [% bank_cc %]</span> <br/>
+          <span>CNPJ: [% cnpj_formated %]</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#339999" padding-bottom="5px" padding-top="0">
+      <mj-column width="100%">
+         <mj-text align="center" color="#FFF" font-size="16px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="28px" padding-top="28px"><span style="font-size:16px; font-weight: bold;">O valor estará disponível em sua conta corrente no dia [% deposited_at %] até as 18:00 horas.</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#336666" padding-bottom="15px">
+      <mj-column>
+        <mj-text align="center" color="#FFF" font-size="16px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="0px"><strong>Número SPCE</strong></mj-text>
+        <mj-text align="center" color="#FFF" font-size="16px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="20px" padding-top="10px">[% id %]</mj-text>
+      </mj-column>
+      <mj-column>
+        <mj-text align="center" color="#FFF" font-size="16px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="0px"><strong>Data de cŕedito na conta</strong></mj-text>
+        <mj-text align="center" color="#FFF" font-size="14px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="20px" padding-top="10px">[% deposited_at %]</mj-text>
+      </mj-column>
+      <mj-column>
+        <mj-text align="center" color="#FFF" font-size="16px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="0px"><strong>Valor do depósito</strong></mj-text>
+        <mj-text align="center" color="#FFF" font-size="16px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="20px" padding-top="10px">R$ [% amount_fmt %]</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#336666" padding-bottom="0px" padding-top="0px">
+      <mj-column width="100%">
+        <mj-text align="center" color="#FFF" font-size="13px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="28px">
+          <p>Utilize os botões abaixo para fazer o download dos arquivos</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+
+    <mj-section background-color="#336666" padding-bottom="0px" padding-top="0px">
+        <mj-column width="100%">
+         <mj-raw>  [% IF link_nf %]</mj-raw>
+        <mj-button background-color="#449d44" color="#FFF" font-size="14px" align="center" font-weight="bold" border="none" padding="15px 30px" border-radius="10px" href="[% link_nf %]" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="10px">Nota Fiscal referente às taxas (Link)</mj-button>
+          <mj-raw>[% ELSE %]</mj-raw>
+          <mj-text align="center" color="#FFF" font-size="13px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="28px">
+          <p>Link para Nota Fiscal referente as taxas não foi informado, será enviado posteriormente.</p>
+        </mj-text>
+				<mj-raw>[%END%]</mj-raw>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#336666" padding-bottom="0px" padding-top="0px">
+        <mj-column width="100%">
+        <mj-button background-color="#449d44" color="#FFF" font-size="14px" align="center" font-weight="bold" border="none" padding="15px 30px" border-radius="10px" href="https://api2022vl.appcivico.com/api2/candidate-deposit-export-xls?deposit_id=[%id%]&download_token=[% token %]" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="10px">Relatório detalhado das doações (XLS)</mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#336666" padding-bottom="0px" padding-top="0px">
+        <mj-column width="100%">
+        <mj-button background-color="#449d44" color="#FFF" font-size="14px" align="center" font-weight="bold" border="none" padding="15px 30px" border-radius="10px" href="https://api2022vl.appcivico.com/api2/candidate-deposit-export-tse?deposit_id=[%id%]&download_token=[% token %]" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="0px">Importação Prestação de Contas de Financiamento Coletivo (FCC)</mj-button>
+      </mj-column>
+    </mj-section>
+
+        <mj-section background-color="#336666" padding-bottom="15px" padding-top="0px">
+      <mj-column width="100%">
+        <mj-text align="center" color="#FFF" font-size="13px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="5px">
+          <p>Os arquivos FCC e NF também estão disponíveis no seu painel administrativo, na opção do menu <strong><em>Prestação de Contas</em></strong>.</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+
+
+    <mj-section background-color="#FFFFFF" padding-bottom="5px" padding-top="20px">
+      <mj-column width="60%">
+        <mj-text>
+          <h3 style="font-weight: bold; margin-top: 0; margin-bottom: 0; color: #454545;font-size: 18px">
+            Importação do arquivo
+            </h3>
+          <p style="font-size: 14px; color: #333333">Apenas o programa SPCE-Cadastro está preparado para fazer a leitura do arquivo “.FCC". Fornecemos este arquivo de acordo com o leiaute do TSE para agilizar a sua prestação de contas, com ele não é necessário preencher manualmente as informações sobre cada doação. <strong>Nenhum programa do seu computador consegue abrir este arquivo.</strong> É necessário que o arquivo seja salvo em uma pasta, para que seja importado lido pelo programa SPCE-Cadastro. </p>
+          <h3 style="font-weight: bold; margin-top: 0; margin-bottom: 0; color: #454545">
+            Após salvar o arquivo no seu computador, realize a sua prestação de contas, seguindo o procedimento abaixo:
+          </h3>
+        </mj-text>
+      </mj-column>
+      <mj-column width="40%">
+        <mj-image width="300px" src="https://participe.votolegal.com.br/email/imagem-spce-cadastro.png"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#FFFFFF" padding-bottom="15px" padding-top="0px">
+      <mj-column width="100%">
+
+        <mj-text>
+                         <span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 15px; color: #333333">Execute o programa <strong><em>SPCE-Cadastro</em></strong></span>
+            <br/>
+            <span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 15px; color: #333333">Abra o menu <strong><em>Manutenção</em></strong> localizado na barra superior.</span>
+          <br/>
+          <span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 15px; color: #333333">Clique na opção <strong><em>Importar Recursos de Financiamento Coletivo de Campanha</em></strong></span>
+          <br/>
+          <span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 15px; color: #333333">Clique no botão <strong><em>Importar</em></strong> arquivo localizado na parte superior, e navegue até a pasta onde o arquivo FCC está localizado, selecione o arquivo e depois em <strong><em>Abrir</em></strong> e complete a importação.</span>
+          <br/>
+
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FFFFFF" padding-bottom="5px" padding-top="5px">
+      <mj-column width="100%">
+        <mj-divider border-color="#EEEEEE" border-width="2px" border-style="solid" padding-left="20px" padding-right="20px" padding-bottom="0px" padding-top="0"></mj-divider>
+        <mj-text>
+          <h3 style="font-weight: bold; margin-top: 0; margin-bottom: 0; color: #454545;font-size: 18px">
+            Prazo para prestação de contas
+            </h3>
+          <p style="font-size: 14px; color: #333333">Você deve fazer a prestação de contas no programa SPCE-Cadastro em até 72 horas <strong>após</strong> a entrada na sua conta corrente. </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FFFFFF" padding-bottom="0px" padding-top="5px">
+      <mj-column width="100%">
+        <mj-divider border-color="#EEEEEE" border-width="2px" border-style="solid" padding-left="20px" padding-right="20px" padding-bottom="0px" padding-top="0"></mj-divider>
+        <mj-text>
+
+          <h3 style="font-weight: bold; margin-top: 0; margin-bottom: 0; color: #454545;font-size: 18px">
+            Identificação do crédito na conta corrente
+            </h3>
+          <span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333">O crédito na sua conta corrente é realizado diretamente pelo AppCívico Consultoria Ltda, ou pela Iugu Serviços da Internet S/A.</span><br/>
+<span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333">Se optar por fazer a prestação de contas manualmente, deverá informar o tipo de doação em sua prestação de contas. Escolha a opção “Recursos de Financiamento Coletivo” e então insira os dados do Appcivico Consultoria LTDA como empresa responsável pela arrecadação dos recursos.</span><br/>
+<span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333"> O AppCívico é a empresa proprietária do Voto Legal, conforme contratos firmados e documentos fiscais enviados.</span><br/>
+<span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333"> A Iugu é a conta intermediária de pagamentos homologada pelo AppCívico, conforme consta nos termos de doação, cláusula 2.4., porém não deve ser utilizada como responsável pela arrecadação dos recursos, <strong>sempre utilize o <code>AppCívico Consultoria Ltda, CNPJ 08.746.641/0001-00</code> como responsável pela arrecadação dos recursos.</strong>
+
+          </span><br/>
+<span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333"> O envio dos repasses realizados através da conta intermediadora está de acordo com termos do art. 24, § 2º da Resolução-TSE nº 23.607/2019, formalizado também na pergunta 21 do FAQ do TSE.</span>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#FFFFFF" padding-bottom="30px" padding-top="5px">
+      <mj-column width="100%">
+        <mj-text>
+          <h3 style="font-weight: bold; margin-top: 0; margin-bottom: 0; color: #454545">
+            Outras informações
+            </h3>
+          <span style="font-size: 20px; color: #666666">↪</span> <span style="font-size: 14px; color: #333333"><a href="https://votolegal.com.br/tos/Termo%20de%20uso%20e%20Politica%20de%20privacidade%20(unificado)%20-%20Voto%20Legal%20-%202022.pdf">Visualizar termos de uso dos doadores.</a></span><br/>
+          <span style="font-size: 20px; color: #666666">↪</span> <span style="font-size: 14px; color: #333333"><a href="https://www.tse.jus.br/legislacao/compilada/res/2019/resolucao-no-23-607-de-17-de-dezembro-de-2019">Resolução Nº 23.607 TSE.</a></span><br/>
+          <span style="font-size: 20px; color: #666666">↪</span> <span style="font-size: 14px; color: #333333"><a href="https://www.tse.jus.br/eleicoes/eleicoes-2022/prestacao-de-contas/financiamento-coletivo">FAQ do TSE.</a></span><br/>
+        </mj-text>
+
+        <mj-divider border-color="#EEEEEE" border-width="2px" border-style="solid" padding-top="15px" padding-left="20px" padding-right="20px" padding-bottom="0px" padding-top="0"></mj-divider>
+
+          <mj-text align="left" color="#FFF" font-size="14px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-top="10px" padding-left="20px" padding-right="20px" padding-bottom="0px" padding-top="5px">
+
+          <span style="font-size: 14px; color: #333333">Se porventura o valor não entrar na conta até as 18 horas do dia [% deposited_at %], entre em contato com a nossa equipe via suporte@votolegal.com.br, pois será necessário atualizar a data que fica dentro do arquivo de prestação de contas.</span><br/><br/>
+
+          <span style="font-size: 14px; color: #333333">Para qualquer esclarecimento, envie um e-mail para suporte@votolegal.com.br ou responda este e-mail.</span><br/>
+          <br/>
+          <span>Boa campanha!
+        </span>
+
+
+
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#336666" padding-bottom="5px" padding-top="0px">
+      <mj-column width="100%">
+
+
+        <mj-text align="justify" color="#FFF" font-size="14px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="20px" padding-top="20px"><p><strong>ATENÇÃO:</strong>
+
+          Este e-mail contém informação confidencial e protegida contra divulgação não autorizada. A informação contida nesta mensagem é de uso pessoal e confidencial dos destinatários designados. Caso não seja o destinatário designado deste email, por favor, avise imediatamente o remetente desta com relação ao engano no recebimento. Qualquer divulgação não autorizada, cópia, distribuição ou uso da informação contida neste email é estritamente proibida.</p>
+          <p>
+Os links contidos neste e-mail permitem o acesso a informações de dados pessoais.<br/> Não compartilhe este e-mail ou os links em sites públicos ou locais inseguros.</p>
+
+        </mj-text>
+
+      </mj-column>
+    </mj-section>
+
+
+
+  </mj-body>
+</mjml>
