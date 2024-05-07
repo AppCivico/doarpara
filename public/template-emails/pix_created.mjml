@@ -25,7 +25,7 @@
   <mj-body background-color="#f5f5f5" width="600px">
     <mj-section full-width="full-width" background-color="#f5f5f5" padding-bottom="0">
       <mj-column width="100%">
-        <mj-image src="https://doarpara.com.br/template-emails/header.png" width="600px" alt="Logo Voto Legal" padding="0" href="https://google.com" />
+        <mj-image src="https://doarpara.com.br/template-emails/header.png" width="600px" alt="Logo DoarPara" padding="0" href="https://google.com" />
       </mj-column>
     </mj-section>
     <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
@@ -42,9 +42,9 @@
             <p>Olá, [% donor_name %],</p>
 
             [% IF candidate.campaign_donation_type == 'pre-campaign' %]
-            <p>você acabou de gerar um PIX no Voto Legal para realizar uma doação a pré-candidatura do(a) <b>[% candidate.name %]</b>. </p>
+            <p>você acabou de gerar um PIX no DoarPara para realizar uma doação a pré-candidatura do(a) <b>[% candidate.name %]</b>. </p>
             [%ELSE%]
-            <p>você acabou de gerar um PIX no Voto Legal para realizar uma doação ao candidato(a) <b>[% candidate.name %]</b>. </p>
+            <p>você acabou de gerar um PIX no DoarPara para realizar uma doação ao candidato(a) <b>[% candidate.name %]</b>. </p>
             [%END%]
 
             <p><strong>Identificador da doação:</strong> [% id %]</p>
@@ -117,7 +117,7 @@
               Você também pode <a href="[% boleto_url %]" target="_blank">utilizar este link</a> para consultar a situação atual da doação e utilizar um botão para copiar o link para a Área de Transferência do celular ou computador.
             </p>
 
-            <p>A sua doação é processada pelo AppCívico Consultoria Ltda, razão social pela qual o Voto Legal é homologado no TSE.</p>
+            <p>A sua doação é processada pelo AppCívico Consultoria Ltda, razão social pela qual o DoarPara é homologado no TSE.</p>
 
             <p>Muito obrigado pela sua iniciativa! </p>
 

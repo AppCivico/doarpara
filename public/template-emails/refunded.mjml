@@ -23,7 +23,7 @@
     <mj-body background-color="#f5f5f5" width="600px">
         <mj-section full-width="full-width" background-color="#f5f5f5" padding-bottom="0">
             <mj-column width="100%">
-                <mj-image src="https://doarpara.com.br/template-emails/header.png" width="600px" alt="Logo Voto Legal"
+                <mj-image src="https://doarpara.com.br/template-emails/header.png" width="600px" alt="Logo DoarPara"
                     padding="0" href="https://google.com" />
             </mj-column>
         </mj-section>
@@ -103,7 +103,7 @@
 
    <p>Para fazer uma nova doação, pedimos que realize uma nova doação <a
                                                                 href="https://doarpara.com.br/[% candidate.username %]?ref=pix-vencido-email">por este link</a>, realizando a correção dos apontamentos para evitar uma nova devolução.</p>
-                      <p>A equipe do Voto Legal agradece sua iniciativa.</p>
+                      <p>A equipe do DoarPara agradece sua iniciativa.</p>
 
 
                     </mj-text>

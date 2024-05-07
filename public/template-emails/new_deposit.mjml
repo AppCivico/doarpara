@@ -2,7 +2,7 @@
   <mj-body background-color="#ccd3e0">
     <mj-section background-color="#fff" padding-bottom="20px" padding-top="20px">
       <mj-column width="100%">
-        <mj-image src="https://participe.doarpara.com.br/email/vl-logo.png" alt="Logo Voto Legal" align="center" border="none" width="315px" padding-left="0px" padding-right="0px" padding-bottom="10px" padding-top="10px"></mj-image>
+        <mj-image src="https://participe.doarpara.com.br/email/vl-logo.png" alt="Logo DoarPara" align="center" border="none" width="315px" padding-left="0px" padding-right="0px" padding-bottom="10px" padding-top="10px"></mj-image>
 
       </mj-column>
     </mj-section>
@@ -135,7 +135,7 @@
             </h3>
           <span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333">O crédito na sua conta corrente é realizado diretamente pelo AppCívico Consultoria Ltda, ou pela Iugu Serviços da Internet S/A.</span><br/>
 <span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333">Se optar por fazer a prestação de contas manualmente, deverá informar o tipo de doação em sua prestação de contas. Escolha a opção “Recursos de Financiamento Coletivo” e então insira os dados do Appcivico Consultoria LTDA como empresa responsável pela arrecadação dos recursos.</span><br/>
-<span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333"> O AppCívico é a empresa proprietária do Voto Legal, conforme contratos firmados e documentos fiscais enviados.</span><br/>
+<span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333"> O AppCívico é a empresa proprietária do DoarPara, conforme contratos firmados e documentos fiscais enviados.</span><br/>
 <span style="font-size: 20px; color: #666666">•</span> <span style="font-size: 14px; color: #333333"> A Iugu é a conta intermediária de pagamentos homologada pelo AppCívico, conforme consta nos termos de doação, cláusula 2.4., porém não deve ser utilizada como responsável pela arrecadação dos recursos, <strong>sempre utilize o <code>AppCívico Consultoria Ltda, CNPJ 08.746.641/0001-00</code> como responsável pela arrecadação dos recursos.</strong>
 
           </span><br/>
