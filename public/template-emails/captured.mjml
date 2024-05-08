@@ -32,57 +32,7 @@
         <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
 
 
-            <mj-raw>[%IF omelhorprorio %]</mj-raw>
 
-            <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
-                <mj-column width="100%">
-
-                    <mj-text color="#212b35" font-weight="bold" font-size="20px">
-                        O Melhor pro Rio
-                    </mj-text>
-
-                    <mj-text color="#434341" font-size="16px">
-
-                        <b>Olá [% donor_name %],</b>
-                        <p>Muito obrigado pela sua doação. Estamos muito felizes de contar com você na luta para
-                            derrotar o
-                            bolsonarismo e retomar uma cadeira no Senado Federal.</p>
-
-                        <p>
-
-                            <b>Este email ainda não é o seu acesso ao show!</b> Você receberá nesse mesmo endereço
-                            e-mail, até o dia
-                            do evento, as instruções para garantir seu acesso ao evento presencial ou à live para
-                            assistir online.
-                        </p>
-
-                        <p>
-                            <b>Sobre o evento:</b><br />
-                            Data: 05/09/2022<br />
-                            Local: Circo Voador (Rio de Janeiro, RJ)<br />
-                            Abertura dos Portões: 19h<br />
-                            Início do show/transmissão: 20h<br />
-                        </p>
-
-                        <p>
-                            A gente se vê dia 05 de setembro, junto com Caetano, Maria Gadú e Pretinho da Serrinha!
-                            🎶<br />
-                            <br />
-                            Até lá,<br />
-                            <br />
-                            Equipe #OMelhorProRio<br />
-                        </p>
-                    </mj-text>
-                </mj-column>
-            </mj-section>
-
-            <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px" padding-top="0">
-                <mj-column width="100%">
-                    <mj-divider border-color="#DFE3E8" border-width="1px" />
-                </mj-column>
-            </mj-section>
-
-            <mj-raw>[% END %]</mj-raw>
 
 
 
@@ -90,14 +40,12 @@
                 <mj-column width="100%">
 
                     <mj-text color="#212b35" font-weight="bold" font-size="20px">
-                        [%IF omelhorprorio %]Dados da sua doação[%ELSE%]Doação confirmada[%END%]
+                        Doação confirmada
                     </mj-text>
 
                     <mj-text color="#434341" font-size="16px">
 
-                        [%IF !omelhorprorio %]
                         <p>Olá, [% donor_name %], sua doação foi confirmada!</p>
-                        [% END %]
 
                         [% IF candidate.colective_name %]
                         <p>Sua doação para [% candidate.colective_name %], representado(a) pela candidato(a) [%
@@ -111,7 +59,6 @@
                             [% END %]
                         [% END %]
 
-                        <p><strong>Identificador da doação:</strong> [% id %]</p>
                         <p><b>Nome do doador(a):</b> [% donor_name %] </p>
                         <p><b>CPF do doador(a):</b> [% donor_cpf %] </p>
                         <p><b>Data da confirmação do pagamento:</b> [% captured_at_human %]</p>
@@ -153,16 +100,12 @@
                         </p>
 
 
-                        <mj-raw>[%IF !omelhorprorio %]</mj-raw>
-
                         <mj-raw>[% IF candidate.campaign_donation_type == 'pre-campaign' %]</mj-raw>
                         <p>Muito obrigado pela sua doação para a pré-candidatura da(o) [% candidate.name %], vamos
                             juntos! </p>
                         <mj-raw>[%ELSE%]</mj-raw>
                         <p>Muito obrigado pela sua doação para a candidatura da(o) [% candidate.name %], vamos juntos!
                         </p>
-                        <mj-raw>[% END %]</mj-raw>
-
                         <mj-raw>[% END %]</mj-raw>
 
                     </mj-text>
