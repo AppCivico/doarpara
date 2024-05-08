@@ -25,7 +25,7 @@
   <mj-body background-color="#f5f5f5" width="600px">
     <mj-section full-width="full-width" background-color="#f5f5f5" padding-bottom="0">
       <mj-column width="100%">
-        <mj-image src="https://doarpara.com.br/template-emails/header.png" width="600px" alt="Logo DoarPara" padding="0" href="https://google.com" />
+        <mj-image src="https://static.doarpara.com.br/template-emails/header.png" width="600px" alt="Logo DoarPara" padding="0" href="https://google.com" />
       </mj-column>
     </mj-section>
     <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
