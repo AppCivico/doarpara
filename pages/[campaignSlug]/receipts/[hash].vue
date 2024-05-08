@@ -16,7 +16,7 @@ definePageMeta({
   layout: 'receipt',
   name: 'receipt',
   title: 'Doar para',
-  path: `/:campaignSlug/${runtimeConfig.public.customSegments.receipts}`,
+  path: `/:campaignSlug/${process.env.CUSTOM_SEGMENTS_RECEIPTS || 'receipts'}/:hash`,
 });
 
 const route = useRoute();

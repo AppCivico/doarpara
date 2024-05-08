@@ -608,7 +608,7 @@ definePageMeta({
   layout: 'like-a-dialog',
   name: 'donate',
   title: 'Doar para',
-  path: `/:campaignSlug/${runtimeConfig.public.customSegments.donate}/:hash`,
+  path: `/:campaignSlug/${process.env.CUSTOM_SEGMENTS_DONATE || 'donate'}`,
 });
 
 const { $i18n } = useNuxtApp();

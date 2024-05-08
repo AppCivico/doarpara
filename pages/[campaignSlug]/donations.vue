@@ -108,7 +108,7 @@ const {
 
 definePageMeta({
   name: 'donations',
-  path: `/:campaignSlug/${runtimeConfig.public.customSegments.donations}`,
+  path: `/:campaignSlug/${process.env.CUSTOM_SEGMENTS_DONATIONS || 'donations'}`,
 });
 
 function fetchDonations(more = false) {
