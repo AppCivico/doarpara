@@ -155,10 +155,7 @@
                   >
                     <NuxtLink
                       class="tab-navigation__link"
-                      :to="sectionId === 'description'
-                        ? `/${campaign?.slug}`
-                        : `/${campaign?.slug}/${sectionId}`
-                      "
+                      :to="sectionId === 'description' ? { name: 'campaign' } : { name: sectionId }"
                     >
                       {{ $t(`nav.${sectionId}`) }}
                     </NuxtLink>
@@ -184,11 +181,8 @@
                     class="footer-nav__item"
                   >
                     <NuxtLink
-                      class="footer-nav__link"
-                      :to="sectionId === 'description'
-                        ? `/${campaign?.slug}`
-                        : `/${campaign?.slug}/${sectionId}`
-                      "
+                      class="tab-navigation__link"
+                      :to="sectionId === 'description' ? { name: 'campaign' } : { name: sectionId }"
                     >
                       {{ $t(`nav.${sectionId}`) }}
                     </NuxtLink>

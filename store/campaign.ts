@@ -10,6 +10,7 @@ interface State {
   campaign: Campaign | null;
   rewards: Reward[];
   requireSections: CampaignSection[];
+  validSections: CampaignSection[];
 
   pending: boolean;
   error: null | unknown;
@@ -20,7 +21,14 @@ export const useCampaignStore = defineStore('campaign', {
     campaign: null,
     rewards: [],
     requireSections: ['description', 'donations'],
-
+    validSections: [
+      'description',
+      'donations',
+      'faq',
+      'goals',
+      'rewards',
+      'testimonies',
+    ],
     pending: false,
     error: null,
   }),
@@ -60,11 +68,12 @@ export const useCampaignStore = defineStore('campaign', {
   getters: {
     isCampaignLoaded: (state) => state.campaign !== null,
 
-    campaignSections: (({ campaign, requireSections }): CampaignSection[] => (
+    campaignSections: (({ campaign, requireSections, validSections }): CampaignSection[] => (
       Array.isArray(campaign?.campaign_section_list)
         ? (campaign?.campaign_section_list || [])
           .filter((s: CampaignSection) => !requireSections.includes(s))
-          .filter((s: CampaignSection) => !!campaign?.[s as keyof Campaign])
+          .filter((s: CampaignSection) => !!campaign?.[s as keyof Campaign]
+            && validSections.includes(s))
           .concat(requireSections)
         : requireSections
     )),
