@@ -20,7 +20,7 @@ definePageMeta({
 const route = useRoute();
 
 const reciboStore = useReciboStore();
-const { responseData: lista } = storeToRefs(reciboStore);
+const { responseData: donation } = storeToRefs(reciboStore);
 
 const donationAmount = (valor) => {
   if (typeof valor !== 'number') {
@@ -54,14 +54,14 @@ const dateHour = (data) => {
 reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
 </script>
 
-<template>
+<template style="background: red">
   <section class="recibo">
     <header>
       <nav>
         <a href="doarpara.com.br">
           <img :src="logo" alt="Logo doarPara">
         </a>
-        <img :src="lista?.donation.candidate.avatar" alt="Pré candidato">
+        <img :src="donation?.donation.candidate.avatar" alt="Pré candidato">
       </nav>
     </header>
     <div>
@@ -69,15 +69,15 @@ reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
         Recibo
       </h1>
       <h3 class="blue">
-        Essa doação foi realizada para {{ lista?.donation.donor_name }},
-        pré-candidato(a) a Prefeito, por <span>{{ lista?.donation.candidate.party.acronym }}</span>.
+        Essa doação foi realizada para {{ donation?.donation.donor_name }},
+        pré-candidato(a) a Prefeito, por <span>{{ donation?.donation.candidate.party.acronym }}</span>.
       </h3>
       <p>
         As doações eleitorais são muito importantes para construção de projetos políticos,
         porém é fundamental que as plataformas de financiamento coletivo, sociedade e o próprio
         TSE tenham garantias de que as informações ofereçam integridade e confiabilidade de maneira
         descentralizada para garantir controle social.
-        Por isso, {{ lista?.donation.donor_name }} está registrando todas suas doações
+        Por isso, {{ donation?.donation.donor_name }} está registrando todas suas doações
         financeiras para comprovar a integridade e honestidade no seu processo
         de captação de recursos.
       </p>
@@ -86,17 +86,17 @@ reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
       <h2>informações de doação</h2>
       <div>
         <ul>
-          <li>Pré-candidato(a): {{ lista?.donation.candidate.popular_name ? lista.donation.candidate.popular_name : '-' }}</li>
-          <li>CNPJ: {{ candidateDocument(lista?.donation.candidate.cnpj) }}</li>
-          <li>CPF: {{ candidateDocument(lista?.donation.candidate.cpf) }}</li>
-          <li>Partido: {{ lista?.donation.candidate.party.acronym }}</li>
-          <li>Cargo: {{ lista?.donation.candidate.office.name }}</li>
-          <li>Nome do doador: {{ lista?.donation.donor_name }}</li>
-          <li>Nome na Receita Federal: {{ lista?.donation.name_receita ? lista.donation.name_receita : '-' }}</li>
-          <li>CPF do doador: {{ candidateDocument(lista?.donation.donor_cpf) }}</li>
-          <li>Data: {{ dateHour(lista?.donation.captured_at_human) }}</li>
-          <li>Valor: {{ donationAmount(lista?.donation.amount) }}</li>
-          <li>Forma de pagamento: {{ lista?.donation.payment_method_human }}</li>
+          <li>Pré-candidato(a): {{ donation?.donation.candidate.popular_name ? donation.donation.candidate.popular_name : '-' }}</li>
+          <li>CNPJ: {{ candidateDocument(donation?.donation.candidate.cnpj) }}</li>
+          <li>CPF: {{ candidateDocument(donation?.donation.candidate.cpf) }}</li>
+          <li>Partido: {{ donation?.donation.candidate.party.acronym }}</li>
+          <li>Cargo: {{ donation?.donation.candidate.office.name }}</li>
+          <li>Nome do doador: {{ donation?.donation.donor_name }}</li>
+          <li>Nome na Receita Federal: {{ donation?.donation.name_receita ? donation.donation.name_receita : '-' }}</li>
+          <li>CPF do doador: {{ candidateDocument(donation?.donation.donor_cpf) }}</li>
+          <li>Data: {{ dateHour(donation?.donation.captured_at_human) }}</li>
+          <li>Valor: {{ donationAmount(donation?.donation.amount) }}</li>
+          <li>Forma de pagamento: {{ donation?.donation.payment_method_human }}</li>
         </ul>
       </div>
       <div>
@@ -108,8 +108,8 @@ reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
         </p>
         <p>
           Comprovante decred:
-          <a class="blue" style="word-break: break-all" :href="lista?.donation.decred_transaction_url">
-            {{ lista?.donation.decred_transaction_url }}
+          <a class="blue" style="word-break: break-all" :href="donation?.donation.decred_transaction_url">
+            {{ donation?.donation.decred_transaction_url }}
           </a>
         </p>
       </div>
@@ -123,8 +123,8 @@ reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
         </p>
         <p>
           Versão do site:
-          <a class="blue" :href="lista?.donation.git_url">
-            {{ lista?.donation.git_url }}
+          <a class="blue" :href="donation?.donation.git_url">
+            {{ donation?.donation.git_url }}
           </a>
         </p>
       </div>
