@@ -2,15 +2,13 @@
 <script setup>
 import { useReciboStore } from '@/store/receipt.js';
 import { storeToRefs } from 'pinia';
-import facebook from '../../assets/images/icon-facebook.svg';
-import instagram from '../../assets/images/icon-instagram.svg';
-import linkedin from '../../assets/images/icon-linkedin.svg';
-import twitter from '../../assets/images/icon-twitter.svg';
+// import facebook from '../../assets/images/icon-facebook.svg';
+// import instagram from '../../assets/images/icon-instagram.svg';
+// import linkedin from '../../assets/images/icon-linkedin.svg';
+// import twitter from '../../assets/images/icon-twitter.svg';
 import doarPara from '../../assets/images/logo-gray.svg';
 import logo from '../../assets/images/logo-receipt.svg';
 import ondas from '../../assets/images/wave.png';
-
-const runtimeConfig = useRuntimeConfig();
 
 definePageMeta({
   layout: 'receipt',
@@ -23,6 +21,35 @@ const route = useRoute();
 
 const reciboStore = useReciboStore();
 const { responseData: lista } = storeToRefs(reciboStore);
+
+const donationAmount = (valor) => {
+  if (typeof valor !== 'number') {
+    return '';
+  }
+  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+};
+
+const candidateDocument = (documento) => {
+  if (!documento) {
+    return '';
+  }
+  // eslint-disable-next-line no-param-reassign
+  documento = documento.replace(/\D/g, '');
+  if (documento.length === 11) {
+    return documento.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  } if (documento.length === 14) {
+    return documento.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+  }
+  return documento;
+};
+
+const dateHour = (data) => {
+  if (!data) {
+    return '';
+  }
+  const dataObj = new Date(data);
+  return dataObj.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+};
 
 reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
 </script>
@@ -59,16 +86,16 @@ reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
       <h2>informações de doação</h2>
       <div>
         <ul>
-          <li>Pré-candidato(a): {{ lista?.donation.candidate.popular_name }}</li>
-          <li>CNPJ: {{ lista?.donation.candidate.cnpj }}</li>
-          <li>CPF: {{ lista?.donation.candidate.cpf }}</li>
+          <li>Pré-candidato(a): {{ lista?.donation.candidate.popular_name ? lista.donation.candidate.popular_name : '-' }}</li>
+          <li>CNPJ: {{ candidateDocument(lista?.donation.candidate.cnpj) }}</li>
+          <li>CPF: {{ candidateDocument(lista?.donation.candidate.cpf) }}</li>
           <li>Partido: {{ lista?.donation.candidate.party.acronym }}</li>
           <li>Cargo: {{ lista?.donation.candidate.office.name }}</li>
           <li>Nome do doador: {{ lista?.donation.donor_name }}</li>
-          <li>Nome na Receita Federal: {{ lista?.donation.name_receita }}</li>
-          <li>CPF do doador: {{ lista?.donation.donor_cpf }}</li>
-          <li>Data: {{ lista?.donation.captured_at_human }}</li>
-          <li>Valor: {{ lista?.donation.amount }}</li>
+          <li>Nome na Receita Federal: {{ lista?.donation.name_receita ? lista.donation.name_receita : '-' }}</li>
+          <li>CPF do doador: {{ candidateDocument(lista?.donation.donor_cpf) }}</li>
+          <li>Data: {{ dateHour(lista?.donation.captured_at_human) }}</li>
+          <li>Valor: {{ donationAmount(lista?.donation.amount) }}</li>
           <li>Forma de pagamento: {{ lista?.donation.payment_method_human }}</li>
         </ul>
       </div>
@@ -87,7 +114,7 @@ reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
         </p>
       </div>
       <div>
-        <h2>Informações sobre o código utilizado para essa doação</h2>
+        <h2><strong>Informações sobre o código utilizado para essa doação</strong></h2>
         <p>
           Para transparência eleitoral, além dos dados de doação, também é fundamental que
           a tecnologia utilizado para processar essa doação seja aberto. Por isso,
@@ -101,18 +128,20 @@ reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
           </a>
         </p>
       </div>
-      <h2>Compartilhe</h2>
-      <p>
-        Faça parte desse movimento contra a corrupção eleitoral e fortaleça a nossa rede.
-      </p>
-      <div>
-        <nav class="social">
-          <a href=""><img :src="linkedin" alt="linkedin"></a>
-          <a href=""><img :src="twitter" alt="twitter"></a>
-          <a href=""><img :src="instagram" alt="instagram"></a>
-          <a href=""><img :src="facebook" alt="facebook"></a>
-        </nav>
-      </div>
+      <!-- <div>
+        <h2>Compartilhe</h2>
+        <p>
+          Faça parte desse movimento contra a corrupção eleitoral e fortaleça a nossa rede.
+        </p>
+        <div>
+          <nav class="social">
+            <a href=""><img :src="linkedin" alt="linkedin"></a>
+            <a href=""><img :src="twitter" alt="twitter"></a>
+            <a href=""><img :src="instagram" alt="instagram"></a>
+            <a href=""><img :src="facebook" alt="facebook"></a>
+          </nav>
+        </div>
+      </div> -->
     </div>
     <footer class="footer">
       <img :src="doarPara" alt="logo">
@@ -125,7 +154,7 @@ reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
       </p>
       <p>
         © 2016-2024 DoarPara • Uma iniciativa AppCívico - Tecnologias Cívicas •
-        <a class="blue" href="">contato</a>
+        <a class="blue" href="https://www.appcivico.com/fale-conosco">contato</a>
       </p>
     </footer>
   </section>
@@ -133,30 +162,15 @@ reciboStore.fetchData(route.params.campaignSlug, route.params.hash);
 </template>
 
 <style scoped>
+
 body {
-  padding: 60px 0 108px;
-
-  font-family: Outfit, sans-serif;
-
-  background-color: #ebebeb;
-}
-
-h1,
-h2,
-h3,
-p,
-ul {
-  color: #58616a;
-
-  opacity: 1;
+  background: #2667ff !important;
 }
 
 h2,
 h3 {
   margin: 0 0 18px;
-
   font-size: 20px;
-  font-weight: 600;
   color: #313337;
 }
 
@@ -166,9 +180,7 @@ ul {
 
 nav {
   display: flex;
-
   flex-direction: column;
-
   align-items: flex-start;
 }
 
@@ -179,7 +191,6 @@ nav > img {
 
 footer {
   padding-top: 70px;
-
   border-top: 1px solid #ebebeb;
 }
 
@@ -189,10 +200,9 @@ footer {
 }
 
 .recibo {
-  max-width: 600px;
+  max-width: 619px;
   padding: 50px 60px;
   margin: auto;
-
   background: #ffffff;
   border-radius: 20px 20px 0 0;
 }
@@ -203,9 +213,7 @@ footer {
 
 .social {
   flex-direction: row;
-
   column-gap: 30px;
-
   padding-top: 40px;
 }
 
@@ -220,7 +228,6 @@ footer {
 
 .ondas {
   display: block;
-
   margin: 0 auto;
 }
 </style>
