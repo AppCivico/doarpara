@@ -21,6 +21,7 @@ export const useCampaignStore = defineStore('campaign', {
     campaign: null,
     rewards: [],
     requireSections: ['description', 'donations'],
+    // sections which already have views
     validSections: [
       'description',
       'donations',
