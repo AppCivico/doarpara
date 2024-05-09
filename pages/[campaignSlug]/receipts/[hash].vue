@@ -14,7 +14,9 @@ definePageMeta({
   layout: 'receipt',
   name: 'receipt',
   title: 'Doar para',
-  path: `/:campaignSlug/${process.env.CUSTOM_SEGMENTS_RECEIPTS || 'receipts'}/:hash`,
+  // TO-DO: localize routes.
+  // Currently, `localePath()` and `NuxtLinkLocale` do not support complex roue objects
+  path: '/:campaignSlug/recibos/:hash',
 });
 
 const route = useRoute();

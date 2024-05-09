@@ -95,7 +95,6 @@ import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonationsStore } from '@/store/donations.ts';
 
 const route = useRoute();
-const runtimeConfig = useRuntimeConfig();
 
 const campaignStore = useCampaignStore();
 const donationsStore = useDonationsStore();
@@ -108,7 +107,9 @@ const {
 
 definePageMeta({
   name: 'donations',
-  path: `/:campaignSlug/${process.env.CUSTOM_SEGMENTS_DONATIONS || 'donations'}`,
+  // TO-DO: localize routes.
+  // Currently, `localePath()` and `NuxtLinkLocale` do not support complex roue objects
+  path: '/:campaignSlug/doacoes',
 });
 
 function fetchDonations(more = false) {

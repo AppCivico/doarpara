@@ -608,7 +608,9 @@ definePageMeta({
   layout: 'like-a-dialog',
   name: 'donate',
   title: 'Doar para',
-  path: `/:campaignSlug/${process.env.CUSTOM_SEGMENTS_DONATE || 'donate'}`,
+  // TO-DO: localize routes.
+  // Currently, `localePath()` and `NuxtLinkLocale` do not support complex roue objects
+  path: '/:campaignSlug/doar',
 });
 
 const { $i18n } = useNuxtApp();
