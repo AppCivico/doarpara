@@ -856,22 +856,20 @@ async function submitDonation() {
   }
 }
 
-if (import.meta.server) {
-  useHead({
-    script: [
-      {
-        type: 'text/javascript',
-        src: 'https://js.iugu.com/v2',
-        tagPosition: 'bodyClose',
-      },
-      {
-        type: 'text/javascript',
-        src: '/vendor/votolegalfp.js',
-        tagPosition: 'bodyClose',
-      },
-    ],
-  });
-}
+useHead({
+  script: [
+    {
+      type: 'text/javascript',
+      src: 'https://js.iugu.com/v2',
+      tagPosition: 'head',
+    },
+    {
+      type: 'text/javascript',
+      src: '/vendor/votolegalfp.js',
+      tagPosition: 'head',
+    },
+  ],
+});
 
 if (import.meta.client) {
   onMounted(() => {
