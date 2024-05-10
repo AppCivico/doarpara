@@ -23,10 +23,10 @@ interface State {
 const validSections:CampaignSection[] = [
   'description',
   'donations',
-  'faq',
+  // 'faq',
   'goals',
-  'rewards',
-  'testimonies',
+  // 'rewards', // available, but not folly tested
+  // 'testimonies',
 ];
 
 const validSectionsOrder: Record<CampaignSection, number> = validSections.reduce(
