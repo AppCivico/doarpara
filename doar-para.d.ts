@@ -106,6 +106,10 @@ export interface RaisedAndSource {
   new_donors_percent: number | string;
 }
 
+export type SourceOnProgressBar = RaisedAndSource & {
+  opacity: number;
+};
+
 interface Donation {
   id: Id;
   captured_at: Date;

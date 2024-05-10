@@ -69,36 +69,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Campaign, Goal, RaisedAndSource } from '@/doar-para.d.ts';
-
-type SourceOnProgressBar = RaisedAndSource & {
-  opacity: number;
-};
+import type { Campaign, SourceOnProgressBar } from '@/doar-para.d.ts';
 
 const props = defineProps<{
   campaign: Campaign;
 }>();
 
-const donationSources = computed(() => {
-  const { platforms } = props.campaign;
-  let opacity = 0;
-  return !Array.isArray(platforms)
-    ? []
-    : platforms
-      .filter((x) => x?.name && x.total_donated !== undefined)
-      .map((x: RaisedAndSource) => {
-        const y = x as SourceOnProgressBar;
-        y.opacity = opacity;
-        opacity += 0.25;
-        return y;
-      });
-});
+const donationSources = computed(() => combineDonationSources(props.campaign.platforms));
 
-const totalAmount = computed(() => donationSources.value.reduce((acc, cur) => {
-  // eslint-disable-next-line no-param-reassign
-  acc += cur.total_donated;
-  return acc;
-}, 0));
+const totalAmount = computed(() => consolidateTotalAmount(donationSources.value));
 
 const totalDonations = computed(() => donationSources.value.reduce((acc, cur) => {
   // eslint-disable-next-line no-param-reassign
@@ -106,13 +85,7 @@ const totalDonations = computed(() => donationSources.value.reduce((acc, cur) =>
   return acc;
 }, 0));
 
-const currentGoal = computed(() => {
-  const { goal_list: goals } = props.campaign;
-
-  return (goals.find((x: Goal) => x.amount > totalAmount.value) || goals[goals.length - 1])?.amount
-    || totalAmount.value
-    || 0;
-});
+const currentGoal = computed(() => getCurrentGoal(props.campaign.goal_list, totalAmount.value));
 
 function percentage(amount = totalAmount.value, expected = currentGoal.value) {
   return Math.floor(
