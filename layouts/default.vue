@@ -157,7 +157,12 @@
                       class="tab-navigation__link"
                       :to="sectionId === 'description' ? { name: 'campaign' } : { name: sectionId }"
                     >
-                      {{ $t(`nav.${sectionId}`) }}
+                      <template v-if="sectionId === 'goals' && campaign?.goal_list?.length">
+                        {{ $t(`nav.${sectionId}`, campaign.goal_list.length) }}
+                      </template>
+                      <template v-else>
+                        {{ $t(`nav.${sectionId}`) }}
+                      </template>
                     </NuxtLink>
                   </li>
                 </ul>
@@ -184,7 +189,12 @@
                       class="tab-navigation__link"
                       :to="sectionId === 'description' ? { name: 'campaign' } : { name: sectionId }"
                     >
-                      {{ $t(`nav.${sectionId}`) }}
+                      <template v-if="sectionId === 'goals' && campaign?.goal_list?.length">
+                        {{ $t(`nav.${sectionId}`, campaign.goal_list.length) }}
+                      </template>
+                      <template v-else>
+                        {{ $t(`nav.${sectionId}`) }}
+                      </template>
                     </NuxtLink>
                   </li>
                 </template>

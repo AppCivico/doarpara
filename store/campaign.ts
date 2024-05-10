@@ -1,5 +1,8 @@
 import type {
-  Campaign, CampaignSection, PaymentMethod, Reward,
+  Campaign,
+  CampaignSection,
+  PaymentMethod,
+  Reward,
 } from '@/doar-para.d.ts';
 
 type MinimumDonationPerMethod = {
@@ -16,20 +19,30 @@ interface State {
   error: null | unknown;
 }
 
+// sections which already have views on the right order
+const validSections:CampaignSection[] = [
+  'description',
+  'donations',
+  'faq',
+  'goals',
+  'rewards',
+  'testimonies',
+];
+
+const validSectionsOrder: Record<CampaignSection, number> = validSections.reduce(
+  (acc, section, i) => {
+    acc[section] = i;
+    return acc;
+  },
+  {} as Record<CampaignSection, number>,
+);
+
 export const useCampaignStore = defineStore('campaign', {
   state: (): State => ({
     campaign: null,
     rewards: [],
     requireSections: ['description', 'donations'],
-    // sections which already have views
-    validSections: [
-      'description',
-      'donations',
-      'faq',
-      'goals',
-      'rewards',
-      'testimonies',
-    ],
+    validSections,
     pending: false,
     error: null,
   }),
@@ -69,13 +82,14 @@ export const useCampaignStore = defineStore('campaign', {
   getters: {
     isCampaignLoaded: (state) => state.campaign !== null,
 
-    campaignSections: (({ campaign, requireSections, validSections }): CampaignSection[] => (
+    campaignSections: (({ campaign, requireSections }): CampaignSection[] => (
       Array.isArray(campaign?.campaign_section_list)
         ? (campaign?.campaign_section_list || [])
           .filter((s: CampaignSection) => !requireSections.includes(s))
-          .filter((s: CampaignSection) => !!campaign?.[s as keyof Campaign]
-            && validSections.includes(s))
+          .filter((s: CampaignSection) => (s === 'goals' && campaign.goal_list?.length)
+          || (!!campaign?.[s as keyof Campaign] && validSections.includes(s)))
           .concat(requireSections)
+          .sort((a, b) => validSectionsOrder[a] - validSectionsOrder[b])
         : requireSections
     )),
 
