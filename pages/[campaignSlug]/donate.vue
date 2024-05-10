@@ -918,7 +918,7 @@ if (import.meta.client) {
   }
 }
 </style>
-<style lang="scss" scoped>
+<style lang="scss">
 @use 'sass:color';
 
 .donation-summary {
