@@ -186,7 +186,7 @@
                     class="footer-nav__item"
                   >
                     <NuxtLink
-                      class="tab-navigation__link"
+                      class="footer-nav__link"
                       :to="sectionId === 'description' ? { name: 'campaign' } : { name: sectionId }"
                     >
                       <template v-if="sectionId === 'goals' && campaign?.goal_list?.length">
