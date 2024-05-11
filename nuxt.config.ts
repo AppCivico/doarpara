@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     },
   },
   build: {
+    analyze: true,
     transpile: ['vue-i18n'],
   },
   css: ['@/assets/scss/index.scss'],
