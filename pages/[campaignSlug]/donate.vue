@@ -4,8 +4,11 @@
     class="donation-form-and-messages"
   >
     <TransitionExpand>
-      <errorMessagePanel v-if="wasAnAdBlockerErrorFound">
+      <errorMessagePanel v-if="wasAnAdBlockerErrorFound" :dismissible="false">
         {{ $t('errors.adBlocker') }}
+      </errorMessagePanel>
+      <errorMessagePanel v-else-if="isVotoLegalFPMissing" :dismissible="false">
+        {{ $t('errors.VotoLegalFP') }}
       </errorMessagePanel>
       <donationValues
         v-else-if="!amount"
