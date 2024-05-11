@@ -1,0 +1,64 @@
+@use '../abstracts' as my;
+
+[role='dialog'] {
+  position: relative;
+
+  max-width: my.$max-width--dialog - my.$gutter * 2;
+  margin-right: my.$gutter;
+  margin-left: my.$gutter;
+
+  @media screen and (min-width: my.$max-width--dialog + my.$gutter * 2) {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+.dialog__close-button:link,
+.dialog__close-button:visited,
+.dialog__close-button {
+  @include my.image-replacement;
+
+  position: absolute;
+  top: my.$gutter;
+  right: my.$gutter;
+  z-index: my.layer('modal');
+
+  display: block;
+
+  width: my.$gutter * 1.5;
+  min-width: 0;
+  height: my.$gutter * 1.5;
+  min-height: 0;
+  padding: 0;
+
+  background-color: transparent;
+  background-position: 50%;
+  background-size: contain;
+  border: 0;
+  border-radius: 100%;
+
+  &::before {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+    content: '';
+
+    background-image: my.image('icons/x-mark.svg');
+    background-position: 50% 50%;
+    opacity: 0.65;
+  }
+
+  &:hover,
+  &:focus {
+    position: absolute;
+
+    background-color: transparent;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}

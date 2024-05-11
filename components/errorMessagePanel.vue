@@ -3,16 +3,25 @@
     v-if="slots.default"
     class="error-message"
     aria-live="assertive"
+    role="dialog"
   >
     <span class="error-message__container">
       <slot />
     </span>
+
+    <button type="button" class="dialog__close-button error-message__close-button" @click="$emit('close')">
+      {{ $t('closeError') }}
+    </button>
   </div>
 </template>
 <script setup lang="ts">
 import { useSlots } from 'vue';
 
 const slots = useSlots();
+
+defineEmits([
+  'close',
+]);
 
 defineProps({
   message: {
@@ -27,9 +36,9 @@ defineProps({
   @include my.pulsing-color(my.palette('effects', 'error-gradient'), 'background-color');
 
   position: sticky;
-  right: 0;
+  right: my.$gutter;
   bottom: my.$gutter;
-  left: 0;
+  left: my.$gutter;
   z-index: my.layer('dropdown');
 
   padding: my.$gutter;

@@ -14,6 +14,7 @@ export default {
     textLink: 'Confira as respostas às Perguntas Frequentes',
   },
   campaignBy: 'Por',
+  closeError: 'Fechar mensagem de erro',
   chooseThisReward: 'Selecionar essa recompensa',
   credits: {
     fundraiserLabel: 'Responsável por esta página',

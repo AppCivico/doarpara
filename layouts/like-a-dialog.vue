@@ -31,7 +31,7 @@
           </h1>
 
           <nav>
-            <NuxtLink :to="{ name: 'campaign' }" class="link-like-a-close">
+            <NuxtLink :to="{ name: 'campaign' }" class="dialog__close-button">
               {{ $t('backToCampaign') }}
             </NuxtLink>
           </nav>
@@ -83,26 +83,8 @@ header span {
   color: my.palette('neutral');
 }
 
-.link-like-a-close {
-  @include my.image-replacement;
-
-  position: absolute;
-  top: my.$gutter;
-  right: my.$gutter;
-  z-index: my.layer('modal');
-
-  width: my.$gutter * 1.5;
-  height: my.$gutter * 1.5;
-
-  background-image: my.image('icons/x-mark.svg');
-  background-position: 50%;
-  background-size: contain;
-  opacity: 0.35;
-
-  &:hover,
-  &:focus {
-    opacity: 1;
-  }
+.dialog__close-button {
+  background-color: my.palette('neutral', 'white');
 
   @media screen and (min-width: my.$max-width--dialog + my.$gutter * 2) {
     position: fixed;
