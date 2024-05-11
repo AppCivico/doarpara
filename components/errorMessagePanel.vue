@@ -9,16 +9,27 @@
     >
       <div class="error-message__container">
         <slot>
-          <ul v-if="Array.isArray((error as FetchError)?.data)">
-            <li
-              v-for="(item, i) in error"
-              :key="i"
-            >
-              {{ item }}
-            </li>
-          </ul>
+          <template v-if="Array.isArray((error as ApiError)?.data)">
+            <ul v-if="(error as ApiError)?.data.length > 1">
+              <li
+                v-for="(item, i) in error"
+                :key="i"
+              >
+                {{ (item as ApiError)?.message || item }}
+              </li>
+            </ul>
+            <template v-else>
+              <p
+                v-for="(item, i) in (error as ApiError)?.data"
+                :key="i"
+                :class="item.msg_id"
+              >
+                {{ (item as ApiError)?.message || item }}
+              </p>
+            </template>
+          </template>
           <p v-else>
-            {{ error }}
+            {{ (error as ApiError)?.message || (error as FetchError)?.statusMessage || error }}
           </p>
         </slot>
       </div>
@@ -37,12 +48,13 @@
 <script setup lang="ts">
 import type { FetchError } from 'ofetch';
 import { useSlots } from 'vue';
+import type { ApiError } from '~/doar-para';
 
 defineOptions({ inheritAttrs: false });
 
 
 interface Props {
-  error?: Error | FetchError | null,
+  error?: Error | FetchError | ApiError | null,
   dismissible?: boolean,
 }
 

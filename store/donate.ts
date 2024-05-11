@@ -214,7 +214,6 @@ export const useDonateStore = defineStore('toDonate', {
         this.pending.creatingDonation = false;
         return { data: response };
       } catch (err) {
-        this.errors.creatingDonation = err as ApiError;
         this.errors.creatingDonation = (err as FetchError).data;
 
         this.pending.creatingDonation = false;

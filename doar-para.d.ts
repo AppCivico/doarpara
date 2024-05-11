@@ -22,7 +22,11 @@ export type ApiError = {
     message?: string,
     msg_id?: string,
     error?: string,
-  } | any,
+  } | {
+    message?: string,
+    msg_id?: string,
+    error?: string,
+  }[] | any,
 };
 
 export type CampaignSection = 'description' | 'donations' | 'faq' | 'goals' | 'rewards' | 'testimonies';
