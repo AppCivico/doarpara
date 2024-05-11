@@ -601,6 +601,7 @@ const creditCardMaskOption = {
 
 declare const Iugu: any;
 // const { Iugu } = (window || {} as any);
+declare const VotolegalFP: any;
 
 const runtimeConfig = useRuntimeConfig();
 
@@ -635,6 +636,7 @@ const paymentMethod = ref('');
 const toDonateTaxes = ref(false);
 const addressNumber = ref(null);
 const wasAnAdBlockerErrorFound = ref(false);
+const isVotoLegalFPMissing = ref(false);
 
 const {
   combinedErrors, combinedPending, donor, donorAddress, errors, pending, pendingMessage,
@@ -890,7 +892,14 @@ if (import.meta.client) {
       nextTick(() => {
         if (Iugu.utils.isBlockedByAdBlock()) {
           wasAnAdBlockerErrorFound.value = true;
-          throw new Error('AdBlocker');
+          throw new Error('AdBlocker preventing Iugu from loading');
+        }
+
+        if (typeof VotolegalFP !== 'function') {
+          isVotoLegalFPMissing.value = true;
+          throw new Error('VotolegalFP is not loaded yet');
+        } else {
+          console.log('VotoLegalFP has loaded');
         }
       });
     });
