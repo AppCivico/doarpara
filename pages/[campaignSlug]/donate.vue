@@ -581,7 +581,7 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
       <hr />
       <pre>createdDonation: {{ createdDonation }}</pre>
       <hr />
-      <pre>deviceAuthorizationTokenId: {{ donateStore.deviceAuthorizationTokenId }}</pre>
+      <pre>deviceAuthorizationToken: {{ donateStore.deviceAuthorizationToken }}</pre>
       <pre>pending: {{ pending }}</pre>
       <pre>combinedPending: {{ combinedPending }}</pre>
     </div>
@@ -878,7 +878,7 @@ if (import.meta.client) {
   onMounted(() => {
     isClipboardInaccessible.value = !navigator.clipboard;
 
-    if (!donateStore.deviceAuthorizationTokenId) {
+    if (!donateStore.deviceAuthorizationToken) {
       donateStore.getDeviceAuthorizationToken({
         lazy: true,
         server: false,

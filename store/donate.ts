@@ -78,14 +78,14 @@ export const useDonateStore = defineStore('toDonate', {
     debug: !!import.meta.dev,
     // be careful to what you add here! Do not persist sensitive information!
     paths: [
-      'deviceAuthorizationTokenId',
+      'deviceAuthorizationToken',
       'referral',
       'donor',
       'donorAddress',
     ],
   },
   state: () => ({
-    deviceAuthorizationTokenId: '',
+    deviceAuthorizationToken: '',
     referral: <ReferralCodes> {},
 
     donor: {
@@ -159,7 +159,7 @@ export const useDonateStore = defineStore('toDonate', {
         this.pending.validatingDevice = false;
 
         if (response?.device_authorization_token_id) {
-          this.deviceAuthorizationTokenId = response.device_authorization_token_id;
+          this.deviceAuthorizationToken = response.device_authorization_token_id;
         }
 
         return response?.device_authorization_token_id;
@@ -184,7 +184,7 @@ export const useDonateStore = defineStore('toDonate', {
         const payload = this.payloadForCreationOfDonationOnBackEnd;
         const { email, cpf = '' } = payload;
 
-        const deviceAuthorizationTokenId = this.deviceAuthorizationTokenId
+        const deviceAuthorizationToken = this.deviceAuthorizationToken
         || String(await this.getDeviceAuthorizationToken());
 
         const nonce = randomString(13);
@@ -207,7 +207,7 @@ export const useDonateStore = defineStore('toDonate', {
             donation_fp: donationFp,
             nc: nonce,
             sv: hash,
-            device_authorization_token_id: deviceAuthorizationTokenId,
+            device_authorization_token_id: deviceAuthorizationToken,
           },
         });
 
@@ -266,7 +266,7 @@ export const useDonateStore = defineStore('toDonate', {
       try {
         const runtimeConfig = useRuntimeConfig();
 
-        const { deviceAuthorizationTokenId: token } = this;
+        const { deviceAuthorizationToken: token } = this;
 
         const response = await $fetch<DonationResponse>(`${runtimeConfig.public.privateApiBase}/api2/donations/${donationId}`, {
           method: 'POST',
