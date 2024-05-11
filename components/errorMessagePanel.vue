@@ -1,34 +1,66 @@
 <template>
-  <div
-    v-if="slots.default"
-    class="error-message"
-    aria-live="assertive"
-    role="dialog"
-  >
-    <span class="error-message__container">
-      <slot />
-    </span>
+  <TransitionExpand>
+    <div
+      v-if="slots.default || error"
+      v-bind="$attrs"
+      class="error-message"
+      aria-live="assertive"
+      role="dialog"
+    >
+      <div class="error-message__container">
+        <slot>
+          <ul v-if="Array.isArray((error as FetchError)?.data)">
+            <li
+              v-for="(item, i) in error"
+              :key="i"
+            >
+              {{ item }}
+            </li>
+          </ul>
+          <p v-else>
+            {{ error }}
+          </p>
+        </slot>
+      </div>
 
-    <button type="button" class="dialog__close-button error-message__close-button" @click="$emit('close')">
-      {{ $t('closeError') }}
-    </button>
-  </div>
+      <button
+        v-if="dismissible"
+        type="button"
+        class="dialog__close-button error-message__close-button"
+        @click="flushErrors"
+      >
+        {{ $t('closeError') }}
+      </button>
+    </div>
+  </TransitionExpand>
 </template>
 <script setup lang="ts">
+import type { FetchError } from 'ofetch';
 import { useSlots } from 'vue';
 
-const slots = useSlots();
+defineOptions({ inheritAttrs: false });
 
-defineEmits([
+
+interface Props {
+  error?: Error | FetchError | null,
+  dismissible?: boolean,
+}
+
+withDefaults(defineProps<Props>(), {
+  error: null,
+  dismissible: true,
+});
+
+const emits = defineEmits([
   'close',
 ]);
 
-defineProps({
-  message: {
-    type: String,
-    default: '',
-  },
-});
+const slots = useSlots();
+
+function flushErrors() {
+  clearError();
+  emits('close');
+}
 </script>
 <style scoped lang="scss">
 .error-message {
@@ -64,5 +96,9 @@ defineProps({
   max-width: my.$max-width--dialog;
 
   text-align: center;
+
+  *:last-child {
+    margin-bottom: 0;
+  }
 }
 </style>

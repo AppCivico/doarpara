@@ -2,6 +2,9 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+
+  <errorMessagePanel :error="errorToShow" @close="flushError" />
+
   <NuxtLoadingIndicator :color="false" :height="3" />
 </template>
 <script setup lang="ts">
@@ -17,6 +20,8 @@ const donateStore = useDonateStore();
 const { campaign } = storeToRefs(campaignStore);
 const { referral } = storeToRefs(donateStore);
 
+const errorToShow:Ref<Error | null> = ref(null);
+
 function storeReferral() {
   const referralCode = route.query[runtimeConfig.public.queryStringSpecialParameters.referrer];
 
@@ -25,11 +30,21 @@ function storeReferral() {
   }
 }
 
+function flushError() {
+  errorToShow.value = null;
+}
+
 await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
 
 if (import.meta.client) {
   onMounted(() => {
     storeReferral();
+  });
+
+  onErrorCaptured((error) => {
+    errorToShow.value = error;
+
+    return false;
   });
 }
 </script>

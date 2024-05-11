@@ -4,6 +4,7 @@
   position: relative;
 
   max-width: my.$max-width--dialog - my.$gutter * 2;
+  min-height: my.$gutter * 3.5;
   margin-right: my.$gutter;
   margin-left: my.$gutter;
 
