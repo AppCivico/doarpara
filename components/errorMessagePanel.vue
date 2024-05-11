@@ -52,6 +52,17 @@ import type { ApiError } from '~/doar-para';
 
 defineOptions({ inheritAttrs: false });
 
+// @see: https://github.com/unjs/ofetch/blob/8e80b3922d940fac67d8163fcbaa46f8c16b7c7d/src/types.ts#L111
+// export interface IFetchError<T = any> extends Error {
+//   request?: FetchRequest;
+//   options?: FetchOptions;
+//   response?: FetchResponse<T>;
+//   data?: T;
+//   status?: number;
+//   statusText?: string;
+//   statusCode?: number;
+//   statusMessage?: string;
+// }
 
 interface Props {
   error?: Error | FetchError | ApiError | null,
