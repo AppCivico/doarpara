@@ -98,6 +98,8 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
       title: 'Oops!',
       message: 'Ocorreu um erro interno, mas não se preocupe. Estamos cientes e trabalhando na correção.',
     },
+
+    VotoLegalFP: 'Um componente essencial falhou em carregar',
   },
   flexibleFunding: 'Campanha flexível',
   footerMenuLabel: 'Menu da campanha, termos de uso e política de privacidade',
