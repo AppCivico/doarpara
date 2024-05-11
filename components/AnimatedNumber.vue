@@ -1,7 +1,7 @@
 <template>{{ formattedNumber }}</template>
 <script setup lang="ts">
 // https://stackoverflow.com/a/76539913/15425845
-import { defineProps, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 
 defineOptions({ inheritAttrs: false });
 
