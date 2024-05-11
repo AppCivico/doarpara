@@ -1,6 +1,8 @@
 <template>
   <NuxtLayout>
-    <NuxtPage />
+    <div class="layout-container">
+      <NuxtPage />
+    </div>
   </NuxtLayout>
 
   <errorMessagePanel :error="errorToShow" @close="flushError" />
