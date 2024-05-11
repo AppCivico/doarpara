@@ -3,6 +3,7 @@ import type { CreditCard, PaymentToken } from '@/iugu.d.ts';
 import randomString from '@/utils/randomString.ts';
 import removeAccented from '@/utils/removeAccented.js';
 import getDonationFP from '@/vendor/donationFp.js';
+import type { FetchError } from 'ofetch';
 import { useCampaignStore } from './campaign.ts';
 
 declare const VotolegalFP: any;
@@ -214,6 +215,7 @@ export const useDonateStore = defineStore('toDonate', {
         return { data: response };
       } catch (err) {
         this.errors.creatingDonation = err as ApiError;
+        this.errors.creatingDonation = (err as FetchError).data;
 
         this.pending.creatingDonation = false;
 
