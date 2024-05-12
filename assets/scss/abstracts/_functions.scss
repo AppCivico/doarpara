@@ -453,8 +453,7 @@ $_default-text-color--light: palette('text', 'light');
 /// Helper function to use organized colors and tones
 ///
 /// @access public
-/// @param {String} $color-name - Color name
-/// @param {String} $tone ['base'] - Tone name
+/// @param {String} $color-path - Color path as a list
 /// @require {variable} $my-palette
 /// @return {color}
 /// @link http://erskinedesign.com/blog/friendlier-colour-names-sass-maps/
@@ -468,7 +467,7 @@ $_default-text-color--light: palette('text', 'light');
 /// 		}
 /// 	}
 ///
-@function palette($color-name, $tones...) {
+@function palette($color-path...) {
   $color: null;
 
   $default-palette: (
@@ -536,31 +535,23 @@ $_default-text-color--light: palette('text', 'light');
     $full-palette: map.deep-merge($default-palette, $my-palette);
   }
 
-  @if not map.has-key($full-palette, $color-name) {
-    @error 'unknown color sent to `palette` function-> `#{$color-name}`. Available colors-> `#{map.keys($full-palette)}`';
-  }
+  $color: map.get($full-palette, $color-path...);
 
-  $color: map.get($full-palette, $color-name, $tones...);
-
-  @if $color == null and list.nth($tones, 1) == 'gray' {
-    @if map.has-key($full-palette, $color-name, 'medium') {
-      $color: map.get($full-palette, $color-name, 'medium');
-    } @else if map.has-key($full-palette, $color-name, 'base') {
-      $color: map.get($full-palette, $color-name, 'base');
+  @if type-of($color) == 'map' {
+    @if map.has-key($full-palette, list.append($color-path, 'medium', $separator: space)...) {
+      $color: map.get($full-palette, list.append($color-path, 'medium', $separator: space)...);
+    } @else if map.has-key($full-palette, list.append($color-path, 'base', $separator: space)...) {
+      $color: map.get($full-palette, list.append($color-path, 'base', $separator: space)...);
+    } @else if map.has-key($full-palette, list.append($color-path, 'default', $separator: space)...) {
+      $color: map.get($full-palette, list.append($color-path, 'default', $separator: space)...);
     }
   }
 
-  @if meta.type-of($color) == 'color' or $color == 'transparent' {
+  @if meta.type-of($color) == 'color' or $color == 'transparent' or type-of($color) == 'list' {
     @return $color;
-  } @else if meta.type-of($color) == 'map' and map.has-key($color, 'base') {
-    @return map.get($color, 'base');
-  } @else if meta.type-of($color) == 'map' and map.has-key($color, 'medium') {
-    @return map.get($color, 'medium');
-  } @else if meta.type-of($color)  == 'list' {
-    @return $color;
-  } @else {
-    @error '`#{$color}` is not a real color';
   }
+
+  @return null;
 }
 
 
