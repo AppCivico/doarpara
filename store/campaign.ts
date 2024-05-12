@@ -47,35 +47,33 @@ export const useCampaignStore = defineStore('campaign', {
     error: null,
   }),
   actions: {
-    async fetchCampaignAndRewards(campaignSlug = '', params = {}, reducedVersion = !!import.meta?.server): Promise<void> {
+    async fetchCampaignAndRewards(campaignSlug = '', params = {}): Promise<void> {
       const route = useRoute();
       const runtimeConfig = useRuntimeConfig();
 
-      const fullUrl = `${runtimeConfig.public.publicApiBase}/${reducedVersion ? 'campaign-reduced' : 'campaign'}/${campaignSlug || route.params.campaignSlug}`;
+      const fullUrl = `${runtimeConfig.public.publicApiBase}/campaign/${campaignSlug || route.params.campaignSlug}`;
 
       this.pending = true;
       this.error = null;
 
-      const {
-        data, error, pending,
-      } = await useFetch<Campaign>(
-        fullUrl,
-        params,
-      );
+      try {
+        const response: Campaign = await $fetch(fullUrl, {
+          method: 'GET',
+          params: params || {},
+        });
 
-      this.pending = pending.value;
+        this.campaign = response;
 
-      if (data.value) {
-        this.campaign = data.value;
-
-        if (data.value.reward_list) {
-          this.rewards = data.value?.reward_list;
+        if (response.reward_list) {
+          this.rewards = response.reward_list;
         }
-      }
 
-      if (error.value) {
-        this.error = error.value;
-        throw createError(error.value);
+        this.pending = false;
+      } catch (error) {
+        this.error = error;
+        this.pending = false;
+
+        throw error;
       }
     },
   },
