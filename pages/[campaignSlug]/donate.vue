@@ -119,7 +119,7 @@
           </p>
         </fieldset>
 
-        <pre hidden v-debug>donor:{{ donor }}</pre>
+        <pre v-debug hidden>donor:{{ donor }}</pre>
 
         <fieldset
           class="flexible-fieldset"
@@ -247,7 +247,7 @@
           </p>
         </fieldset>
 
-        <pre hidden v-debug>donorAddress: {{ donorAddress }}</pre>
+        <pre v-debug hidden>donorAddress: {{ donorAddress }}</pre>
 
         <fieldset
           class="flexible-fieldset"
@@ -464,9 +464,9 @@
           </div>
         </fieldset>
 
-        <pre hidden v-debug>currentTaxes: {{ currentTaxes }}</pre>
-        <pre hidden v-debug>amount: {{ amount }}</pre>
-        <pre hidden v-debug>amountDonatingTaxes: {{ amountDonatingTaxes }}</pre>
+        <pre v-debug hidden>currentTaxes: {{ currentTaxes }}</pre>
+        <pre v-debug hidden>amount: {{ amount }}</pre>
+        <pre v-debug hidden>amountDonatingTaxes: {{ amountDonatingTaxes }}</pre>
 
         <MDC :value="$t('donationForm.declaration')" tag="fieldset" />
 
@@ -499,7 +499,7 @@
             {{ $t(`donationForm.pendingMessages.${pendingMessage}`) }}
           </requestMessagePanel>
 
-          <pre hidden v-debug>
+          <pre v-debug hidden>
 Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 - rendered on server: (not rendered)
 - expected on client: disabled="true"
@@ -572,7 +572,7 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
       </div>
     </TransitionExpand>
 
-    <div hidden v-debug>
+    <div v-debug hidden>
       <pre>combinedErrors:{{ combinedErrors }}</pre>
       <hr />
       <pre>errors:{{ errors }}</pre>
