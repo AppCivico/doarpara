@@ -1,14 +1,22 @@
 @use 'sass:map';
 @use 'sass:color';
 
-
-$_red: hsl(339, 100%, 46%);
-$_light-red: hsl(0, 100%, 78%);
 $_light-blue: hsl(198, 95%, 52%);
 $_blue: hsl(222, 100%, 57%);
-$_purple: hsl(247, 67%, 48%);
 $_dark-blue: hsl(247, 96%, 21%);
+$_purple: hsl(247, 67%, 48%);
 
+$_light-green: hsl(157, 100%, 41%);
+$_green: hsl(169, 100%, 26%);
+$_dark-green: hsl(185, 85%, 18%);
+
+$_light-orange: hsl(30, 100%, 73%);
+$_orange: hsl(23, 100%, 67%);
+$_dark-orange: hsl(20, 100%, 41%);
+
+$_light-red: hsl(0, 100%, 78%);
+$_red: hsl(339, 100%, 46%);
+$_dark-red: hsl(339, 100%, 27%);
 
 ////
 /// This file contains all application-wide Sass color palettes
@@ -36,21 +44,38 @@ $base: (
 );
 $palette: map.set($palette, 'base', $base);
 
-$primary: $_blue;
-$secondary: $_dark-blue;
-$tertiary: $_light-blue;
-$quaternary: $_purple;
-
 ///
 /// @colors brand
 ///
 $brand: (
-  'primary': $primary,
-  'secondary': $secondary,
-  'tertiary': $tertiary,
-  'quaternary': $quaternary,
+  'primary': $_blue,
+  'secondary': $_dark-blue,
+  'tertiary': $_light-blue,
+  'quaternary': $_purple,
 );
 $palette: map.set($palette, 'brand', $brand);
+
+$green-theme: (
+  'primary': $_green,
+  'secondary': $_dark-green,
+  'tertiary': $_light-green,
+  'quaternary': $_dark_green,
+);
+$palette: map.deep-merge($palette, ('green-theme': ('brand': $green-theme)));
+$orange-theme: (
+  'primary': $_orange,
+  'secondary': $_dark-orange,
+  'tertiary': $_light-orange,
+  'quaternary': $_dark_orange,
+);
+$palette: map.deep-merge($palette, ('orange-theme': ('brand': $orange-theme)));
+$red-theme: (
+  'primary': $_red,
+  'secondary': $_dark-red,
+  'tertiary': $_light-red,
+  'quaternary': $_dark-red,
+);
+$palette: map.deep-merge($palette, ('red-theme': ('brand': $red-theme)));
 
 ///
 /// @colors neutral
@@ -65,7 +90,6 @@ $neutral: (
   'black': hsl(200, 20%, 9%)
 );
 $palette: map.set($palette, 'neutral', $neutral);
-
 
 ///
 /// @colors text
@@ -92,6 +116,37 @@ $anchor: (
 );
 $palette: map.set($palette, 'anchor', $anchor);
 
+$palette: map.deep-merge($palette, ('green-theme':(
+  'anchor': (
+    'base': $_green,
+    'link': $_green,
+    'visited': $_dark-green,
+    'hover': $_light-green,
+    'focus': $_light-green,
+    'active': $_light-green,
+  )
+)));
+$palette: map.deep-merge($palette, ('orange-theme':(
+  'anchor': (
+    'base': $_orange,
+    'link': $_orange,
+    'visited': $_dark-orange,
+    'hover': $_light-orange,
+    'focus': $_light-orange,
+    'active': $_light-orange,
+  )
+)));
+$palette: map.deep-merge($palette, ('red-theme':(
+  'anchor': (
+    'base': $_red,
+    'link': $_red,
+    'visited': $_dark-red,
+    'hover': $_light-red,
+    'focus': $_light-red,
+    'active': $_light-red,
+  )
+)));
+
 
 ///
 /// @colors button
@@ -105,6 +160,25 @@ $button: (
   'reset': transparent,
 );
 $palette: map.set($palette, 'button', $button);
+
+$palette: map.deep-merge($palette, ('green-theme': (
+  'button': (
+    'focus': map.get($green-theme, 'primary'),
+    'submit': map.get($green-theme, 'primary'),
+  )
+)));
+$palette: map.deep-merge($palette, ('orange-theme': (
+  'button': (
+    'focus': map.get($orange-theme, 'primary'),
+    'submit': map.get($orange-theme, 'primary'),
+  )
+)));
+$palette: map.deep-merge($palette, ('red-theme': (
+  'button': (
+    'focus': map.get($red-theme, 'primary'),
+    'submit': map.get($red-theme, 'primary'),
+  )
+)));
 
 
 ///
@@ -130,6 +204,21 @@ $border: (
 );
 $palette: map.set($palette, 'border', $border);
 
+$palette: map.deep-merge($palette, ('green-theme': (
+  'border': (
+    'focus': map.get($green-theme, 'primary'),
+  )
+)));
+$palette: map.deep-merge($palette, ('orange-theme': (
+  'border': (
+    'focus': map.get($orange-theme, 'primary'),
+  )
+)));
+$palette: map.deep-merge($palette, ('red-theme':(
+  'border': (
+    'focus': map.get($red-theme, 'primary'),
+  )
+)));
 
 ///
 /// @colors disabled
@@ -148,9 +237,25 @@ $loading: (
   'foreground': map.get($neutral, 'x-dark'),
   'background': map.get($neutral, 'x-light'),
   'gradient-list': ($_red, $_light-red, $_light-blue, $_blue, $_purple, $_dark-blue),
-  'pulsing-list': ($tertiary, $primary, $tertiary),
+  'pulsing-list': ($_light-blue, $_blue, $_light-blue),
 );
 $palette: map.set($palette, 'loading', $loading);
+
+$palette: map.deep-merge($palette, ('green-theme' : (
+  'loading' : (
+    'pulsing-list': ($_light-green, $_green, $_light-green),
+  )
+)));
+$palette: map.deep-merge($palette, ('orange-theme' : (
+  'loading' : (
+    'pulsing-list': ($_light-orange, $_orange, $_light-orange),
+  )
+)));
+$palette: map.deep-merge($palette, ('red-theme' : (
+  'loading' : (
+    'pulsing-list': ($_light-red, $_red, $_light-red),
+  )
+)));
 
 
 ///
@@ -174,6 +279,25 @@ $effects: ( // TO-DO
   'error-gradient': (map.get($signage, 'danger'), $_red),
 );
 $palette: map.set($palette, 'effects', $effects);
+
+$palette: map.deep-merge($palette, ('green-theme': (
+  'effects': (
+    'shadow': color.adjust($_dark-green, $alpha: -0.8),
+    'tap-highlight': color.adjust($_dark-green, $alpha: -0.9),
+  ),
+)));
+$palette: map.deep-merge($palette, ('orange-theme': (
+  'effects': (
+    'shadow': color.adjust($_dark-orange, $alpha: -0.8),
+    'tap-highlight': color.adjust($_dark-orange, $alpha: -0.9),
+  ),
+)));
+$palette: map.deep-merge($palette, ('red-theme': (
+  'effects': (
+    'shadow': color.adjust($_dark-red, $alpha: -0.8),
+    'tap-highlight': color.adjust($_dark-red, $alpha: -0.9),
+  ),
+)));
 
 
 ///
