@@ -1080,9 +1080,10 @@ $no-viewport: false !default;
 }
 
 @mixin _focus-and-hover-basis {
+  @include themed-color ('outline-color', ('effects', 'tap-highlight'));
+
   outline-width: 4px;
   outline-style: solid;
-  outline-color: f.palette('effects', 'tap-highlight');
 
   transition-duration: 100ms;
   transition-property: outline-width;
@@ -1137,10 +1138,46 @@ $no-viewport: false !default;
 @mixin shadow ($inset: false) {
   @if $inset {
     box-shadow: inset 10px 10px 50px f.palette('effects', 'shadow');
+
+      @include themed-declaration ('green') {
+        box-shadow: inset 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
+      }
+
+      @include themed-declaration ('orange') {
+        box-shadow: inset 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+      }
+
+      @include themed-declaration ('red') {
+        box-shadow: inset 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+      }
   } @else {
     box-shadow: 10px 10px 50px f.palette('effects', 'shadow');
+
+      @include themed-declaration ('green') {
+        box-shadow: 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
+      }
+
+      @include themed-declaration ('orange') {
+        box-shadow: 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+      }
+
+      @include themed-declaration ('red') {
+        box-shadow: 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+      }
   }
   // filter: drop-shadow(0px 4px 4px f.palette('effects', 'shadow'));
+
+  // @include themed-declaration ('green') {
+  //   filter: drop-shadow(0px 4px 4px f.palette('green-theme', 'effects', 'shadow'));
+  // }
+
+  // @include themed-declaration ('orange') {
+  //   filter: drop-shadow(0px 4px 4px f.palette('orange-theme', 'effects', 'shadow'));
+  // }
+
+  // @include themed-declaration ('red') {
+  //   filter: drop-shadow(0px 4px 4px f.palette('red-theme', 'effects', 'shadow'));
+  // }
 }
 
 @mixin columns($width: map-get(c.$line-lengths, 'column'), $gap: c.$gutter) {

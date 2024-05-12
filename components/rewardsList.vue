@@ -85,6 +85,18 @@ defineProps<{
     grid-row-start: span 99;
 
     box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
+
+    @include my.themed-declaration ('green') {
+      box-shadow: 0 60px 24px -36px my.palette('green-theme', 'effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('green-theme', 'brand', 'tertiary'), $alpha: -0.6);
+    }
+
+    @include my.themed-declaration ('orange') {
+      box-shadow: 0 60px 24px -36px my.palette('orange-theme', 'effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('orange-theme', 'brand', 'tertiary'), $alpha: -0.6);
+    }
+
+    @include my.themed-declaration ('red') {
+      box-shadow: 0 60px 24px -36px my.palette('red-theme', 'effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('red-theme', 'brand', 'tertiary'), $alpha: -0.6);
+    }
   }
 }
 

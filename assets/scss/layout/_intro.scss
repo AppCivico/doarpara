@@ -39,6 +39,18 @@ $_background-width-beyond-column: 70px;
 
   @media screen and (min-width: my.breakpoint('tablet__portrait')) {
     box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
+
+    @include my.themed-declaration ('green') {
+      box-shadow: 0 60px 24px -36px my.palette('green-theme', 'effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('green-theme', 'brand', 'tertiary'), $alpha: -0.6);
+    }
+
+    @include my.themed-declaration ('orange') {
+      box-shadow: 0 60px 24px -36px my.palette('orange-theme', 'effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('orange-theme', 'brand', 'tertiary'), $alpha: -0.6);
+    }
+
+    @include my.themed-declaration ('red') {
+      box-shadow: 0 60px 24px -36px my.palette('red-theme', 'effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('red-theme', 'brand', 'tertiary'), $alpha: -0.6);
+    }
   }
 
   @media screen and (max-width: my.breakpoint('toggle-sidebar-position') - 0.01) {
@@ -125,6 +137,18 @@ $_background-width-beyond-column: 70px;
     transition-duration: 300ms;
     transition-property: filter;
 
+    @include my.themed-declaration ('green') {
+      filter: invert(1) drop-shadow(0 4px 4px my.palette('green-theme', 'effects', 'shadow'));
+    }
+
+    @include my.themed-declaration ('orange') {
+      filter: invert(1) drop-shadow(0 4px 4px my.palette('orange-theme', 'effects', 'shadow'));
+    }
+
+    @include my.themed-declaration ('red') {
+      filter: invert(1) drop-shadow(0 4px 4px my.palette('red-theme', 'effects', 'shadow'));
+    }
+
     @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
       width: 50px;
       height: auto;
@@ -158,6 +182,19 @@ $_background-width-beyond-column: 70px;
     > img {
       filter: invert(1) drop-shadow(my.palette('effects', 'shadow') 0 0 4px) drop-shadow(color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2) 0 0 8px);
       opacity: 1;
+      filter: invert(1) drop-shadow(my.palette('effects', 'shadow') 0 0 2px) drop-shadow(color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2) 0 0 4px);
+
+      @include my.themed-declaration ('green') {
+        filter: invert(1) drop-shadow(my.palette('green-theme', 'effects', 'shadow') 0 0 2px) drop-shadow(color.adjust(my.palette('green-theme', 'brand', 'tertiary'), $alpha: -0.2) 0 0 4px);
+      }
+
+      @include my.themed-declaration ('orange') {
+        filter: invert(1) drop-shadow(my.palette('orange-theme', 'effects', 'shadow') 0 0 2px) drop-shadow(color.adjust(my.palette('orange-theme', 'brand', 'tertiary'), $alpha: -0.2) 0 0 4px);
+      }
+
+      @include my.themed-declaration ('red') {
+        filter: invert(1) drop-shadow(my.palette('red-theme', 'effects', 'shadow') 0 0 2px) drop-shadow(color.adjust(my.palette('red-theme', 'brand', 'tertiary'), $alpha: -0.2) 0 0 4px);
+      }
     }
 
     &::after {
@@ -217,6 +254,18 @@ $_background-width-beyond-column: 70px;
       background-image: my.image('themes/blue/preamble.svg'), linear-gradient(to bottom, transparent, my.palette('brand', 'quaternary'));
       background-position: 100% 0;
       border-bottom-right-radius: 60px;
+
+      @include my.themed-declaration ('green') {
+        background-image: my.image('themes/green/preamble.svg'), linear-gradient(to bottom, transparent, my.palette('green-theme', 'brand', 'quaternary'));
+      }
+
+      @include my.themed-declaration ('orange') {
+        background-image: my.image('themes/orange/preamble.svg'), linear-gradient(to bottom, transparent, my.palette('orange-theme', 'brand', 'quaternary'));
+      }
+
+      @include my.themed-declaration ('red') {
+        background-image: my.image('themes/red/preamble.svg'), linear-gradient(to bottom, transparent, my.palette('red-theme', 'brand', 'quaternary'));
+      }
     }
   }
 

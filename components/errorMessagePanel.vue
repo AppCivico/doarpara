@@ -101,6 +101,18 @@ function flushErrors() {
   color: my.text-contrast(my.palette('signage', 'danger'), my.palette('neutral', 'white'), $level: 'AA');
 
   border-radius: my.$rounded-corner;
+
+  @include my.themed-declaration ('green') {
+    @include my.pulsing-color(my.palette('green-theme', 'effects', 'error-gradient'), 'background-color');
+  }
+
+  @include my.themed-declaration ('orange') {
+    @include my.pulsing-color(my.palette('orange-theme', 'effects', 'error-gradient'), 'background-color');
+  }
+
+  @include my.themed-declaration ('red') {
+    @include my.pulsing-color(my.palette('red-theme', 'effects', 'error-gradient'), 'background-color');
+  }
 }
 
 .error-message--idle {}
