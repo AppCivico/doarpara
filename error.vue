@@ -113,5 +113,10 @@ const meta = computed(() => {
 });
 
 useHead(meta);
-const handleError = () => { clearError({ redirect: '/' }); };
+
+const handleError = () => {
+  clearError();
+  // using window location because home page is out of this SPA
+  window.location.assign('/');
+};
 </script>
