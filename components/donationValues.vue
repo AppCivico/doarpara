@@ -67,7 +67,7 @@
             query: {
               [runtimeConfig.public.queryStringSpecialParameters.amount]: pledgeValue,
             },
-}"
+          }"
           class="donation-values__custom-submit like-a__button"
         >
           {{ $t(`pledges.toChoose`) }}
