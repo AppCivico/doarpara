@@ -42,9 +42,9 @@
 }
 
 .error-page--server {
-  color: my.palette('text', 'light');
+  @include my.themed-color('background-color', ('brand', 'quaternary'));
 
-  background-color: my.palette('brand', 'quaternary');
+  color: my.palette('text', 'light');
 
   .container {
     @media screen and (min-width: my.breakpoint('tablet__portrait')) {

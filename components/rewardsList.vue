@@ -69,16 +69,19 @@ defineProps<{
 }
 
 .rewards__item {
+  @include my.themed-color('border-color', ('border'));
+
   padding: my.$gutter;
   margin-bottom: my.$gutter;
 
   background-color: my.palette('neutral', 'white');
-  border: my.$stroke solid my.palette('border');
+  border-style: solid;
+  border-width: my.$stroke;
   border-radius: 10px;
 
   &:hover,
   &:focus {
-    border-color: my.palette('border', 'focus');
+    @include my.themed-color('border-color', ('border', 'focus'));
   }
 
   &:focus {
@@ -132,6 +135,8 @@ defineProps<{
   margin-bottom: 0;
 
   &::after {
+    @include my.themed-color('color', ('brand', 'secondary'));
+
     position: absolute;
     right: 0;
     bottom: 0;
@@ -141,7 +146,6 @@ defineProps<{
     padding-right: 50%;
 
     font-weight: my.font-weight('bold');
-    color: my.palette('brand', 'secondary');
 
     content: '+ detalhes';
 
@@ -179,12 +183,13 @@ defineProps<{
 .rewards__call-to-action:link {
   all: unset;
 
+  @include my.themed-color('color', ('brand', 'primary'));
+
   display: block;
 
   padding: my.$gutter * 0.75;
 
   font-weight: my.font-weight('bold');
-  color: my.palette('brand', 'primary');
   text-align: center;
 
   cursor: pointer;
@@ -193,10 +198,9 @@ defineProps<{
   border-radius: my.$rounded-corner;
 
   @include my.on-event {
+    @include my.themed-color('background-color', ('brand', 'primary'));
+    @include my.themed-color('border-color', ('brand', 'primary'));
     color: my.palette('text', 'light');
-
-    background-color: my.palette('brand', 'primary');
-    border-color: my.palette('brand', 'primary');
   }
 }
 

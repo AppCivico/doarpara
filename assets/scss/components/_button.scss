@@ -21,6 +21,9 @@
 %button-reset {
   @extend %os-element-reset;
 
+  @include my.themed-color('background-color', ('button', 'base'));/* 5 */
+  @include my.themed-color('border-color', ('border', 'base'));
+
   box-sizing: inherit;
   display: inline-flex;
 
@@ -44,8 +47,6 @@
   appearance: button; /* 1 */
   cursor: pointer; /* 2 */
 
-  background-color: my.palette('button', 'base'); /* 5 */
-  border-color: my.palette('border', 'base');
   border-width: my.$stroke;
 
   [role='group'] > &,
@@ -97,13 +98,14 @@ button,
 
   &:hover,
   &:focus {
+    @include my.themed-color('background-color', ('button', 'focus'));
+    @include my.themed-color('border-color', ('button', 'focus'));
+
     position: relative;
     z-index: my.layer('default');
 
     color: my.palette('text', 'light');
 
-    background-color: my.palette('button', 'focus');
-    border-color: my.palette('button', 'focus');
     box-shadow: 0 20px 24px -10px my.palette('effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2);
 
     @include my.themed-declaration ('green') {
@@ -128,35 +130,32 @@ button,
 [type='reset'] {
   @extend %button-reset;
 
-  color: my.palette('button', 'submit');
-
-  background-color: my.palette('button', 'reset');
+  @include my.themed-color('color', ('button', 'submit'));
+  @include my.themed-color('background-color', ('button', 'reset'));
 }
 
 .like-a__button--submit,
 [type='submit'] {
   @extend %button-reset;
 
+  @include my.themed-color('color', ('text', 'light'));
+  @include my.themed-color('background-color', ('button', 'submit'));
+
   justify-content: center;
 
   width: my.$gutter * 12;
 
-  color: my.palette('text', 'light');
   text-align: center;
-
-  background-color: my.palette('button', 'submit');
 
   &:hover,
   &:focus {
     @include my.focused;
-
-    background-color: my.palette('button', 'focus');
+    @include my.themed-color('background-color', ('button', 'focus'));
   }
 
   &:disabled {
-    color: my.palette('disabled', 'background');
-
-    background-color: my.palette('disabled', 'foreground');
+    @include my.themed-color('color', ('disabled', 'background'));
+    @include my.themed-color('background-color', ('disabled', 'foreground'));
   }
 
   fieldset > &,

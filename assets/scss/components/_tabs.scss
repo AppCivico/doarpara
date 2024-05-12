@@ -50,7 +50,7 @@
   }
 
   @include my.on-event {
-    color: my.palette('brand', 'primary');
+    @include my.themed-color('color', ('brand', 'primary'));
 
     border-bottom: 3px solid currentColor;
   }

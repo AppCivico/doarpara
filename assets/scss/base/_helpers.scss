@@ -9,7 +9,8 @@
 /* CLASSES
 ============================================================================ */
 %loading-bg {
-  background-color: my.palette('loading', 'background');
+  @include my.themed-color('background-color', ('loading', 'background'));
+
   // TODO: set loading icon
   background-image: my.image('SvgSpinners3DotsMove.svg');
   background-repeat: no-repeat;

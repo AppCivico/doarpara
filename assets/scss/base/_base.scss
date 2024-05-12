@@ -7,10 +7,10 @@
 /* User interaction (https://www.w3.org/TR/html5/editing.html)
 ========================================================================== */
 ::selection {
-  color: my.palette('selection', 'foreground');
-  text-shadow: none;
+  @include my.themed-color('color', ('selection', 'foreground'));
+  @include my.themed-color('background-color', ('selection', 'background'));
 
-  background-color: my.palette('selection', 'background');
+  text-shadow: none;
 }
 
 [id] {
@@ -445,17 +445,20 @@ object > img {
 /// @link https://bitsofco.de/styling-broken-images/
 ///
 %broken-image {
+  @include my.themed-color('color', ('loading', 'foreground'));
+
   position: relative;
 
   overflow: hidden;
 
   font-size: my.ms-step(-1);
   font-style: normal;
-  color: my.palette('loading', 'foreground');
   text-align: center;
 
   &::before,
   &::after {
+    @include my.themed-color('background-color', ('loading', 'background'));
+
     position: absolute;
     top: 0;
     right: 0;
@@ -465,8 +468,6 @@ object > img {
     display: flex;
 
     justify-content: center;
-
-    background-color: my.palette('loading', 'background');
   }
 
   &::before {
@@ -498,9 +499,8 @@ object > img {
   }
 
   &:-moz-broken {// sometimes, Firefox ignores pseudo elements styles
-    color: my.palette('loading', 'foreground');
-
-    background-color: my.palette('loading', 'background');
+    @include my.themed-color('color', ('loading', 'foreground'));
+    @include my.themed-color('background-color', ('loading', 'background'));
   }
 }
 
@@ -523,7 +523,7 @@ img {
 }
 
 [usemap] {
-  color: my.palette('anchor');
+  @include my.themed-color('color', ('anchor'));
 }
 
 map {
@@ -548,15 +548,15 @@ a > picture {
 /* links
 ============================================================================ */
 %link {
-  color: my.palette('anchor', 'link');
+  @include my.themed-color('color', ('anchor', 'link'));
+  @include my.themed-color('-webkit-tap-highlight-color', ('tap-highlight'));
+
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-decoration-style: dotted;
   text-underline-offset: 0.125em;
 
   cursor: pointer;
-  // stylelint-disable-next-line property-no-vendor-prefix
-  -webkit-tap-highlight-color: my.palette('tap-highlight');
 }
 
 .like-a__link {
@@ -565,11 +565,12 @@ a > picture {
 
 .like-a__link,
 a {
+  @include my.themed-color('color', ('anchor', 'base'));
+
   padding: 0;
   margin: 0;
 
   font-size: 100%;
-  color: my.palette('anchor', 'base');
   vertical-align: baseline;
 
   outline-width: 0;
@@ -584,7 +585,7 @@ a {
   }
 
   &:visited {
-    color: my.palette('anchor', 'visited');
+    @include my.themed-color('color', ('anchor', 'visited'));
 
     @include my.on-event {
       text-decoration: underline;
@@ -594,20 +595,18 @@ a {
   &:hover,
   &:focus {
     @supports (text-decoration-color: my.palette('anchor', 'hover')) {
-      text-decoration-color: my.palette('anchor', 'hover');
+      @include my.themed-color('text-decoration-color', ('anchor', 'hover'));
     }
   }
 
   &:hover {
     @include my.hovered;
-
-    color: my.palette('anchor', 'hover');
+    @include my.themed-color('color', ('anchor', 'hover'));
   }
 
   &:focus {
     @include my.focused;
-
-    color: my.palette('anchor', 'focus');
+    @include my.themed-color('color', ('anchor', 'focus'));
   }
 
   /**
@@ -623,7 +622,7 @@ a {
   * @see https://github.com/necolas/normalize.css/issues/473
   */
   &:active {
-    color: my.palette('anchor', 'active');
+    @include my.themed-color('color', ('anchor', 'active'));
 
     background-color: transparent;
   }

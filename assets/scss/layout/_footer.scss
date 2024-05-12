@@ -14,13 +14,14 @@
  * Within any `document` or `application`, the author **SHOULD** mark no more than one element with the `contentinfo` role.
  */
 .main-footer {
+  @include my.themed-color('background-color', ('brand', 'secondary'));
+  @include my.themed-asset('background-image', 'footer.svg');
+
   padding-top: my.$gutter * 5;
 
   font-size: my.ms-step(-1);
   color: my.palette('text', 'light');
 
-  background-color: my.palette('brand','secondary');
-  background-image: my.image('themes/blue/footer.svg');
   background-position: right my.$gutter * 0.5 top;
   background-size: 164px 110px;
   border-top-right-radius: 20px;

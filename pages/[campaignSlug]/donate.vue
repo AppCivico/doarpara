@@ -982,11 +982,14 @@ watch(() => route.query, (to, from) => {
 @use 'sass:color';
 
 .donation-summary {
+  @include my.themed-color('border-color', ('border'));
+
   flex-basis: 100%;
 
   overflow: hidden;
 
-  border: my.$stroke solid my.palette('border');
+  border-style: solid;
+  border-width: my.$stroke;
   border-radius: my.$rounded-corner;
 }
 
@@ -1002,7 +1005,10 @@ watch(() => route.query, (to, from) => {
   border-radius: 0;
 
   & + & {
-    border-top: my.$stroke solid my.palette('border');
+    @include my.themed-color('border-top-color', ('border'));
+
+    border-top-style: solid;
+    border-top-width: my.$stroke;
   }
 }
 
@@ -1031,7 +1037,7 @@ watch(() => route.query, (to, from) => {
 
 .donation-summary__change-amount {
   &:visited {
-    color: my.palette('anchor', 'link');
+    @include my.themed-color('color', ('anchor', 'link'));
   }
 }
 

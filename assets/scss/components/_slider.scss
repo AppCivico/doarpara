@@ -115,7 +115,7 @@
 
   // stylelint-disable-next-line mixins-before-declarations
   @include range-track($height: 0.125rem, $thumb-height: 1.5rem, $bg-fallback: null) {
-    background-color: my.palette('button');
+    @include my.themed-color('background-color', ('button'));
 
     &:focus {
       outline: none;
@@ -124,7 +124,8 @@
 
   // stylelint-disable-next-line mixins-before-declarations
   @include range-thumb($height: 1.5rem, $track-height: 0.125rem) {
-    background-color: my.palette('button', 'slider');
+    @include my.themed-color('background-color', ('button', 'slider'));
+
     border: 0;
   }
 

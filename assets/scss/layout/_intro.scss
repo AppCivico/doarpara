@@ -24,6 +24,8 @@ $_background-width-beyond-column: 70px;
 }
 
 .intro__cover {
+  @include my.themed-color('background-color', ('brand', 'primary'));
+
   position: relative;
   z-index: my.layer('default');
 
@@ -34,8 +36,6 @@ $_background-width-beyond-column: 70px;
   margin-right: auto;
   margin-bottom: my.$gutter * 2;
   margin-left: auto;
-
-  background-color: my.palette('brand', 'primary');
 
   @media screen and (min-width: my.breakpoint('tablet__portrait')) {
     box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
@@ -236,12 +236,13 @@ $_background-width-beyond-column: 70px;
     }
 
     &::before {
+      @include my.themed-color('background-color', ('brand', 'primary'));
+
       right: min(0px, (100vw - my.$max-width) / -2);
       z-index: my.layer('below');
 
       width: 100vw;
 
-      background-color: my.palette('brand', 'primary');
       border-bottom-right-radius: 60px;
     }
 
@@ -337,7 +338,7 @@ $_background-width-beyond-column: 70px;
 }
 
 .call-to-action-values__campaign-type {
-  color: my.palette('brand', 'primary');
+  @include my.themed-color('color', ('brand', 'primary'));
 }
 
 .call-to-action-values__donation-values {

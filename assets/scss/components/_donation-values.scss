@@ -110,13 +110,13 @@
 
 .donation-values__custom-submit[class] {
   @include my.image-replacement;
+  @include my.themed-color('background-color', ('button', 'focus'));
 
   flex-basis: 25%;
   flex-grow: 1;
 
   text-indent: calc(101% + my.$gutter);
 
-  background-color: my.palette('button', 'focus');
   background-image: my.image('icons/icon-arrow-triangle-fill-right.svg');
   background-position: 50%;
   border: 0;

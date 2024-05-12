@@ -27,7 +27,7 @@ $_themes: 'blue' 'green' 'orange' 'red';
   }
 }
 
-@mixin themed-color ($property, $palette-path) {
+@mixin themed-color($property, $palette-path) {
   #{$property}: f.palette($palette-path...);
 
   @each $theme in $_themes {
@@ -1080,7 +1080,7 @@ $no-viewport: false !default;
 }
 
 @mixin _focus-and-hover-basis {
-  @include themed-color ('outline-color', ('effects', 'tap-highlight'));
+  @include themed-color('outline-color', ('effects', 'tap-highlight'));
 
   outline-width: 4px;
   outline-style: solid;

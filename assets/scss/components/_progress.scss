@@ -57,26 +57,26 @@
 
 progress,
 [role='progressbar'] {
+  @include my.themed-color('color' ,('button', 'submit'));
+  @include my.themed-color('background-color' ,('disabled', 'background'));
+
   display: block;
 
   width: 100%;
   // Get rid of default border in Firefox.
   height: 0.25rem;
 
-  color: my.palette('button', 'submit');
-
   appearance: none;
 
-  background-color: my.palette('disabled', 'background');
   border: 0;
 
   @include progress-bar-fg {
-    background: my.palette('brand', 'tertiary');
-    border-radius: 999em;
+    @include my.themed-color('background' ,('brand', 'tertiary'));    border-radius: 999em;
   }
 
   @include progress-bar-bg {
-    background: my.palette('neutral', 'light');
+    @include my.themed-color('background' ,('neutral', 'light'));
+
     border-radius: 999em;
   }
 }

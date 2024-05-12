@@ -16,14 +16,14 @@
 .main-header {
   $header-bg-width: 593px;
 
+  @include my.themed-color('background-color', ('brand', 'primary'));
+
   color: my.palette('text', 'light');
 
-  background-color: my.palette('brand', 'primary');
-
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+    @include my.themed-asset('background-image', 'header.svg');
     min-height: 242px;
 
-    background-image: my.image('themes/blue/header.svg');
     // using half the image width to deal with percentage alignment algorithm
     background-position: max(my.$cover-max-width + my.$gutter, 50% + (my.$cover-max-width - my.$max-width / 2 + my.$gutter) + $header-bg-width / 2) 0;
   }
@@ -47,9 +47,10 @@
     flex-basis: 100%;
 
     @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+      @include my.themed-asset('background-image', 'top-right-corner.svg');
+
       max-width: 48.75rem;
 
-      background-image: my.image('themes/blue/top-right-corner.svg');
       background-position: 100% 2px;
     }
   }
