@@ -14,7 +14,7 @@ type DonationResponse = {
   ui: {
     messages: DonationMessage[]
   }
-  errors?: ApiError | Error | null;
+  errors?: FetchError | ApiError | null;
 };
 
 type DonorData = {
@@ -61,11 +61,11 @@ type CreditCardError = {
 };
 
 type StateErrors = {
-  gettingAddress: ApiError | null ;
-  validatingDevice: ApiError | null ;
-  creatingDonation: ApiError | null ;
+  gettingAddress: FetchError | ApiError | null ;
+  validatingDevice: FetchError | ApiError | null ;
+  creatingDonation: FetchError | ApiError | null ;
   validatingCreditCard: CreditCardError | null ;
-  payingDonation: ApiError | null ;
+  payingDonation: FetchError | ApiError | null ;
 };
 
 type ValidatedCard = {
@@ -164,7 +164,7 @@ export const useDonateStore = defineStore('toDonate', {
 
         return response?.device_authorization_token_id;
       } catch (err) {
-        this.errors.validatingDevice = err as ApiError;
+        this.errors.validatingDevice = err as FetchError;
         this.pending.validatingDevice = false;
         throw err;
       }
@@ -214,7 +214,7 @@ export const useDonateStore = defineStore('toDonate', {
         this.pending.creatingDonation = false;
         return { data: response };
       } catch (err) {
-        this.errors.creatingDonation = (err as FetchError).data;
+        this.errors.creatingDonation = err as FetchError;
 
         this.pending.creatingDonation = false;
 
@@ -259,7 +259,7 @@ export const useDonateStore = defineStore('toDonate', {
     },
 
     async payCreditCardDonation(donationId: string | number, payload: ValidatedCard):
-    Promise<{ data?: DonationResponse | null; error?: Error | ApiError | unknown }> {
+    Promise<DonationResponse> {
       this.pending.payingDonation = true;
       this.errors.payingDonation = null;
 
@@ -279,20 +279,18 @@ export const useDonateStore = defineStore('toDonate', {
 
         this.pending.payingDonation = false;
 
-        return {
-          data: response,
-        };
-      } catch (error) {
-        this.errors.payingDonation = error as ApiError;
+        return response;
+      } catch (err) {
+        this.errors.payingDonation = (err as FetchError);
         this.pending.payingDonation = false;
-        throw error;
+        throw err;
       }
     },
   },
   getters: {
     combinedPending: ({ pending }) => Object.values(pending).some((value) => value === true),
 
-    combinedErrors: ({ errors }) => Object.values(errors).filter((value) => !!value),
+    combinedErrors: ({ errors }) => Object.values(errors).filter((value) => !!value).map((x) => JSON.stringify(x)),
 
     pendingMessage: ({ pending }) => Object.keys(pending)
       .find((x) => pending[x as keyof typeof pending] !== false),

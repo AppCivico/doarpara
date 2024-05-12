@@ -8,7 +8,7 @@ type State = {
   paginationMarker: string;
 
   pending: boolean;
-  error: null | unknown;
+  error: FetchError | null;
 };
 
 export const useDonationsStore = defineStore('donation', {

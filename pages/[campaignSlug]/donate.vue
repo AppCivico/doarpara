@@ -840,7 +840,7 @@ async function submitDonation() {
     throw new Error('Property `id` is missing');
   }
 
-  const { data: paymentData, error: paymentError = null } = await donateStore
+  const paymentData = await donateStore
     .payCreditCardDonation(createdDonation.value.id, validCreditCard);
 
   if (paymentData) {
@@ -851,11 +851,6 @@ async function submitDonation() {
     if (paymentData?.ui?.messages) {
       addMessages(paymentData?.ui?.messages);
     }
-  }
-
-  if (paymentError) {
-    console.debug('paymentError', paymentError);
-    throw new Error(JSON.stringify(paymentError));
   }
 }
 
