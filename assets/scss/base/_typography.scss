@@ -415,7 +415,7 @@ q,
 blockquote {
   font-style: normal;
   font-weight: 100;
-  color: my.palette('quotes');
+  color: my.palette('text', 'quotes');
 }
 
 cite {
