@@ -90,6 +90,12 @@ header span {
     position: fixed;
     top: my.$gutter * 2;
     right: my.$gutter * 2;
+
+    &:hover,
+    &:focus,
+    &:active {
+      position: fixed;
+    }
   }
 }
 </style>
