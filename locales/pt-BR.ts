@@ -56,9 +56,9 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     pendingMessages: {
       gettingAddress: 'Buscando endereço...',
       validatingDevice: 'Validando dispositivo...',
-      creatingDonation: 'Criando doação...',
+      creatingDonation: 'Registrando doação...',
       validatingCreditCard: 'Validando cartão de crédito...',
-      payingDonation: 'Pagando doação',
+      payingDonation: 'Concluindo doação!',
     },
     phoneNumber: 'Telefone',
     postalCode: 'CEP',
