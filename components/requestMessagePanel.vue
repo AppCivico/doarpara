@@ -55,6 +55,18 @@ const defaultMessage = computed(() => {
   @include my.shadow;
   @include my.pulsing-color(my.palette('loading', 'pulsing-list'), 'background-color');
 
+  @include my.themed-declaration('green') {
+    @include my.pulsing-color(my.palette('green-theme', 'loading', 'pulsing-list'), 'background-color');
+  }
+
+  @include my.themed-declaration('orange') {
+    @include my.pulsing-color(my.palette('orange-theme', 'loading', 'pulsing-list'), 'background-color');
+  }
+
+  @include my.themed-declaration('red') {
+    @include my.pulsing-color(my.palette('red-theme', 'loading', 'pulsing-list'), 'background-color');
+  }
+
   position: fixed;
   top: 0;
   right: 0;

@@ -1125,12 +1125,23 @@ $no-viewport: false !default;
   }
 }
 
-@mixin pulsing-outline($color-list) {
-  @include pulsing-color($color-list, 'outline-color');
+@mixin pulsing-outline($color-path) {
+  @include themed-color('outline-color', ('brand', 'secondary'));
+  @include pulsing-color(f.palette($color-path...), 'outline-color');
 
   outline-width: 2px;
   outline-style: solid;
-  outline-color: f.palette('brand', 'secondary');
+
+  @each $theme in $_themes {
+    $themed-path: list.join(('#{$theme}-theme'), $color-path);
+    $themed-color-list: f.palette($themed-path...);
+
+    @if $themed-color-list {
+      @include themed-declaration($theme) {
+        @include pulsing-color($themed-color-list, 'outline-color');
+      }
+    }
+  }
 }
 
 @mixin hovered {
@@ -1139,8 +1150,7 @@ $no-viewport: false !default;
 
 @mixin focused {
   @include _focus-and-hover-basis;
-
-  border-color: f.palette('border','focus');
+  @include themed-color('border-color', ('border','focus'));
 }
 
 @mixin shadow ($inset: false) {

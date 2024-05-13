@@ -76,7 +76,7 @@
   }
 
   &[aria-busy='true'] {
-    @include my.pulsing-outline(my.palette('loading', 'pulsing-list'));
+    @include my.pulsing-outline(('loading', 'pulsing-list'));
   }
 
   table & {
