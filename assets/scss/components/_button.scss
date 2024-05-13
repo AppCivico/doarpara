@@ -77,6 +77,11 @@
   &[aria-busy='true'] {
     @include my.pulsing-outline(my.palette('loading', 'pulsing-list'));
   }
+
+  table & {
+    min-height: 0;
+    padding: calc(my.$gutter * 0.375 - my.$stroke) 0.375rem;
+  }
 }
 
 .like-a__button,
@@ -101,7 +106,10 @@ button,
     border-color: my.palette('button', 'focus');
     box-shadow: 0 20px 24px -10px my.palette('effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2);
   }
+}
 
+.like-a__button input {
+  display: none;
 }
 
 .like-a__button--reset,
