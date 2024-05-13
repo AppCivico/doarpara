@@ -88,7 +88,7 @@ header span {
 
   @media screen and (min-width: my.$max-width--dialog + my.$gutter * 2) {
     position: fixed;
-    top: my.$gutter * 2;
+    top: my.$gutter;
     right: my.$gutter * 2;
 
     &:hover,
