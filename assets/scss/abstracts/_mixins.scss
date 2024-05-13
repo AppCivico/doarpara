@@ -19,24 +19,32 @@ $_themes: 'blue' 'green' 'orange' 'red';
 
 @mixin themed-declaration($theme: null) {
   @if $theme {
-    .theme--#{$theme}:root & {
+    :where(.theme--#{$theme}:root) & {
       @content;
     }
   } @else {
     @content;
+
+    :where(.theme--default:root) & {
+      @content;
+    }
   }
 }
 
 @mixin themed-color($property, $palette-path) {
-  #{$property}: f.palette($palette-path...);
+  $default-color: if($palette-path == 'inherit', inherit, f.palette($palette-path...));
+
+  @include themed-declaration {
+    #{$property}: $default-color;
+  }
 
   @each $theme in $_themes {
-    $color: f.palette(list.join(('#{$theme}-theme'), $palette-path)...);
+    $themed-path: list.join(('#{$theme}-theme'), $palette-path);
 
-    @if $color {
-      @include themed-declaration($theme) {
-        #{$property}: $color;
-      }
+    $themed-color: if($palette-path == 'inherit', inherit, f.palette($themed-path...));
+
+    @include themed-declaration($theme) {
+      #{$property}: if($themed-color, $themed-color, $default-color);
     }
   }
 }
@@ -45,7 +53,7 @@ $_themes: 'blue' 'green' 'orange' 'red';
   #{$property}: f.image(#{'themes/blue/#{$asset-name}'});
 
   @each $theme in $_themes {
-    .theme--#{$theme}:root & {
+    :where(.theme--#{$theme}:root) & {
       #{$property}: f.image(#{'themes/#{$theme}/#{$asset-name}'});
     }
   }
