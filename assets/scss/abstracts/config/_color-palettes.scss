@@ -243,17 +243,17 @@ $palette: map.set($palette, 'loading', $loading);
 
 $palette: map.deep-merge($palette, ('green-theme' : (
   'loading' : (
-    'pulsing-list': ($_light-green, $_green, $_light-green),
+    'pulsing-list': ($_dark-green, $_green, $_dark-green),
   )
 )));
 $palette: map.deep-merge($palette, ('orange-theme' : (
   'loading' : (
-    'pulsing-list': ($_light-orange, $_orange, $_light-orange),
+    'pulsing-list': ($_dark-orange, $_orange, $_dark-orange),
   )
 )));
 $palette: map.deep-merge($palette, ('red-theme' : (
   'loading' : (
-    'pulsing-list': ($_light-red, $_red, $_light-red),
+    'pulsing-list': ($_dark-red, $_red, $_dark-red),
   )
 )));
 
