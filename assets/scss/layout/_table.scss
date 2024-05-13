@@ -251,3 +251,16 @@ tfoot td {
     text-align: left;
   }
 }
+
+.has-unmasked-row {
+  color: my.palette('neutral', 'gray');
+
+  tbody th,
+  tbody td {
+    color: inherit;
+  }
+
+  .unmasked-row {
+    color: my.palette('neutral', 'black');
+  }
+}

@@ -14,6 +14,7 @@
 
       <table
         class="donations-page__receipts-table"
+        :class="{ 'has-unmasked-row': donationToUnmask }"
       >
         <colgroup span="5" />
         <col class="col--action">
@@ -27,18 +28,30 @@
               {{ $t('receipts.amount') }}
             </th>
             <th />
+            <th />
           </tr>
         </thead>
         <tbody
           v-if="donationsList.length"
           :aria-live="pending ? 'polite' : 'off'"
         >
-          <tr v-for="donation in donationsList" :key="donation.id">
+          <tr
+            v-for="donation in donationsList"
+            :key="donation.id"
+            :class="{
+              irregular: donation.is_irregular,
+              'unmasked-row': donationToUnmask === donation.id,
+            }"
+          >
             <td :aria-label="$t('receipts.donorName')">
-              {{ donation.donor_name }}
+              {{ donationToUnmask === donation.id
+                ? donation.donor_name
+                : maskName(donation.donor_name) }}
             </td>
             <td :aria-label="$t('naturalPersonIdentification')">
-              {{ donation.donor_natural_person_id }}
+              {{ donationToUnmask === donation.id
+                ? formatCPF(donation.donor_natural_person_id)
+                : maskCPF(donation.donor_natural_person_id) }}
             </td>
             <td :aria-label="$t('receipts.creationDate')">
               {{ $d(new Date(donation.captured_at), 'medium') }}
@@ -48,6 +61,16 @@
             </td>
             <td :aria-label="$t('receipts.amount')" class="cell--number">
               {{ $n(donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) }}
+            </td>
+            <td class="cell--action">
+              <label class="like-a__button">
+                <input
+                  v-model="donationToUnmask"
+                  type="checkbox"
+                  :true-value="donation.id"
+                />
+                {{ $t('toExposeData').toLowerCase() }}
+              </label>
             </td>
             <td class="cell--action">
               <a
@@ -111,6 +134,8 @@ definePageMeta({
   // Currently, `localePath()` and `NuxtLinkLocale` do not support complex roue objects
   path: '/:campaignSlug/doacoes',
 });
+
+const donationToUnmask = ref('');
 
 function fetchDonations(more = false) {
   if (pending.value) return;
