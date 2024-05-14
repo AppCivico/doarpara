@@ -273,18 +273,18 @@
                 required
                 type="radio"
                 name="paymentMethod"
-                :disabled="minimumDonationPerMethod[method] / 100 > grossValue"
+                :disabled="minimumDonationPerMethod[method] > grossValue"
                 :value="method"
               />
               <label :for="`method__${method}`">
                 {{ $t(`paymentMethods.${method}`) }}
               </label>
               <small
-                v-if="minimumDonationPerMethod[method] / 100 > grossValue"
+                v-if="minimumDonationPerMethod[method] > grossValue"
                 class="signage__text--warning"
               >
                 {{ $t('minimumValue').toLowerCase() }}:
-                {{ $n(minimumDonationPerMethod[method] / 100, 'currency', { maximumFractionDigits: 2 }) }}
+                {{ $n(minimumDonationPerMethod[method], 'currency', { maximumFractionDigits: 2 }) }}
               </small>
             </li>
           </ul>
@@ -473,6 +473,8 @@
         </fieldset>
 
         <pre v-debug hidden>currentTaxes: {{ currentTaxes }}</pre>
+        <pre v-debug hidden>grossValue: {{ grossValue }}</pre>
+        <pre v-debug hidden>minimumDonationPerMethod: {{ minimumDonationPerMethod }}</pre>
         <pre v-debug hidden>amount: {{ amount }}</pre>
         <pre v-debug hidden>amountDonatingTaxes: {{ amountDonatingTaxes }}</pre>
 
@@ -600,10 +602,10 @@ import states from '@/data/states.json';
 import taxes from '@/data/taxes.ts';
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
+import { useI18n } from 'vue-i18n';
 import type {
   CreatedDonation, DonationMessage, MinDonationValue, PaymentMethod,
 } from '~/doar-para.d.ts';
-import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
@@ -749,7 +751,7 @@ const instantPaymentPlatformKey = computed(() => {
 const minimumDonationPerMethod = computed(() => {
   if (Array.isArray(campaign.value?.min_donation_values)) {
     return campaign.value.min_donation_values.reduce((acc, cur: MinDonationValue) => {
-      acc[cur.method] = cur.value;
+      acc[cur.method] = cur.value / 100;
       return acc;
     }, {} as Record<PaymentMethod, number>);
   }
