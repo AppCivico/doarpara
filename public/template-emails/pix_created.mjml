@@ -42,9 +42,9 @@
             <p>Olá, [% donor_name %],</p>
 
             [% IF candidate.campaign_donation_type == 'pre-campaign' %]
-            <p>você acabou de gerar um PIX no DoarPara para realizar uma doação a pré-candidatura do(a) <b>[% candidate.name %]</b>. </p>
+            <p>você acabou de gerar um PIX no DoarPara para realizar uma doação [% IF candidate.gender == 'female' %]a pré-candidata [% ELSE %]ao pré-candidato[%IF !candidate.gender%](a)[%END%][%END%] à [% office_name %] <b>[% candidate.name %]</b>. </p>
             [%ELSE%]
-            <p>você acabou de gerar um PIX no DoarPara para realizar uma doação ao candidato(a) <b>[% candidate.name %]</b>. </p>
+            <p>você acabou de gerar um PIX no DoarPara para realizar uma doação [% IF candidate.gender == 'female' %]a candidata[% ELSE %]ao candidato[%IF !candidate.gender%](a)[%END%][%END%] à [% office_name %] <b>[% candidate.name %]</b>. </p>
             [%END%]
 
             <p><strong>Identificador da doação:</strong> [% id %]</p>

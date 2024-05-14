@@ -25,9 +25,9 @@
                                           <td align="justify" style="color:#444444; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
 <p>Olá, [% donor_name %],</p>
 [% IF candidate.campaign_donation_type == 'pre-campaign' %]
-<p>você acabou de gerar um boleto no DoarPara para realizar uma doação a pré-candidatura da(o) [%  candidate.name %]. </p>
+<p>você acabou de gerar um boleto no DoarPara para realizar uma doação [% IF candidate.gender == 'female' %]a pré-candidata [% ELSE %]ao pré-candidato[%IF !candidate.gender%](a)[%END%][%END%] à [% office_name %] <b>[% candidate.name %]</b>. </p>
 [%ELSE%]
-<p>você acabou de gerar um boleto no DoarPara para realizar uma doação ao candidato [%  candidate.name %]. </p>
+<p>você acabou de gerar um boleto no DoarPara para realizar uma doação [% IF candidate.gender == 'female' %]a candidata[% ELSE %]ao candidato[%IF !candidate.gender%](a)[%END%][%END%] à [% office_name %] <b>[% candidate.name %]</b>. </p>
 [%END%]
 
 <p>Lembramos que o boleto tem validade de 3 dias. <br/>
