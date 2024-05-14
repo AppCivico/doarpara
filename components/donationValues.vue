@@ -122,10 +122,24 @@ const maximumDonation = computed(() => (typeof props.campaign.max_donation_value
   : sortedPledgeList.value[sortedPledgeList.value.length - 1] as number
   || undefined));
 
+const minimumSuggestedDonation = computed((): number => {
+  const { pledge_list: pledgeList } = props.campaign;
+
+  return !Array.isArray(pledgeList) || !pledgeList.length
+    ? minimumDonation.value
+    : pledgeList
+      // using `Array.filter()` instead of a `Array.reduce()`
+      // because TypeScript isn't smart enough
+      .filter((pledge): pledge is number => typeof pledge === 'number')
+      .reduce((acc, cur) => Math.min(acc, cur), +Infinity as number);
+});
+
 const isPledgeValueValid = computed(() => !(pledgeValue.value < (minimumDonation?.value || 0) / 100
   || pledgeValue.value > (maximumDonation?.value || Infinity) / 100));
 
 if (minimumDonation.value) {
-  pledgeValue.value = minimumDonation.value / 100;
+  pledgeValue.value = minimumSuggestedDonation.value < +Infinity
+    ? minimumSuggestedDonation.value / 100
+    : minimumDonation.value / 100;
 }
 </script>
