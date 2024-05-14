@@ -199,7 +199,7 @@
                   </li>
                 </template>
                 <li class="footer-nav__item">
-                  <a class="footer-nav__link" href="/termos-de-uso">
+                  <a class="footer-nav__link" href="https://blog.doarpara.com.br/contrato/">
                     {{ $t('useTerms') }}
                   </a>
                 </li>
