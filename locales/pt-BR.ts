@@ -82,6 +82,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   },
   errors: {
     adBlocker: 'Há um bloqueador de anúncios impedindo o processador de pagamentos.',
+    invalidValue: 'Valor inválido para o meio de pagamento.',
     is_invalid: 'Valor inválido',
 
     404: {
@@ -119,6 +120,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   },
 
   minimumRewardOrMore: 'ou mais',
+  minimumValue: 'Valor mínimo',
   nSupporters: {
     plural: 'Nenhum apoio | 1 apoio | {n} apoios',
   },

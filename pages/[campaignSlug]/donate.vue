@@ -273,11 +273,19 @@
                 required
                 type="radio"
                 name="paymentMethod"
+                :disabled="minimumDonationPerMethod[method] / 100 > grossValue"
                 :value="method"
               />
               <label :for="`method__${method}`">
                 {{ $t(`paymentMethods.${method}`) }}
               </label>
+              <small
+                v-if="minimumDonationPerMethod[method] / 100 > grossValue"
+                class="signage__text--warning"
+              >
+                {{ $t('minimumValue').toLowerCase() }}:
+                {{ $n(minimumDonationPerMethod[method] / 100, 'currency', { maximumFractionDigits: 2 }) }}
+              </small>
             </li>
           </ul>
 
@@ -507,7 +515,7 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 
           <button
             type="submit"
-            :aria-disabled="!grossValue || combinedPending || undefined"
+            :aria-disabled="invalidValue || combinedPending || undefined"
             class="donation-form__submit"
             :aria-busy="combinedPending"
           >
@@ -592,7 +600,12 @@ import states from '@/data/states.json';
 import taxes from '@/data/taxes.ts';
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
-import type { CreatedDonation, DonationMessage } from '~/doar-para.d.ts';
+import type {
+  CreatedDonation, DonationMessage, MinDonationValue, PaymentMethod,
+} from '~/doar-para.d.ts';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const creditCardMaskOption = {
   preProcess: (val: string) => val.toUpperCase(),
@@ -733,6 +746,20 @@ const instantPaymentPlatformKey = computed(() => {
   return key;
 });
 
+const minimumDonationPerMethod = computed(() => {
+  if (Array.isArray(campaign.value?.min_donation_values)) {
+    return campaign.value.min_donation_values.reduce((acc, cur: MinDonationValue) => {
+      acc[cur.method] = cur.value;
+      return acc;
+    }, {} as Record<PaymentMethod, number>);
+  }
+  return {} as Record<PaymentMethod, number>;
+});
+
+// eslint-disable-next-line vue/max-len
+const invalidValue = computed(() => grossValue.value < minimumDonationPerMethod.value[paymentMethod.value as PaymentMethod]
+  || false);
+
 watch(paymentMethod, () => {
   if (maxDonation.value && amountDonatingTaxes.value > maxDonation.value / 100) {
     toDonateTaxes.value = false;
@@ -797,11 +824,8 @@ function fillAddress(event: Event) {
 }
 
 async function submitDonation() {
-  if (!grossValue.value) {
-    throw createError({
-      statusCode: 403,
-      statusMessage: 'Required value is missing',
-    });
+  if (invalidValue.value) {
+    throw new Error(t('errors.invalidValue'));
   }
 
   if (combinedPending.value) {

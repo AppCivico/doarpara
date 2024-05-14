@@ -73,7 +73,7 @@ $palette: map.set($palette, 'neutral', $neutral);
 $text: (
   'dark': map.get($neutral, 'black'),
   'title': map.get($neutral, 'black'),
-  'faded': map.get($neutral, 'dark'),
+  'faded': map.get($neutral, 'base'),
   'light': map.get($neutral, 'x-light'),
   'quotes': map.get($neutral, 'dark'),
 );
