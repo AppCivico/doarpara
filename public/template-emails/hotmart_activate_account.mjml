@@ -1,42 +1,47 @@
 <mjml>
-  <mj-body background-color="#ccd3e0">
-    <mj-section background-color="#fff" padding-bottom="20px" padding-top="20px">
+  <mj-body background-color="#FFFFFF">
+    <mj-section background-color="#FFFFFF" padding-bottom="20px" padding-top="20px">
       <mj-column width="100%">
         <mj-image src="https://static.doarpara.com.br/template-emails/vl-logo.png" alt="Logo DoarPara" align="center" border="none" width="315px" padding-left="0px" padding-right="0px" padding-bottom="10px" padding-top="10px"></mj-image>
 
       </mj-column>
     </mj-section>
-    <mj-section background-color="#336666" padding-bottom="0px" padding-top="0">
+    <mj-section background-color="#efeff7" padding-bottom="0px" padding-top="0">
       <mj-column width="100%">
-        <mj-text align="center" font-size="14px" color="#E4E4E4" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">Olá,
-          <p style="font-size:18px; color:white"><span>Você está próximo de ativar sua conta para as eleições de 2024 com o DoarPara</span></p>
+        <mj-text align="center" font-size="18px" color="#35373a" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="28px">Olá,</mj-text>
+        <mj-text align="center" font-size="16px" color="#35373a" line-height="1.5" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="18px" padding-top="18px">
+          Você está próximo de ativar sua conta para as eleições de 2024 com o DoarPara.
+
+            <br/>
+            <br/>
+            <a href="https://www.youtube.com/watch?v=uznBcheFeqM&ab_channel=DoarPara">Assistir vídeo sobre primeiros passos</a>
         </mj-text>
       </mj-column>
     </mj-section>
-    <mj-section background-color="#339999" padding-bottom="5px" padding-top="0">
+    <mj-section background-color="#FFFFFF" padding-bottom="5px" padding-top="0">
       <mj-column width="100%">
-        <mj-text align="center" color="#FFF" font-size="16px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="28px" padding-top="28px"><span style="font-size:16px; font-weight: bold;">Utilize o link abaixo para iniciar a criação da sua conta.</span>
+        <mj-text align="center" color="#35373a" font-size="16px"  line-height="1.5" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="28px" padding-top="28px"><span style="font-size:16px; font-weight: bold;">Utilize o link abaixo para iniciar a criação da sua conta.</span>
         </mj-text>
       </mj-column>
     </mj-section>
 
 
-    <mj-section background-color="#336666" padding-bottom="0px" padding-top="0px">
+    <mj-section background-color="#efeff7" padding-bottom="0px" padding-top="0px">
       <mj-column width="100%">
 
-        <mj-button background-color="#449d44" color="#FFF" font-size="14px" align="center" font-weight="bold" border="none" padding="15px 30px" border-radius="10px" href="[% link %]" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="10px">Criar conta (Link)</mj-button>
+        <mj-button background-color="#2c2cc4" color="#FFF" font-size="16px" align="center" font-weight="bold" border="none" padding="15px 30px" border-radius="10px" href="[% link %]" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="10px">Criar conta (Link)</mj-button>
 
       </mj-column>
     </mj-section>
 
-    <mj-section background-color="#336666" padding-bottom="5px" padding-top="0px">
+    <mj-section background-color="#efeff7" padding-bottom="5px" padding-top="0px">
       <mj-column width="100%">
 
-
-        <mj-text align="justify" color="#FFF" font-size="14px" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="20px" padding-top="20px">
+        <mj-text align="justify" color="#35373a" font-size="14px" line-height="1.5" font-family="Ubuntu, Helvetica, Arial, sans-serif" padding-left="25px" padding-right="25px" padding-bottom="20px" padding-top="20px">
           <p><strong>ATENÇÃO:</strong>
 
             Apenas uma conta pode ser criada através do link acima, e deve ser preenchida com os dados do(a) pré-candidato(a). O cadastro deve ser concluído em 6 horas, caso contrário, será necessário abrir novamente o link acima e reiniciar o preenchimento.
+
           </p>
 
 
