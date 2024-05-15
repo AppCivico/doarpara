@@ -925,6 +925,18 @@ if (import.meta.client) {
     });
   });
 }
+
+// to clean up donation in case the donor navigate back after to donate
+// and switched amounts
+watch(() => route.query, (to, from) => {
+  if (createdDonation.value) {
+    const amountParam = runtimeConfig.public.queryStringSpecialParameters.amount;
+
+    if (to[amountParam] !== from[amountParam]) {
+      createdDonation.value = null;
+    }
+  }
+});
 </script>
 <style lang="scss">
 .donation-form {}
