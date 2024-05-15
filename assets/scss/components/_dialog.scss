@@ -19,16 +19,18 @@
 .dialog__close-button {
   @include my.image-replacement;
 
+  $width-and-height: my.$gutter * 1.5;
+
   position: absolute;
-  top: my.$gutter;
-  right: my.$gutter;
+  top: my.$gutter - $width-and-height * 0.5;
+  right: my.$gutter - $width-and-height * 0.5;
   z-index: my.layer('modal');
 
   display: block;
 
-  width: my.$gutter * 1.5;
+  width: $width-and-height;
   min-width: 0;
-  height: my.$gutter * 1.5;
+  height: $width-and-height;
   min-height: 0;
   padding: 0;
 
