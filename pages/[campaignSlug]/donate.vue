@@ -76,7 +76,7 @@
             </label>
             <input
               id="birthdate"
-              v-model.trim="donor.birthdate"
+              v-model.trim="maskedBirthData"
               v-maska
               data-maska="##/##/####"
               type="text"
@@ -714,10 +714,14 @@ const amount = computed(() => {
   return 0;
 });
 
-const convertDate = (dateStr: string): string => {
-  const [day, month, year] = dateStr.split('/');
-  return `${year}-${month}-${day}`;
-};
+const maskedBirthData = computed({
+  get() {
+    return [...((donor.value.birthdate || '').split('-'))].reverse().join('/');
+  },
+  set(newValue) {
+    donor.value.birthdate = [...newValue.split('/')].reverse().join('-');
+  },
+});
 
 const amountDonatingTaxes = computed<number>(() => ((typeof currentTaxes.value?.percent === 'number'
   && typeof currentTaxes.value?.tax === 'number')
@@ -845,8 +849,6 @@ async function submitDonation() {
     return;
   }
 
-  const isoBirthdate = convertDate(donor.value.birthdate);
-  donor.value.birthdate = isoBirthdate;
 
   const { data: donationData } = await donateStore
     .createDonationOnBackEnd(grossValue.value * 100, mappedPaymentMethod.value);
