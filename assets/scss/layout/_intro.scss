@@ -107,6 +107,8 @@ $_background-width-beyond-column: 70px;
 
   cursor: pointer;
 
+  border-radius: 0;
+
   > img {
     @include my.reset;
 
@@ -116,6 +118,7 @@ $_background-width-beyond-column: 70px;
     pointer-events: none;
 
     filter: invert(1) drop-shadow(0 4px 4px my.palette('effects', 'shadow'));
+    opacity: 0.65;
 
     transition-duration: 300ms;
     transition-property: filter;
@@ -126,6 +129,21 @@ $_background-width-beyond-column: 70px;
     }
   }
 
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    content: '';
+
+    background-color: my.palette('brand', 'primary');
+    opacity: 0;
+
+    transition-duration: 300ms;
+    transition-property: opacity;
+  }
 
   &:hover,
   &:focus {
@@ -136,11 +154,12 @@ $_background-width-beyond-column: 70px;
     box-shadow: none;
 
     > img {
-      filter: invert(1) drop-shadow(my.palette('effects', 'shadow') 0 0 2px) drop-shadow(color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2) 0 0 4px);
+      filter: invert(1) drop-shadow(my.palette('effects', 'shadow') 0 0 4px) drop-shadow(color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2) 0 0 8px);
+      opacity: 1;
     }
 
-    &::before {
-      opacity: 0;
+    &::after {
+      opacity: 0.15;
     }
   }
 }
