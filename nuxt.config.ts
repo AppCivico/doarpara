@@ -78,6 +78,8 @@ export default defineNuxtConfig({
         helperWebsiteUrl: process.env.POSTAL_SERVICE_HELPER_WEBSITE_URL
           || 'https://buscacepinter.correios.com.br/',
       },
+      urlOfPrivacyPolicy: process.env.URL_OF_PRIVACY_POLICY || 'https://blog.doarpara.com.br/contrato/',
+      urlOfUseTerms: process.env.URL_OF_USE_TERMS || 'https://blog.doarpara.com.br/contrato/',
     },
   },
   vite: {

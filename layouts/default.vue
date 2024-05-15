@@ -199,12 +199,12 @@
                   </li>
                 </template>
                 <li class="footer-nav__item">
-                  <a class="footer-nav__link" href="https://blog.doarpara.com.br/contrato/">
+                  <a class="footer-nav__link" :href="runtimeConfig.public.urlOfUseTerms">
                     {{ $t('useTerms') }}
                   </a>
                 </li>
                 <li class="footer-nav__item">
-                  <a class="footer-nav__link" href="/politica-de-privacidade">
+                  <a class="footer-nav__link" :href="runtimeConfig.public.urlOfPrivacyPolicy">
                     {{ $t('privacyPolicy') }}
                   </a>
                 </li>

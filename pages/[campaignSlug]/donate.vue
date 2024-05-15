@@ -478,7 +478,13 @@
         <pre v-debug hidden>amount: {{ amount }}</pre>
         <pre v-debug hidden>amountDonatingTaxes: {{ amountDonatingTaxes }}</pre>
 
-        <MDC :value="$t('donationForm.declaration')" tag="fieldset" />
+        <MDC
+          :value="$t(
+            'donationForm.declaration',
+            { useTerms: runtimeConfig.public.urlOfUseTerms },
+          )"
+          tag="fieldset"
+        />
 
         <fieldset
           v-if="messages.length"
