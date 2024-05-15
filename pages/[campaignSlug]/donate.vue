@@ -77,7 +77,9 @@
             <input
               id="birthdate"
               v-model.trim="donor.birthdate"
-              type="date"
+              v-maska
+              data-maska="##/##/####"
+              type="text"
               name="birthdate"
               autocomplete="bday"
               required
@@ -712,6 +714,11 @@ const amount = computed(() => {
   return 0;
 });
 
+const convertDate = (dateStr: string): string => {
+  const [day, month, year] = dateStr.split('/');
+  return `${year}-${month}-${day}`;
+};
+
 const amountDonatingTaxes = computed<number>(() => ((typeof currentTaxes.value?.percent === 'number'
   && typeof currentTaxes.value?.tax === 'number')
   ? Number.parseFloat((
@@ -837,6 +844,9 @@ async function submitDonation() {
   if (combinedPending.value) {
     return;
   }
+
+  const isoBirthdate = convertDate(donor.value.birthdate);
+  donor.value.birthdate = isoBirthdate;
 
   const { data: donationData } = await donateStore
     .createDonationOnBackEnd(grossValue.value * 100, mappedPaymentMethod.value);
