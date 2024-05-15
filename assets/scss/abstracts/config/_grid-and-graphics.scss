@@ -65,12 +65,12 @@ $_i: $mobile-columns;
 ///
 $breakpoints: _im-to-em(
   (
-    'phone__portrait': 320px,
-    'phone__landscape': 480px,
-    'tablet__portrait': 768px,
-    'tablet__landscape': 1024px,
-    'desktop': 1280px,
-    'wide': 1600px,
+    'phone__portrait': 320px, // 20m
+    'phone__landscape': 480px, // 30m
+    'tablet__portrait': 768px, // 48m
+    'tablet__landscape': 1024px, // 64m
+    'desktop': 1280px, // 80m
+    'wide': 1600px, // 100m
   )
 ) !default;
 
