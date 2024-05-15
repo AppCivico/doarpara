@@ -90,13 +90,22 @@
   .social-networks {
     display: none;
 
-    padding-top: my.$gutter * 3;
+    flex-basis: 0;
+    flex-grow: 1;
+
+    padding-top: my.$gutter;
+    padding-bottom: my.$gutter;
     margin-right: 0;
     margin-left: auto;
 
-    @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
-      display: block;
+    @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+      display: flex;
+    }
 
+    @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
+      max-width: my.$gutter * 15;
+      padding-top: my.$gutter * 3;
+      margin-bottom: auto;
       margin-left: my.$gutter * 2;
     }
   }
@@ -106,6 +115,7 @@
       display: block;
 
       margin: auto;
+
       object-fit: contain;
     }
   }
