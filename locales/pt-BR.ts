@@ -73,9 +73,9 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     runningForLocation: 'Concorre em',
     runningForOffice: ({ values: { gender } }: GenderData) => showGenderedVersion(
       {
-        female: 'Candidata a',
-        male: 'Candidato a',
-        other: 'Concorre para',
+        female: 'Pré-candidata a',
+        male: 'Pré-candidato a',
+        other: 'Concorrerá para',
       },
       gender,
     ),
