@@ -490,8 +490,6 @@
           v-if="messages.length"
           name="messages"
         >
-          <legend>Messages</legend>
-          <p>A serem revisadas com o backend.</p>
           <template v-for="message, i in messages">
             <p v-if="message.type === 'link'" :key="`message__${i}--link`">
               <NuxtLink
