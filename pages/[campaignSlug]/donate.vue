@@ -715,11 +715,16 @@ const amount = computed(() => {
   return 0;
 });
 
+// TO-DO: move masks to an ENV and write a better date converter.
+// We could use `new Date().toLocaleDateString()`, like did on
+// `localeParseFloat.ts`
 const maskedBirthData = computed({
   get() {
+    // Using spread operator because `Array.reverse()` as side effects
     return [...((donor.value.birthdate || '').split('-'))].reverse().join('/');
   },
   set(newValue) {
+    // Using spread operator because `Array.reverse()` as side effects
     donor.value.birthdate = [...newValue.split('/')].reverse().join('-');
   },
 });
@@ -849,7 +854,6 @@ async function submitDonation() {
   if (combinedPending.value) {
     return;
   }
-
 
   const { data: donationData } = await donateStore
     .createDonationOnBackEnd(grossValue.value * 100, mappedPaymentMethod.value);
