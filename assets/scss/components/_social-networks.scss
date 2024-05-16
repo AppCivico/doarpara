@@ -49,8 +49,6 @@
   }
 
   @supports (gap: my.$gutter) {
-    display: flex;
-
     padding: 0;
 
     :first-child > &,
