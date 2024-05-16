@@ -79,6 +79,7 @@
               v-model.trim="maskedBirthData"
               v-maska
               data-maska="##/##/####"
+              placeholder="dd/mm/aaaa"
               type="text"
               name="birthdate"
               autocomplete="bday"
