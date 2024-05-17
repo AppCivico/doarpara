@@ -9,6 +9,7 @@
       :key="i"
       role="region"
       class="tab-list text-body__tab-list goals-page__goal-item"
+      :class="currentGoal > goal.amount ? 'goals-page__goal-item--achieved' : 'goals-page__goal-item--current'"
     >
       <h2 class="goals-page__goal-amount">
         {{ $n(goal.amount / 100, 'currency', { maximumFractionDigits: 0 }) }}
@@ -93,6 +94,10 @@ const goals = computed(() => (Array.isArray(campaign.value?.goal_list)
   }
 }
 
+.goals-page__goal-item--achieved {
+  color: my.palette('neutral', 'dark');
+}
+
 .goals-page__goal-title-and-description,
 .goals-page__goal-amount {
   @media screen and (min-width: my.breakpoint('toggle-table-layout')) {
@@ -108,6 +113,14 @@ const goals = computed(() => (Array.isArray(campaign.value?.goal_list)
     padding-right: my.$gutter;
 
     text-align: right;
+  }
+
+  .goals-page__goal-item--current & {
+    color: my.palette('brand', 'primary');
+  }
+
+  .goals-page__goal-item--achieved & {
+    color: inherit
   }
 }
 
