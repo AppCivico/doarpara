@@ -141,6 +141,11 @@ td {
 
     &:last-child {
       padding: 0;
+
+      &:first-child {
+        padding-right: my.$gutter;
+        padding-left: my.$gutter;
+      }
     }
   }
 }
