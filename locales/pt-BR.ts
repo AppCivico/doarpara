@@ -27,6 +27,7 @@ export default {
     name: 'Nome no cartão',
     validationCode: 'CVV',
   },
+  currentGoal: 'Meta corrente',
   donateWithoutReward: 'Doe sem recompensa',
   donationForm: {
     birthDate: 'Data de nascimento',
@@ -104,6 +105,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   },
   flexibleFunding: 'Campanha flexível',
   footerMenuLabel: 'Menu da campanha, termos de uso e política de privacidade',
+  goalAchieved: 'Meta alcançada',
   legalEntityIdentification: 'CNPJ',
   loadVideo: 'Carregar vídeo',
 

@@ -15,11 +15,27 @@
       </h2>
 
       <div class="goals-page__goal-title-and-description">
-        <h3 class="goals-page__goal-title">
+        <h3 v-if="goal.title" class="goals-page__goal-title">
           {{ goal.title }}
         </h3>
 
-        <MDC v-if="goal.description" :value="goal.description" tag="div" class="goals-page__goal-description" />
+        <MDC
+          v-if="goal.description"
+          :value="goal.description"
+          tag="div"
+          class="goals-page__goal-description"
+        />
+        <div
+          v-else
+          class="goals-page__goal-description"
+        >
+          <p v-if="currentGoal > goal.amount">
+            {{ $t('goalAchieved') }}
+          </p>
+          <p v-else>
+            {{ $t('currentGoal') }}
+          </p>
+        </div>
       </div>
     </section>
   </article>
