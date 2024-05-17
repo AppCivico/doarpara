@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper page-wrapper--receipt container">
-    <Html :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir">
+    <Html class="background-page-receipt" :lang="head.htmlAttrs?.lang" :dir="head.htmlAttrs?.dir">
       <Head>
         <Title>{{ title }}</Title>
         <template v-for="link in head.link" :key="link.id">
@@ -50,9 +50,9 @@ const title = computed(() => (route.meta.title
   padding-top: my.$gutter * 4;
   padding-bottom: my.$gutter * 4;
 
-  @media screen and (min-width: my.breakpoint('tablet__portrait')) {
-    padding-top: my.$gutter * 7;
-    padding-bottom: my.$gutter * 7;
-  }
+  // @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+  //   padding-top: my.$gutter * 7;
+  //   padding-bottom: my.$gutter * 7;
+  // }
 }
 </style>
