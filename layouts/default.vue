@@ -46,7 +46,10 @@
                     v-if="campaign?.fundraiser?.office"
                     class="colophon__campaign-creator"
                   >
-                    <dt>
+                    <dt v-if="campaign.campaign_donation_type === 'pre-campaign'">
+                      {{ $t('electionCampaign.preRunningForOffice', { gender: campaign.fundraiser.gender }) }}
+                    </dt>
+                    <dt v-else>
                       {{ $t('electionCampaign.runningForOffice', { gender: campaign.fundraiser.gender }) }}
                     </dt>
                     <dd>
@@ -65,7 +68,10 @@
                     </dd>
                   </div>
 
-                  <div v-if="campaign.fundraiser.ballot_number" class="colophon__campaign-ballot-number">
+                  <div
+                    v-if="campaign.campaign_donation_type !== 'pre-campaign' && campaign.fundraiser.ballot_number"
+                    class="colophon__campaign-ballot-number"
+                  >
                     <dt>
                       {{ $t('electionCampaign.ballotNumber') }}
                     </dt>

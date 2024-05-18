@@ -72,11 +72,19 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     ballotNumber: 'Número',
     politicalParty: 'Partido',
     runningForLocation: 'Concorre em',
-    runningForOffice: ({ values: { gender } }: GenderData) => showGenderedVersion(
+    preRunningForOffice: ({ values: { gender } }: GenderData) => showGenderedVersion(
       {
         female: 'Pré-candidata a',
         male: 'Pré-candidato a',
         other: 'Concorrerá para',
+      },
+      gender,
+    ),
+    runningForOffice: ({ values: { gender } }: GenderData) => showGenderedVersion(
+      {
+        female: 'Candidata a',
+        male: 'Candidato a',
+        other: 'Concorre para',
       },
       gender,
     ),

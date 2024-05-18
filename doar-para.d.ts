@@ -149,6 +149,7 @@ export interface Campaign {
   google_analytics?: string;
   facebook_pixel?: string;
 
+  campaign_donation_type?: 'pre-campaign';
   is_recurrent: boolean;
   is_flexible_funding: boolean;
   is_election_campaign: boolean;
