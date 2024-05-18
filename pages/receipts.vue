@@ -10,7 +10,8 @@ definePageMeta({
   title: 'Doar para',
   // TO-DO: localize routes.
   // Currently, `localePath()` and `NuxtLinkLocale` do not support complex roue objects
-  path: '/:campaignSlug/recibos/:hash',
+  path: '/recibos/:hash',
+  alias: '/:campaignSlug/recibos/:hash',
 });
 
 const route = useRoute();
@@ -91,14 +92,14 @@ const dateHour = (data) => {
         <ul class="receipt-donation-list">
           <li>Pré-candidato(a): {{ donation?.donation.candidate.popular_name || '-' }}</li>
           <!-- <li>CNPJ: {{ candidateDocument(donation?.donation.candidate.cnpj) || '-'}}</li> -->
-          <li>CPF: {{ candidateDocument(donation?.donation.candidate.cpf) || '-'}}</li>
-          <li>Partido: {{ donation?.donation.candidate.party.acronym || '-'}}</li>
+          <li>CPF: {{ candidateDocument(donation?.donation.candidate.cpf) || '-' }}</li>
+          <li>Partido: {{ donation?.donation.candidate.party.acronym || '-' }}</li>
           <li>Cargo: {{ donation?.donation.candidate.office.name || '-' }}</li>
-          <li>Nome do doador: {{ donation?.donation.donor_name || '-'}}</li>
+          <li>Nome do doador: {{ donation?.donation.donor_name || '-' }}</li>
           <li>Nome na Receita Federal: {{ donation?.donation.name_receita || '-' }}</li>
           <li>CPF do doador: {{ candidateDocument(donation?.donation.donor_cpf) || '-' }}</li>
           <li>Data da doação: {{ dateHour(donation?.donation.captured_at_human) }}</li>
-          <li>Valor:{{ $n(donation?.donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) || '-'}}</li>
+          <li>Valor:{{ $n(donation?.donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) || '-' }}</li>
           <li>Forma de pagamento: {{ donation?.donation.payment_method_human || '-' }}</li>
         </ul>
       </div>
@@ -162,7 +163,8 @@ const dateHour = (data) => {
           class="blue"
           target="_blank"
           rel="noopener noreferrer"
-          href="https://www.appcivico.com/fale-conosco">
+          href="https://www.appcivico.com/fale-conosco"
+        >
           contato
         </a>
       </p>
@@ -173,18 +175,20 @@ const dateHour = (data) => {
 
 <style>
 .background-page-receipt {
-  background: #EBEBEB ;
+  background: #ebebeb;
 }
 
-.receipts-page a{
+.receipts-page a {
   text-decoration: none;
 }
 
-.receipts-page h2, h3 {
+.receipts-page h2,
+h3 {
   margin: 0 0 18px;
+
   font-size: 20px;
-  color: #313337;
   font-weight: normal;
+  color: #313337;
 }
 
 .receipts-page .receipt-donation-list {
@@ -193,7 +197,9 @@ const dateHour = (data) => {
 
 .receipts-page nav {
   display: flex;
+
   flex-direction: column;
+
   align-items: flex-start;
 }
 
@@ -204,6 +210,7 @@ const dateHour = (data) => {
 
 .receipts-page footer {
   padding-top: 70px;
+
   border-top: 1px solid #ebebeb;
 }
 
@@ -215,6 +222,7 @@ const dateHour = (data) => {
   max-width: 619px;
   padding: 50px 60px;
   margin: auto;
+
   background: #ffffff;
   border-radius: 20px 20px 0 0;
 }
@@ -225,7 +233,9 @@ const dateHour = (data) => {
 
 .receipts-page .social {
   flex-direction: row;
+
   column-gap: 30px;
+
   padding-top: 40px;
 }
 
@@ -240,6 +250,7 @@ const dateHour = (data) => {
 
 .receipts-page .waves {
   display: block;
+
   margin: 0 auto;
 }
 </style>

@@ -25,13 +25,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useCampaignStore } from '@/store/campaign.ts';
-
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
-
-const campaignStore = useCampaignStore();
-const { campaign } = storeToRefs(campaignStore);
 
 const head = useLocaleHead({
   addDirAttribute: true,
@@ -40,7 +35,7 @@ const head = useLocaleHead({
 });
 
 const title = computed(() => (route.meta.title
-  ? `${route.meta.title} • ${campaign.value?.name} • ${runtimeConfig.public.title}`
+  ? `${route.meta.title} • ${runtimeConfig.public.title}`
   : runtimeConfig.public.title));
 </script>
 <style lang="scss" scoped>
