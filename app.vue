@@ -10,39 +10,13 @@
   <NuxtLoadingIndicator :color="false" :height="3" />
 </template>
 <script setup lang="ts">
-import { useCampaignStore } from '@/store/campaign.ts';
-import { useDonateStore } from '@/store/donate.ts';
-
-const runtimeConfig = useRuntimeConfig();
-const route = useRoute();
-
-const campaignStore = useCampaignStore();
-const donateStore = useDonateStore();
-
-const { campaign } = storeToRefs(campaignStore);
-const { referral } = storeToRefs(donateStore);
-
-const errorToShow:Ref<Error | null> = ref(null);
-
-function storeReferral() {
-  const referralCode = route.query[runtimeConfig.public.queryStringSpecialParameters.referrer];
-
-  if (referralCode && campaign.value?.id) {
-    referral.value[campaign.value.id as keyof typeof referral.value] = String(referralCode);
-  }
-}
+const errorToShow: Ref<Error | null> = ref(null);
 
 function flushError() {
   errorToShow.value = null;
 }
 
-await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
-
 if (import.meta.client) {
-  onMounted(() => {
-    storeReferral();
-  });
-
   onErrorCaptured((error) => {
     errorToShow.value = error;
 

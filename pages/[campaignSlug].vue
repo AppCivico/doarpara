@@ -9,13 +9,33 @@
 </template>
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
+import { useDonateStore } from '@/store/donate.ts';
 
 const runtimeConfig = useRuntimeConfig();
+const route = useRoute();
 
 const campaignStore = useCampaignStore();
+const donateStore = useDonateStore();
 const { campaign, error } = storeToRefs(campaignStore);
+const { referral } = storeToRefs(donateStore);
 
 const { initialize } = useGtag();
+
+function storeReferral() {
+  const referralCode = route.query[runtimeConfig.public.queryStringSpecialParameters.referrer];
+
+  if (referralCode && campaign.value?.id) {
+    referral.value[campaign.value.id as keyof typeof referral.value] = String(referralCode);
+  }
+}
+
+if (import.meta.client) {
+  onMounted(() => {
+    storeReferral();
+  });
+}
+
+await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
 
 if (campaign.value) {
   const meta = {
