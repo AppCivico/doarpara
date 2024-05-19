@@ -939,8 +939,6 @@ if (import.meta.client) {
         if (typeof VotolegalFP !== 'function') {
           isVotoLegalFPMissing.value = true;
           throw new Error('VotolegalFP is not loaded yet');
-        } else {
-          console.log('VotoLegalFP has loaded');
         }
       });
     });
