@@ -204,9 +204,10 @@ h3 {
 }
 
 .receipts-page nav > img {
+  max-width: 200px;
   padding: 25px 0 40px;
   margin: auto;
-  max-width: 200px;
+
   border-radius: 100%;
 }
 
