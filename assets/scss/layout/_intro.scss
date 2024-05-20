@@ -67,6 +67,7 @@ $_background-width-beyond-column: 70px;
   width: 100%;
   height: auto;
   aspect-ratio: 780 / 440;
+  object-fit: cover;
 }
 
 .intro__video {
