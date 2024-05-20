@@ -12,6 +12,8 @@
 <script setup lang="ts">
 const errorToShow: Ref<Error | null> = ref(null);
 
+console.log('foobar');
+
 function flushError() {
   errorToShow.value = null;
 }
@@ -58,6 +60,6 @@ if (import.meta.client) {
 
 .nuxt-loading-indicator {
   background: my.palette('neutral', 'white') linear-gradient(to right,
-        my.palette('loading', 'gradient-list'));
+    my.palette('loading', 'gradient-list'));
 }
 </style>
