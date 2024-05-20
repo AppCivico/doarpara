@@ -21,7 +21,11 @@
         <thead>
           <tr>
             <th>{{ $t('receipts.donorName') }}</th>
-            <th>{{ $t('naturalPersonIdentification') }}</th>
+            <th
+              class="cell--nowrap"
+            >
+              {{ $t('naturalPersonIdentification') }}
+            </th>
             <th>{{ $t('receipts.creationDate') }}</th>
             <th>{{ $t('receipts.paymentMethod') }}</th>
             <th class="cell--number">
@@ -48,7 +52,10 @@
                 ? donation.donor_name
                 : maskName(donation.donor_name) }}
             </td>
-            <td :aria-label="$t('naturalPersonIdentification')">
+            <td
+              :aria-label="$t('naturalPersonIdentification')"
+              class="cell--nowrap"
+            >
               {{ donationToUnmask === donation.id
                 ? formatCPF(donation.donor_natural_person_id)
                 : maskCPF(donation.donor_natural_person_id) }}

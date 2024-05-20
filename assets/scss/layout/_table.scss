@@ -257,6 +257,10 @@ tfoot td {
   }
 }
 
+.cell--nowrap {
+  white-space: nowrap;
+}
+
 .has-unmasked-row {
   color: my.palette('neutral', 'gray');
 
