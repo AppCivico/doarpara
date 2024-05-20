@@ -10,8 +10,11 @@ definePageMeta({
   title: 'Doar para',
   // TO-DO: localize routes.
   // Currently, `localePath()` and `NuxtLinkLocale` do not support complex roue objects
-  path: '/recibos/:hash',
-  alias: '/:campaignSlug/recibos/:hash',
+  path: '/recibo/:hash',
+  alias: [
+    '/recibos/:hash',
+    '/:campaignSlug/recibos/:hash',
+  ],
 });
 
 const route = useRoute();
