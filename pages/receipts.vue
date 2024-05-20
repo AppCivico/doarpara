@@ -69,7 +69,7 @@ const dateHour = (data) => {
       </h1>
       <h3 class="blue">
         <!-- eslint-disable-next-line vue/max-len -->
-        Essa doação foi realizada para <strong>{{ donation?.donation.donor_name }}</strong>, pré-candidato(a)
+        Essa doação foi realizada para <strong>{{ donation?.donation.candidate.popular_name }}</strong>, pré-candidato(a)
         a Prefeito, por <span>{{ donation?.donation.candidate.party.acronym }}</span>.
       </h3>
       <p>
@@ -79,7 +79,7 @@ const dateHour = (data) => {
         descentralizada para garantir controle social.
       </p>
       <p>
-        Por isso, <span>{{ donation?.donation.donor_name }}</span> está registrando
+        Por isso, <span>{{ donation?.donation.candidate.popular_name }}</span> está registrando
         todas suas doações financeiras para comprovar a integridade e honestidade no seu processo
         de captação de recursos.
       </p>
@@ -170,7 +170,7 @@ const dateHour = (data) => {
       </p>
     </footer>
   </section>
-  <img v-if="!pending" class="waves" :src="waves" alt="Ondas">
+  <img v-if="!pending && !error" class="waves" :src="waves" alt="Ondas">
 </template>
 
 <style>
@@ -206,6 +206,8 @@ h3 {
 .receipts-page nav > img {
   padding: 25px 0 40px;
   margin: auto;
+  max-width: 200px;
+  border-radius: 100%;
 }
 
 .receipts-page footer {
