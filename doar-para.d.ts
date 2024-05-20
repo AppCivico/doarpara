@@ -103,6 +103,7 @@ export interface RaisedAndSource {
   name: string;
   total_donated: number;
   total_donations: number;
+  total_donors: number;
   cnpj: string;
   type: string;
   social_name: string;

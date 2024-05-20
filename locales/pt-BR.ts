@@ -118,7 +118,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   loadVideo: 'Carregar vídeo',
 
   indicators: {
-    donorsToCampaign: 'Pessoas doaram para {campaignName}',
+    donorsToCampaign: 'Pessoas doaram {donations} vezes para {campaignName}',
     newDonors: {
       title: 'Novos doadores',
       description: 'Pessoas que nunca doaram para esse projeto',

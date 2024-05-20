@@ -2,10 +2,13 @@
   <dl class="donation-indicators">
     <div class="donation-indicators__item">
       <dt class="donation-indicators__title">
-        {{ $n(totalDonations.total) }}
+        {{ $n(totalDonations.totalDonors) }}
       </dt>
       <dd class="donation-indicators__description">
-        {{ $t('indicators.donorsToCampaign', { campaignName: campaign?.name }) }}
+        {{ $t('indicators.donorsToCampaign', {
+          campaignName: campaign?.name,
+          donations: totalDonations.totalDonations,
+        }) }}
       </dd>
     </div>
 
