@@ -36,6 +36,7 @@ export default defineNuxtConfig({
     '@nuxtjs/mdc',
     '@pinia-plugin-persistedstate/nuxt',
     'nuxt-gtag',
+    '@nuxtjs/sentry',
   ],
   runtimeConfig: {
     public: {
