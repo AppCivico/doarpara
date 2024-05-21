@@ -49,6 +49,7 @@
   "dependencies": {
     "@nuxtjs/sentry": "^8.0.7",
     "@pinia/nuxt": "^0.5.1",
+    "@sentry/vue": "^8.2.1",
     "maska": "^2.1.10",
     "vue-i18n": "^9.6.4"
   },
