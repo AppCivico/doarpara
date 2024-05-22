@@ -26,28 +26,6 @@ const {
   error,
   pending,
 } = await useLazyFetch(`${runtimeConfig.public.publicApiBase}/donation/digest/${hash}`);
-
-const candidateDocument = (documento) => {
-  if (!documento) {
-    return '';
-  }
-  // eslint-disable-next-line no-param-reassign
-  documento = documento.replace(/\D/g, '');
-  if (documento.length === 11) {
-    return documento.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-  } if (documento.length === 14) {
-    return documento.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
-  }
-  return documento;
-};
-
-const dateHour = (data) => {
-  if (!data) {
-    return '';
-  }
-  const dataObj = new Date(data);
-  return dataObj.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
-};
 </script>
 
 <template>
@@ -60,7 +38,7 @@ const dateHour = (data) => {
   <section v-else class="receipts-page">
     <header>
       <nav>
-        <a href="doarpara.com.br">
+        <a href="https://blog.doarpara.com.br/">
           <img :src="logo" alt="Logo doarPara">
         </a>
         <img :src="donation?.donation.candidate.avatar" alt="Pré candidato">
@@ -70,7 +48,7 @@ const dateHour = (data) => {
       <h1 style="color: #313337">
         Recibo
       </h1>
-      <h3 class="blue">
+      <h3 class="receipts-page-blueLink">
         <!-- eslint-disable-next-line vue/max-len -->
         Essa doação foi realizada para <strong>{{ donation?.donation.candidate.popular_name }}</strong>, pré-candidato(a)
         a Prefeito, por <span>{{ donation?.donation.candidate.party.acronym }}</span>.
@@ -88,34 +66,32 @@ const dateHour = (data) => {
       </p>
     </div>
     <div>
-      <h2>
-        <strong>informações de doação</strong>
-      </h2>
+      <h2>informações de doação</h2>
       <div>
         <ul class="receipt-donation-list">
           <li>Pré-candidato(a): {{ donation?.donation.candidate.popular_name || '-' }}</li>
-          <!-- <li>CNPJ: {{ candidateDocument(donation?.donation.candidate.cnpj) || '-'}}</li> -->
-          <li>CPF: {{ candidateDocument(donation?.donation.candidate.cpf) || '-' }}</li>
+          <li v-if="donation?.donation.candidate.cnpj">
+            CNPJ: {{ formatCNPJ(donation?.donation.candidate.cnpj) || '-'}}
+          </li>
+          <li>CPF: {{ formatCPF(donation?.donation.candidate.cpf) || '-' }}</li>
           <li>Partido: {{ donation?.donation.candidate.party.acronym || '-' }}</li>
           <li>Cargo: {{ donation?.donation.candidate.office.name || '-' }}</li>
           <li>Nome do doador: {{ donation?.donation.donor_name || '-' }}</li>
           <li>Nome na Receita Federal: {{ donation?.donation.name_receita || '-' }}</li>
-          <li>CPF do doador: {{ candidateDocument(donation?.donation.donor_cpf) || '-' }}</li>
-          <li>Data da doação: {{ dateHour(donation?.donation.captured_at_human) }}</li>
+          <li>CPF do doador: {{ formatCPF(donation?.donation.donor_cpf) || '-' }}</li>
+          <li>Data da doação: {{ $d(new Date(donation?.donation.captured_at_human), 'medium')}}</li>
           <li>Valor:{{ $n(donation?.donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) || '-' }}</li>
           <li>Forma de pagamento: {{ donation?.donation.payment_method_human || '-' }}</li>
         </ul>
       </div>
       <div>
-        <h2>
-          <strong>Informações sobre o registro na blockchain</strong>
-        </h2>
+        <h2>Informações sobre o registro na blockchain</h2>
         <p>
           Para que sua doação tenha garantias, usamos o Blockchain, uma ferramenta
           que garantirá que todo histórico de doações ficará online e ninguém poderá alterá-lo,
           de maneira descentralizada.
         </p>
-        <p>
+        <p v-if="donation?.donation.decred_transaction_url">
           Comprovante decred:
           <a
             class="blue"
@@ -124,29 +100,27 @@ const dateHour = (data) => {
             style="word-break: break-all"
             :href="donation?.donation.decred_transaction_url"
           >
-            <strong>{{ donation?.donation.decred_transaction_url || '-' }}</strong>
+            <strong>{{ donation?.donation.decred_transaction_url }}</strong>
           </a>
         </p>
       </div>
       <div>
-        <h2>
-          <strong>Informações sobre o código utilizado para essa doação</strong>
-        </h2>
+        <h2>Informações sobre o código utilizado para essa doação</h2>
         <p>
           Para transparência eleitoral, além dos dados de doação, também é fundamental que
           a tecnologia utilizado para processar essa doação seja aberto. Por isso,
           nosso código fonte é aberto e também registramos a versão utilizada por nossos
           servidores junto com os dados de doação na blockchain.
         </p>
-        <p>
+        <p v-if="donation?.donation.git_url">
           Versão do site:
           <a
-            class="blue"
+            class="receipts-page-blueLink"
             target="_blank"
             rel="noopener noreferrer"
             :href="donation?.donation.git_url"
           >
-            <strong>{{ donation?.donation.git_url || '-' }}</strong>
+            <strong>{{ donation?.donation.git_url }}</strong>
           </a>
         </p>
       </div>
@@ -163,7 +137,7 @@ const dateHour = (data) => {
       <p>
         © 2016-2024 DoarPara • Uma iniciativa AppCívico - Tecnologias Cívicas •
         <a
-          class="blue"
+          class="receipts-page-blueLink"
           target="_blank"
           rel="noopener noreferrer"
           href="https://www.appcivico.com/fale-conosco"
@@ -173,7 +147,7 @@ const dateHour = (data) => {
       </p>
     </footer>
   </section>
-  <img v-if="!pending && !error" class="waves" :src="waves" alt="Ondas">
+  <img v-if="!pending && !error" class="waves-footer" :src="waves" alt="Ondas">
 </template>
 
 <style>
@@ -185,13 +159,17 @@ const dateHour = (data) => {
   text-decoration: none;
 }
 
-.receipts-page h2,
-h3 {
+.receipts-page h2{
   margin: 0 0 18px;
 
   font-size: 20px;
-  font-weight: normal;
   color: #313337;
+}
+
+.receipts-page h3{
+  margin: 0 0 18px;
+
+  font-size: 20px;
 }
 
 .receipts-page .receipt-donation-list {
@@ -220,7 +198,7 @@ h3 {
   border-top: 1px solid #ebebeb;
 }
 
-.receipts-page .blue {
+.receipts-page-blueLink {
   color: #2667ff
 }
 
@@ -254,7 +232,7 @@ h3 {
   margin: 0;
 }
 
-.receipts-page .waves {
+.receipts-page .waves-footer {
   display: block;
 
   margin: 0 auto;
