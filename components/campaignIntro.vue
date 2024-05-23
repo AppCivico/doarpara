@@ -75,14 +75,28 @@ const props = defineProps<{
   campaign: Campaign;
 }>();
 
+const refVideo = props.campaign.refs_videos;
+const urlParams = new URLSearchParams(window.location.search);
+const refParam = urlParams.get('ref')?.replace(/"/g, '');
+
 const showVideo = ref(false);
+const currentVideoUrl = ref< string | null | undefined >('');
 
 const origin: String = typeof window !== 'undefined'
   ? window.location.origin
   : '';
 
-const videoId = computed(() => getYoutubeId(props.campaign.video));
+let videoId = computed<string | null | undefined>(() => getYoutubeId(props.campaign.video));
 const youtubeThumbnail = computed(() => getYoutubeThumbnail(props.campaign.video));
+
+if (refParam) {
+  refVideo.forEach((item) => {
+    if (item.code === refParam) {
+      currentVideoUrl.value = getYoutubeId(item.video_url);
+    }
+  });
+  videoId = computed(() => currentVideoUrl.value);
+}
 
 const campaignDefaultCover = computed(() => {
   if (typeof props.campaign.cover === 'string') {

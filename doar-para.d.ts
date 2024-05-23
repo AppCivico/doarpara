@@ -89,6 +89,11 @@ export type MinDonationValue = {
 
 export type PledgeValue = number | 'custom';
 
+export interface Refs {
+  code: string;
+  video_url: string;
+}
+
 export interface Reward {
   id: Id;
   name: string;
@@ -139,6 +144,7 @@ interface Donation {
 // API endpoints ///////////////////////////////////////////////////////////////
 
 export interface Campaign {
+  refs_videos: Refs[];
   slug: string;
   name: string;
   id: string | number;
