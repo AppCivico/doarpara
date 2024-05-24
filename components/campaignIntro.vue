@@ -31,7 +31,9 @@
           :title="$t('campaignVideo')"
           width="780"
           height="440"
-          :src="`https://www.youtube-nocookie.com/embed/${videoId}?origin=${origin}&autoplay=1`"
+          :src="currentVideoUrl
+            ? `https://www.youtube-nocookie.com/embed/${currentVideoUrl}?origin=${origin}&autoplay=1`
+            : `https://www.youtube-nocookie.com/embed/${videoId}?origin=${origin}&autoplay=1`"
           frameborder="0"
           allow="autoplay; encrypted-media"
           allowfullscreen
@@ -80,23 +82,25 @@ const urlParams = new URLSearchParams(window.location.search);
 const refParam = urlParams.get('ref')?.replace(/"/g, '');
 
 const showVideo = ref(false);
-const currentVideoUrl = ref< string | null | undefined >('');
 
 const origin: String = typeof window !== 'undefined'
   ? window.location.origin
   : '';
 
-let videoId = computed<string | null | undefined>(() => getYoutubeId(props.campaign.video));
+const videoId = computed<string | null | undefined>(() => getYoutubeId(props.campaign.video));
 const youtubeThumbnail = computed(() => getYoutubeThumbnail(props.campaign.video));
 
-if (refParam) {
-  refVideo.forEach((item) => {
-    if (item.code === refParam) {
-      currentVideoUrl.value = getYoutubeId(item.video_url);
-    }
-  });
-  videoId = computed(() => currentVideoUrl.value);
-}
+const currentVideoUrl = computed(() => {
+  let url = '';
+  if (refParam) {
+    refVideo.forEach((item) => {
+      if (item.code === refParam) {
+        url = getYoutubeId(item.video_url);
+      }
+    });
+  }
+  return url;
+});
 
 const campaignDefaultCover = computed(() => {
   if (typeof props.campaign.cover === 'string') {
