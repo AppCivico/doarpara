@@ -223,6 +223,7 @@ Por isso, **{campaignName}** está registrando todas suas doações financeiras 
   totalAmountByDonationsPerSource: '{percentage}% por {numberOfDonations} doações ({source})',
   totalDonations: 'Doações recebidas',
   useTerms: 'Termos de uso',
+  useTermsAndPrivacyPolicy: 'Termos de uso e política de privacidade',
   waiting: 'Aguardando...',
   visitWebsite: 'Visitar página inicial',
 };

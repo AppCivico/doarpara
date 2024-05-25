@@ -183,6 +183,9 @@
             <nav
               class="footer-nav"
               :aria-label="$t('footerMenuLabel')"
+              v-if="(Array.isArray(campaignSections) && campaignSections.length > 1)
+                || runtimeConfig.public.urlOfUseTerms
+                || runtimeConfig.public.urlOfPrivacyPolicy"
             >
               <ul class="footer-nav__list">
                 <template v-if="Array.isArray(campaignSections) && campaignSections.length > 1">
@@ -204,16 +207,33 @@
                     </NuxtLink>
                   </li>
                 </template>
-                <li class="footer-nav__item">
+                <li
+                  v-if="runtimeConfig.public.urlOfUseTerms
+                    && runtimeConfig.public.urlOfUseTerms === runtimeConfig.public.urlOfPrivacyPolicy"
+                  class="footer-nav__item"
+                >
                   <a class="footer-nav__link" :href="runtimeConfig.public.urlOfUseTerms">
-                    {{ $t('useTerms') }}
+                    {{ $t('useTermsAndPrivacyPolicy') }}
                   </a>
                 </li>
-                <li class="footer-nav__item">
-                  <a class="footer-nav__link" :href="runtimeConfig.public.urlOfPrivacyPolicy">
-                    {{ $t('privacyPolicy') }}
-                  </a>
-                </li>
+                <template v-else>
+                  <li
+                    v-if="runtimeConfig.public.urlOfUseTerms"
+                    class="footer-nav__item"
+                  >
+                    <a class="footer-nav__link" :href="runtimeConfig.public.urlOfUseTerms">
+                      {{ $t('useTerms') }}
+                    </a>
+                  </li>
+                  <li
+                    v-if="runtimeConfig.public.urlOfPrivacyPolicy"
+                    class="footer-nav__item"
+                  >
+                    <a class="footer-nav__link" :href="runtimeConfig.public.urlOfPrivacyPolicy">
+                      {{ $t('privacyPolicy') }}
+                    </a>
+                  </li>
+                </template>
               </ul>
             </nav>
 
