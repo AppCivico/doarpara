@@ -87,7 +87,7 @@ $neutral: (
   'base': hsl(224, 10%, 58%),
   'dark': hsl(210, 9%, 38%),
   'x-dark': hsl(220, 6%, 20%),
-  'black': hsl(200, 20%, 9%)
+  'black': hsl(200, 20%, 9%),
 );
 $palette: map.set($palette, 'neutral', $neutral);
 

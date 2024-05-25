@@ -49,7 +49,7 @@ $_themes: 'blue' 'green' 'orange' 'red';
   }
 }
 
-@mixin themed-asset ($property, $asset-name) {
+@mixin themed-asset($property, $asset-name) {
   #{$property}: f.image(#{'themes/blue/#{$asset-name}'});
 
   @each $theme in $_themes {

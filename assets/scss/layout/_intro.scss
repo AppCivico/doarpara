@@ -181,8 +181,8 @@ $_background-width-beyond-column: 70px;
 
     > img {
       filter: invert(1) drop-shadow(my.palette('effects', 'shadow') 0 0 4px) drop-shadow(color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2) 0 0 8px);
-      opacity: 1;
       filter: invert(1) drop-shadow(my.palette('effects', 'shadow') 0 0 2px) drop-shadow(color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2) 0 0 4px);
+      opacity: 1;
 
       @include my.themed-declaration ('green') {
         filter: invert(1) drop-shadow(my.palette('green-theme', 'effects', 'shadow') 0 0 2px) drop-shadow(color.adjust(my.palette('green-theme', 'brand', 'tertiary'), $alpha: -0.2) 0 0 4px);
