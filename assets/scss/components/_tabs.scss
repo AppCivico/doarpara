@@ -49,8 +49,13 @@
   }
 
   @include my.on-event {
-    @include my.themed-color('color', ('brand', 'primary'));
+    @include my.themed-color('color', ('anchor', 'link'));
 
     border-bottom: 3px solid currentColor;
+  }
+
+  &[aria-current='page'],
+  &[aria-current='page']:visited {
+    @include my.themed-color('color', ('anchor', 'link'));
   }
 }
