@@ -91,6 +91,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   },
   errors: {
     adBlocker: 'Há um bloqueador de anúncios impedindo o processador de pagamentos.',
+    'CEP not found': 'CEP não encontrado',
     invalidValue: 'Valor inválido para o meio de pagamento.',
     is_invalid: 'Valor inválido',
 

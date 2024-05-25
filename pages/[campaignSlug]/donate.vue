@@ -163,7 +163,7 @@
               @input="fillAddress"
             />
             <small v-if="errors.gettingAddress" class="signage__text--danger">
-              {{ errors.gettingAddress?.data?.error || errors.gettingAddress }}
+              {{ $t(`errors.${errors.gettingAddress?.data?.error || errors.gettingAddress}`) }}
             </small>
           </p>
 
