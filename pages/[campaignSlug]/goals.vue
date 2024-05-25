@@ -117,6 +117,10 @@ const goals = computed(() => (Array.isArray(campaign.value?.goal_list)
 
   .goals-page__goal-item--current & {
     @include my.themed-color('color', ('brand', 'primary'));
+
+    @include my.themed-declaration ('orange') {
+      color: my.palette('orange-theme', 'brand', 'quaternary');
+    }
   }
 
   .goals-page__goal-item--achieved & {

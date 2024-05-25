@@ -64,9 +64,9 @@ $green-theme: (
 $palette: map.deep-merge($palette, ('green-theme': ('brand': $green-theme)));
 $orange-theme: (
   'primary': $_orange,
-  'secondary': $_dark-orange,
+  'secondary': $_red,
   'tertiary': $_light-orange,
-  'quaternary': $_dark_orange,
+  'quaternary': $_dark-orange,
 );
 $palette: map.deep-merge($palette, ('orange-theme': ('brand': $orange-theme)));
 $red-theme: (
@@ -128,12 +128,12 @@ $palette: map.deep-merge($palette, ('green-theme':(
 )));
 $palette: map.deep-merge($palette, ('orange-theme':(
   'anchor': (
-    'base': $_orange,
-    'link': $_orange,
-    'visited': $_dark-orange,
-    'hover': $_light-orange,
-    'focus': $_light-orange,
-    'active': $_light-orange,
+    'base': $_dark-orange,
+    'link': $_dark-orange,
+    'visited': $_red,
+    'hover': $_orange,
+    'focus': $_orange,
+    'active': $_orange,
   )
 )));
 $palette: map.deep-merge($palette, ('red-theme':(

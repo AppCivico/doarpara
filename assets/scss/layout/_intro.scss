@@ -225,6 +225,10 @@ $_background-width-beyond-column: 70px;
 
     color: my.palette('text', 'light');
 
+    @include my.themed-declaration ('orange') {
+      color: my.text-contrast(my.palette('orange-theme', 'brand', 'primary'));
+    }
+
     &::before,
     &::after {
       position: absolute;
