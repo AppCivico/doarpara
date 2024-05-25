@@ -105,7 +105,8 @@ const currentVideoUrl = computed(() => {
 const campaignDefaultCover = computed(() => {
   if (typeof props.campaign.cover === 'string') {
     return props.campaign.cover;
-  } if (Array.isArray(props.campaign.cover)) {
+  }
+  if (Array.isArray(props.campaign.cover)) {
     return typeof props.campaign.cover?.[0] === 'string'
       ? props.campaign.cover[0]
       : props.campaign.cover[0]?.url || undefined;
