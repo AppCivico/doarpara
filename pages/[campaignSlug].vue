@@ -48,7 +48,7 @@ if (campaign.value) {
         }))
       : []),
     htmlAttrs: {
-      class: () => `theme--${campaign.value?.theme || 'default'}`,
+      class: () => normalizeThemeName(campaign.value?.theme),
     },
   };
 
