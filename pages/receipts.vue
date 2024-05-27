@@ -69,7 +69,7 @@ const {
       <h2>informações de doação</h2>
       <div>
         <ul class="receipt-donation-list">
-          <li>Pré-candidato(a): {{ donation?.donation.candidate.popular_name || '-' }}</li>
+          <li>Pré-candidato(a): {{ donation?.donation.candidate.name || '-' }}</li>
           <li v-if="donation?.donation.candidate.cnpj">
             CNPJ: {{ formatCNPJ(donation?.donation.candidate.cnpj) || '-'}}
           </li>
