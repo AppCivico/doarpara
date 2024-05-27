@@ -156,6 +156,8 @@ $_background-width-beyond-column: 70px;
   }
 
   &::after {
+    @include my.themed-color('background-color', ('brand', 'primary'));
+
     position: absolute;
     top: 0;
     right: 0;
@@ -164,7 +166,6 @@ $_background-width-beyond-column: 70px;
 
     content: '';
 
-    background-color: my.palette('brand', 'primary');
     opacity: 0;
 
     transition-duration: 300ms;
