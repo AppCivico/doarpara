@@ -129,10 +129,9 @@ const {
       <img :src="doarPara" alt="logo">
       <p>
         <strong>DoarPara</strong> é uma plataforma de software livre homologada
-        pelo TSE e opera sob o CNPJ "30.217.474/0001-50", razão social "Pague Junto -
-        Tecnologia de Intermediação LTDA". Todas as doações são registradas na blockchain
-        da Decred com objetivo de garantir a autenticidade das transações, promovendo a
-        confiabilidade no processo de doação eleitoral.
+        pelo TSE e opera sob o CNPJ "08.746.641/0001-00", razão social "AppCívico Consultoria LTDA".
+        Todas as doações são registradas na blockchain da Decred com objetivo de garantir a
+        autenticidade das transações, promovendo a confiabilidade no processo de doação eleitoral.
       </p>
       <p>
         © 2016-2024 DoarPara • Uma iniciativa AppCívico - Tecnologias Cívicas •
