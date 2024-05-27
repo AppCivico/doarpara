@@ -289,7 +289,7 @@ $palette: map.deep-merge($palette, ('green-theme': (
 $palette: map.deep-merge($palette, ('orange-theme': (
   'effects': (
     'shadow': color.adjust($_dark-orange, $alpha: -0.8),
-    'tap-highlight': color.adjust($_dark-orange, $alpha: -0.9),
+    'tap-highlight': color.adjust($_dark-orange, $alpha: -0.8),
   ),
 )));
 $palette: map.deep-merge($palette, ('red-theme': (
