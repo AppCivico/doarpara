@@ -11,6 +11,7 @@
           :srcset="campaignCoverSrcset"
         />
         <button
+          v-if="youtubeThumbnail || refParam"
           class="intro__figure-switcher"
           type="button"
           :aria-label="$t('loadVideo')"
