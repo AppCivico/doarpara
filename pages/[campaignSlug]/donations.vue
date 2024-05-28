@@ -10,113 +10,119 @@
     <section class="donations-page__receipts">
       <h2>{{ $t('receipts.titles') }}</h2>
 
-      <MDC :value="$t('receipts.description', { campaignName: campaign?.name })" tag="div" class="donations-page__receipts-intro" />
+      <MDC
+        :value="$t('receipts.description', { campaignName: campaign?.name })"
+        tag="div"
+        class="donations-page__receipts-intro"
+      />
 
-      <table
-        class="donations-page__receipts-table"
-        :class="{ 'has-unmasked-row': donationToUnmask }"
-      >
-        <colgroup span="5" />
-        <col class="col--action">
-        <thead>
-          <tr>
-            <th>{{ $t('receipts.donorName') }}</th>
-            <th
-              class="cell--nowrap"
-            >
-              {{ $t('naturalPersonIdentification') }}
-            </th>
-            <th>{{ $t('receipts.creationDate') }}</th>
-            <th>{{ $t('receipts.paymentMethod') }}</th>
-            <th class="cell--number">
-              {{ $t('receipts.amount') }}
-            </th>
-            <th />
-            <th />
-          </tr>
-        </thead>
-        <tbody
-          v-if="donationsList.length"
-          :aria-live="pending ? 'polite' : 'off'"
+      <ClientOnly>
+        <table
+          class="donations-page__receipts-table"
+          :class="{ 'has-unmasked-row': donationToUnmask }"
         >
-          <tr
-            v-for="donation in donationsList"
-            :key="donation.id"
-            :class="{
-              irregular: donation.is_irregular,
-              'unmasked-row': donationToUnmask === donation.id,
-            }"
-          >
-            <td :aria-label="$t('receipts.donorName')">
-              {{ donationToUnmask === donation.id
-                ? donation.donor_name
-                : maskName(donation.donor_name) }}
-            </td>
-            <td
-              :aria-label="$t('naturalPersonIdentification')"
-              class="cell--nowrap"
-            >
-              {{ donationToUnmask === donation.id
-                ? formatCPF(donation.donor_natural_person_id)
-                : maskCPF(donation.donor_natural_person_id) }}
-            </td>
-            <td :aria-label="$t('receipts.creationDate')">
-              {{ $d(new Date(donation.captured_at), 'medium') }}
-            </td>
-            <td :aria-label="$t('receipts.paymentMethod')">
-              {{ $t(`paymentMethods.${donation.payment_method}`) }}
-            </td>
-            <td :aria-label="$t('receipts.amount')" class="cell--number">
-              {{ $n(donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) }}
-            </td>
-            <td class="cell--action">
-              <label class="like-a__button">
-                <input
-                  v-model="donationToUnmask"
-                  type="checkbox"
-                  :true-value="donation.id"
-                />
-                {{ $t('toExposeData').toLowerCase() }}
-              </label>
-            </td>
-            <td class="cell--action">
-              <a
-                v-if="donation.transaction_link"
-                :href="donation.transaction_link"
-                class="nowrap"
-                target="_blank"
-                rel="noopener noreferrer"
-                :title="$t('receipt')"
+          <colgroup span="5" />
+          <col class="col--action">
+          <thead>
+            <tr>
+              <th>{{ $t('receipts.donorName') }}</th>
+              <th
+                class="cell--nowrap"
               >
-                {{ $t('receipts.linkTo').toLowerCase() }}
-              </a>
-            </td>
-          </tr>
-        </tbody>
-        <tbody v-if="pending || !donationsList.length">
-          <tr>
-            <td v-if="pending" colspan="6" :aria-busy="pending">
-              {{ $t('waiting') }}
-            </td>
-            <td v-else colspan="6">
-              {{ $t('noDonations') }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                {{ $t('naturalPersonIdentification') }}
+              </th>
+              <th>{{ $t('receipts.creationDate') }}</th>
+              <th>{{ $t('receipts.paymentMethod') }}</th>
+              <th class="cell--number">
+                {{ $t('receipts.amount') }}
+              </th>
+              <th />
+              <th />
+            </tr>
+          </thead>
+          <tbody
+            v-if="donationsList.length"
+            :aria-live="pending ? 'polite' : 'off'"
+          >
+            <tr
+              v-for="donation in donationsList"
+              :key="donation.id"
+              :class="{
+                irregular: donation.is_irregular,
+                'unmasked-row': donationToUnmask === donation.id,
+              }"
+            >
+              <td :aria-label="$t('receipts.donorName')">
+                {{ donationToUnmask === donation.id
+                  ? donation.donor_name
+                  : maskName(donation.donor_name) }}
+              </td>
+              <td
+                :aria-label="$t('naturalPersonIdentification')"
+                class="cell--nowrap"
+              >
+                {{ donationToUnmask === donation.id
+                  ? formatCPF(donation.donor_natural_person_id)
+                  : maskCPF(donation.donor_natural_person_id) }}
+              </td>
+              <td :aria-label="$t('receipts.creationDate')">
+                {{ $d(new Date(donation.captured_at), 'medium') }}
+              </td>
+              <td :aria-label="$t('receipts.paymentMethod')">
+                {{ $t(`paymentMethods.${donation.payment_method}`) }}
+              </td>
+              <td :aria-label="$t('receipts.amount')" class="cell--number">
+                {{ $n(donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) }}
+              </td>
+              <td class="cell--action">
+                <label class="like-a__button">
+                  <input
+                    v-model="donationToUnmask"
+                    type="checkbox"
+                    :true-value="donation.id"
+                  />
+                  {{ $t('toExposeData').toLowerCase() }}
+                </label>
+              </td>
+              <td class="cell--action">
+                <a
+                  v-if="donation.transaction_link"
+                  :href="donation.transaction_link"
+                  class="nowrap"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  :title="$t('receipt')"
+                >
+                  {{ $t('receipts.linkTo').toLowerCase() }}
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-if="pending || !donationsList.length">
+            <tr>
+              <td v-if="pending" colspan="6" :aria-busy="pending">
+                {{ $t('waiting') }}
+              </td>
+              <td v-else colspan="6">
+                {{ $t('noDonations') }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-      <div class="pagination">
-        <button
-          v-if="hasMore"
-          type="button"
-          class="like-a__link pagination__load-more"
-          :aria-busy="pending"
-          :aria-disabled="pending"
-          @click="fetchDonations(true)"
-        >
-          carregar mais
-        </button>
-      </div>
+        <div class="pagination">
+          <button
+            v-if="hasMore"
+            type="button"
+            class="like-a__link pagination__load-more"
+            :aria-busy="pending"
+            :aria-disabled="pending"
+            @click="fetchDonations(true)"
+          >
+            carregar mais
+          </button>
+        </div>
+      </ClientOnly>
     </section>
   </article>
 </template>
