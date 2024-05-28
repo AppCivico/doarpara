@@ -78,8 +78,8 @@ const props = defineProps<{
 }>();
 
 const refVideo = props.campaign.refs_videos;
-const urlParams = new URLSearchParams(window.location.search);
-const refParam = urlParams.get('ref')?.replace(/"/g, '');
+const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+const refParam = urlParams ? urlParams.get('ref')?.replace(/"/g, '') : null;
 
 const showVideo = ref(false);
 
