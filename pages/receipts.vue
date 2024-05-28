@@ -48,10 +48,14 @@ const {
       <h1 style="color: #313337">
         Recibo
       </h1>
-      <h3 class="receipts-page-blueLink">
-        <!-- eslint-disable-next-line vue/max-len -->
-        Essa doação foi realizada para <strong>{{ donation?.donation.candidate.popular_name }}</strong>, pré-candidato(a)
-        a Prefeito, por <span>{{ donation?.donation.candidate.party.acronym }}</span>.
+      <h3 class="receipts-page-title">
+        Essa doação foi realizada para
+        <strong>{{ donation?.donation.candidate.popular_name }}</strong>,
+        pré-candidato(a) a Prefeito, por
+        <span v-if="donation?.donation.candidate.party">
+          {{ donation?.donation.candidate.party.acronym }} -
+          {{ donation?.donation.candidate.party.name }}.
+        </span>
       </h3>
       <p>
         As doações eleitorais são muito importantes para construção de projetos políticos,
@@ -66,22 +70,38 @@ const {
       </p>
     </div>
     <div>
-      <h2>informações de doação</h2>
       <div>
+        <h2>Candidato(a)</h2>
         <ul class="receipt-donation-list">
           <li>Pré-candidato(a): {{ donation?.donation.candidate.name || '-' }}</li>
           <li v-if="donation?.donation.candidate.cnpj">
-            CNPJ: {{ formatCNPJ(donation?.donation.candidate.cnpj) || '-'}}
+            CNPJ: {{ formatCNPJ(donation?.donation.candidate.cnpj) }}
           </li>
           <li>CPF: {{ formatCPF(donation?.donation.candidate.cpf) || '-' }}</li>
           <li>Partido: {{ donation?.donation.candidate.party.acronym || '-' }}</li>
-          <li>Cargo: {{ donation?.donation.candidate.office.name || '-' }}</li>
+          <li v-if="donation?.donation.candidate.office.name">
+            Cargo: {{ donation?.donation.candidate.office.name }}
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>Doação(a)</h2>
+        <ul class="receipt-donation-list">
           <li>Nome do doador: {{ donation?.donation.donor_name || '-' }}</li>
-          <li>Nome na Receita Federal: {{ donation?.donation.name_receita || '-' }}</li>
+          <li v-if="donation?.donation.name_receita">
+            Nome na Receita Federal: {{ donation?.donation.name_receita }}
+          </li>
           <li>CPF do doador: {{ formatCPF(donation?.donation.donor_cpf) || '-' }}</li>
           <li>Data da doação: {{ $d(new Date(donation?.donation.captured_at_human), 'medium')}}</li>
           <li>Valor:{{ $n(donation?.donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) || '-' }}</li>
           <li>Forma de pagamento: {{ donation?.donation.payment_method_human || '-' }}</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Entidade arrecadadora</h2>
+        <ul class="receipt-donation-list">
+          <li>Razão social: AppCivico Consultoria Ltda.</li>
+          <li>CNPJ: 08.746.641/0001-00 </li>
         </ul>
       </div>
       <div>
@@ -108,14 +128,14 @@ const {
         <h2>Informações sobre o código utilizado para essa doação</h2>
         <p>
           Para transparência eleitoral, além dos dados de doação, também é fundamental que
-          a tecnologia utilizado para processar essa doação seja aberto. Por isso,
+          a tecnologia utilizado para processar essa doação seja aberta. Por isso,
           nosso código fonte é aberto e também registramos a versão utilizada por nossos
           servidores junto com os dados de doação na blockchain.
         </p>
         <p v-if="donation?.donation.git_url">
           Versão do site:
           <a
-            class="receipts-page-blueLink"
+            class="receipts-page-blueColor"
             target="_blank"
             rel="noopener noreferrer"
             :href="donation?.donation.git_url"
@@ -128,15 +148,16 @@ const {
     <footer class="footer">
       <img :src="doarPara" alt="logo">
       <p>
-        <strong>DoarPara</strong> é uma plataforma de software livre homologada
-        pelo TSE e opera sob o CNPJ "08.746.641/0001-00", razão social "AppCívico Consultoria LTDA".
-        Todas as doações são registradas na blockchain da Decred com objetivo de garantir a
-        autenticidade das transações, promovendo a confiabilidade no processo de doação eleitoral.
+        <strong>DoarPara</strong> é uma plataforma de financiamento coletivo eleitoral
+        homologada pelo TSE sob a razão social AppCivico Consultoria LTDA,
+        CNPJ: 08.746.641/0001-00. Todas as doações são registradas na blockchain
+        da Decred com objetivo de garantir a autenticidade das transações,
+        promovendo a confiabilidade no processo de doação eleitoral.
       </p>
       <p>
         © 2016-2024 DoarPara • Uma iniciativa AppCívico - Tecnologias Cívicas •
         <a
-          class="receipts-page-blueLink"
+          class="receipts-page-blueColor"
           target="_blank"
           rel="noopener noreferrer"
           href="https://www.appcivico.com/fale-conosco"
@@ -192,13 +213,18 @@ const {
 }
 
 .receipts-page footer {
-  padding-top: 70px;
+  padding-top: 40px;
 
   border-top: 1px solid #ebebeb;
 }
 
-.receipts-page-blueLink {
+.receipts-page-blueColor {
   color: #2667ff
+}
+
+.receipts-page-title{
+  color: #2667ff;
+  font-weight: normal;
 }
 
 .receipts-page {
