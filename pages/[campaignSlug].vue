@@ -35,7 +35,10 @@ if (import.meta.client) {
   });
 }
 
-await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
+// Maybe the campaign is already loaded on `layouts/default.vue`
+if (!campaign.value) {
+  await useAsyncData('campaign', async () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true));
+}
 
 if (campaign.value) {
   const meta = {
@@ -54,27 +57,25 @@ if (campaign.value) {
 
   useHead(meta);
 
-  if (import.meta.dev || import.meta.server) {
-    useSeoMeta({
-      title: () => (campaign.value?.name
-        ? `${campaign.value?.name} • ${runtimeConfig.public.title}`
-        : `${runtimeConfig.public.title}`),
-      ogTitle: () => campaign.value?.name,
-      ogImage: () => (typeof campaign.value?.sharing_image === 'object'
-        ? {
-          url: campaign.value?.sharing_image?.url,
-          width: campaign.value?.sharing_image?.width,
-          height: campaign.value?.sharing_image?.height,
-        }
-        : campaign.value?.sharing_image
-        || null),
-      description: () => campaign.value?.preamble,
-      ogDescription: () => campaign.value?.preamble,
-      ogType: 'website',
-      twitterCard: 'summary_large_image',
-      twitterSite: extractTwitterHandle(campaign.value?.contact_methods?.twitter),
-    });
-  }
+  useSeoMeta({
+    title: () => (campaign.value?.name
+      ? `${campaign.value?.name} • ${runtimeConfig.public.title}`
+      : `${runtimeConfig.public.title}`),
+    ogTitle: () => campaign.value?.name,
+    ogImage: () => (typeof campaign.value?.sharing_image === 'object'
+      ? {
+        url: campaign.value?.sharing_image?.url,
+        width: campaign.value?.sharing_image?.width,
+        height: campaign.value?.sharing_image?.height,
+      }
+      : campaign.value?.sharing_image
+      || null),
+    description: () => campaign.value?.preamble,
+    ogDescription: () => campaign.value?.preamble,
+    ogType: 'website',
+    twitterCard: 'summary_large_image',
+    twitterSite: extractTwitterHandle(campaign.value?.contact_methods?.twitter),
+  });
 
   if (!import.meta.dev && import.meta.client) {
     if (campaign.value.google_analytics) {
