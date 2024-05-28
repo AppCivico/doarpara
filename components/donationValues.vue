@@ -95,7 +95,7 @@ const props = defineProps<{
 const runtimeConfig = useRuntimeConfig();
 
 const campaignStore = useCampaignStore();
-const { minimumDonation } = storeToRefs(campaignStore); // TODO: move from using props to store
+const { minimumDonation } = storeToRefs(campaignStore); // TODO: move from using store to props
 const chosenCustomPledge: Ref<string> = ref('');
 const pledgeValue = ref(0);
 
