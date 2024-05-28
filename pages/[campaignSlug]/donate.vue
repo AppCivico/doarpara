@@ -612,7 +612,7 @@ import { useDonateStore } from '@/store/donate.ts';
 import { useI18n } from 'vue-i18n';
 import type {
   CreatedDonation, DonationMessage, MinDonationValue, PaymentMethod,
-} from '~/doar-para.d.ts';
+} from '@/doar-para.d.ts';
 
 const { t } = useI18n();
 

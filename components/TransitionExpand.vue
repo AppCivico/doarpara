@@ -8,8 +8,11 @@
     <slot />
   </transition>
 </template>
-<!-- eslint-disable no-param-reassign -->
-<script>
+<!--
+  eslint-disable no-param-reassign
+  eslint-disable-next-line vue/block-lang
+-->
+<script lang="js">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -32,7 +35,7 @@ export default defineComponent({
 
       // Force repaint to make sure the
       // animation is triggered correctly.
-      // eslint-disable-next-line no-unused-expressions
+      // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
       getComputedStyle(element).height;
 
       // Trigger the animation.
@@ -54,7 +57,7 @@ export default defineComponent({
 
       // Force repaint to make sure the
       // animation is triggered correctly.
-      // eslint-disable-next-line no-unused-expressions
+      // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
       getComputedStyle(element).height;
 
       requestAnimationFrame(() => {
@@ -66,16 +69,17 @@ export default defineComponent({
 </script>
 <style scoped>
 * {
-  will-change: height;
   transform: translateZ(0);
-  backface-visibility: hidden;
   perspective: 1000px;
+  will-change: height;
+  backface-visibility: hidden;
 }
 
 .expand-enter-active,
 .expand-leave-active {
-  transition: height 300ms ease-in-out;
   overflow: hidden;
+
+  transition: height 300ms ease-in-out;
 }
 
 .expand-enter,

@@ -13,7 +13,8 @@ const props = defineProps({
   slowness: {
     // smaller is faster
     type: [
-      Number, String,
+      Number,
+      String,
     ],
     default: 5,
     validator(value) { return Number(value) !== 0; },

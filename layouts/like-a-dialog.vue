@@ -31,7 +31,10 @@
           </h1>
 
           <nav>
-            <NuxtLink :to="{ name: 'campaign' }" class="dialog__close-button">
+            <NuxtLink
+              :to="{ name: 'campaign' }"
+              class="dialog__close-button"
+            >
               {{ $t('backToCampaign') }}
             </NuxtLink>
           </nav>

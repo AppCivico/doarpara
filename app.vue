@@ -12,7 +12,6 @@
 <script setup lang="ts">
 const errorToShow: Ref<Error | null> = ref(null);
 
-
 function flushError() {
   errorToShow.value = null;
 }

@@ -161,7 +161,9 @@
                   >
                     <NuxtLink
                       class="tab-navigation__link"
-                      :to="sectionId === 'description' ? { name: 'campaign' } : { name: sectionId }"
+                      :to="sectionId === 'description'
+                        ? { name: 'campaign' }
+                        : { name: sectionId }"
                     >
                       <template v-if="sectionId === 'goals' && campaign?.goal_list?.length">
                         {{ $t(`nav.${sectionId}`, campaign.goal_list.length) }}
@@ -181,11 +183,11 @@
         <footer class="main-footer">
           <div class="container main-footer__navigation-social-and-credits">
             <nav
-              class="footer-nav"
-              :aria-label="$t('footerMenuLabel')"
               v-if="(Array.isArray(campaignSections) && campaignSections.length > 1)
                 || runtimeConfig.public.urlOfUseTerms
                 || runtimeConfig.public.urlOfPrivacyPolicy"
+              class="footer-nav"
+              :aria-label="$t('footerMenuLabel')"
             >
               <ul class="footer-nav__list">
                 <template v-if="Array.isArray(campaignSections) && campaignSections.length > 1">

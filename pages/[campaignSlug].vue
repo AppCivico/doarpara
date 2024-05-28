@@ -78,7 +78,7 @@ if (campaign.value) {
 
   if (!import.meta.dev && import.meta.client) {
     if (campaign.value.google_analytics) {
-      const foo = initialize(campaign.value.google_analytics);
+      initialize(campaign.value.google_analytics);
     }
   }
 }
