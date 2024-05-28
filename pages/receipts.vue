@@ -71,7 +71,7 @@ const {
     </div>
     <div>
       <div>
-        <h2>Candidato(a)</h2>
+        <h2>Candidata(o)</h2>
         <ul class="receipt-donation-list">
           <li>Pré-candidato(a): {{ donation?.donation.candidate.name || '-' }}</li>
           <li v-if="donation?.donation.candidate.cnpj">
@@ -85,7 +85,7 @@ const {
         </ul>
       </div>
       <div>
-        <h2>Doação(a)</h2>
+        <h2>Doação</h2>
         <ul class="receipt-donation-list">
           <li>Nome do doador: {{ donation?.donation.donor_name || '-' }}</li>
           <li v-if="donation?.donation.name_receita">
