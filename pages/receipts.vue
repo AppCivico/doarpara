@@ -1,6 +1,5 @@
 <!-- eslint-disable vue/block-lang -->
 <script setup>
-// import { useCampaignStore } from '@/store/campaign.ts';
 import doarPara from '../../assets/images/logo-gray.svg';
 import logo from '../../assets/images/logo-receipt.svg';
 import waves from '../../assets/images/wave.png';
@@ -17,8 +16,6 @@ definePageMeta({
     '/:campaignSlug/recibos/:hash',
   ],
 });
-// const campaignStore = useCampaignStore();
-// const {campaign} = storeToRefs(campaignStore);
 
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
@@ -30,15 +27,9 @@ const {
   pending,
 } = await useLazyFetch(`${runtimeConfig.public.publicApiBase}/donation/digest/${hash}`);
 
-// if (donation?.donation.candidate.id) {
-//   await useAsyncData('campaign', async () => campaignStore.fetchCampaignAndRewards(
-//     String(donation?.donation.candidate.id),
-//   ).then(() => true));
-// }
 </script>
 
 <template>
-  <!-- <pre>{{donation?.donation.candidate.id}}</pre> -->
   <div v-if="pending">
     Carregando
   </div>
@@ -61,7 +52,7 @@ const {
       <h3 class="receipts-page-title">
         Essa doação foi realizada para
         <strong>{{ donation?.donation.candidate.popular_name }}</strong>,
-        pré-candidata(o) a Prefeito, por
+        pré-candidata(o), por
         <span v-if="donation?.donation.candidate.party">
           {{ donation?.donation.candidate.party.acronym }} -
           {{ donation?.donation.candidate.party.name }}.
