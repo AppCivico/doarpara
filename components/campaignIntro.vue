@@ -33,8 +33,8 @@
           width="780"
           height="440"
           :src="currentVideoUrl
-            ? `https://www.youtube-nocookie.com/embed/${currentVideoUrl}?origin=${origin}&autoplay=1`
-            : `https://www.youtube-nocookie.com/embed/${videoId}?origin=${origin}&autoplay=1`"
+            ? `https://www.youtube-nocookie.com/embed/${currentVideoUrl}?origin=${origin}&autoplay=1&rel=0`
+            : `https://www.youtube-nocookie.com/embed/${videoId}?origin=${origin}&autoplay=1&rel=0`"
           frameborder="0"
           allow="autoplay; encrypted-media"
           allowfullscreen
