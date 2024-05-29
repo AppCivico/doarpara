@@ -51,7 +51,7 @@ const {
       <h3 class="receipts-page-title">
         Essa doação foi realizada para
         <strong>{{ donation?.donation.candidate.popular_name }}</strong>,
-        pré-candidato(a) a Prefeito, por
+        pré-candidata(o) a Prefeito, por
         <span v-if="donation?.donation.candidate.party">
           {{ donation?.donation.candidate.party.acronym }} -
           {{ donation?.donation.candidate.party.name }}.
@@ -71,7 +71,7 @@ const {
     </div>
     <div>
       <div>
-        <h2>Candidata(o)</h2>
+        <h2>Pré-candidata(o)</h2>
         <ul class="receipt-donation-list">
           <li>Pré-candidato(a): {{ donation?.donation.candidate.name || '-' }}</li>
           <li v-if="donation?.donation.candidate.cnpj">
@@ -121,26 +121,6 @@ const {
             :href="donation?.donation.decred_transaction_url"
           >
             <strong>{{ donation?.donation.decred_transaction_url }}</strong>
-          </a>
-        </p>
-      </div>
-      <div>
-        <h2>Informações sobre o código utilizado para essa doação</h2>
-        <p>
-          Para transparência eleitoral, além dos dados de doação, também é fundamental que
-          a tecnologia utilizado para processar essa doação seja aberta. Por isso,
-          nosso código fonte é aberto e também registramos a versão utilizada por nossos
-          servidores junto com os dados de doação na blockchain.
-        </p>
-        <p v-if="donation?.donation.git_url">
-          Versão do site:
-          <a
-            class="receipts-page-blueColor"
-            target="_blank"
-            rel="noopener noreferrer"
-            :href="donation?.donation.git_url"
-          >
-            <strong>{{ donation?.donation.git_url }}</strong>
           </a>
         </p>
       </div>
