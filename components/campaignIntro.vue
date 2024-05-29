@@ -11,7 +11,7 @@
           :srcset="campaignCoverSrcset"
         />
         <button
-          v-if="youtubeThumbnail || refParam"
+          v-if="refVideo.some(item => item.code === refParam) || youtubeThumbnail"
           class="intro__figure-switcher"
           type="button"
           :aria-label="$t('loadVideo')"
@@ -26,6 +26,7 @@
           />
         </button>
       </figure>
+
       <figure v-else class="intro__cover intro__video-container">
         <iframe
           class="intro__video"
@@ -40,7 +41,6 @@
           allowfullscreen
         />
       </figure>
-
       <div class="intro__campaign-preamble">
         <p v-if="campaign.preamble">
           {{ campaign.preamble }}
