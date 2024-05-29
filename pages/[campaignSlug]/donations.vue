@@ -37,7 +37,6 @@
                 {{ $t('receipts.amount') }}
               </th>
               <th />
-              <th />
             </tr>
           </thead>
           <tbody
@@ -83,18 +82,6 @@
                   />
                   {{ $t('toExposeData').toLowerCase() }}
                 </label>
-              </td>
-              <td class="cell--action">
-                <a
-                  v-if="donation.transaction_link"
-                  :href="donation.transaction_link"
-                  class="nowrap"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  :title="$t('receipt')"
-                >
-                  {{ $t('receipts.linkTo').toLowerCase() }}
-                </a>
               </td>
             </tr>
           </tbody>
