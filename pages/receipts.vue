@@ -50,9 +50,14 @@ const {
         Recibo
       </h1>
       <h3 class="receipts-page-title">
-        Essa doação foi realizada para
-        <strong>{{ donation?.donation.candidate.popular_name }}</strong>,
-        pré-candidata(o), por
+        Essa doação foi realizada para <strong>{{ donation?.donation.candidate.popular_name }}</strong>,
+        <span v-if="donation?.donation.candidate.campaign_donation_type === 'pre-campaign'">
+          {{ $t('electionCampaign.preRunningForOffice', { gender: donation?.donation.candidate.gender }) }}
+        </span>
+        <span v-else>
+          {{ $t('electionCampaign.runningForOffice', { gender: donation?.donation.candidate.gender }) }}
+        </span> {{ $t(`governmentOffices.${donation?.donation.candidate.office.code}`, { gender: donation?.donation.candidate.gender }) }}
+        por
         <span v-if="donation?.donation.candidate.party">
           {{ donation?.donation.candidate.party.acronym }} -
           {{ donation?.donation.candidate.party.name }}.
@@ -80,8 +85,8 @@ const {
           </li>
           <li>CPF: {{ formatCPF(donation?.donation.candidate.cpf) || '-' }}</li>
           <li>Partido: {{ donation?.donation.candidate.party.acronym || '-' }}</li>
-          <li v-if="donation?.donation.candidate.office.name">
-            Cargo: {{ donation?.donation.candidate.office.name }}
+          <li v-if="donation?.donation.candidate.office.code">
+            Cargo: {{ $t(`governmentOffices.${donation?.donation.candidate.office.code}`, { gender: donation?.donation.candidate.gender }) }}
           </li>
         </ul>
       </div>
