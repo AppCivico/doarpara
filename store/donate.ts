@@ -155,7 +155,13 @@ export const useDonateStore = defineStore('toDonate', {
       const runtimeConfig = useRuntimeConfig();
 
       try {
-        const response:{ device_authorization_token_id: string } = await $fetch(`${runtimeConfig.public.privateApiBase}/api2/device-authentication`, { method: 'POST', ...params });
+        const response:{ device_authorization_token_id: string } = await $fetch(
+          `${runtimeConfig.public.privateApiBase}/api2/device-authentication`,
+          {
+            method: 'POST',
+            ...params,
+          },
+        );
         this.pending.validatingDevice = false;
 
         if (response?.device_authorization_token_id) {
@@ -270,7 +276,7 @@ export const useDonateStore = defineStore('toDonate', {
 
         const response = await $fetch<DonationResponse>(`${runtimeConfig.public.privateApiBase}/api2/donations/${donationId}`, {
           method: 'POST',
-          query: {
+          body: {
             device_authorization_token_id: token,
             credit_card_token: payload.id,
             cc_hash: payload.cc_hash,
