@@ -30,7 +30,7 @@
         v-if="!chosenCustomPledge"
         type="button"
         class="donation-values__value donation-values__value--custom-button like-a__button"
-        @click="() => { chosenCustomPledge = pledge; }"
+        @click="openCustomPledge(pledge)"
       >
         {{ $t(`pledges.${pledge}`) }}
       </button>
@@ -47,6 +47,7 @@
         </label>
         <input
           :id="runtimeConfig.public.queryStringSpecialParameters.amount"
+          ref="customPledgeField"
           v-model.number="pledgeValue"
           v-focus.select
           type="number"
@@ -93,11 +94,12 @@ const props = defineProps<{
 }>();
 
 const runtimeConfig = useRuntimeConfig();
-
 const campaignStore = useCampaignStore();
 const { minimumDonation } = storeToRefs(campaignStore); // TODO: move from using store to props
+
 const chosenCustomPledge: Ref<string> = ref('');
 const pledgeValue = ref(0);
+const customPledgeField = ref(null);
 
 const sortedPledgeList = computed(() => {
   const { pledge_list: pledgeList } = props.campaign;
@@ -136,6 +138,19 @@ const minimumSuggestedDonation = computed((): number => {
 
 const isPledgeValueValid = computed(() => !(pledgeValue.value < (minimumDonation?.value || 0) / 100
   || pledgeValue.value > (maximumDonation?.value || Infinity) / 100));
+
+async function openCustomPledge(pledge: string) {
+  chosenCustomPledge.value = pledge;
+  await nextTick();
+
+  if (customPledgeField.value?.[0] && customPledgeField.value[0] as any instanceof HTMLElement) {
+    (customPledgeField.value[0] as HTMLElement).scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'nearest',
+    });
+  }
+}
 
 if (minimumDonation.value) {
   pledgeValue.value = minimumSuggestedDonation.value < +Infinity
