@@ -72,7 +72,7 @@
   &:disabled {
     cursor: not-allowed;
 
-    filter: grayscale(100%);
+    filter: grayscale(50%);
   }
 
   &[aria-busy='true'] {
