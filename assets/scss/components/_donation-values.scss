@@ -115,7 +115,7 @@
   flex-basis: 25%;
   flex-grow: 1;
 
-  text-indent: calc(101% + my.$gutter);
+  text-indent: calc(101% + my.$gutter * 2);
 
   background-image: my.image('icons/icon-arrow-triangle-fill-right.svg');
   background-position: 50%;
