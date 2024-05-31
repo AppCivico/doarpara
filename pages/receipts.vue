@@ -177,14 +177,14 @@ const {
   text-decoration: none;
 }
 
-.receipts-page h2{
+.receipts-page h2 {
   margin: 0 0 18px;
 
   font-size: 20px;
   color: #313337;
 }
 
-.receipts-page h3{
+.receipts-page h3 {
   margin: 0 0 18px;
 
   font-size: 20px;
@@ -220,9 +220,9 @@ const {
   color: #2667ff
 }
 
-.receipts-page-title{
-  color: #2667ff;
+.receipts-page-title {
   font-weight: normal;
+  color: #2667ff;
 }
 
 .receipts-page {
