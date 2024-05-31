@@ -11,6 +11,8 @@
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
 
+let poolingInterval: ReturnType<typeof setInterval> | null = null;
+
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 
@@ -29,15 +31,27 @@ function storeReferral() {
   }
 }
 
-if (import.meta.client) {
-  onMounted(() => {
-    storeReferral();
-  });
-}
-
 // Maybe the campaign is already loaded on `layouts/default.vue`
 if (!campaign.value) {
   await useAsyncData('campaign', async () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true));
+}
+
+if (import.meta.client) {
+  onMounted(() => {
+    if (runtimeConfig.public.campaignPoolingInterval) {
+      poolingInterval = setInterval(() => {
+        campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
+      }, runtimeConfig.public.campaignPoolingInterval);
+    }
+
+    storeReferral();
+  });
+
+  onBeforeUnmount(() => {
+    if (poolingInterval) {
+      clearInterval(poolingInterval);
+    }
+  });
 }
 
 if (campaign.value) {

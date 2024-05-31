@@ -42,7 +42,12 @@ export default defineNuxtConfig({
       title: process.env.APP_TITLE
         || 'DoarPara',
 
-      isIuguTesting: Number(process.env.IUGU_IS_TESTING) === 0 ? 0 : 1,
+      isIuguTesting: Number(process.env.IUGU_IS_TESTING) === 0
+        ? 0
+        : 1,
+
+      campaignPoolingInterval: Number(process.env.CAMPAIGN_POOLING_INTERVAL)
+        || 0,
 
       masks: {
         creditCardExpirationCsc: process.env.MASKS_CREDIT_CARD_EXPIRATION_CSC
