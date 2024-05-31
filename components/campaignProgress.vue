@@ -1,14 +1,13 @@
 <template>
   <div class="campaign-progress">
     <data class="campaign-progress__total" :value="totalAmount">
-      <output for="progress-bar" class="campaign-progress__total-value">
-        <AnimatedNumber
-          for="progress-bar"
-          class="campaign-progress__total-value"
-          :value="totalAmount / 100"
-          :formatter="($v: number) => $n($v, 'currency', { maximumFractionDigits: 0 })"
-        />
-      </output>
+      <AnimatedNumber
+        for="progress-bar"
+        class="campaign-progress__total-value"
+        as="output"
+        :value="totalAmount / 100"
+        :formatter="($v: number) => $n($v, 'currency', { maximumFractionDigits: 0 })"
+      />
       {{ $t('totalAmount').toLowerCase() }}
     </data>
 
