@@ -26,36 +26,39 @@ const props = defineProps({
   },
 });
 
-let interval: NodeJS.Timeout | null = null;
+let interval: ReturnType<typeof setInterval> | null = null;
 
-const displayNumber = ref<number>(props.value);
+const displayNumber = ref<number>(0);
 const formattedNumber = computed(() => props.formatter(displayNumber.value));
 
-watch(
-  () => props.value,
-  (newVal: number) => {
-    if (interval) {
-      clearInterval(interval);
-    }
-
-    if (newVal === displayNumber.value) {
-      return;
-    }
-
-    interval = setInterval(() => {
-      if (Math.floor(displayNumber.value) !== Math.floor(newVal)) {
-        let change = (newVal - displayNumber.value) / Number(props.slowness) || 5;
-        change = change >= 0
-          ? Math.ceil(change)
-          : Math.floor(change);
-        displayNumber.value += change;
-      } else {
-        displayNumber.value = newVal;
-        if (interval) {
-          clearInterval(interval);
-        }
+if (import.meta.client) {
+  watch(
+    () => props.value,
+    (newVal: number) => {
+      if (interval) {
+        clearInterval(interval);
       }
-    }, 20);
-  },
-);
+
+      if (newVal === displayNumber.value) {
+        return;
+      }
+
+      interval = setInterval(() => {
+        if (Math.floor(displayNumber.value) !== Math.floor(newVal)) {
+          let change = (newVal - displayNumber.value) / Number(props.slowness) || 5;
+          change = change >= 0
+            ? Math.ceil(change)
+            : Math.floor(change);
+          displayNumber.value += change;
+        } else {
+          displayNumber.value = newVal;
+          if (interval) {
+            clearInterval(interval);
+          }
+        }
+      }, 20);
+    },
+    { immediate: true },
+  );
+}
 </script>
