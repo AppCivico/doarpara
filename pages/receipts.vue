@@ -77,9 +77,21 @@ const {
     </div>
     <div>
       <div>
-        <h2>Pré-candidata(o)</h2>
+        <h2 v-if="donation?.donation.candidate.campaign_donation_type === 'pre-campaign'">
+          {{ $t('electionCampaign.preRunningForName', { gender: donation?.donation.candidate.gender }) }}
+        </h2>
+        <h2 v-else>
+          {{ $t('electionCampaign.preRunningForName', { gender: donation?.donation.candidate.gender }) }}
+        </h2>
         <ul class="receipt-donation-list">
-          <li>Pré-candidato(a): {{ donation?.donation.candidate.name || '-' }}</li>
+          <li v-if="donation?.donation.candidate.campaign_donation_type === 'pre-campaign'">
+            {{ $t('electionCampaign.preRunningForName', { gender: donation?.donation.candidate.gender }) }}:
+            {{ donation?.donation.candidate.name || '-' }}
+          </li>
+          <li v-else>
+            {{ $t('electionCampaign.preRunningForName', { gender: donation?.donation.candidate.gender }) }}:
+            {{ donation?.donation.candidate.name || '-' }}
+          </li>
           <li v-if="donation?.donation.candidate.cnpj">
             CNPJ: {{ formatCNPJ(donation?.donation.candidate.cnpj) }}
           </li>

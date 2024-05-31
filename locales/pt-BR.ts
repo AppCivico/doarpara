@@ -80,6 +80,14 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
       },
       gender,
     ),
+    preRunningForName: ({ values: { gender } }: GenderData) => showGenderedVersion(
+      {
+        female: 'Pré-candidata',
+        male: 'Pré-candidato',
+        other: 'Pré-candidata(o)',
+      },
+      gender,
+    ),
     runningForOffice: ({ values: { gender } }: GenderData) => showGenderedVersion(
       {
         female: 'Candidata a',
