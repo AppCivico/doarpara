@@ -11,7 +11,7 @@
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
 
-let poolingInterval: ReturnType<typeof setInterval> | null = null;
+let pollingInterval: ReturnType<typeof setInterval> | null = null;
 
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
@@ -39,8 +39,10 @@ if (!campaign.value) {
 if (import.meta.client) {
   onMounted(() => {
     if (runtimeConfig.public.campaignPoolingInterval) {
-      poolingInterval = setInterval(() => {
-        campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
+      pollingInterval = setInterval(() => {
+        if (document.visibilityState === 'visible' || document.hidden === false) {
+          campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
+        }
       }, runtimeConfig.public.campaignPoolingInterval);
     }
 
@@ -48,8 +50,8 @@ if (import.meta.client) {
   });
 
   onBeforeUnmount(() => {
-    if (poolingInterval) {
-      clearInterval(poolingInterval);
+    if (pollingInterval) {
+      clearInterval(pollingInterval);
     }
   });
 }
