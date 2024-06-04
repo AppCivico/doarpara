@@ -7,7 +7,7 @@
           class="intro__image"
           width="780"
           height="440"
-          :src="campaignDefaultCover || youtubeThumbnail"
+          :src="campaignDefaultCover || currentVideoUrl.thumbnailUrl || youtubeThumbnail"
           :srcset="campaignCoverSrcset"
         />
         <button
@@ -33,8 +33,8 @@
           :title="$t('campaignVideo')"
           width="780"
           height="440"
-          :src="currentVideoUrl
-            ? `https://www.youtube-nocookie.com/embed/${currentVideoUrl}?origin=${origin}&autoplay=1&color=white&rel=0`
+          :src="currentVideoUrl.videoUrl
+            ? `https://www.youtube-nocookie.com/embed/${currentVideoUrl.videoUrl}?origin=${origin}&autoplay=1&color=white&rel=0`
             : `https://www.youtube-nocookie.com/embed/${videoId}?origin=${origin}&autoplay=1&color=white&rel=0`"
           frameborder="0"
           allow="autoplay; encrypted-media"
@@ -74,13 +74,14 @@
 <script setup lang="ts">
 import type { Campaign } from '@/doar-para.d.ts';
 
+const route = useRoute();
+
 const props = defineProps<{
   campaign: Campaign;
 }>();
 
 const refVideo = props.campaign.refs_videos;
-const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-const refParam = urlParams ? urlParams.get('ref')?.replace(/"/g, '') : null;
+const refParam = route.query.ref;
 
 const showVideo = ref(false);
 
@@ -92,15 +93,17 @@ const videoId = computed<string | null | undefined>(() => getYoutubeId(props.cam
 const youtubeThumbnail = computed(() => getYoutubeThumbnail(props.campaign.video));
 
 const currentVideoUrl = computed(() => {
-  let url = '';
+  let videoUrl = '';
+  let thumbnailUrl = '';
+
   if (refParam) {
-    refVideo.forEach((item) => {
-      if (item.code === refParam) {
-        url = getYoutubeId(item.video_url);
-      }
-    });
+    const itemRefParam = refVideo.find((item) => item.code === refParam);
+    if (itemRefParam) {
+      videoUrl = getYoutubeId(itemRefParam.video_url);
+      thumbnailUrl = getYoutubeThumbnail(itemRefParam.video_url);
+    }
   }
-  return url;
+  return { videoUrl, thumbnailUrl };
 });
 
 const campaignDefaultCover = computed(() => {
