@@ -68,6 +68,14 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     street: 'Endereço',
     submit: 'Doar {amount}',
   },
+  testimoniesForm: {
+    birthDate: 'Data de nascimento',
+    content: 'Depoimento',
+    email: 'E-mail',
+    family_name: 'Sobrenome',
+    name: 'Nome',
+    phone_number: 'Telefone',
+  },
   electionCampaign: {
     ballotNumber: 'Número',
     politicalParty: 'Partido',
@@ -150,7 +158,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     faq: 'FAQ',
     goals: 'Meta | Metas',
     rewards: 'Recompensa',
-    testimonies: 'Testemunho | Testemunhos',
+    testimonies: 'Depoimento | Depoimentos',
   },
   navigationLabel: 'Seções dessa campanha',
   noDonations: 'Não há doações',

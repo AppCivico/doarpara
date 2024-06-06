@@ -26,7 +26,7 @@ const validSections:CampaignSection[] = [
   // 'faq',
   'goals',
   // 'rewards', // available, but not folly tested
-  // 'testimonies',
+  'testimonies',
 ];
 
 const validSectionsOrder: Record<CampaignSection, number> = validSections.reduce(
@@ -41,8 +41,8 @@ export const useCampaignStore = defineStore('campaign', {
   state: (): State => ({
     campaign: null,
     rewards: [],
-    requireSections: ['description', 'donations'],
-    validSections,
+    requireSections: ['description', 'donations', 'testimonies'],
+    validSections: [],
     pending: false,
     error: null,
   }),
