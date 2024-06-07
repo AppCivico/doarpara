@@ -1,126 +1,136 @@
 <template>
-  <div v-if="pending">
-    Carregando...
-  </div>
-  <div class="depositions-page-content">
-    <article v-if="depositions?.candidate_reviews">
-      <h1>Conheça o motivo pelo qual algumas pessoas apoiam {{ campaign?.name }}</h1>
-      <div
-        v-for="review in depositions?.candidate_reviews"
-        :key="review.id"
-      >
-        <div class="depositions-item">
-          <blockquote><p>{{ review.content }}</p></blockquote>
-          <cite>{{ review.first_name }} {{ review.family_name }}</cite>
-          <div v-if="review.reply" class="depositions-reply">
-            <p>{{ review.reply }}</p>
-            <img class="colophon__creator-avatar" :src="campaign?.fundraiser.avatar.url" alt="Pré candidato">
+  <div>
+    <pre>{{ campaign }}</pre>
+    <div v-if="pending">
+      Carregando...
+    </div>
+    <div class="depositions-page-content">
+      <article v-if="depositions?.candidate_reviews.length">
+        <h1>
+          Conheça o motivo pelo qual algumas pessoas apoiam {{ campaign?.name }}
+        </h1>
+        {{ depositions }}
+        <div
+          v-for="review in depositions?.candidate_reviews"
+          :key="review.id"
+        >
+          <div class="depositions-item">
+            <blockquote><p>{{ review.content }}</p></blockquote>
+            <cite>{{ review.first_name }} {{ review.family_name }}</cite>
+            <div v-if="review.reply" class="depositions-reply">
+              <p>{{ review.reply }}</p>
+              <img
+                class="colophon__creator-avatar"
+                :src="campaign?.fundraiser.avatar.url"
+                alt="Pré candidato"
+              >
+            </div>
           </div>
         </div>
-      </div>
-    </article>
-    <article>
-      <div>
-        <h1 class="depositions-page-title">
-          Deixe seu depoimento
-        </h1>
-        <form
-          enctype="multipart/form-data"
-          @submit.prevent="submitTestimonies"
-        >
-          <fieldset class="flexible-fieldset">
-            <p data-field-size="50">
-              <label for="email" class="label--of-required">
-                {{ $t('testimoniesForm.email') }}
-              </label>
-              <input
-                id="email"
-                v-model="donor.email"
-                type="email"
-                name="email"
-                autocomplete="email"
-                required
-              >
-            </p>
+      </article>
+      <article>
+        <div>
+          <h1 class="depositions-page-title">
+            Deixe seu depoimento
+          </h1>
+          <form
+            enctype="multipart/form-data"
+            @submit.prevent="submitTestimonies"
+          >
+            <fieldset class="flexible-fieldset">
+              <p data-field-size="50">
+                <label for="email" class="label--of-required">
+                  {{ $t('testimoniesForm.email') }}
+                </label>
+                <input
+                  id="email"
+                  v-model="donor.email"
+                  type="email"
+                  name="email"
+                  autocomplete="email"
+                  required
+                >
+              </p>
 
-            <p data-field-size="50">
-              <label for="first_name" class="label--of-required">
-                {{ $t('testimoniesForm.name') }}
-              </label>
-              <input
-                id="first-name"
-                v-model="donor.first_name"
-                v-focus
-                type="text"
-                name="first_name"
-                autocomplete="given-name"
-                required
-              >
-            </p>
+              <p data-field-size="50">
+                <label for="first_name" class="label--of-required">
+                  {{ $t('testimoniesForm.name') }}
+                </label>
+                <input
+                  id="first-name"
+                  v-model="donor.first_name"
+                  v-focus
+                  type="text"
+                  name="first_name"
+                  autocomplete="given-name"
+                  required
+                >
+              </p>
 
-            <p data-field-size="50">
-              <label for="family_name" class="label--of-required">
-                {{ $t('testimoniesForm.family_name') }}
-              </label>
-              <input
-                id="family_name"
-                v-model="donor.last_name"
-                type="text"
-                name="family_name"
-                autocomplete="family_name"
-                required
-              >
-            </p>
+              <p data-field-size="50">
+                <label for="family_name" class="label--of-required">
+                  {{ $t('testimoniesForm.family_name') }}
+                </label>
+                <input
+                  id="family_name"
+                  v-model="donor.last_name"
+                  type="text"
+                  name="family_name"
+                  autocomplete="family_name"
+                  required
+                >
+              </p>
 
-            <p data-field-size="50">
-              <label for="phone_number">
-                {{ $t('testimoniesForm.phone_number') }}
-              </label>
-              <input
-                id="phone"
-                v-model="donor.phone_number"
-                v-maska
-                data-maska="['(##) ####-####', '(##) #####-####']"
-                type="tel"
-                name="phone"
-                autocomplete="tel-national"
-                inputmode="numeric"
-                placeholder="(00) 00000-0000"
-                minlength="14"
-              />
-            </p>
-          </fieldset>
+              <p data-field-size="100">
+                <label for="phone_number">
+                  {{ $t('testimoniesForm.phone_number') }}
+                </label>
+                <input
+                  id="phone"
+                  v-model="donor.phone_number"
+                  v-maska
+                  data-maska="['(##) ####-####', '(##) #####-####']"
+                  type="tel"
+                  name="phone"
+                  autocomplete="tel-national"
+                  inputmode="numeric"
+                  placeholder="(00) 00000-0000"
+                  minlength="14"
+                />
+              </p>
+            </fieldset>
 
-          <fieldset class="depositions-page-form">
-            <p data-field-size="50">
-              <label for="content" class="label--of-required">
-                {{ $t('testimoniesForm.content') }}
-              </label>
-              <textarea
-                id="content"
-                v-model="content"
-                type="text"
-                name="content"
-                rows="4"
-                maxlength="220"
-                required
-                @input="updateCounter"
-              />
-            </p>
-            <span>Faltam {{ count }} caracteres</span>
-          </fieldset>
+            <fieldset class="depositions-page-form">
+              <p data-field-size="50">
+                <label for="content" class="label--of-required">
+                  {{ $t('testimoniesForm.content') }}
+                </label>
+                <textarea
+                  id="content"
+                  v-model="content"
+                  type="text"
+                  name="content"
+                  rows="4"
+                  maxlength="220"
+                  required
+                  @input="updateCounter"
+                />
+              </p>
+              <span>Faltam {{ count }} caracteres</span>
+            </fieldset>
 
-          <fieldset>
-            <div v-if="submissionSuccess" class="request-message-depositions">
-              Depoimento enviado com sucesso, aguardando aprovação!
-            </div>
-            <button type="submit">
-              Enviar
-            </button>
-          </fieldset>
-        </form>
-      </div>
-    </article>
+            <fieldset>
+              <div v-if="submissionSuccess" class="request-message-depositions">
+                Depoimento enviado com sucesso, aguardando aprovação!
+              </div>
+              <button type="submit">
+                Enviar
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </article>
+    </div>
   </div>
 </template>
 <!-- eslint-disable-next-line vue/block-lang -->
@@ -130,7 +140,7 @@ import { useDonateStore } from '@/store/donate.ts';
 
 definePageMeta({
   name: 'testimonies',
-  path: '/:campaignSlug/depoimentos',
+  path: '/:campaignSlug/depoimento',
 });
 
 const campaignStore = useCampaignStore();

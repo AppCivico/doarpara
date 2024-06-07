@@ -41,8 +41,8 @@ export const useCampaignStore = defineStore('campaign', {
   state: (): State => ({
     campaign: null,
     rewards: [],
-    requireSections: ['description', 'donations', 'testimonies'],
-    validSections: [],
+    requireSections: ['description', 'donations'],
+    validSections: ['testimonies'],
     pending: false,
     error: null,
   }),
