@@ -3,33 +3,43 @@ import type {
   CampaignSection,
   PaymentMethod,
   Reward,
-} from '@/doar-para.d.ts';
+} from '../doar-para.d.ts';
 
 type MinimumDonationPerMethod = {
   [key in PaymentMethod]?: number
 };
 
-interface State {
+type State = {
   campaign: Campaign | null;
   rewards: Reward[];
-  requireSections: CampaignSection[];
-  validSections: CampaignSection[];
 
   pending: boolean;
   error: null | unknown;
-}
+};
 
-// sections which already have views on the right order
-const validSections:CampaignSection[] = [
-  'description',
-  'donations',
-  // 'faq',
-  'goals',
-  // 'rewards', // available, but not folly tested
-  'testimonies',
-];
+type SectionsConfig = {
+  valid:CampaignSection[];
+  required:CampaignSection[];
+};
 
-const validSectionsOrder: Record<CampaignSection, number> = validSections.reduce(
+const sectionsConfig:SectionsConfig = {
+  // sections which already have views on the right order
+  valid: [
+    'description',
+    'donations',
+    // 'faq',
+    'goals',
+    // 'rewards', // available, but not fully tested
+    'testimonies',
+  ],
+  // List of sections that should be shown even wether absent from API response
+  required: [
+    'description',
+    'donations',
+  ],
+};
+
+const validSectionsOrder: Record<CampaignSection, number> = sectionsConfig.valid.reduce(
   (acc, section, i) => {
     acc[section] = i;
     return acc;
@@ -41,8 +51,6 @@ export const useCampaignStore = defineStore('campaign', {
   state: (): State => ({
     campaign: null,
     rewards: [],
-    requireSections: ['description', 'donations'],
-    validSections: ['testimonies'],
     pending: false,
     error: null,
   }),
@@ -80,15 +88,20 @@ export const useCampaignStore = defineStore('campaign', {
   getters: {
     isCampaignLoaded: (state) => state.campaign !== null,
 
-    campaignSections: (({ campaign, requireSections }): CampaignSection[] => (
+    campaignSections: (({ campaign }): CampaignSection[] => (
       Array.isArray(campaign?.campaign_section_list)
         ? (campaign?.campaign_section_list || [])
-          .filter((s: CampaignSection) => !requireSections.includes(s))
-          .filter((s: CampaignSection) => (s === 'goals' && campaign.goal_list?.length)
-          || (!!campaign?.[s as keyof Campaign] && validSections.includes(s)))
-          .concat(requireSections)
+          // filter invalid sections and goals, in case its list is empty
+          .filter((section: CampaignSection) => (section === 'goals'
+            ? (campaign.goal_list?.length && sectionsConfig.valid.includes(section))
+            : sectionsConfig.valid.includes(section)))
+          // combine with list of required sections
+          .concat(sectionsConfig.required
+            // preventing duplicates
+            .filter((section, _i, sections) => sections.indexOf(section) < 0))
+          // sort sections the same as the list of the required ones
           .sort((a, b) => validSectionsOrder[a] - validSectionsOrder[b])
-        : requireSections
+        : sectionsConfig.required
     )),
 
     minimumDonationPerMethod: (({ campaign }) => {

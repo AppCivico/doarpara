@@ -1,6 +1,5 @@
 <template>
   <div>
-    <pre>{{ campaign }}</pre>
     <div v-if="pending">
       Carregando...
     </div>
@@ -9,7 +8,7 @@
         <h1>
           Conheça o motivo pelo qual algumas pessoas apoiam {{ campaign?.name }}
         </h1>
-        {{ depositions }}
+
         <div
           v-for="review in depositions?.candidate_reviews"
           :key="review.id"
