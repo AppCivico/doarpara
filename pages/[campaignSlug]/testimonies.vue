@@ -139,7 +139,7 @@ import { useDonateStore } from '@/store/donate.ts';
 
 definePageMeta({
   name: 'testimonies',
-  path: '/:campaignSlug/depoimento',
+  path: '/:campaignSlug/depoimentos',
 });
 
 const campaignStore = useCampaignStore();
