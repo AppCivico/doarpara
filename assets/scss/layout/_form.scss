@@ -301,6 +301,10 @@ form br {
 
     cursor: wait;
   }
+
+  + small {
+    font-size: my.ms-step(-1);
+  }
 }
 
 :enabled {

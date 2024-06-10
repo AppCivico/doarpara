@@ -2,43 +2,26 @@
 
 .signage {}
 
-%signage__text {
-  font-size: my.ms-step(-1);
-  font-weight: my.font-weight('text');
-}
-
 .signage__text {
-  @extend %signage__text;
-
   color: my.text-contrast(my.palette('neutral', 'white'), my.palette('signage', 'default'));
 }
 
 .signage__text--primary {
-  @extend %signage__text;
-
   color: my.text-contrast(my.palette('neutral', 'white'), my.palette('signage', 'primary'));
 }
 
 .signage__text--success {
-  @extend %signage__text;
-
   color: my.text-contrast(my.palette('neutral', 'white'), my.palette('signage', 'success'));
 }
 
 .signage__text--info {
-  @extend %signage__text;
-
   color: my.text-contrast(my.palette('neutral', 'white'), my.palette('signage', 'info'));
 }
 
 .signage__text--warning {
-  @extend %signage__text;
-
   color: my.text-contrast(my.palette('neutral', 'white'), my.palette('signage', 'warning'));
 }
 
 .signage__text--danger {
-  @extend %signage__text;
-
   color: my.text-contrast(my.palette('neutral', 'white'), my.palette('signage', 'danger'));
 }
