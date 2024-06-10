@@ -38,16 +38,9 @@ const title = computed(() => (route.meta.title
   ? `${route.meta.title} • ${runtimeConfig.public.title}`
   : runtimeConfig.public.title));
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .page-wrapper--receipt {
-  max-width: my.$max-width--dialog;
-  /* 660px */
   padding-top: my.$gutter * 4;
   padding-bottom: my.$gutter * 4;
-
-  // @media screen and (min-width: my.breakpoint('tablet__portrait')) {
-  //   padding-top: my.$gutter * 7;
-  //   padding-bottom: my.$gutter * 7;
-  // }
 }
 </style>
