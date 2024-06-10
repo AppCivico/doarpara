@@ -26,9 +26,7 @@ const {
   error,
   pending,
 } = await useLazyFetch(`${runtimeConfig.public.publicApiBase}/donation/digest/${hash}`);
-
 </script>
-
 <template>
   <div v-if="pending">
     Carregando
@@ -53,7 +51,7 @@ const {
       </h1>
 
     <h2
-      v-if="receipt?.refunded_at_human"
+      v-if="receipt?.donation.refunded_at_human"
       class="receipts-page__refunded-at"
     >
       Recibo cancelado
@@ -74,6 +72,7 @@ const {
         </span>
       </h3>
     </header>
+
     <section>
       <p>
         As doações eleitorais são muito importantes para construção de projetos políticos,
@@ -118,12 +117,12 @@ const {
         <h2>Doação</h2>
 
         <dl>
-          <div v-if="receipt?.is_irregular">
+          <div v-if="receipt?.donation.is_irregular">
             <dt>Irregular / em análise:</dt>
             <dd
               class="signage__text--danger"
             >
-              {{ receipt.irregular_reason }}
+              {{ receipt?.donation.irregular_reason }}
             </dd>
           </div>
         </dl>
