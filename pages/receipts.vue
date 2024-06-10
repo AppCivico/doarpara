@@ -38,14 +38,16 @@ const {
   </div>
   <section v-else class="receipts-page">
     <header>
-      <nav>
-        <a href="https://blog.doarpara.com.br/">
-          <img :src="logo" alt="Logo doarPara">
-        </a>
-        <img :src="receipt?.donation.candidate.avatar" alt="Pré candidato">
-      </nav>
-    </header>
-    <div>
+      <a href="https://blog.doarpara.com.br/">
+        <img :src="logo" alt="Logo doarPara">
+      </a>
+
+      <img
+        class="receipts-page__candidate-avatar"
+        :src="receipt?.donation.candidate.avatar"
+        :alt="`fotografia de ${receipt?.donation.candidate.popular_name}`"
+      >
+
       <h1 style="color: #313337">
         Recibo
       </h1>
@@ -63,6 +65,8 @@ const {
           {{ receipt?.donation.candidate.party.name }}.
         </span>
       </h3>
+    </header>
+    <section>
       <p>
         As doações eleitorais são muito importantes para construção de projetos políticos,
         porém é fundamental que as plataformas de financiamento coletivo, sociedade e o próprio
@@ -74,9 +78,9 @@ const {
         todas suas doações financeiras para comprovar a integridade e honestidade no seu processo
         de captação de recursos.
       </p>
-    </div>
+    </section>
     <div>
-      <div>
+      <section>
         <h2 v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
           {{ $t('electionCampaign.preRunningForName', { gender: receipt?.donation.candidate.gender }) }}
         </h2>
@@ -101,8 +105,8 @@ const {
             Cargo: {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}`, { gender: receipt?.donation.candidate.gender }) }}
           </li>
         </ul>
-      </div>
-      <div>
+      </section>
+      <section>
         <h2>Doação</h2>
         <ul class="receipt-donation-list">
           <li>Nome do doador: {{ receipt?.donation.donor_name || '-' }}</li>
@@ -115,15 +119,15 @@ const {
           <li>Valor:{{ $n(receipt?.donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) || '-' }}</li>
           <li>Forma de pagamento: {{ receipt?.donation.payment_method_human || '-' }}</li>
         </ul>
-      </div>
-      <div>
+      </section>
+      <section>
         <h2>Entidade arrecadadora</h2>
         <ul class="receipt-donation-list">
           <li>Razão social: AppCivico Consultoria Ltda.</li>
           <li>CNPJ: 08.746.641/0001-00 </li>
         </ul>
-      </div>
-      <div>
+      </section>
+      <section>
         <h2>Informações sobre o registro na blockchain</h2>
         <p>
           Para que sua doação tenha garantias, usamos o Blockchain, uma ferramenta
@@ -142,7 +146,7 @@ const {
             <strong>{{ receipt?.donation.decred_transaction_url }}</strong>
           </a>
         </p>
-      </div>
+      </section>
     </div>
     <footer class="footer">
       <img :src="doarPara" alt="logo">
@@ -168,10 +172,22 @@ const {
   </section>
   <img v-if="!pending && !error" class="waves-footer" :src="waves" alt="Ondas">
 </template>
+<style lang="scss">
 
-<style>
 .background-page-receipt {
   background: #ebebeb;
+}
+
+.receipts-page {
+  max-width: my.$max-width--dialog;
+  padding-top: my.$gutter * 2;
+  padding-right: my.$gutter * 3;
+  padding-bottom: my.$gutter * 2;
+  padding-left: my.$gutter * 3;
+  margin: auto;
+
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
 }
 
 .receipts-page a {
@@ -195,20 +211,18 @@ const {
   padding-left: 20px;
 }
 
-.receipts-page nav {
-  display: flex;
+.receipts-page__candidate-avatar {
+  display: block;
 
-  flex-direction: column;
-
-  align-items: flex-start;
-}
-
-.receipts-page nav > img {
-  max-width: 200px;
-  padding: 25px 0 40px;
+  width: 200px;
+  max-width: 100%;
   margin: auto;
+  margin-top: my.$gutter;
+    margin-right: auto;
+    margin-bottom: my.$gutter;
+    margin-left: auto;
 
-  border-radius: 100%;
+  border-radius: 999em;
 }
 
 .receipts-page footer {
@@ -226,25 +240,16 @@ const {
   color: #2667ff;
 }
 
-.receipts-page {
-  max-width: 619px;
-  padding: 50px 60px;
-  margin: auto;
-
-  background: #ffffff;
-  border-radius: 20px 20px 0 0;
-}
-
-.receipts-page div {
-  padding-bottom: 30px;
+.receipts-page section {
+  padding-bottom: my.$gutter;
 }
 
 .receipts-page .social {
   flex-direction: row;
 
-  column-gap: 30px;
+  column-gap: my.$gutter;
 
-  padding-top: 40px;
+  padding-top: my.$gutter * 2;
 }
 
 .social img {
@@ -252,7 +257,7 @@ const {
 }
 
 .footer img {
-  padding-bottom: 40px;
+  padding-bottom: my.$gutter * 2;
   margin: 0;
 }
 
