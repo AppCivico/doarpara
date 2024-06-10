@@ -158,7 +158,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     faq: 'FAQ',
     goals: 'Meta | Metas',
     rewards: 'Recompensa',
-    testimonies: 'Depoimento | Depoimentos',
+    testimonies: 'Depoimentos',
   },
   navigationLabel: 'Seções dessa campanha',
   noDonations: 'Não há doações',
