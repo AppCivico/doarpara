@@ -51,6 +51,14 @@ const {
       <h1 style="color: #313337">
         Recibo
       </h1>
+
+    <h2
+      v-if="receipt?.refunded_at_human"
+      class="receipts-page__refunded-at"
+    >
+      Recibo cancelado
+    </h2>
+
       <h3 class="receipts-page-title">
         Essa doação foi realizada para <strong>{{ receipt?.donation.candidate.popular_name }}</strong>,
         <span v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
@@ -108,6 +116,18 @@ const {
       </section>
       <section>
         <h2>Doação</h2>
+
+        <dl>
+          <div v-if="receipt?.is_irregular">
+            <dt>Irregular / em análise:</dt>
+            <dd
+              class="signage__text--danger"
+            >
+              {{ receipt.irregular_reason }}
+            </dd>
+          </div>
+        </dl>
+
         <ul class="receipt-donation-list">
           <li>Nome do doador: {{ receipt?.donation.donor_name || '-' }}</li>
           <li v-if="receipt?.donation.name_receita">
@@ -173,12 +193,15 @@ const {
   <img v-if="!pending && !error" class="waves-footer" :src="waves" alt="Ondas">
 </template>
 <style lang="scss">
+@use '@/assets/scss/abstracts/constants/font-stacks' as fs;
 
 .background-page-receipt {
   background: #ebebeb;
 }
 
 .receipts-page {
+  position: relative;
+
   max-width: my.$max-width--dialog;
   padding-top: my.$gutter * 2;
   padding-right: my.$gutter * 3;
@@ -188,6 +211,41 @@ const {
 
   background: #ffffff;
   border-radius: 20px 20px 0 0;
+}
+
+.receipts-page__refunded-at {
+  position: absolute;
+  top: my.$gutter;
+  right: my.$gutter;
+  z-index: my.layer('default');
+
+  width: max-content;
+  padding-top: my.$gutter * 0.5;
+  padding-right: 1em;
+  padding-bottom: my.$gutter * 0.5;
+  padding-left: 1em;
+
+  font-family: fs.$IMPACT-FONT-STACK;
+  font-size: ms-step(2);
+  color: my.text-contrast(my.palette('neutral', 'white'), my.palette('signage', 'danger'));
+  text-align: center;
+  text-transform: uppercase;
+
+  pointer-events: none;
+
+  border: 3px dashed currentColor;
+  border-radius: 12px;
+  opacity: 0.85;
+
+  transform: translateX(25%) translateY(50%) rotate(45deg);
+
+  @media screen and (min-width: my.breakpoint('phone__landscape')) {
+    font-size: my.ms-step(4);
+  }
+
+  @media screen and (min-width: my.breakpoint('tablet__portrait')) {
+    font-size: my.ms-step(5);
+  }
 }
 
 .receipts-page a {
