@@ -22,7 +22,7 @@ const runtimeConfig = useRuntimeConfig();
 const { hash } = route.params;
 
 const {
-  data: donation,
+  data: receipt,
   error,
   pending,
 } = await useLazyFetch(`${runtimeConfig.public.publicApiBase}/donation/digest/${hash}`);
@@ -42,7 +42,7 @@ const {
         <a href="https://blog.doarpara.com.br/">
           <img :src="logo" alt="Logo doarPara">
         </a>
-        <img :src="donation?.donation.candidate.avatar" alt="Pré candidato">
+        <img :src="receipt?.donation.candidate.avatar" alt="Pré candidato">
       </nav>
     </header>
     <div>
@@ -50,17 +50,17 @@ const {
         Recibo
       </h1>
       <h3 class="receipts-page-title">
-        Essa doação foi realizada para <strong>{{ donation?.donation.candidate.popular_name }}</strong>,
-        <span v-if="donation?.donation.candidate.campaign_donation_type === 'pre-campaign'">
-          {{ $t('electionCampaign.preRunningForOffice', { gender: donation?.donation.candidate.gender }) }}
+        Essa doação foi realizada para <strong>{{ receipt?.donation.candidate.popular_name }}</strong>,
+        <span v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
+          {{ $t('electionCampaign.preRunningForOffice', { gender: receipt?.donation.candidate.gender }) }}
         </span>
         <span v-else>
-          {{ $t('electionCampaign.runningForOffice', { gender: donation?.donation.candidate.gender }) }}
-        </span> {{ $t(`governmentOffices.${donation?.donation.candidate.office.code}`, { gender: donation?.donation.candidate.gender }) }}
+          {{ $t('electionCampaign.runningForOffice', { gender: receipt?.donation.candidate.gender }) }}
+        </span> {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}`, { gender: receipt?.donation.candidate.gender }) }}
         por
-        <span v-if="donation?.donation.candidate.party">
-          {{ donation?.donation.candidate.party.acronym }} -
-          {{ donation?.donation.candidate.party.name }}.
+        <span v-if="receipt?.donation.candidate.party">
+          {{ receipt?.donation.candidate.party.acronym }} -
+          {{ receipt?.donation.candidate.party.name }}.
         </span>
       </h3>
       <p>
@@ -70,49 +70,50 @@ const {
         descentralizada para garantir controle social.
       </p>
       <p>
-        Por isso, <span>{{ donation?.donation.candidate.popular_name }}</span> está registrando
+        Por isso, <span>{{ receipt?.donation.candidate.popular_name }}</span> está registrando
         todas suas doações financeiras para comprovar a integridade e honestidade no seu processo
         de captação de recursos.
       </p>
     </div>
     <div>
       <div>
-        <h2 v-if="donation?.donation.candidate.campaign_donation_type === 'pre-campaign'">
-          {{ $t('electionCampaign.preRunningForName', { gender: donation?.donation.candidate.gender }) }}
+        <h2 v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
+          {{ $t('electionCampaign.preRunningForName', { gender: receipt?.donation.candidate.gender }) }}
         </h2>
         <h2 v-else>
-          {{ $t('electionCampaign.preRunningForName', { gender: donation?.donation.candidate.gender }) }}
+          {{ $t('electionCampaign.preRunningForName', { gender: receipt?.donation.candidate.gender }) }}
         </h2>
         <ul class="receipt-donation-list">
-          <li v-if="donation?.donation.candidate.campaign_donation_type === 'pre-campaign'">
-            {{ $t('electionCampaign.preRunningForName', { gender: donation?.donation.candidate.gender }) }}:
-            {{ donation?.donation.candidate.name || '-' }}
+          <li v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
+            {{ $t('electionCampaign.preRunningForName', { gender: receipt?.donation.candidate.gender }) }}:
+            {{ receipt?.donation.candidate.name || '-' }}
           </li>
           <li v-else>
-            {{ $t('electionCampaign.preRunningForName', { gender: donation?.donation.candidate.gender }) }}:
-            {{ donation?.donation.candidate.name || '-' }}
+            {{ $t('electionCampaign.preRunningForName', { gender: receipt?.donation.candidate.gender }) }}:
+            {{ receipt?.donation.candidate.name || '-' }}
           </li>
-          <li v-if="donation?.donation.candidate.cnpj">
-            CNPJ: {{ formatCNPJ(donation?.donation.candidate.cnpj) }}
+          <li v-if="receipt?.donation.candidate.cnpj">
+            CNPJ: {{ formatCNPJ(receipt?.donation.candidate.cnpj) }}
           </li>
-          <li>CPF: {{ formatCPF(donation?.donation.candidate.cpf) || '-' }}</li>
-          <li>Partido: {{ donation?.donation.candidate.party.acronym || '-' }}</li>
-          <li v-if="donation?.donation.candidate.office.code">
-            Cargo: {{ $t(`governmentOffices.${donation?.donation.candidate.office.code}`, { gender: donation?.donation.candidate.gender }) }}
+          <li>CPF: {{ formatCPF(receipt?.donation.candidate.cpf) || '-' }}</li>
+          <li>Partido: {{ receipt?.donation.candidate.party.acronym || '-' }}</li>
+          <li v-if="receipt?.donation.candidate.office.code">
+            Cargo: {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}`, { gender: receipt?.donation.candidate.gender }) }}
           </li>
         </ul>
       </div>
       <div>
         <h2>Doação</h2>
         <ul class="receipt-donation-list">
-          <li>Nome do doador: {{ donation?.donation.donor_name || '-' }}</li>
-          <li v-if="donation?.donation.name_receita">
-            Nome na Receita Federal: {{ donation?.donation.name_receita }}
+          <li>Nome do doador: {{ receipt?.donation.donor_name || '-' }}</li>
+          <li v-if="receipt?.donation.name_receita">
+            Nome na Receita Federal: {{ receipt?.donation.name_receita }}
           </li>
-          <li>CPF do doador: {{ formatCPF(donation?.donation.donor_cpf) || '-' }}</li>
-          <li>Data da doação: {{ $d(new Date(donation?.donation.captured_at_human), 'medium')}}</li>
-          <li>Valor:{{ $n(donation?.donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) || '-' }}</li>
-          <li>Forma de pagamento: {{ donation?.donation.payment_method_human || '-' }}</li>
+          <li>CPF do doador: {{ formatCPF(receipt?.donation.donor_cpf) || '-' }}</li>
+          <li>Data da doação: {{ $d(new
+            Date(receipt?.donation.captured_at_human), 'medium') }}</li>
+          <li>Valor:{{ $n(receipt?.donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) || '-' }}</li>
+          <li>Forma de pagamento: {{ receipt?.donation.payment_method_human || '-' }}</li>
         </ul>
       </div>
       <div>
@@ -129,16 +130,16 @@ const {
           que garantirá que todo histórico de doações ficará online e ninguém poderá alterá-lo,
           de maneira descentralizada.
         </p>
-        <p v-if="donation?.donation.decred_transaction_url">
+        <p v-if="receipt?.donation.decred_transaction_url">
           Comprovante decred:
           <a
             class="blue"
             target="_blank"
             rel="noopener noreferrer"
             style="word-break: break-all"
-            :href="donation?.donation.decred_transaction_url"
+            :href="receipt?.donation.decred_transaction_url"
           >
-            <strong>{{ donation?.donation.decred_transaction_url }}</strong>
+            <strong>{{ receipt?.donation.decred_transaction_url }}</strong>
           </a>
         </p>
       </div>
