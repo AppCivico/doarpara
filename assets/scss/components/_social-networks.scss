@@ -77,37 +77,41 @@
   }
 }
 
-.social-networks__link--linkedin {
-  background-image: my.image('icon-linkedin.svg');
-}
-
-.social-networks__link--twitter {
-  background-image: my.image('icon-twitter.svg');
-}
-
-.social-networks__link--instagram {
-  background-image: my.image('icon-instagram.svg');
+.social-networks__link--email {
+  background-image: my.image('icon-email.svg');
 }
 
 .social-networks__link--facebook {
   background-image: my.image('icon-facebook.svg');
 }
 
-.social-networks__link--mastodon {
-  background-image: my.image('icon-mastodon.svg');
+.social-networks__link--instagram {
+  background-image: my.image('icon-instagram.svg');
 }
 
-.social-networks__link--tiktok {
-  background-image: my.image('icon-tiktok.svg');
+.social-networks__link--linkedin {
+  background-image: my.image('icon-linkedin.svg');
+}
+
+.social-networks__link--mastodon {
+  background-image: my.image('icon-mastodon.svg');
 }
 
 .social-networks__link--telegram {
   background-image: my.image('icon-telegram.svg');
 }
 
-.social-networks__link--whatsapp {
-  background-image: my.image('icon-whatsapp.svg');
+.social-networks__link--tiktok {
+  background-image: my.image('icon-tiktok.svg');
+}
+
+.social-networks__link--twitter {
+  background-image: my.image('icon-twitter.svg');
 }
 
 .social-networks__link--website {
+}
+
+.social-networks__link--whatsapp {
+  background-image: my.image('icon-whatsapp.svg');
 }
