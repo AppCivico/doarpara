@@ -12,7 +12,6 @@ definePageMeta({
   path: '/recibo/:hash',
   alias: [
     '/recibos/:hash',
-    '/:campaignSlug/recibos/:hash',
   ],
 });
 
