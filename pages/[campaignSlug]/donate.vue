@@ -76,7 +76,7 @@
             </label>
             <input
               id="birthdate"
-              v-model.trim="maskedBirthData"
+              v-model.trim="maskedBirthDate"
               v-maska
               data-maska="##/##/####"
               placeholder="dd/mm/aaaa"
@@ -718,7 +718,7 @@ const amount = computed(() => {
 // TO-DO: move masks to an ENV and write a better date converter.
 // We could use `new Date().toLocaleDateString()`, like did on
 // `localeParseFloat.ts`
-const maskedBirthData = computed({
+const maskedBirthDate = computed({
   get() {
     // Using spread operator because `Array.reverse()` as side effects
     return [...((donor.value.birthdate || '').split('-'))].reverse().join('/');
