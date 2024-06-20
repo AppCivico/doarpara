@@ -136,12 +136,27 @@ export const useDonateStore = defineStore('toDonate', {
         const {
           street, city, state, district,
         } = response;
-        // not using `$patch()` to keep reactivity of sibling properties under `address.`
-        this.donorAddress.street = street;
-        this.donorAddress.city = city;
-        this.donorAddress.state = state;
-        this.donorAddress.district = district;
+        // not using `$patch()` to keep reactivity of sibling properties under
+        // `address.`
+        // TODO: remove hardcoded cleanup
+        this.donorAddress.street = ['vazio', 'Não consta'].indexOf(street) === -1
+          ? street
+          : '';
+        this.donorAddress.city = ['vazio', 'Não consta'].indexOf(city) === -1
+          ? city
+          : '';
+        this.donorAddress.state = ['vazio', 'Não consta'].indexOf(state) === -1
+          ? state
+          : '';
+        this.donorAddress.district = ['vazio', 'Não consta'].indexOf(district) === -1
+          ? district
+          : '';
       }).catch((err) => {
+        this.donorAddress.street = '';
+        this.donorAddress.city = '';
+        this.donorAddress.state = '';
+        this.donorAddress.district = '';
+
         this.errors.gettingAddress = err;
       }).finally(() => {
         this.pending.gettingAddress = false;

@@ -173,14 +173,13 @@
             </label>
             <input
               id="street"
+              ref="addressStreetElem"
               v-model.trim="donorAddress.street"
               aria-live="assertive"
               type="text"
               required
               :aria-busy="pending.gettingAddress"
-              disabled
-              :class="{
-              }"
+              :disabled="!isAddressStreetEditionAllowed"
             />
           </p>
 
@@ -190,7 +189,7 @@
             </label>
             <input
               id="number"
-              ref="addressNumber"
+              ref="addressNumberElem"
               v-model.trim="donorAddress.number"
               type="text"
               required
@@ -218,7 +217,7 @@
               id="city"
               v-model.trim="donorAddress.city"
               type="text"
-              disabled
+              :disabled="!isAddressCityEditionAllowed"
               required
               :aria-busy="pending.gettingAddress"
             />
@@ -233,7 +232,7 @@
               id="state"
               v-model.trim="donorAddress.state"
               name="state"
-              disabled
+              :disabled="!isAddressStateEditionAllowed"
               required
               :aria-busy="pending.gettingAddress"
             >
@@ -607,12 +606,12 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 <script setup lang="ts">
 import states from '@/data/states.json';
 import taxes from '@/data/taxes.ts';
-import { useCampaignStore } from '@/store/campaign.ts';
-import { useDonateStore } from '@/store/donate.ts';
-import { useI18n } from 'vue-i18n';
 import type {
   CreatedDonation, DonationMessage, MinDonationValue, PaymentMethod,
 } from '@/doar-para.d.ts';
+import { useCampaignStore } from '@/store/campaign.ts';
+import { useDonateStore } from '@/store/donate.ts';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
@@ -655,9 +654,15 @@ const isClipboardInaccessible = ref(true);
 const messages: Ref<DonationMessage[]> = ref([]);
 const paymentMethod = ref('');
 const toDonateTaxes = ref(false);
-const addressNumber = ref(null);
 const wasAnAdBlockerErrorFound = ref(false);
 const isVotoLegalFPMissing = ref(false);
+
+const isAddressStreetEditionAllowed = ref(false);
+const isAddressCityEditionAllowed = ref(false);
+const isAddressStateEditionAllowed = ref(false);
+
+const addressNumberElem = ref(null);
+const addressStreetElem = ref(null);
 
 const {
   combinedErrors, combinedPending, donor, donorAddress, errors, pending, pendingMessage,
@@ -824,16 +829,39 @@ function selectContent(el: HTMLInputElement | EventTarget | null) {
 
 function fillAddress(event: Event) {
   const { target: el } = event;
-  const cleanPostalCode = (el as HTMLInputElement).value.replace(/\D/g, '');
+  const postalCode = (el as HTMLInputElement).value;
+  const cleanPostalCode = postalCode.replace(/\D/g, '');
 
   if (cleanPostalCode.length === 8) {
+    isAddressStreetEditionAllowed.value = false;
+    isAddressCityEditionAllowed.value = false;
+    isAddressStateEditionAllowed.value = false;
+
     donateStore.fillAddressFromPostalCode(cleanPostalCode)
       .then(() => {
-        if (addressNumber.value) {
-          nextTick(() => {
-            (addressNumber.value as unknown as HTMLInputElement).focus();
-          });
+        if (!donorAddress.value.street) {
+          isAddressStreetEditionAllowed.value = true;
         }
+
+        if (!donorAddress.value.city) {
+          isAddressCityEditionAllowed.value = true;
+        }
+
+        if (!donorAddress.value.state) {
+          isAddressStateEditionAllowed.value = true;
+        }
+
+        nextTick(() => {
+          if (!donorAddress.value.street) {
+            if (addressNumberElem.value) {
+              (addressStreetElem.value as unknown as HTMLInputElement).focus();
+            }
+          } else {
+            if (addressNumberElem.value) {
+              (addressNumberElem.value as unknown as HTMLInputElement).focus();
+            }
+          }
+        });
       })
       .catch(() => {
         if (el) {
