@@ -29,9 +29,9 @@
                                                 <tr>
                                                     <td align="justify"
                                                         style="color:#444444; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
-							    <p>Olá, [% donor_name %], sua doação [% IF is_fixable %] está congelada e não será
-                                                            repassada para o candidato[% ELSE %] será estornada e não será
-                                                            repassada para o candidato[% END %]. </p>
+							    <p>Olá, [% donor_name %], sua doação [% IF is_fixable %] está congelada e não será repassada para o candidato [% ELSE %] [% IF refunded_at_human %] foi devolvida em [% refunded_at_human %]. Por favor, faça uma nova doação com os dados corretos. [% ELSE %] será estornada. [% END %] Esta doação não será repassada para o candidato. [% END %]</p>
+
+
                                                         <p>Motivo: <b>[% irregular_reason %]</b></p>
 							[% IF is_fixable %]
                                                         <p><b>Por favor, responda este e-mail com os dados corretos para
