@@ -61,11 +61,11 @@ type CreditCardError = {
 };
 
 type StateErrors = {
-  gettingAddress: FetchError | ApiError | null ;
-  validatingDevice: FetchError | ApiError | null ;
-  creatingDonation: FetchError | ApiError | null ;
-  validatingCreditCard: CreditCardError | null ;
-  payingDonation: FetchError | ApiError | null ;
+  gettingAddress: FetchError | ApiError | null;
+  validatingDevice: FetchError | ApiError | null;
+  creatingDonation: FetchError | ApiError | null;
+  validatingCreditCard: CreditCardError | null;
+  payingDonation: FetchError | ApiError | null;
 };
 
 type ValidatedCard = {
@@ -86,7 +86,7 @@ export const useDonateStore = defineStore('toDonate', {
   },
   state: () => ({
     deviceAuthorizationToken: '',
-    referral: <ReferralCodes> {},
+    referral: <ReferralCodes>{},
 
     donor: {
       first_name: '',
@@ -117,7 +117,7 @@ export const useDonateStore = defineStore('toDonate', {
       validatingCreditCard: false,
       payingDonation: false,
     },
-    errors: <StateErrors> {
+    errors: <StateErrors>{
       gettingAddress: null,
       validatingDevice: null,
       creatingDonation: null,
@@ -170,7 +170,7 @@ export const useDonateStore = defineStore('toDonate', {
       const runtimeConfig = useRuntimeConfig();
 
       try {
-        const response:{ device_authorization_token_id: string } = await $fetch(
+        const response: { device_authorization_token_id: string } = await $fetch(
           `${runtimeConfig.public.privateApiBase}/api2/device-authentication`,
           {
             method: 'POST',
@@ -206,7 +206,7 @@ export const useDonateStore = defineStore('toDonate', {
         const { email, cpf = '' } = payload;
 
         const deviceAuthorizationToken = this.deviceAuthorizationToken
-        || String(await this.getDeviceAuthorizationToken());
+          || String(await this.getDeviceAuthorizationToken());
 
         const nonce = randomString(13);
         const str = `${nonce}${Number.parseInt(cpf.replace(/[^0-9]+/g, ''), 10) * -1}/\u00A0${amount}${email.toUpperCase()}`;
@@ -218,7 +218,7 @@ export const useDonateStore = defineStore('toDonate', {
         const hash = fp.x64hash128(str);
         const donationFp = await getDonationFP();
         const campaignStore = useCampaignStore();
-        const response:DonationResponse = await $fetch(`${runtimeConfig.public.privateApiBase}/api2/donations`, {
+        const response: DonationResponse = await $fetch(`${runtimeConfig.public.privateApiBase}/api2/donations`, {
           method: 'POST',
           body: {
             ...payload,
@@ -280,7 +280,7 @@ export const useDonateStore = defineStore('toDonate', {
     },
 
     async payCreditCardDonation(donationId: string | number, payload: ValidatedCard):
-    Promise<DonationResponse> {
+      Promise<DonationResponse> {
       this.pending.payingDonation = true;
       this.errors.payingDonation = null;
 
