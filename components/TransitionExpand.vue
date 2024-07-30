@@ -71,7 +71,7 @@ export default defineComponent({
 * {
   transform: translateZ(0);
   perspective: 1000px;
-  will-change: height;
+  will-change: height min-height padding-top padding-bottom;
   backface-visibility: hidden;
 }
 
@@ -79,11 +79,18 @@ export default defineComponent({
 .expand-leave-active {
   overflow: hidden;
 
-  transition: height 300ms ease-in-out;
+  transition: height padding-top padding-bottom 300ms ease-in-out;
 }
 
 .expand-enter,
 .expand-leave-to {
-  height: 0;
+  /* stylelint-disable-next-line declaration-no-important */
+  height: 0 !important;
+  /* stylelint-disable-next-line declaration-no-important */
+  min-height: 0 !important;
+  /* stylelint-disable-next-line declaration-no-important */
+  padding-top: 0 !important;
+  /* stylelint-disable-next-line declaration-no-important */
+  padding-bottom: 0 !important;
 }
 </style>
