@@ -22,7 +22,9 @@
           :class="{ 'has-unmasked-row': donationToUnmask }"
         >
           <colgroup span="5" />
-          <col class="col--action">
+          <!--
+            <col class="col--action">
+          -->
           <thead>
             <tr>
               <th>{{ $t('receipts.donorName') }}</th>
@@ -36,7 +38,9 @@
               <th class="cell--number">
                 {{ $t('receipts.amount') }}
               </th>
-              <th />
+              <!--
+                <th />
+              -->
             </tr>
           </thead>
           <tbody
@@ -73,24 +77,26 @@
               <td :aria-label="$t('receipts.amount')" class="cell--number">
                 {{ $n(donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) }}
               </td>
-              <td class="cell--action">
-                <label class="like-a__button">
-                  <input
-                    v-model="donationToUnmask"
-                    type="checkbox"
-                    :true-value="donation.id"
-                  />
-                  {{ $t('toExposeData').toLowerCase() }}
-                </label>
-              </td>
+              <!--
+                <td class="cell--action">
+                  <label class="like-a__button">
+                    <input
+                      v-model="donationToUnmask"
+                      type="checkbox"
+                      :true-value="donation.id"
+                    />
+                    {{ $t('toExposeData').toLowerCase() }}
+                  </label>
+                </td>
+              -->
             </tr>
           </tbody>
           <tbody v-if="pending || !donationsList.length">
             <tr>
-              <td v-if="pending" colspan="6" :aria-busy="pending">
+              <td v-if="pending" colspan="5" :aria-busy="pending">
                 {{ $t('waiting') }}
               </td>
-              <td v-else colspan="6">
+              <td v-else colspan="5">
                 {{ $t('noDonations') }}
               </td>
             </tr>
