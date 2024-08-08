@@ -75,7 +75,7 @@ if (campaign.value) {
 
   if (campaign.value.facebook_pixel) {
     meta.script.push({
-      'textContent': `!function(f,b,e,v,n,t,s)
+      textContent: `!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
 if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
@@ -87,7 +87,7 @@ fbq('init', '${campaign.value.facebook_pixel}');
 fbq('track', 'PageView');`,
     });
     meta.noscript.push({
-      'textContent': `<img height="1" width="1" style="display:none"
+      textContent: `<img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=${campaign.value.facebook_pixel}&ev=PageView&noscript=1"/>`,
     });
   }
