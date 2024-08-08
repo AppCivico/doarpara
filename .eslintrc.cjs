@@ -1,6 +1,5 @@
 module.exports = {
   root: true,
-  baseUrl: './',
   env: {
     browser: true,
     node: true,
