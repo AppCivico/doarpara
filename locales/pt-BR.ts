@@ -104,6 +104,14 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
       },
       gender,
     ),
+    runningForName: ({ values: { gender } }: GenderData) => showGenderedVersion(
+      {
+        female: 'Candidata',
+        male: 'Candidato',
+        other: 'Concorre',
+      },
+      gender,
+    ),
   },
   errors: {
     adBlocker: 'Há um bloqueador de anúncios impedindo o processador de pagamentos.',
