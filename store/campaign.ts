@@ -86,8 +86,6 @@ export const useCampaignStore = defineStore('campaign', {
     },
   },
   getters: {
-    isCampaignLoaded: (state) => state.campaign !== null,
-
     campaignSections: (({ campaign }): CampaignSection[] => (
       Array.isArray(campaign?.campaign_section_list)
         ? (campaign?.campaign_section_list || [])
