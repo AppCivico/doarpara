@@ -50,12 +50,12 @@ const {
         Recibo
       </h1>
 
-    <h2
-      v-if="receipt?.donation.refunded_at_human"
-      class="receipts-page__refunded-at"
-    >
-      Recibo cancelado
-    </h2>
+      <h2
+        v-if="receipt?.donation.refunded_at_human"
+        class="receipts-page__refunded-at"
+      >
+        Recibo cancelado
+      </h2>
 
       <h3 class="receipts-page-title">
         Essa doação foi realizada para <strong>{{ receipt?.donation.candidate.popular_name }}</strong>,
@@ -108,35 +108,44 @@ const {
             {{ receipt?.donation.candidate.name || '-' }}
           </dd>
         </div>
+
         <div
-          class="receipt-data__item"
           v-if="receipt?.donation.candidate.cnpj"
+          class="receipt-data__item"
         >
-          <dt class="receipt-data__term">CNPJ</dt>
+          <dt class="receipt-data__term">
+            CNPJ
+          </dt>
           <dd class="receipt-data__description">
             {{ formatCNPJ(receipt?.donation.candidate.cnpj) }}
           </dd>
         </div>
         <div class="receipt-data__item">
-          <dt class="receipt-data__term">CPF</dt>
+          <dt class="receipt-data__term">
+            CPF
+          </dt>
           <dd class="receipt-data__description">
             {{ formatCPF(receipt?.donation.candidate.cpf) || '-' }}
           </dd>
         </div>
         <div class="receipt-data__item">
-          <dt class="receipt-data__term">Partido</dt>
+          <dt class="receipt-data__term">
+            Partido
+          </dt>
           <dd class="receipt-data__description">
             {{ receipt?.donation.candidate.party.acronym || '-' }}
           </dd>
         </div>
         <div
-          class="receipt-data__item"
           v-if="receipt?.donation.candidate.office.code"
+          class="receipt-data__item"
         >
-          <dt class="receipt-data__term">Cargo</dt>
+          <dt class="receipt-data__term">
+            Cargo
+          </dt>
           <dd class="receipt-data__description">
             {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}`, {
-              gender: receipt?.donation.candidate.gender
+              gender: receipt?.donation.candidate.gender,
             }) }}
           </dd>
         </div>
@@ -146,8 +155,10 @@ const {
       <h2>Doação</h2>
 
       <dl class="receipt-data">
-        <div class="receipt-data__item" v-if="receipt?.donation.is_irregular">
-          <dt class="receipt-data__term">Irregular / em análise</dt>
+        <div v-if="receipt?.donation.is_irregular" class="receipt-data__item">
+          <dt class="receipt-data__term">
+            Irregular / em análise
+          </dt>
           <dd
             class="receipt-data__description signage__text--danger"
           >
@@ -155,37 +166,49 @@ const {
           </dd>
         </div>
         <div class="receipt-data__item">
-          <dt class="receipt-data__term">Nome do doador</dt>
+          <dt class="receipt-data__term">
+            Nome do doador
+          </dt>
           <dd class="receipt-data__description">
             {{ receipt?.donation.donor_name || '-' }}
           </dd>
         </div>
         <div v-if="receipt?.donation.name_receita">
-          <dt class="receipt-data__term">Nome na Receita Federal</dt>
+          <dt class="receipt-data__term">
+            Nome na Receita Federal
+          </dt>
           <dd class="receipt-data__description">
             {{ receipt?.donation.name_receita }}
           </dd>
         </div>
         <div class="receipt-data__item">
-          <dt class="receipt-data__term">CPF do doador</dt>
+          <dt class="receipt-data__term">
+            CPF do doador
+          </dt>
           <dd class="receipt-data__description">
             {{ formatCPF(receipt?.donation.donor_cpf) || '-' }}
           </dd>
-          </div>
+        </div>
         <div class="receipt-data__item">
-          <dt class="receipt-data__term">Data da doação</dt>
+          <dt class="receipt-data__term">
+            Data da doação
+          </dt>
           <dd class="receipt-data__description">
             {{ $d(new Date(receipt?.donation.captured_at_human), 'medium') }}
           </dd>
-          </div>
+        </div>
         <div class="receipt-data__item">
-          <dt class="receipt-data__term">Valor</dt>
+          <dt class="receipt-data__term">
+            Valor
+          </dt>
           <dd class="receipt-data__description">
             {{ $n(receipt?.donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) || '-' }}
           </dd>
         </div>
         <div class="receipt-data__item">
-          <dt class="receipt-data__term">Forma de pagamento</dt>
+          <dt class="receipt-data__term">
+            Forma de pagamento
+          </dt>
           <dd class="receipt-data__description">
             {{ receipt?.donation.payment_method_human || '-' }}
           </dd>
@@ -196,11 +219,17 @@ const {
       <h2>Entidade arrecadadora</h2>
       <dl class="receipt-data">
         <div class="receipt-data__item">
-          <dt class="receipt-data__term">Razão social</dt>
-          <dd class="receipt-data__description">AppCivico Consultoria Ltda.</dd>
+          <dt class="receipt-data__term">
+            Razão social
+          </dt>
+          <dd class="receipt-data__description">
+            AppCivico Consultoria Ltda.
+          </dd>
         </div>
         <div class="receipt-data__item">
-          <dt class="receipt-data__term">CNPJ</dt>
+          <dt class="receipt-data__term">
+            CNPJ
+          </dt>
           <dd class="receipt-data__description">
             08.746.641/0001-00
           </dd>
