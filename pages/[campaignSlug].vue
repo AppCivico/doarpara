@@ -38,7 +38,7 @@ if (!campaign.value) {
 
 if (import.meta.client) {
   onMounted(() => {
-    if (runtimeConfig.public.campaignPoolingInterval) {
+    if (campaign.value && runtimeConfig.public.campaignPoolingInterval) {
       pollingInterval = setInterval(() => {
         if (document.visibilityState === 'visible' || document.hidden === false) {
           campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug));
