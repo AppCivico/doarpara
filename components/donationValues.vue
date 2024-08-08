@@ -136,7 +136,7 @@ const minimumSuggestedDonation = computed((): number => {
       .reduce((acc, cur) => Math.min(acc, cur), +Infinity as number);
 });
 
-const isPledgeValueValid = computed(() => !(pledgeValue.value < (minimumDonation?.value || 0) / 100
+const isPledgeValueValid = computed(() => !(pledgeValue.value < (minimumDonation.value || 0) / 100
   || pledgeValue.value > (maximumDonation?.value || Infinity) / 100));
 
 async function openCustomPledge(pledge: string) {
