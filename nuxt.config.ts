@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/mdc',
     '@pinia-plugin-persistedstate/nuxt',
+    '@sentry/nuxt/module',
     'nuxt-gtag',
   ],
   runtimeConfig: {
@@ -85,6 +86,13 @@ export default defineNuxtConfig({
       },
       urlOfPrivacyPolicy: process.env.URL_OF_PRIVACY_POLICY || 'https://blog.doarpara.com.br/contrato/',
       urlOfUseTerms: process.env.URL_OF_USE_TERMS || 'https://blog.doarpara.com.br/contrato/',
+    },
+  },
+  sentry: {
+    sourceMapsUploadOptions: {
+      org: 'appcivico',
+      project: 'doarpara',
+      authToken: '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',
     },
   },
   vite: {

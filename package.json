@@ -6,7 +6,8 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "NODE_OPTIONS='--import ./public/instrument.server.mjs' nuxt preview",
+    "start": "node --import .output/public/instrument.server.mjs .output/server/index.mjs",
     "postinstall": "nuxt prepare",
     "lint:js": "eslint --ext \".ts,.vue\" --ignore-path .gitignore .",
     "lint:css": "stylelint assets/scss/**/*.{vue,scss} --fix",
@@ -48,6 +49,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "@sentry/nuxt": "^8.26.0",
     "maska": "^2.1.10",
     "vue-i18n": "^9.6.4"
   },

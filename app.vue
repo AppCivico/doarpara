@@ -10,6 +10,8 @@
   <NuxtLoadingIndicator :color="false" :height="3" />
 </template>
 <script setup lang="ts">
+import * as Sentry from '@sentry/nuxt';
+
 const errorToShow: Ref<Error | null> = ref(null);
 
 function flushError() {
@@ -19,7 +21,7 @@ function flushError() {
 if (import.meta.client) {
   onErrorCaptured((error) => {
     errorToShow.value = error;
-
+    Sentry.captureException(error);
     return false;
   });
 }
