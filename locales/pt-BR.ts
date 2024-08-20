@@ -28,6 +28,7 @@ export default {
     validationCode: 'CVV',
   },
   currentGoal: 'Meta corrente',
+  disabledCampaign: 'Aguardando confirmação de CNPJ',
   donateWithoutReward: 'Doe sem recompensa',
   donationForm: {
     birthDate: 'Data de nascimento',

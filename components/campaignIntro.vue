@@ -66,7 +66,14 @@
           </span>
         </p>
 
-        <donationValues :campaign="campaign" class="call-to-action-values__donation-values" />
+        <donationValues
+          v-if="campaign?.payment_method_list?.length"
+          :campaign="campaign"
+          class="call-to-action-values__donation-values"
+        />
+        <template v-else>
+          {{ $t('disabledCampaign') }}
+        </template>
       </div>
     </div>
   </section>
