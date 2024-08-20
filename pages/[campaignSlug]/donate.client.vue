@@ -856,10 +856,8 @@ function fillAddress(event: Event) {
             if (addressNumberElem.value) {
               (addressStreetElem.value as unknown as HTMLInputElement).focus();
             }
-          } else {
-            if (addressNumberElem.value) {
-              (addressNumberElem.value as unknown as HTMLInputElement).focus();
-            }
+          } else if (addressNumberElem.value) {
+            (addressNumberElem.value as unknown as HTMLInputElement).focus();
           }
         });
       })
