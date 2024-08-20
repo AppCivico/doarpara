@@ -957,7 +957,7 @@ if (import.meta.client) {
 
     window.addEventListener('load', () => {
       nextTick(() => {
-        if (Iugu.utils.isBlockedByAdBlock()) {
+        if (Iugu?.utils?.isBlockedByAdBlock()) {
           wasAnAdBlockerErrorFound.value = true;
           throw new Error('AdBlocker preventing Iugu from loading');
         }
