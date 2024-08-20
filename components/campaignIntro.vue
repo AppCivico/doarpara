@@ -71,9 +71,12 @@
           :campaign="campaign"
           class="call-to-action-values__donation-values"
         />
-        <template v-else>
-          {{ $t('disabledCampaign') }}
-        </template>
+        <div
+          v-else
+          class="disabled-methods"
+        >
+          {{ $t('disabledPaymentMethods') }}
+        </div>
       </div>
     </div>
   </section>
@@ -142,3 +145,16 @@ const campaignCoverSrcset = computed(() => {
   return undefined;
 });
 </script>
+<style lang="scss" scoped>
+// TO-DO: Update styles. It's ugly!
+.disabled-methods {
+  @include my.shadow;
+  @include my.pulsing-color(my.palette('effects', 'error-gradient'), 'background-color');
+
+  padding: my.$gutter;
+
+  color: my.text-contrast(my.palette('signage', 'danger'), my.palette('neutral', 'white'), $level: 'AA');
+
+  border-radius: my.$rounded-corner;
+}
+</style>
