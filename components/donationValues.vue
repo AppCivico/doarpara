@@ -1,5 +1,6 @@
 <template>
   <ul
+    v-if="sortedPledgeList.length || customPledges.length"
     class="donation-values__list"
   >
     <li
