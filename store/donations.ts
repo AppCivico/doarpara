@@ -53,11 +53,12 @@ export const useDonationsStore = defineStore('donation', {
         // eslint-disable-next-line no-underscore-dangle
         || response.donations[response.donations.length - 1]?._marker
         || '';
-      } catch (error) {
-        this.error = (error as FetchError).data;
-        throw error;
-      } finally {
         this.pending = false;
+      } catch (error) {
+        this.pending = false;
+        this.error = (error as FetchError).data;
+
+        throw error;
       }
     },
   },
