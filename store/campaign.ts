@@ -64,24 +64,23 @@ export const useCampaignStore = defineStore('campaign', {
       this.pending = true;
       this.error = null;
 
-      try {
-        const response: Campaign = await $fetch(fullUrl, {
-          method: 'GET',
-          params: params || {},
-        });
+      const { data, error, pending } = await useFetch<Campaign>(fullUrl, {
+        method: 'GET',
+        params,
+      });
 
-        this.campaign = response;
+      this.pending = pending.value;
 
-        if (response.reward_list) {
-          this.rewards = response.reward_list;
+      if (data.value) {
+        this.campaign = data.value;
+
+        if (data.value.reward_list) {
+          this.rewards = data.value?.reward_list;
         }
+      }
 
-        this.pending = false;
-      } catch (error) {
-        this.error = error;
-        this.pending = false;
-
-        throw error;
+      if (error.value) {
+        this.error = error.value;
       }
     },
   },
