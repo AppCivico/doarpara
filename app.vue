@@ -22,7 +22,6 @@ if (import.meta.client) {
   onErrorCaptured((error) => {
     errorToShow.value = error;
     Sentry.captureException(error);
-    return false;
   });
 }
 </script>

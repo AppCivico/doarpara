@@ -36,6 +36,10 @@ if (!campaign.value) {
   await useAsyncData('campaign', async () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true));
 }
 
+if (error.value) {
+  throw createError(error.value);
+}
+
 if (import.meta.client) {
   onMounted(() => {
     if (campaign.value && runtimeConfig.public.campaignPoolingInterval) {
