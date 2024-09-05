@@ -21,6 +21,11 @@ function flushError() {
 if (import.meta.client) {
   onErrorCaptured((error) => {
     errorToShow.value = error;
+
+    if (import.meta.dev) {
+      console.trace(error);
+    }
+
     Sentry.captureException(error);
   });
 }

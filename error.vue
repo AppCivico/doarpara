@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="container">
-    <template v-if="error.statusCode === 404">
+    <template v-if="$props.error?.statusCode === 404">
       <img
         src="/assets/images/logo-doarpara.svg"
         width="180"
@@ -59,7 +59,13 @@
       />
       <!-- eslint-disable-next-line vuejs-accessibility/heading-has-content -->
       <h1 v-t="'errors.generic.title'" class="error-page__title" />
-      <p v-t="'errors.generic.message'" class="error-page__message" />
+
+      <pre>$props.error: {{ $props.error }}</pre>
+
+      <p v-if="$props.error?.message">
+        {{ $props.error.message }}
+      </p>
+      <p v-else v-t="'errors.generic.message'" class="error-page__message" />
     </template>
 
     <button

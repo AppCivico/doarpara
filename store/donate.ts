@@ -239,7 +239,7 @@ export const useDonateStore = defineStore('toDonate', {
 
         this.pending.creatingDonation = false;
 
-        throw err;
+        throw createError(err as FetchError);
       }
     },
 
@@ -280,7 +280,7 @@ export const useDonateStore = defineStore('toDonate', {
     },
 
     async payCreditCardDonation(donationId: string | number, payload: ValidatedCard):
-      Promise<DonationResponse> {
+    Promise<DonationResponse> {
       this.pending.payingDonation = true;
       this.errors.payingDonation = null;
 
@@ -304,7 +304,8 @@ export const useDonateStore = defineStore('toDonate', {
       } catch (err) {
         this.errors.payingDonation = (err as FetchError);
         this.pending.payingDonation = false;
-        throw err;
+
+        throw createError(err as FetchError);
       }
     },
   },

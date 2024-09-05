@@ -10,6 +10,7 @@
       <errorMessagePanel v-else-if="isVotoLegalFPMissing" :dismissible="false">
         {{ $t('errors.VotoLegalFP') }}
       </errorMessagePanel>
+
       <donationValues
         v-else-if="!amount"
         :campaign="campaign"
@@ -521,6 +522,9 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 - expected on client: disabled="true"
 </pre>
 
+          <errorMessagePanel :error="errors.validatingDevice" :dismissible="false" />
+          <errorMessagePanel :error="errors.creatingDonation" :dismissible="true" />
+
           <button
             type="submit"
             :aria-disabled="invalidValue || combinedPending || undefined"
@@ -881,26 +885,32 @@ async function submitDonation() {
     return;
   }
 
-  const { data: donationData } = await donateStore
-    .createDonationOnBackEnd(grossValue.value * 100, mappedPaymentMethod.value);
+  try {
+    const { data: donationData } = await donateStore
+      .createDonationOnBackEnd(grossValue.value * 100, mappedPaymentMethod.value);
 
-  if (donationData) {
-    if (donationData.donation) {
-      createdDonation.value = donationData.donation;
-    }
-
-    if (donationData.ui) {
-      const [iugu] = donationData.ui.messages.slice(1, 2);
-      if (iugu) {
-        Iugu.setAccountID(iugu.account_id);
-        Iugu.setTestMode(iugu.is_testing === runtimeConfig.public.isIuguTesting);
+    if (donationData) {
+      if (donationData.donation) {
+        createdDonation.value = donationData.donation;
       }
 
-      if (paymentMethod.value !== 'credit_card') {
-        if (donationData.ui.messages) {
-          addMessages(donationData.ui.messages);
+      if (donationData.ui) {
+        const [iugu] = donationData.ui.messages.slice(1, 2);
+        if (iugu) {
+          Iugu.setAccountID(iugu.account_id);
+          Iugu.setTestMode(iugu.is_testing === runtimeConfig.public.isIuguTesting);
+        }
+
+        if (paymentMethod.value !== 'credit_card') {
+          if (donationData.ui.messages) {
+            addMessages(donationData.ui.messages);
+          }
         }
       }
+    }
+  } catch (error) {
+    if (import.meta.dev) {
+      console.trace(error);
     }
   }
 
@@ -909,20 +919,27 @@ async function submitDonation() {
   }
 
   const validCreditCard = await donateStore.validateCard(creditCard.value);
+
   if (!createdDonation.value?.id) {
-    throw new Error('Property `id` is missing');
+    throw createError('Property `id` is missing');
   }
 
-  const paymentData = await donateStore
-    .payCreditCardDonation(createdDonation.value.id, validCreditCard);
+  try {
+    const paymentData = await donateStore
+      .payCreditCardDonation(createdDonation.value.id, validCreditCard);
 
-  if (paymentData) {
-    if (paymentData?.donation) {
-      createdDonation.value = paymentData.donation;
+    if (paymentData) {
+      if (paymentData?.donation) {
+        createdDonation.value = paymentData.donation;
+      }
+
+      if (paymentData?.ui?.messages) {
+        addMessages(paymentData?.ui?.messages);
+      }
     }
-
-    if (paymentData?.ui?.messages) {
-      addMessages(paymentData?.ui?.messages);
+  } catch (error) {
+    if (import.meta.dev) {
+      console.trace(error);
     }
   }
 }
