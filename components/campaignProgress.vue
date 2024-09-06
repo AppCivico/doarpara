@@ -6,7 +6,10 @@
         class="campaign-progress__total-value"
         as="output"
         :value="totalAmount / 100"
-        :formatter="($v: number) => $n($v, 'currency', { maximumFractionDigits: 0 })"
+        :formatter="($v: number) => $n($v, 'currency', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        })"
       />
       {{ $t('totalAmount').toLowerCase() }}
     </data>
@@ -56,7 +59,12 @@
       </data>
       {{ $t('of').toLowerCase() }}
       <data :value="currentGoal / 100" class="campaign-progress__progress-total">
-        {{ $n(currentGoal / 100, 'currency', { maximumFractionDigits: 0 }) }}
+        {{
+          $n(currentGoal / 100, 'currency', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })
+        }}
       </data>
     </div>
     <div class="campaign-progress__donations">

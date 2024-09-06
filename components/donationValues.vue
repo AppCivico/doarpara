@@ -17,9 +17,14 @@
         }"
         class="donation-values__value like-a__button"
       >
-        {{ typeof pledge === 'number'
-          ? $n(pledge / 100, 'currency', { maximumFractionDigits: 0 })
-          : $t(`pledges.${pledge}`) }}
+        {{
+          typeof pledge === 'number'
+            ? $n(pledge / 100, 'currency', {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })
+            : $t(`pledges.${pledge}`)
+        }}
       </NuxtLink>
     </li>
     <li

@@ -12,7 +12,7 @@
       :class="currentGoal > goal.amount ? 'goals-page__goal-item--achieved' : 'goals-page__goal-item--current'"
     >
       <h2 class="goals-page__goal-amount">
-        {{ $n(goal.amount / 100, 'currency', { maximumFractionDigits: 0 }) }}
+        {{ $n(goal.amount / 100, 'currency', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) }}
       </h2>
 
       <div class="goals-page__goal-title-and-description">

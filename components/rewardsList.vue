@@ -7,9 +7,10 @@
       tabindex="0"
     >
       <dd class="rewards__value">
-        {{
-          $n(reward.minimum_value / 100, 'currency', { maximumFractionDigits: 0 })
-        }}
+        {{ $n(reward.minimum_value / 100, 'currency', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }) }}
         {{ $t('minimumRewardOrMore') }}
       </dd>
       <dt class="rewards__title">
@@ -33,6 +34,7 @@
             >{{
               $n(reward.total_of_supporters, {
                 notation: 'compact',
+                minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
               })
             }}</data>
