@@ -187,7 +187,7 @@ export const useDonateStore = defineStore('toDonate', {
       } catch (err) {
         this.errors.validatingDevice = err as FetchError;
         this.pending.validatingDevice = false;
-        throw err;
+        throw createError(err as FetchError);
       }
     },
 
