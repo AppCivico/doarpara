@@ -29,6 +29,12 @@ export default defineNuxtConfig({
   },
   i18n: {
     defaultLocale: 'pt-BR',
+    locales: [
+      {
+        code: 'pt-BR',
+        iso: 'pt-BR',
+      },
+    ],
   },
   modules: [
     '@nuxtjs/i18n',
