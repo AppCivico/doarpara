@@ -564,7 +564,7 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 
           <template v-else-if="message.type === 'msg'">
             <template v-if="instantPaymentPlatformKey">
-              <div v-if="isClipboardInaccessible" :key="i + '--copy-field'" class="input-wrapper field-for-copy__wrapper">
+              <div v-if="isClipboardInaccessible || clipboardError" :key="i + '--copy-field'" class="input-wrapper field-for-copy__wrapper">
                 <label class="field-for-copy__label" :for="`to-copy--${i}`">
                   Selecione e copie
                 </label>
@@ -591,6 +591,10 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
         </template>
       </div>
     </TransitionExpand>
+
+    <errorMessagePanel v-if="clipboardError" :dismissible="true">
+      {{ $t('errors.clipboard') }}
+    </errorMessagePanel>
 
     <div v-debug hidden>
       <pre>combinedErrors:{{ combinedErrors }}</pre>
@@ -667,6 +671,8 @@ const isAddressStateEditionAllowed = ref(false);
 
 const addressNumberElem = ref(null);
 const addressStreetElem = ref(null);
+
+const clipboardError = ref(null);
 
 const {
   combinedErrors, combinedPending, donor, donorAddress, errors, pending, pendingMessage,
@@ -819,7 +825,12 @@ function delegation(event: Event) {
           alert('Chave PIX copiada');
         }).catch((err) => {
           isClipboardInaccessible.value = true;
-          throw err;
+
+          clipboardError.value = err;
+
+          if (import.meta.dev) {
+            console.error(err);
+          }
         });
     }
   }
@@ -961,7 +972,7 @@ useHead({
 
 if (import.meta.client) {
   onMounted(() => {
-    isClipboardInaccessible.value = !navigator.clipboard;
+    isClipboardInaccessible.value = !navigator.clipboard?.writeText;
 
     if (!donateStore.deviceAuthorizationToken) {
       donateStore.getDeviceAuthorizationToken({
