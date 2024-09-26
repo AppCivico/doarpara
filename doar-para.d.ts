@@ -167,6 +167,7 @@ export interface Campaign {
   max_donation_value: number;
   payment_method_list: PaymentMethod[];
   reward_list: Reward[];
+  cnpj_approved: boolean;
 
   cover: ImageOrSet;
   video: string;

@@ -66,17 +66,24 @@
           </span>
         </p>
 
+        <div
+          v-if="!campaign?.payment_method_list?.length
+            || !campaign?.cnpj_approved"
+          class="disabled-methods"
+        >
+          <template v-if="!campaign?.cnpj_approved">
+            {{ $t('legal_entities_id_missing') }}
+          </template>
+          <template v-else>
+            {{ $t('disabledPaymentMethods') }}
+          </template>
+        </div>
+
         <donationValues
-          v-if="campaign?.payment_method_list?.length"
+          v-else
           :campaign="campaign"
           class="call-to-action-values__donation-values"
         />
-        <div
-          v-else
-          class="disabled-methods"
-        >
-          {{ $t('disabledPaymentMethods') }}
-        </div>
       </div>
     </div>
   </section>
