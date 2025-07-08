@@ -23,7 +23,7 @@
               minimumFractionDigits: 0,
               maximumFractionDigits: 0,
             })
-            : $t(`pledges.${pledge}`)
+            : $t(`pledges.${pledge as string}`)
         }}
       </NuxtLink>
     </li>

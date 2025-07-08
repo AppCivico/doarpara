@@ -28,11 +28,7 @@
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
-const head = useLocaleHead({
-  addDirAttribute: true,
-  identifierAttribute: 'id',
-  addSeoAttributes: true,
-});
+const head = useLocaleHead();
 
 const title = computed(() => (route.meta.title
   ? `${route.meta.title} • ${runtimeConfig.public.title}`

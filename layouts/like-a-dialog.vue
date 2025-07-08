@@ -53,11 +53,7 @@ const runtimeConfig = useRuntimeConfig();
 const campaignStore = useCampaignStore();
 const { campaign } = storeToRefs(campaignStore);
 
-const head = useLocaleHead({
-  addDirAttribute: true,
-  identifierAttribute: 'id',
-  addSeoAttributes: true,
-});
+const head = useLocaleHead();
 
 const title = computed(() => (route.meta.title
   ? `${route.meta.title} • ${runtimeConfig.public.title}`

@@ -4,8 +4,6 @@ interface GenderData {
   };
 }
 
-const showGenderedVersion = (terms: Record<string, string>, gender: string = 'other') => terms[gender] || terms.other;
-
 export default {
   _currencySymbol: 'R$',
   backToCampaign: 'Voltar à campanha',
@@ -82,38 +80,6 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     ballotNumber: 'Número',
     politicalParty: 'Partido',
     runningForLocation: 'Concorre em',
-    preRunningForOffice: ({ values: { gender } }: GenderData) => showGenderedVersion(
-      {
-        female: 'Pré-candidata a',
-        male: 'Pré-candidato a',
-        other: 'Concorrerá para',
-      },
-      gender,
-    ),
-    preRunningForName: ({ values: { gender } }: GenderData) => showGenderedVersion(
-      {
-        female: 'Pré-candidata',
-        male: 'Pré-candidato',
-        other: 'Pré-candidata(o)',
-      },
-      gender,
-    ),
-    runningForOffice: ({ values: { gender } }: GenderData) => showGenderedVersion(
-      {
-        female: 'Candidata a',
-        male: 'Candidato a',
-        other: 'Concorre para',
-      },
-      gender,
-    ),
-    runningForName: ({ values: { gender } }: GenderData) => showGenderedVersion(
-      {
-        female: 'Candidata',
-        male: 'Candidato',
-        other: 'Concorre',
-      },
-      gender,
-    ),
   },
   errors: {
     adBlocker: 'Há um bloqueador de anúncios impedindo o processador de pagamentos.',
@@ -174,46 +140,6 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   navigationLabel: 'Seções dessa campanha',
   noDonations: 'Não há doações',
   of: 'De',
-  governmentOffices: {
-    municipal_council: ({ values: { gender } }: GenderData) => showGenderedVersion(
-      {
-        female: 'Vereadora',
-        male: 'Vereador',
-        other: 'Câmara municipal',
-      },
-      gender,
-    ),
-    city_hall: ({ values: { gender } }: GenderData) => showGenderedVersion({
-      female: 'Prefeita',
-      male: 'Prefeito',
-      other: 'Prefeitura',
-    }, gender),
-    state_legislature: ({ values: { gender } }: GenderData) => showGenderedVersion({
-      female: 'Deputada estadual',
-      male: 'Deputado estadual',
-      other: 'Câmara estadual',
-    }, gender),
-    state_government: ({ values: { gender } }: GenderData) => showGenderedVersion({
-      female: 'Governadora',
-      male: 'Governador',
-      other: 'Governo estadual',
-    }, gender),
-    federal_chamber: ({ values: { gender } }: GenderData) => showGenderedVersion({
-      female: 'Deputada federal',
-      male: 'Deputado federal',
-      other: 'Câmara federal',
-    }, gender),
-    senate: ({ values: { gender } }: GenderData) => showGenderedVersion({
-      female: 'Senadora',
-      male: 'Senador',
-      other: 'Senado',
-    }, gender),
-    presidency: ({ values: { gender } }: GenderData) => showGenderedVersion({
-      female: 'Presidenta',
-      male: 'Presidente',
-      other: 'Presidência',
-    }, gender),
-  },
   paymentMethod: 'Meio de pagamento',
   paymentMethods: {
     credit_card: 'Cartão de crédito',

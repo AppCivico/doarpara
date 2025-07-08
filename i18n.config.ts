@@ -1,5 +1,5 @@
 import datetimeFormats from '@/datetime-formats/pt-BR.ts';
-import ptBR from '@/locales/pt-BR.ts';
+import ptBR from '@/i18n/locales/pt-BR.ts';
 import numberFormats from '@/number-formats/pt-BR.ts';
 
 export default defineI18nConfig(() => ({

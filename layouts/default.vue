@@ -280,11 +280,7 @@ import { useCampaignStore } from '@/store/campaign.ts';
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 
-const head = useLocaleHead({
-  addDirAttribute: true,
-  identifierAttribute: 'id',
-  addSeoAttributes: true,
-});
+const head = useLocaleHead();
 
 const title = computed(() => (route.meta.title
   ? `${route.meta.title} • ${runtimeConfig.public.title}`

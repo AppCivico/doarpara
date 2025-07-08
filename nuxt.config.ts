@@ -1,9 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: '2025-07-08',
   app: {
     head: {
       noscript: [
-        { children: 'JavaScript is required' },
+        { textContent: 'JavaScript is required' },
       ],
     },
     layoutTransition: {
@@ -28,11 +29,13 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
+    lazy: true,
     defaultLocale: 'pt-BR',
     locales: [
       {
         code: 'pt-BR',
         iso: 'pt-BR',
+        file: 'pt-BR.ts',
       },
     ],
   },
@@ -80,9 +83,9 @@ export default defineNuxtConfig({
       },
 
       publicApiBase: process.env.PUBLIC_API
-        || 'https://votolegal-test-api.appcivico.com/public-api',
+        || 'https://api24.doarpara.com.br/public-api',
       privateApiBase: process.env.PRIVATE_API
-        || 'https://votolegal-test-api.appcivico.com',
+        || 'https://api24.doarpara.com.br',
       receiptsBase: process.env.RECEIPTS_BASE || '',
       postalService: {
         queryUrl: process.env.POSTAL_SERVICE_QUERY_URL
