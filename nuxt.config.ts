@@ -30,6 +30,7 @@ export default defineNuxtConfig({
   },
   i18n: {
     lazy: true,
+    strategy: 'no_prefix',
     defaultLocale: 'pt-BR',
     locales: [
       {
