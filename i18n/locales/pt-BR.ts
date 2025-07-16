@@ -1,11 +1,5 @@
-interface GenderData {
-  values: {
-    gender: string;
-  };
-}
-
 export default {
-  _currencySymbol: 'R$',
+  currency: 'R$',
   backToCampaign: 'Voltar à campanha',
   callToFAQ: {
     message: 'Dúvidas sobre esse projeto? {0}',
@@ -80,6 +74,26 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
     ballotNumber: 'Número',
     politicalParty: 'Partido',
     runningForLocation: 'Concorre em',
+    preRunningForOffice: {
+      female: 'Pré-candidata a',
+      male: 'Pré-candidato a',
+      other: 'Concorrerá para',
+    },
+    preRunningForName: {
+      female: 'Pré-candidata',
+      male: 'Pré-candidato',
+      other: 'Pré-candidata(o)',
+    },
+    runningForOffice: {
+      female: 'Candidata a',
+      male: 'Candidato a',
+      other: 'Concorre para',
+    },
+    runningForName: {
+      female: 'Candidata',
+      male: 'Candidato',
+      other: 'Concorre',
+    },
   },
   errors: {
     adBlocker: 'Há um bloqueador de anúncios impedindo o processador de pagamentos.',
@@ -140,6 +154,43 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   navigationLabel: 'Seções dessa campanha',
   noDonations: 'Não há doações',
   of: 'De',
+  governmentOffices: {
+    municipal_council: {
+      female: 'Vereadora',
+      male: 'Vereador',
+      other: 'Câmara municipal',
+    },
+    city_hall: {
+      female: 'Prefeita',
+      male: 'Prefeito',
+      other: 'Prefeitura',
+    },
+    state_legislature: {
+      female: 'Deputada estadual',
+      male: 'Deputado estadual',
+      other: 'Câmara estadual',
+    },
+    state_government: {
+      female: 'Governadora',
+      male: 'Governador',
+      other: 'Governo estadual',
+    },
+    federal_chamber: {
+      female: 'Deputada federal',
+      male: 'Deputado federal',
+      other: 'Câmara federal',
+    },
+    senate: {
+      female: 'Senadora',
+      male: 'Senador',
+      other: 'Senado',
+    },
+    presidency: {
+      female: 'Presidenta',
+      male: 'Presidente',
+      other: 'Presidência',
+    },
+  },
   paymentMethod: 'Meio de pagamento',
   paymentMethods: {
     credit_card: 'Cartão de crédito',

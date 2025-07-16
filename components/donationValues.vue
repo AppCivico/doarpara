@@ -49,7 +49,7 @@
           class="donation-values__custom-currency"
           :for="runtimeConfig.public.queryStringSpecialParameters.amount"
         >
-          {{ $t('_currencySymbol') }}
+          {{ $t('currency') }}
         </label>
         <input
           :id="runtimeConfig.public.queryStringSpecialParameters.amount"
