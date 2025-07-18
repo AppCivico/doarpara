@@ -1,0 +1,93 @@
+<mjml>
+    <mj-head>
+        <mj-title>Confirmação do pagamento da doação</mj-title>
+        <mj-preview>[% IF omelhorprorio %]Vamos juntos com Caetano, Maria Gadú e Pretinho da Serrinha[%ELSE%]Confirmação do pagamento da doação[% END %]</mj-preview>
+        <mj-attributes>
+            <mj-all font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"></mj-all>
+            <mj-text font-weight="400" font-size="16px" color="#000000" line-height="24px"
+                font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"></mj-text>
+        </mj-attributes>
+        <mj-style inline="inline">
+            .body-section {
+              -webkit-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+              -moz-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+              box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+            }
+        </mj-style>
+        <mj-style inline="inline">
+            .text-link {
+              color: #5e6ebf
+            }
+        </mj-style>
+
+
+    </mj-head>
+    <mj-body background-color="#f5f5f5" width="600px">
+        <mj-section full-width="full-width" background-color="#f5f5f5" padding-bottom="0">
+            <mj-column width="100%">
+                <mj-image src="https://static.doarpara.com.br/template-emails/header.png" width="600px" alt="Logo DoarPara"
+                    padding="0" href="https://google.com" />
+            </mj-column>
+        </mj-section>
+        <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
+            <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
+                <mj-column width="100%">
+
+                    <mj-text color="#212b35" font-weight="bold" font-size="20px">
+                        Seus recibos eleitorais &ndash; saiba como declarar no IR
+                    </mj-text>
+
+                    <mj-text color="#434341" font-size="16px">
+                        <p>Olá!</p>
+                        <p>Seguem os dados de suas doações realizadas na última eleição.</p>
+
+                        <mj-raw>[% FOREACH rr IN rows %]</mj-raw>
+                            <p>Doações para [% rr.candidate.office %] [% rr.candidate.popular_name %] ([% rr.candidate.name %]), <b>CNPJ</b> [% rr.candidate.cnpj %], agrupadas por CPF.</p>
+
+                            <mj-raw>[% FOREACH cpf IN rr.cpfs %]</mj-raw>
+                                <p><b>CPF:</b> [% cpf.cpf %]</p>
+                                <ul>
+                                    <mj-raw>[% FOREACH don IN cpf.donations %]</mj-raw>
+                                    <li>
+                                        ID da doação: [% don.donation_id %]
+                                        <ul>
+                                            <li><b>Nome do doador:</b> [% don.donor_name %]</li>
+                                            <li><b>Recibo:</b> https://doarpara.com.br/[% rr.candidate.id %]/recibo/[% don.decred_data_digest %]</li>
+                                            <li><b>CPF do doador:</b> [% cpf.cpf %]</li>
+                                            <li><b>Data da doação:</b> [% don.paid_at %]</li>
+                                            <li><b>Valor:</b> R$ [% don.amount %]</li>
+                                            <li><b>Forma de pagamento:</b> [% don.is_boleto %]</li>
+                                        </ul>
+                                    </li>
+                                    <mj-raw>[% END %]</mj-raw>
+                                </ul>
+                            <mj-raw>[% END %]</mj-raw>
+                        <mj-raw>[% END %]</mj-raw>
+
+                        <p>Esses dados são importantes para declarar corretamente suas doações no Imposto de Renda, conforme exigência da Justiça Eleitoral.</p>
+
+                        <h2>Como declarar suas doações</h2>
+                        <p>Ao preencher sua declaração de Imposto de Renda no site da Receita Federal, vá até a seção <strong>Doações para Partidos Políticos, Comitês Financeiros e Candidatos a Cargos Eletivos</strong>.</p>
+                        <p>Informe, para cada doação realizada:</p>
+                        <ul>
+                            <li>Nome ou razão social do candidato(a)/campanha</li>
+                            <li>CNPJ da campanha (consta no recibo)</li>
+                            <li>Valor da doação.</li>
+                        </ul>
+                        <p>Simples, rápido e em conformidade com a lei.</p>
+
+                        <h2>Quer entender melhor?</h2>
+
+                        <p>Gravamos uma aula explicando tudo sobre o recibo eleitoral, para que serve e como ele é emitido.</p>
+                        <p>👉 <a href="https://youtu.be/d4Hz2uhreMY">Assista no YouTube</a></p>
+
+                        <p>Qualquer dúvida, estamos à disposição para ajudar.</p>
+
+                        <p>Atenciosamente.</p>
+                        <p><b>Equipe DoarPara</b></p>
+                    </mj-text>
+                </mj-column>
+            </mj-section>
+        </mj-wrapper>
+    </mj-body>
+</mjml>
