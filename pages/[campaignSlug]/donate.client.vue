@@ -675,12 +675,14 @@ const addressStreetElem = ref(null);
 const clipboardError = ref(null);
 
 const {
-  donor, donorAddress, errors, pending,
+  donor,
+  donorAddress,
+  errors,
+  pending,
+  combinedErrors,
+  combinedPending,
+  pendingMessage,
 } = storeToRefs(donateStore);
-
-const combinedErrors = computed(() => donateStore.combinedErrors);
-const combinedPending = computed(() => donateStore.combinedPending);
-const pendingMessage = computed(() => donateStore.pendingMessage);
 
 // TODO: remove dumb mapping. It was a bad decision.
 const mappedPaymentMethod = computed(() => {
