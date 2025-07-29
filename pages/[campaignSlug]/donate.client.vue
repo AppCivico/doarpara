@@ -564,7 +564,7 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 
           <template v-else-if="message.type === 'msg'">
             <template v-if="instantPaymentPlatformKey">
-              <div v-if="isClipboardInaccessible || clipboardError" :key="i + '--copy-field'" class="input-wrapper field-for-copy__wrapper">
+              <div v-if="isClipboardInaccessible || clipboardError" :key="`${i}--copy-field`" class="input-wrapper field-for-copy__wrapper">
                 <label class="field-for-copy__label" :for="`to-copy--${i}`">
                   Selecione e copie
                 </label>
