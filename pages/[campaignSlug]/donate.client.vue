@@ -301,9 +301,7 @@
               <input
                 id="full-name"
                 v-model.trim="creditCard.full_name"
-                v-maska:[creditCardMaskOption]
-                data-maska="A"
-                data-maska-tokens="A:[A-Z ]:multiple"
+                v-maska="creditCardMaskOption"
                 type="text"
                 name="full_name"
                 autocomplete="cc-name"
@@ -624,7 +622,14 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const creditCardMaskOption = {
-  preProcess: (val: string) => val.toUpperCase(),
+  mask: 'A',
+  tokens: {
+    A: {
+      pattern: /[A-Z ]/,
+      transform: (char: string) => char.toUpperCase(),
+      multiple: true
+    }
+  }
 };
 
 declare const Iugu: any;
