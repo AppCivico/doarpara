@@ -934,6 +934,8 @@ async function submitDonation() {
     if (import.meta.dev) {
       console.trace(error);
     }
+
+    return;
   }
 
   if (mappedPaymentMethod.value !== 'credit_card') {
