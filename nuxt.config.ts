@@ -85,9 +85,9 @@ export default defineNuxtConfig({
       },
 
       publicApiBase: process.env.PUBLIC_API
-        || 'https://api24.doarpara.com.br/public-api',
+        || 'https://dapi.votolegal.com.br',
       privateApiBase: process.env.PRIVATE_API
-        || 'https://api24.doarpara.com.br',
+        || 'https://dapi.votolegal.com.br/public-api',
       receiptsBase: process.env.RECEIPTS_BASE || '',
       postalService: {
         queryUrl: process.env.POSTAL_SERVICE_QUERY_URL
