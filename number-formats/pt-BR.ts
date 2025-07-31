@@ -12,5 +12,7 @@ export default {
   percent: {
     style: 'percent',
     useGrouping: false,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   },
 } as const;

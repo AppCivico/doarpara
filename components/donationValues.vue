@@ -23,7 +23,7 @@
               minimumFractionDigits: 0,
               maximumFractionDigits: 0,
             })
-            : $t(`pledges.${pledge}`)
+            : $t(`pledges.${pledge as string}`)
         }}
       </NuxtLink>
     </li>
@@ -49,7 +49,7 @@
           class="donation-values__custom-currency"
           :for="runtimeConfig.public.queryStringSpecialParameters.amount"
         >
-          {{ $t('_currencySymbol') }}
+          {{ $t('currency') }}
         </label>
         <input
           :id="runtimeConfig.public.queryStringSpecialParameters.amount"

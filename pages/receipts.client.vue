@@ -60,11 +60,11 @@ const {
       <h3 class="receipts-page-title">
         Essa doação foi realizada para <strong>{{ receipt?.donation.candidate.popular_name }}</strong>,
         <span v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
-          {{ $t('electionCampaign.preRunningForOffice', { gender: receipt?.donation.candidate.gender }) }}
+          {{ $t(`electionCampaign.preRunningForOffice.${receipt?.donation.candidate.gender}`) }}
         </span>
         <span v-else>
-          {{ $t('electionCampaign.runningForOffice', { gender: receipt?.donation.candidate.gender }) }}
-        </span> {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}`, { gender: receipt?.donation.candidate.gender }) }}
+          {{ $t(`electionCampaign.runningForOffice.${receipt?.donation.candidate.gender}`) }}
+        </span> {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}.${receipt?.donation.candidate.gender}`) }}
         por
         <span v-if="receipt?.donation.candidate.party">
           {{ receipt?.donation.candidate.party.acronym }} -
@@ -88,10 +88,10 @@ const {
     </section>
     <section>
       <h2 v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
-        {{ $t('electionCampaign.preRunningForName', { gender: receipt?.donation.candidate.gender }) }}
+        {{ $t(`electionCampaign.preRunningForName.${receipt?.donation.candidate.gender}`) }}
       </h2>
       <h2 v-else>
-        {{ $t('electionCampaign.runningForName', { gender: receipt?.donation.candidate.gender }) }}
+        {{ $t(`electionCampaign.runningForName.${receipt?.donation.candidate.gender}`) }}
       </h2>
 
       <dl class="receipt-data">
@@ -99,10 +99,10 @@ const {
           class="receipt-data__item"
         >
           <dt v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'" class="receipt-data__term">
-            {{ $t('electionCampaign.preRunningForName', { gender: receipt?.donation.candidate.gender }) }}
+            {{ $t(`electionCampaign.preRunningForName.${receipt?.donation.candidate.gender}`) }}
           </dt>
           <dt v-else class="receipt-data__term">
-            {{ $t('electionCampaign.runningForName', { gender: receipt?.donation.candidate.gender }) }}
+            {{ $t(`electionCampaign.runningForName.${receipt?.donation.candidate.gender}`) }}
           </dt>
           <dd class="receipt-data__description">
             {{ receipt?.donation.candidate.name || '-' }}
@@ -144,9 +144,7 @@ const {
             Cargo
           </dt>
           <dd class="receipt-data__description">
-            {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}`, {
-              gender: receipt?.donation.candidate.gender,
-            }) }}
+            {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}.${receipt?.donation.candidate.gender}`) }}
           </dd>
         </div>
       </dl>

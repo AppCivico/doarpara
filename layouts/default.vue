@@ -47,13 +47,13 @@
                     class="colophon__campaign-creator"
                   >
                     <dt v-if="campaign.campaign_donation_type === 'pre-campaign'">
-                      {{ $t('electionCampaign.preRunningForOffice', { gender: campaign.fundraiser.gender }) }}
+                      {{ $t(`electionCampaign.preRunningForOffice.${campaign.fundraiser.gender}`) }}
                     </dt>
                     <dt v-else>
-                      {{ $t('electionCampaign.runningForOffice', { gender: campaign.fundraiser.gender }) }}
+                      {{ $t(`electionCampaign.runningForOffice.${campaign.fundraiser.gender}`) }}
                     </dt>
                     <dd>
-                      {{ $t(`governmentOffices.${campaign.fundraiser.office}`, { gender: campaign.fundraiser.gender }) }}
+                      {{ $t(`governmentOffices.${campaign.fundraiser.office}.${campaign.fundraiser.gender}`) }}
                     </dd>
                   </div>
 
@@ -280,11 +280,7 @@ import { useCampaignStore } from '@/store/campaign.ts';
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 
-const head = useLocaleHead({
-  addDirAttribute: true,
-  identifierAttribute: 'id',
-  addSeoAttributes: true,
-});
+const head = useLocaleHead();
 
 const title = computed(() => (route.meta.title
   ? `${route.meta.title} • ${runtimeConfig.public.title}`

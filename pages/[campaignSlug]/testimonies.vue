@@ -169,22 +169,18 @@ const submitTestimonies = async (event) => {
   try {
     const formData = new FormData(event.target);
     formData.append('candidate_id', campaign.value.id);
-    const { status, error: err } = await useFetch(url, {
+    await $fetch(url, {
       method: 'POST',
       body: formData,
     });
-    if (status.value === 'success') {
-      submissionSuccess.value = true;
-      setTimeout(() => {
-        content.value = '';
-        count.value = 220;
-        submissionSuccess.value = false;
-      }, 2000);
-    } else {
-      setErrorMessage(`Erro do servidor: ${err.message || 'Erro desconhecido'}`);
-    }
+    submissionSuccess.value = true;
+    setTimeout(() => {
+      content.value = '';
+      count.value = 220;
+      submissionSuccess.value = false;
+    }, 2000);
   } catch (err) {
-    throw new Error('Erro ao enviar depoimento');
+    throw new Error(`Erro ao enviar depoimento ${err}`);
   }
 };
 

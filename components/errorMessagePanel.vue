@@ -98,7 +98,13 @@ function flushErrors() {
 
   padding: my.$gutter;
 
-  color: my.text-contrast(my.palette('signage', 'danger'), my.palette('neutral', 'white'), $level: 'AA');
+  color: my.apca-text-contrast(
+    $background-color: my.palette('signage', 'danger'),
+    $text-color: my.palette('neutral', 'white'),
+    $font-size: 13px,
+    $font-weight: 400,
+    $usage-context: 'content',
+  );
 
   border-radius: my.$rounded-corner;
 

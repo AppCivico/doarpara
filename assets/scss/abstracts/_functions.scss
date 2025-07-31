@@ -4,6 +4,7 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
+@use 'sass-apca/apca';
 
 @use 'constants/mdc-linear-channel-values' as constants;
 
@@ -48,6 +49,27 @@ $my-gutter: 1rem !default;
 /// @type map
 /// @access public
 $my-palette: () !default;
+
+/**
+ * @var {Map} $apca-use-case-thresholds
+ * A map defining APCA contrast thresholds for various text usage contexts.
+ * Each key corresponds to a specific context and its required minimum contrast value (Lc).
+ * Keys:
+ *   - 'body':       90 (fluent body text)
+ *   - 'sub-fluent': 75 (secondary body / larger non-body text)
+ *   - 'content':    60 (button labels, links, interface text)
+ *   - 'headline':   45 (headlines, large bold text)
+ *   - 'spot':       30 (placeholders, disabled text)
+ *   - 'non-text':   15 (dividers, thick outlines)
+ */
+$apca-use-case-thresholds: (
+  'body':       90,
+  'sub-fluent': 75,
+  'content':    60,
+  'headline':   45,
+  'spot':       30,
+  'non-text':   15
+) !default;
 
 /// Native `url(..)` function wrapper
 ///
@@ -333,7 +355,118 @@ $_default-text-color--light: palette('text', 'light');
   }
 }
 
-/// Convert a HSL color to RGB
+/**
+ * Computes an accessible text color adjusted for a given background using APCA contrast thresholds.
+ *
+ * @function apca-text-contrast
+ * @param {Color} $background-color - The background color to test against.
+ * @param {Color} $text-color - The initial text color to adjust.
+ * @param {Number|string} $font-size - Font size (e.g., 16px) for threshold calculation.
+ * @param {Number} [$font-weight=400] - Font weight for threshold lookup (default: 400).
+ * @param {String} [$usage-context='body'] - Usage context key mapping to a contrast threshold.
+ * @param {Map} [$options=()] - Optional parameters map:
+ *   - {Number} iterations: Number of binary search iterations (default: 7).
+ *   - {Boolean} strict: Throw error if final contrast is below threshold (default: true).
+ *   - {Boolean} debug: Enable debug warnings (default: false).
+ * @return {Color} - Adjusted text color that meets or exceeds the contrast threshold.
+ *
+ * @example scss
+ * .my-component {
+ *   color: my.apca-text-contrast(
+ *     my.palette('neutral', 'base'),    // background color from project palette
+ *     my.palette('neutral', 'black'),   // text color from project palette
+ *     16px,                              // font size
+ *     400,                               // font weight
+ *     'body',                            // usage context key
+ *     (debug: true)                      // enable debug logs
+ *   );
+ * }
+ */
+@function apca-text-contrast(
+  $background-color,
+  $text-color,
+  $font-size,
+  $font-weight: 400,
+  $usage-context: 'body',
+  $options: ()
+) {
+  // Set defaults and merge with provided options
+  $default-options: (
+    iterations: 7,
+    strict: true,
+    debug: false
+  );
+  $merged-options: map.merge($default-options, $options);
+  $max-iterations: map.get($merged-options, iterations);
+  $is-strict: map.get($merged-options, strict);
+  $is-debug: map.get($merged-options, debug);
+
+  // Retrieve contrast threshold for the given usage context
+  $contrast-threshold: map.get($apca-use-case-thresholds, $usage-context);
+  @if $contrast-threshold == null {
+    @error "apca-text-contrast: invalid usage-context '#{$usage-context}'. "
+         "Choose one of #{map.keys($apca-use-case-thresholds)}.";
+  }
+
+  // Calculate initial contrast value and determine polarity
+  $initial-contrast-raw: apca.contrast($text-color, $background-color);
+  $initial-contrast: math.abs(strip-unit($initial-contrast-raw));
+  $contrast-polarity: if($initial-contrast-raw > 0, 1, -1);
+
+  // Initial debug logs
+  @if $is-debug {
+    @warn "APCA ▶ usage-context: '#{$usage-context}', threshold: #{$contrast-threshold}";
+    @warn "APCA ▶ initial contrast (raw): #{round($initial-contrast-raw, 1)}";
+    @warn "APCA ▶ initial contrast (unitless): #{round($initial-contrast, 1)}";
+  }
+
+  // Binary search loop to find best contrast adjustment
+  $lower-bound: 0%;
+  $upper-bound: 100%;
+  $best-color: $text-color;
+
+  @for $i from 1 through $max-iterations {
+    $mid-percentage: math.div($lower-bound + $upper-bound, 2);
+    $candidate-color: if(
+      $contrast-polarity == 1,
+      color.scale($text-color, $lightness: -$mid-percentage),
+      color.scale($text-color, $lightness:  $mid-percentage)
+    );
+
+    @if $is-debug {
+      @warn "APCA ▶ iteration #{$i}: midpoint #{$mid-percentage}, candidate #{inspect($candidate-color)}";
+    }
+
+    $candidate-contrast-raw: apca.contrast($candidate-color, $background-color);
+    $candidate-contrast: math.abs(strip-unit($candidate-contrast-raw));
+
+    @if $candidate-contrast >= $contrast-threshold {
+      $best-color: $candidate-color;
+      $upper-bound: $mid-percentage;
+    } @else {
+      $lower-bound: $mid-percentage;
+    }
+  }
+
+  // 6) Final contrast validation
+  $final-contrast-raw: apca.contrast($best-color, $background-color);
+  $final-contrast: math.abs(strip-unit($final-contrast-raw));
+
+  @if $is-debug {
+    @warn "APCA ▶ final contrast (raw): #{round($final-contrast-raw, 1)}";
+    @warn "APCA ▶ final contrast (unitless): #{round($final-contrast, 1)}";
+  }
+
+  @if $final-contrast < $contrast-threshold and $is-strict {
+    @error "APCA Contrast Error: final contrast #{round($final-contrast, 1)} "
+         "is below threshold #{round($contrast-threshold, 1)} for usage-context '#{$usage-context}', "
+         "font-size #{$font-size}, font-weight #{$font-weight}.";
+  }
+
+  @return $best-color;
+}
+
+/// convert a hsl color to rgb
 ///
 /// @access public
 /// @group helpers
@@ -537,7 +670,7 @@ $_default-text-color--light: palette('text', 'light');
 
   $color: map.get($full-palette, $color-path...);
 
-  @if type-of($color) == 'map' {
+  @if meta.type-of($color) == 'map' {
     @if map.has-key($full-palette, list.append($color-path, 'medium', $separator: space)...) {
       $color: map.get($full-palette, list.append($color-path, 'medium', $separator: space)...);
     } @else if map.has-key($full-palette, list.append($color-path, 'base', $separator: space)...) {
@@ -547,7 +680,7 @@ $_default-text-color--light: palette('text', 'light');
     }
   }
 
-  @if meta.type-of($color) == 'color' or $color == 'transparent' or type-of($color) == 'list' {
+  @if meta.type-of($color) == 'color' or $color == 'transparent' or meta.type-of($color) == 'list' {
     @return $color;
   }
 

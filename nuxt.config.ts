@@ -1,9 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: '2025-07-08',
   app: {
     head: {
       noscript: [
-        { children: 'JavaScript is required' },
+        { textContent: 'JavaScript is required' },
       ],
     },
     layoutTransition: {
@@ -28,11 +29,15 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
+    baseUrl: process.env.BASE_URL,
+    lazy: true,
+    strategy: 'no_prefix',
     defaultLocale: 'pt-BR',
     locales: [
       {
         code: 'pt-BR',
         iso: 'pt-BR',
+        file: 'pt-BR.ts',
       },
     ],
   },
@@ -80,9 +85,9 @@ export default defineNuxtConfig({
       },
 
       publicApiBase: process.env.PUBLIC_API
-        || 'https://votolegal-test-api.appcivico.com/public-api',
+        || 'https://dapi.votolegal.com.br',
       privateApiBase: process.env.PRIVATE_API
-        || 'https://votolegal-test-api.appcivico.com',
+        || 'https://dapi.votolegal.com.br/public-api',
       receiptsBase: process.env.RECEIPTS_BASE || '',
       postalService: {
         queryUrl: process.env.POSTAL_SERVICE_QUERY_URL

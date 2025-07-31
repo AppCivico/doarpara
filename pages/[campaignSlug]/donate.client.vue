@@ -301,9 +301,7 @@
               <input
                 id="full-name"
                 v-model.trim="creditCard.full_name"
-                v-maska:[creditCardMaskOption]
-                data-maska="A"
-                data-maska-tokens="A:[A-Z ]:multiple"
+                v-maska="creditCardMaskOption"
                 type="text"
                 name="full_name"
                 autocomplete="cc-name"
@@ -564,7 +562,7 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 
           <template v-else-if="message.type === 'msg'">
             <template v-if="instantPaymentPlatformKey">
-              <div v-if="isClipboardInaccessible || clipboardError" :key="i + '--copy-field'" class="input-wrapper field-for-copy__wrapper">
+              <div v-if="isClipboardInaccessible || clipboardError" :key="`${i}--copy-field`" class="input-wrapper field-for-copy__wrapper">
                 <label class="field-for-copy__label" :for="`to-copy--${i}`">
                   Selecione e copie
                 </label>
@@ -624,7 +622,14 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
 const creditCardMaskOption = {
-  preProcess: (val: string) => val.toUpperCase(),
+  mask: 'A',
+  tokens: {
+    A: {
+      pattern: /[A-Z ]/,
+      transform: (char: string) => char.toUpperCase(),
+      multiple: true
+    }
+  }
 };
 
 declare const Iugu: any;
@@ -675,7 +680,13 @@ const addressStreetElem = ref(null);
 const clipboardError = ref(null);
 
 const {
-  combinedErrors, combinedPending, donor, donorAddress, errors, pending, pendingMessage,
+  donor,
+  donorAddress,
+  errors,
+  pending,
+  combinedErrors,
+  combinedPending,
+  pendingMessage,
 } = storeToRefs(donateStore);
 
 // TODO: remove dumb mapping. It was a bad decision.
@@ -923,6 +934,8 @@ async function submitDonation() {
     if (import.meta.dev) {
       console.trace(error);
     }
+
+    return;
   }
 
   if (mappedPaymentMethod.value !== 'credit_card') {
