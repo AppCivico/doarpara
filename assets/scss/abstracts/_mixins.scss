@@ -1198,7 +1198,7 @@ $no-viewport: false !default;
   // }
 }
 
-@mixin columns($width: map-get(c.$line-lengths, 'column'), $gap: c.$gutter) {
+@mixin columns($width: map.get(c.$line-lengths, 'column'), $gap: c.$gutter) {
   @include hyphens;
 
   column-fill: balance;
