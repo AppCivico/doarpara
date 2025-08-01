@@ -76,7 +76,7 @@ $_ratios: constants.$ratios;
   $bases: ();
 
   // Render target values from settings.
-  @if type-of($ratio) == 'string' or type-of($ratio) == 'list' {
+  @if meta.type-of($ratio) == 'string' or meta.type-of($ratio) == 'list' {
     $ratio: radio-target($ratio, $base);
   }
 

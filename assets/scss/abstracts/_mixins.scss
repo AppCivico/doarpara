@@ -889,7 +889,7 @@ $no-viewport: false !default;
   @each $direction in $directions {
     $direction: string.to-lower-case($direction);
 
-    @if not index(top right bottom left, $direction) {
+    @if not list.index(top right bottom left, $direction) {
       @error 'Direction must be either `top`, `right`, `bottom` or `left`.';
     }
 
@@ -910,7 +910,7 @@ $no-viewport: false !default;
 @mixin triangle($direction, $color: currentcolor, $size: 1em) {
   $perpendicular-borders: $size solid transparent;
 
-  @if not index(top right bottom left, $direction) {
+  @if not list.index(top right bottom left, $direction) {
     @error 'Direction must be either `top`, `right`, `bottom` or `left`.';
   }
 

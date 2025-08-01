@@ -158,15 +158,16 @@ const campaignCoverSrcset = computed(() => {
   @include my.shadow;
   @include my.pulsing-color(my.palette('effects', 'error-gradient'), 'background-color');
 
-  padding: my.$gutter;
-  color: my.apca-text-contrast(
-    $background-color: my.palette('signage', 'danger'),
-    $text-color: my.palette('neutral', 'white'),
-    $font-size: 14px,
-    $font-weight: 500,
-    $usage-context: 'content',
-  );
-  border-radius: my.$rounded-corner;
-
+  & {
+    padding: my.$gutter;
+    color: my.apca-text-contrast(
+      $background-color: my.palette('signage', 'danger'),
+      $text-color: my.palette('neutral', 'white'),
+      $font-size: 14px,
+      $font-weight: 500,
+      $usage-context: 'content',
+    );
+    border-radius: my.$rounded-corner;
+  }
 }
 </style>
