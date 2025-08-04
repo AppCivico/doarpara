@@ -23,7 +23,9 @@ $_themes: 'blue' 'green' 'orange' 'red';
       @content;
     }
   } @else {
-    @content;
+    & {
+      @content;
+    }
 
     :where(.theme--default:root) & {
       @content;
@@ -50,7 +52,9 @@ $_themes: 'blue' 'green' 'orange' 'red';
 }
 
 @mixin themed-asset($property, $asset-name) {
-  #{$property}: f.image(#{'themes/blue/#{$asset-name}'});
+  & {
+    #{$property}: f.image(#{'themes/blue/#{$asset-name}'});
+  }
 
   @each $theme in $_themes {
     :where(.theme--#{$theme}:root) & {
@@ -94,25 +98,27 @@ $_themes: 'blue' 'green' 'orange' 'red';
   $_placeholder-bg__diagonal: rgb(0, 0, 0);
   $_placeholder-bg__color: rgb(220, 220, 220);
 
-  background: linear-gradient(
-    to top left,
-    transparent 0%,
-    transparent calc(50% - 1px),
-    $_placeholder-bg__diagonal 50%,
-    transparent calc(50% + 1px),
-    transparent 100%
-  ), linear-gradient(
-    to top right,
-    transparent 0%,
-    transparent calc(50% - 1px),
-    $_placeholder-bg__diagonal 50%,
-    transparent calc(50% + 1px),
-    transparent 100%
-  ), linear-gradient(
-    to right,
-    $_placeholder-bg__color,
-    $_placeholder-bg__color
-  );
+  & {
+    background: linear-gradient(
+      to top left,
+      transparent 0%,
+      transparent calc(50% - 1px),
+      $_placeholder-bg__diagonal 50%,
+      transparent calc(50% + 1px),
+      transparent 100%
+    ), linear-gradient(
+      to top right,
+      transparent 0%,
+      transparent calc(50% - 1px),
+      $_placeholder-bg__diagonal 50%,
+      transparent calc(50% + 1px),
+      transparent 100%
+    ), linear-gradient(
+      to right,
+      $_placeholder-bg__color,
+      $_placeholder-bg__color
+    );
+  }
 }
 
 /// Grid background image
@@ -137,10 +143,12 @@ $_themes: 'blue' 'green' 'orange' 'red';
     );
   }
 
-  background-image: linear-gradient(
-    to right,
-    #{list.append($grid-image, (transparent calc(100% - #{c.$gutter}), $color calc(100% - #{c.$gutter}), $color 100%), 'comma')}
-  );
+  & {
+    background-image: linear-gradient(
+      to right,
+      #{list.append($grid-image, (transparent calc(100% - #{c.$gutter}), $color calc(100% - #{c.$gutter}), $color 100%), 'comma')}
+    );
+  }
 }
 
 
@@ -149,9 +157,11 @@ $_themes: 'blue' 'green' 'orange' 'red';
 /// @access private
 ///
 @mixin _italic-overflow {
-  overflow: visible;
+  & {
+    overflow: visible;
 
-  font-style: italic;
+    font-style: italic;
+  }
 }
 
 /// Special style for the _&_ used as a conjunction.
@@ -179,11 +189,14 @@ $_themes: 'blue' 'green' 'orange' 'red';
 ///
 @mixin alt-ampersand {
   .amp {
+    & {
+      font-family: fs.$AMPERSAND-FONT-STACK;
+      font-size: 2em;
+      line-height: 0.25;
+      vertical-align: middle;
+    }
+
     @include _italic-overflow;
-    font-family: fs.$AMPERSAND-FONT-STACK;
-    font-size: 2em;
-    line-height: 0.25;
-    vertical-align: middle;
 
     @content;
   }
@@ -210,9 +223,11 @@ $_themes: 'blue' 'green' 'orange' 'red';
 ///
 @mixin alt-preposition {
   .alt {
-    @include _italic-overflow;
+    & {
+      font-family: fs.$ALT-FONT-STACK;
+    }
 
-    font-family: fs.$ALT-FONT-STACK;
+    @include _italic-overflow;
 
     @content;
   }
@@ -261,9 +276,11 @@ $_themes: 'blue' 'green' 'orange' 'red';
 /// }
 ///
 @mixin inline-background ($position: 'before') {
-  display: inline;
+  & {
+    display: inline;
 
-  box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
 
   @include inline-break($position) {
     margin-right: -2em;
@@ -317,15 +334,17 @@ $_themes: 'blue' 'green' 'orange' 'red';
 ///
 @mixin inline-block-wrapper {
   $_inline-block-font-stack: 'FreeSans', 'Arimo', 'Droid Sans', 'Helvetica', 'Arial', sans-serif;
-  font-family: $_inline-block-font-stack;
-  font-size: 0;
-  letter-spacing: -0.31em; /* Webkit: collapse white-space between units */
-  // stylelint-disable-next-line declaration-block-no-duplicate-properties
-  letter-spacing: normal\9; /* reset IE < 8 */
+  & {
+    font-family: $_inline-block-font-stack;
+    font-size: 0;
+    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */
+    // stylelint-disable-next-line declaration-block-no-duplicate-properties
+    letter-spacing: normal\9; /* reset IE < 8 */
 
-  word-spacing: -0.43em\9; /* IE < 8: collapse white-space between units */
+    word-spacing: -0.43em\9; /* IE < 8: collapse white-space between units */
 
-  text-rendering: optimizeSpeed; /* Webkit: fixes text-rendering: optimizeLegibility */
+    text-rendering: optimizeSpeed; /* Webkit: fixes text-rendering: optimizeLegibility */
+  }
 }
 
 /// Helper for an inline-block grid.
@@ -468,17 +487,19 @@ $_themes: 'blue' 'green' 'orange' 'red';
 /// }
 ///
 @mixin icon-font {
+  & {
+    // stylelint-disable-next-line property-units
+    font-size: 14px; /* font-awesome pixel perfection is at 14px and multiples of 14 */
+    font-style: normal;
+    font-weight: font-weight('normal');
+    font-variant: normal;
+    line-height: 1;
+    text-transform: none;
+
+    speak: none;
+  }
+
   @include _font-smoothing(true);
-
-  // stylelint-disable-next-line property-units
-  font-size: 14px; /* font-awesome pixel perfection is at 14px and multiples of 14 */
-  font-style: normal;
-  font-weight: font-weight('normal');
-  font-variant: normal;
-  line-height: 1;
-  text-transform: none;
-
-  speak: none;
 }
 
 @mixin clearfix($ie: 8) {
@@ -505,7 +526,9 @@ $_themes: 'blue' 'green' 'orange' 'red';
   }
 
   @if ($ie <= 8) {
-    zoom: 1\9; // old IE sucks
+    & {
+      zoom: 1\9; // old IE sucks
+    }
   }
 }
 
@@ -1090,23 +1113,27 @@ $no-viewport: false !default;
 @mixin _focus-and-hover-basis {
   @include themed-color('outline-color', ('effects', 'tap-highlight'));
 
-  outline-width: 4px;
-  outline-style: solid;
+  & {
+    outline-width: 4px;
+    outline-style: solid;
 
-  transition-duration: 100ms;
-  transition-property: outline-width;
-  box-decoration-break: clone;
+    transition-duration: 100ms;
+    transition-property: outline-width;
+    box-decoration-break: clone;
+  }
 }
 
 @mixin pulsing-color($list, $property: 'color') {
   $animation-name: pulsing-#{$property};
 
-  #{$property}: list.nth($list, 1);
+  & {
+    #{$property}: list.nth($list, 1);
 
-  animation-name: $animation-name;
-  animation-duration: 2s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+    animation-name: $animation-name;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
 
   @at-root {
     $length: list.length($list);
@@ -1127,10 +1154,13 @@ $no-viewport: false !default;
 
 @mixin pulsing-outline($color-path) {
   @include themed-color('outline-color', ('brand', 'secondary'));
-  @include pulsing-color(f.palette($color-path...), 'outline-color');
 
-  outline-width: 2px;
-  outline-style: solid;
+  & {
+    outline-width: 2px;
+    outline-style: solid;
+  }
+
+  @include pulsing-color(f.palette($color-path...), 'outline-color');
 
   @each $theme in $_themes {
     $themed-path: list.join(('#{$theme}-theme'), $color-path);
@@ -1138,7 +1168,9 @@ $no-viewport: false !default;
 
     @if $themed-color-list {
       @include themed-declaration($theme) {
-        @include pulsing-color($themed-color-list, 'outline-color');
+        & {
+          @include pulsing-color($themed-color-list, 'outline-color');
+        }
       }
     }
   }
@@ -1155,32 +1187,48 @@ $no-viewport: false !default;
 
 @mixin shadow ($inset: false) {
   @if $inset {
-    box-shadow: inset 10px 10px 50px f.palette('effects', 'shadow');
+    & {
+      box-shadow: inset 10px 10px 50px f.palette('effects', 'shadow');
+    }
 
       @include themed-declaration ('green') {
-        box-shadow: inset 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
+        & {
+          box-shadow: inset 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
+        }
       }
 
       @include themed-declaration ('orange') {
-        box-shadow: inset 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+        & {
+          box-shadow: inset 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+        }
       }
 
       @include themed-declaration ('red') {
-        box-shadow: inset 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+        & {
+          box-shadow: inset 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+        }
       }
   } @else {
-    box-shadow: 10px 10px 50px f.palette('effects', 'shadow');
+    & {
+      box-shadow: 10px 10px 50px f.palette('effects', 'shadow');
+    }
 
       @include themed-declaration ('green') {
-        box-shadow: 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
+        & {
+          box-shadow: 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
+        }
       }
 
       @include themed-declaration ('orange') {
-        box-shadow: 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+        & {
+          box-shadow: 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+        }
       }
 
       @include themed-declaration ('red') {
-        box-shadow: 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+        & {
+          box-shadow: 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+        }
       }
   }
   // filter: drop-shadow(0px 4px 4px f.palette('effects', 'shadow'));
@@ -1199,33 +1247,39 @@ $no-viewport: false !default;
 }
 
 @mixin columns($width: map.get(c.$line-lengths, 'column'), $gap: c.$gutter) {
+  & {
+    column-fill: balance;
+
+    column-gap: $gap;
+    column-width: $width;
+
+    max-width: 100%;
+  }
+
   @include hyphens;
-
-  column-fill: balance;
-
-  column-gap: $gap;
-  column-width: $width;
-
-  max-width: 100%;
 }
 
 @mixin container {
-  width: 100%;
-  max-width: c.$max-width;
-  padding-right: c.$gutter;
-  padding-left: c.$gutter;
-  margin-right: auto;
-  margin-left: auto;
+  & {
+    width: 100%;
+    max-width: c.$max-width;
+    padding-right: c.$gutter;
+    padding-left: c.$gutter;
+    margin-right: auto;
+    margin-left: auto;
+  }
 }
 
 @mixin full-width {
-  position: relative;
-  right: 50%;
-  left: 50%;
+  & {
+    position: relative;
+    right: 50%;
+    left: 50%;
 
-  width: 100vw;
-  margin-right: -50vw;
-  margin-left: -50vw;
+    width: 100vw;
+    margin-right: -50vw;
+    margin-left: -50vw;
+  }
 }
 
 @mixin headings ($which-ones: 'all') {

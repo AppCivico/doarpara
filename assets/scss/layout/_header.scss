@@ -62,9 +62,11 @@
   .campaign-title {
     padding-top: my.$gutter;
 
-    @include my.fluid-font-size($min: my.ms-step(30px), $max: my.ms-step(45px));
+    & {
+      color: inherit;
+    }
 
-    color: inherit;
+    @include my.fluid-font-size($min: my.ms-step(30px), $max: my.ms-step(45px));
 
     @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
       padding-top: my.$gutter * 3;

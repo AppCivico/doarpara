@@ -7,10 +7,12 @@
 /* User interaction (https://www.w3.org/TR/html5/editing.html)
 ========================================================================== */
 ::selection {
+  & {
+    text-shadow: none;
+  }
+
   @include my.themed-color('color', ('selection', 'foreground'));
   @include my.themed-color('background-color', ('selection', 'background'));
-
-  text-shadow: none;
 }
 
 [id] {
@@ -565,16 +567,18 @@ a > picture {
 
 .like-a__link,
 a {
+  & {
+    padding: 0;
+    margin: 0;
+
+    font-size: 100%;
+    vertical-align: baseline;
+
+    outline-width: 0;
+    outline-offset: 2px;
+  }
+
   @include my.themed-color('color', ('anchor', 'base'));
-
-  padding: 0;
-  margin: 0;
-
-  font-size: 100%;
-  vertical-align: baseline;
-
-  outline-width: 0;
-  outline-offset: 2px;
 
   @include my.on-event {
     text-decoration: underline;
@@ -642,22 +646,26 @@ a {
 /* Contact info and addresses
 ---------------------------------------------------------------------------- */
 address {
-  padding: 0;
-  margin: 0;
+  & {
+    padding: 0;
+    margin: 0;
 
-  font-style: normal;
-  font-weight: 100;
+    font-style: normal;
+    font-weight: 100;
+  }
 }
 
 /* Code blocks
 ---------------------------------------------------------------------------- */
 pre {
-  padding: my.$leading * 0.5rem my.$gutter * 0.5;
-  margin: 0 0 my.$leading * 1rem;
-  overflow: auto;
+  & {
+    padding: my.$leading * 0.5rem my.$gutter * 0.5;
+    margin: 0 0 my.$leading * 1rem;
+    overflow: auto;
 
-  font-size: smaller;
-  color: my.palette('text', 'light');
+    font-size: smaller;
+    color: my.palette('text', 'light');
 
-  background-color: my.palette('text', 'dark');
+    background-color: my.palette('text', 'dark');
+  }
 }

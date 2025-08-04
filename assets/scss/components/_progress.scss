@@ -57,18 +57,20 @@
 
 progress,
 [role='progressbar'] {
+  & {
+    display: block;
+
+    width: 100%;
+    // Get rid of default border in Firefox.
+    height: 0.25rem;
+
+    appearance: none;
+
+    border: 0;
+  }
+
   @include my.themed-color('color' ,('button', 'submit'));
   @include my.themed-color('background-color' ,('disabled', 'background'));
-
-  display: block;
-
-  width: 100%;
-  // Get rid of default border in Firefox.
-  height: 0.25rem;
-
-  appearance: none;
-
-  border: 0;
 
   @include progress-bar-fg {
     @include my.themed-color('background' ,('brand', 'tertiary'));    border-radius: 999em;

@@ -9,24 +9,26 @@
  * <li><label for="id">label</label> <input type="checkbox" id="id" /></li>
  */
 fieldset .list-of-options {
+  & {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: my.$gutter;
+
+    align-items: top;
+
+    width: 100%;
+    padding: my.$gutter * 0.75;
+    margin: 0;
+
+    border-style: solid;
+    border-width: my.$stroke;
+    border-radius: my.$rounded-corner;
+  }
+
   @include my.themed-color('background-color', ('neutral','x-light'));
   @include my.themed-color('border-color', ('border'));
-
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: my.$gutter;
-
-  align-items: top;
-
-  width: 100%;
-  padding: my.$gutter * 0.75;
-  margin: 0;
-
-  border-style: solid;
-  border-width: my.$stroke;
-  border-radius: my.$rounded-corner;
 }
 
 .list-of-options__item {
@@ -76,25 +78,27 @@ fieldset .list-of-options {
 [type='radio'] {
   @extend %os-element-reset;
 
+  & {
+    box-sizing: border-box; /* 1 */
+
+    width: my.$gutter;
+    height: my.$gutter;
+    padding: 0; /* 2 */
+    margin: 0;
+
+    vertical-align: middle;
+
+    appearance: none;
+    cursor: pointer;
+
+    background-color: my.palette('neutral', 'white');
+    background-clip: padding-box;
+    border-style: solid;
+    border-width: my.$stroke;
+    box-shadow: inset 0 0 0 my.$gutter * 0.25 my.palette('neutral', 'white');
+  }
+
   @include my.themed-color('border-color', ('border', 'base'));
-
-  box-sizing: border-box; /* 1 */
-
-  width: my.$gutter;
-  height: my.$gutter;
-  padding: 0; /* 2 */
-  margin: 0;
-
-  vertical-align: middle;
-
-  appearance: none;
-  cursor: pointer;
-
-  background-color: my.palette('neutral', 'white');
-  background-clip: padding-box;
-  border-style: solid;
-  border-width: my.$stroke;
-  box-shadow: inset 0 0 0 my.$gutter * 0.25 my.palette('neutral', 'white');
 
   &:checked {
     @include my.themed-color('background-color', ('brand', 'primary'));

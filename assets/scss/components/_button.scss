@@ -21,33 +21,35 @@
 %button-reset {
   @extend %os-element-reset;
 
+  & {
+    box-sizing: inherit;
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: auto; /* 3 */
+    max-width: 100%;
+    min-height: my.$gutter * 2.5;
+    // stylelint-disable-next-line property-units
+    padding: calc(my.$gutter * 0.75 - my.$stroke) 0.75rem; /* 6 */
+    overflow: visible; /* 3 */
+
+    font-weight: my.font-weight('bold');
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+    white-space: inherit;
+
+    appearance: button; /* 1 */
+    cursor: pointer; /* 2 */
+
+    border-width: my.$stroke;
+  }
+
   @include my.themed-color('background-color', ('button', 'base'));/* 5 */
   @include my.themed-color('border-color', ('border', 'base'));
-
-  box-sizing: inherit;
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: auto; /* 3 */
-  max-width: 100%;
-  min-height: my.$gutter * 2.5;
-  // stylelint-disable-next-line property-units
-  padding: calc(my.$gutter * 0.75 - my.$stroke) 0.75rem; /* 6 */
-  overflow: visible; /* 3 */
-
-  font-weight: my.font-weight('bold');
-  line-height: 1.25;
-  text-align: center;
-  text-decoration: none;
-  text-indent: 0;
-  white-space: inherit;
-
-  appearance: button; /* 1 */
-  cursor: pointer; /* 2 */
-
-  border-width: my.$stroke;
 
   [role='group'] > &,
   fieldset > & {

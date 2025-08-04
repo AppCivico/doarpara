@@ -4,9 +4,11 @@
 $_background-width-beyond-column: 70px;
 
 .intro {
-  margin-bottom: my.$gutter * 3;
+  & {
+    margin-bottom: my.$gutter * 3;
 
-  line-height: my.$gutter;
+    line-height: my.$gutter;
+  }
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     margin-bottom: my.$gutter * 5;
@@ -24,18 +26,20 @@ $_background-width-beyond-column: 70px;
 }
 
 .intro__cover {
+  & {
+    position: relative;
+    z-index: my.layer('default');
+
+    align-self: flex-start;
+
+    width: 100%;
+    margin-top: 0;
+    margin-right: auto;
+    margin-bottom: my.$gutter * 2;
+    margin-left: auto;
+  }
+
   @include my.themed-color('background-color', ('brand', 'primary'));
-
-  position: relative;
-  z-index: my.layer('default');
-
-  align-self: flex-start;
-
-  width: 100%;
-  margin-top: 0;
-  margin-right: auto;
-  margin-bottom: my.$gutter * 2;
-  margin-left: auto;
 
   @media screen and (min-width: my.breakpoint('tablet__portrait')) {
     box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
@@ -74,13 +78,15 @@ $_background-width-beyond-column: 70px;
 
 .intro__image,
 .intro__video {
-  display: block;
+  & {
+    display: block;
 
-  width: 100%;
-  height: auto;
-  aspect-ratio: 780 / 440;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 780 / 440;
 
-  object-fit: cover;
+    object-fit: cover;
+  }
 }
 
 .intro__video {
