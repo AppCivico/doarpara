@@ -768,7 +768,7 @@ $_themes: 'blue' 'green' 'orange' 'red';
 
     direction: ltr;
   } @else {
-    font: 0/0;
+    font: 0;
     color: transparent;
     text-shadow: none;
 
@@ -1424,7 +1424,7 @@ $no-viewport: false !default;
     $min: math.div(100%, $n - 1);
     $max: math.div(100%, $n);
 
-    min-width: mth.div($min + $max, 2);
+    min-width: math.div($min + $max, 2);
   }
 }
 

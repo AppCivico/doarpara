@@ -760,16 +760,16 @@ $_default-text-color--light: palette('text', 'light');
 ///
 @function aspect-ratio($name: null) {
   $default: (
-    'cinemascope': 21 / 9,
-    'widescreen': 37 / 20,
-    'sixteen-nine': 16 / 9,
-    'hdtv': 16 / 9,
-    'hd-video': 16 / 9,
-    'classic-film': 3 / 2,
-    'tv': 4 / 3,
-    'standard-monitor': 4 / 3,
-    'four-three': 4 / 3,
-    'square': 1 / 1,
+    'cinemascope': math.div(21, 9),
+    'widescreen': math.div(37, 20),
+    'sixteen-nine': math.div(16, 9),
+    'hdtv': math.div(16, 9),
+    'hd-video': math.div(16, 9),
+    'classic-film': math.div(3, 2),
+    'tv': math.div(4, 3),
+    'standard-monitor': math.div(4, 3),
+    'four-three': math.div(4, 3),
+    'square': math.div(1, 1),
   );
 
   @if $name == null {

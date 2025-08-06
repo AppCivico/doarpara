@@ -1,14 +1,12 @@
 @use 'sass:color';
+@use 'sass:math';
 @use '../abstracts' as my;
 
 $_background-width-beyond-column: 70px;
 
 .intro {
-  & {
-    margin-bottom: my.$gutter * 3;
-
-    line-height: my.$gutter;
-  }
+  margin-bottom: my.$gutter * 3;
+  line-height: my.$gutter;
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     margin-bottom: my.$gutter * 5;
@@ -25,19 +23,15 @@ $_background-width-beyond-column: 70px;
   }
 }
 
-.intro__cover {
-  & {
-    position: relative;
-    z-index: my.layer('default');
-
-    align-self: flex-start;
-
-    width: 100%;
-    margin-top: 0;
-    margin-right: auto;
-    margin-bottom: my.$gutter * 2;
-    margin-left: auto;
-  }
+ .intro__cover {
+  position: relative;
+  z-index: my.layer('default');
+  align-self: flex-start;
+  width: 100%;
+  margin-top: 0;
+  margin-right: auto;
+  margin-bottom: my.$gutter * 2;
+  margin-left: auto;
 
   @include my.themed-color('background-color', ('brand', 'primary'));
 
@@ -57,7 +51,7 @@ $_background-width-beyond-column: 70px;
     }
   }
 
-  @media screen and (max-width: my.breakpoint('toggle-sidebar-position') - 0.01) {
+  @media screen and (max-width: calc(#{my.breakpoint('toggle-sidebar-position')} - 0.01)) {
     @include my.full-width;
 
     max-width: none;
@@ -78,15 +72,11 @@ $_background-width-beyond-column: 70px;
 
 .intro__image,
 .intro__video {
-  & {
-    display: block;
-
-    width: 100%;
-    height: auto;
-    aspect-ratio: 780 / 440;
-
-    object-fit: cover;
-  }
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: math.div(780, 440);
+  object-fit: cover;
 }
 
 .intro__video {
@@ -164,13 +154,15 @@ $_background-width-beyond-column: 70px;
   &::after {
     @include my.themed-color('background-color', ('brand', 'primary'));
 
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    & {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
 
-    content: '';
+      content: '';
+    }
 
     opacity: 0;
 
@@ -248,7 +240,7 @@ $_background-width-beyond-column: 70px;
     &::before {
       @include my.themed-color('background-color', ('brand', 'primary'));
 
-      right: min(0px, (100vw - my.$max-width) / -2);
+      right: min(0px, calc((100vw - my.$max-width) / -2));
       z-index: my.layer('below');
 
       width: 100vw;

@@ -31,7 +31,7 @@
     }
 
     @if math.unit($height) != math.unit($thumb-height) {
-      border-width: calc((#{$thumb-height} - #{$height}) / 2) 0;
+      border-width: math.div($thumb-height - $height, 2) 0;
     } @else {
       border-width: math.div($thumb-height - $height, 2) 0;
     }
@@ -68,7 +68,7 @@
     @content;
 
     @if math.unit($height) != math.unit($track-height) {
-      margin-top: calc((#{$height} - #{$track-height}) / -2);
+      margin-top: math.div($height - $track-height, -2);
     } @else {
       margin-top: math.div($height - $track-height, -2);
     }
