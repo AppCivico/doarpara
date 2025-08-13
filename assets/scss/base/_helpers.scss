@@ -95,11 +95,9 @@ textarea {
 }
 
 .skeleton {
-  & {
-    pointer-events: none;
+  pointer-events: none;
 
-    background-color: transparent;
-  }
+  background-color: transparent;
 
   &.skeleton__bone--vertebra,
   &.skeleton__bone,
