@@ -31,19 +31,14 @@ nav li {
 
 menu a,
 nav a {
-  @include my.link-undercover;
-
   display: block;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
+  @include my.link-undercover;
 
   @media screen and (min-width: my.breakpoint('toggle-menu')) {
     display: flex;
-
     align-items: center;
-
     height: 100%;
     padding: 0 my.$gutter;
   }
@@ -56,12 +51,10 @@ nav a {
   &:focus,
   &:active {
     text-decoration: underline;
-
     @supports (text-decoration-color: #{palette('anchor', 'hover')}) {
-      @include my.themed-color('text-decoration-color', ('anchor', 'hover'));
-
       text-decoration-line: underline;
       text-decoration-style: solid;
+      @include my.themed-color('text-decoration-color', ('anchor', 'hover'));
     }
   }
 }

@@ -96,12 +96,12 @@
 
   @supports selector(:user-invalid) {
     &:invalid {
-      @include my.themed-color('border-color', ('border'));
-
       /* override old browsers styles */
       border-style: solid;
       border-width: my.$stroke;
       box-shadow: none;
+
+      @include my.themed-color('border-color', ('border'));
     }
 
     &:user-invalid {

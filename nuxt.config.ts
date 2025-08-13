@@ -85,9 +85,9 @@ export default defineNuxtConfig({
       },
 
       publicApiBase: process.env.PUBLIC_API
-        || 'https://dapi.votolegal.com.br',
-      privateApiBase: process.env.PRIVATE_API
         || 'https://dapi.votolegal.com.br/public-api',
+      privateApiBase: process.env.PRIVATE_API
+        || 'https://dapi.votolegal.com.br/',
       receiptsBase: process.env.RECEIPTS_BASE || '',
       postalService: {
         queryUrl: process.env.POSTAL_SERVICE_QUERY_URL
@@ -110,6 +110,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
+          loadPaths: ['node_modules'],
           additionalData: '@use "@/assets/scss/abstracts" as my;',
         },
       },

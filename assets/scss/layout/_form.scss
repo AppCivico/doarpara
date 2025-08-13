@@ -309,9 +309,9 @@ form br {
   &[aria-busy='true'] {
     & {
       cursor: wait;
-    }
 
-    @include my.pulsing-outline(('loading', 'pulsing-list'));
+      @include my.pulsing-outline(('loading', 'pulsing-list'));
+    }
   }
 
   + small {
@@ -473,9 +473,6 @@ form br {
  */
 
 ::-webkit-file-upload-button {
-  @include my.themed-color( 'background-color', ('button')); /* 2 */
-  @include my.themed-color( 'border-color', ('border')); /* 3 */
-
   font: inherit; /* 4 */
 
   // stylelint-disable-next-line property-no-vendor-prefix
@@ -484,6 +481,9 @@ form br {
 
   border-style: solid; /* 3 */
   border-width: 1px; /* 3 */
+
+  @include my.themed-color( 'background-color', ('button')); /* 2 */
+  @include my.themed-color( 'border-color', ('border')); /* 3 */
 
   &:hover {
     @include my.themed-color( 'background-color', ('button', 'focus'));
@@ -504,10 +504,10 @@ form br {
  */
 
 ::-ms-browse {
-  @include my.themed-color('border-color', ('border'));/* 1 */
-
   border-style: solid; /* 1 */
   border-width: 1px; /* 1 */
+
+  @include my.themed-color('border-color', ('border'));/* 1 */
 
   &:hover {
     @include my.themed-color('background-color', ('button', 'focus'));

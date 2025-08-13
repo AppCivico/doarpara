@@ -52,9 +52,7 @@ $_themes: 'blue' 'green' 'orange' 'red';
 }
 
 @mixin themed-asset($property, $asset-name) {
-  & {
-    #{$property}: f.image(#{'themes/blue/#{$asset-name}'});
-  }
+  #{$property}: f.image(#{'themes/blue/#{$asset-name}'});
 
   @each $theme in $_themes {
     :where(.theme--#{$theme}:root) & {
@@ -157,11 +155,9 @@ $_themes: 'blue' 'green' 'orange' 'red';
 /// @access private
 ///
 @mixin _italic-overflow {
-  & {
     overflow: visible;
 
     font-style: italic;
-  }
 }
 
 /// Special style for the _&_ used as a conjunction.
@@ -276,11 +272,9 @@ $_themes: 'blue' 'green' 'orange' 'red';
 /// }
 ///
 @mixin inline-background ($position: 'before') {
-  & {
-    display: inline;
+  display: inline;
 
-    box-decoration-break: clone;
-  }
+  box-decoration-break: clone;
 
   @include inline-break($position) {
     margin-right: -2em;
@@ -334,17 +328,15 @@ $_themes: 'blue' 'green' 'orange' 'red';
 ///
 @mixin inline-block-wrapper {
   $_inline-block-font-stack: 'FreeSans', 'Arimo', 'Droid Sans', 'Helvetica', 'Arial', sans-serif;
-  & {
-    font-family: $_inline-block-font-stack;
-    font-size: 0;
-    letter-spacing: -0.31em; /* Webkit: collapse white-space between units */
-    // stylelint-disable-next-line declaration-block-no-duplicate-properties
-    letter-spacing: normal\9; /* reset IE < 8 */
+  font-family: $_inline-block-font-stack;
+  font-size: 0;
+  letter-spacing: -0.31em; /* Webkit: collapse white-space between units */
+  // stylelint-disable-next-line declaration-block-no-duplicate-properties
+  letter-spacing: normal\9; /* reset IE < 8 */
 
-    word-spacing: -0.43em\9; /* IE < 8: collapse white-space between units */
+  word-spacing: -0.43em\9; /* IE < 8: collapse white-space between units */
 
-    text-rendering: optimizeSpeed; /* Webkit: fixes text-rendering: optimizeLegibility */
-  }
+  text-rendering: optimizeSpeed; /* Webkit: fixes text-rendering: optimizeLegibility */
 }
 
 /// Helper for an inline-block grid.
@@ -487,17 +479,15 @@ $_themes: 'blue' 'green' 'orange' 'red';
 /// }
 ///
 @mixin icon-font {
-  & {
-    // stylelint-disable-next-line property-units
-    font-size: 14px; /* font-awesome pixel perfection is at 14px and multiples of 14 */
-    font-style: normal;
-    font-weight: font-weight('normal');
-    font-variant: normal;
-    line-height: 1;
-    text-transform: none;
+  // stylelint-disable-next-line property-units
+  font-size: 14px; /* font-awesome pixel perfection is at 14px and multiples of 14 */
+  font-style: normal;
+  font-weight: font-weight('normal');
+  font-variant: normal;
+  line-height: 1;
+  text-transform: none;
 
-    speak: none;
-  }
+  speak: none;
 
   @include _font-smoothing(true);
 }
@@ -768,7 +758,8 @@ $_themes: 'blue' 'green' 'orange' 'red';
 
     direction: ltr;
   } @else {
-    font: 0;
+    font-size: 0;
+    line-height: 0;
     color: transparent;
     text-shadow: none;
 
@@ -1111,16 +1102,14 @@ $no-viewport: false !default;
 }
 
 @mixin _focus-and-hover-basis {
+  outline-width: 4px;
+  outline-style: solid;
+
+  transition-duration: 100ms;
+  transition-property: outline-width;
+  box-decoration-break: clone;
+
   @include themed-color('outline-color', ('effects', 'tap-highlight'));
-
-  & {
-    outline-width: 4px;
-    outline-style: solid;
-
-    transition-duration: 100ms;
-    transition-property: outline-width;
-    box-decoration-break: clone;
-  }
 }
 
 @mixin pulsing-color($list, $property: 'color') {
@@ -1153,12 +1142,10 @@ $no-viewport: false !default;
 }
 
 @mixin pulsing-outline($color-path) {
-  @include themed-color('outline-color', ('brand', 'secondary'));
+  outline-width: 2px;
+  outline-style: solid;
 
-  & {
-    outline-width: 2px;
-    outline-style: solid;
-  }
+  @include themed-color('outline-color', ('brand', 'secondary'));
 
   @include pulsing-color(f.palette($color-path...), 'outline-color');
 
@@ -1168,9 +1155,7 @@ $no-viewport: false !default;
 
     @if $themed-color-list {
       @include themed-declaration($theme) {
-        & {
-          @include pulsing-color($themed-color-list, 'outline-color');
-        }
+        @include pulsing-color($themed-color-list, 'outline-color');
       }
     }
   }
@@ -1187,49 +1172,33 @@ $no-viewport: false !default;
 
 @mixin shadow ($inset: false) {
   @if $inset {
-    & {
-      box-shadow: inset 10px 10px 50px f.palette('effects', 'shadow');
+    box-shadow: inset 10px 10px 50px f.palette('effects', 'shadow');
+
+    @include themed-declaration ('green') {
+      box-shadow: inset 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
     }
 
-      @include themed-declaration ('green') {
-        & {
-          box-shadow: inset 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
-        }
-      }
+    @include themed-declaration ('orange') {
+      box-shadow: inset 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+    }
 
-      @include themed-declaration ('orange') {
-        & {
-          box-shadow: inset 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
-        }
-      }
-
-      @include themed-declaration ('red') {
-        & {
-          box-shadow: inset 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
-        }
-      }
+    @include themed-declaration ('red') {
+      box-shadow: inset 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+    }
   } @else {
-    & {
-      box-shadow: 10px 10px 50px f.palette('effects', 'shadow');
+    box-shadow: 10px 10px 50px f.palette('effects', 'shadow');
+
+    @include themed-declaration ('green') {
+      box-shadow: 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
     }
 
-      @include themed-declaration ('green') {
-        & {
-          box-shadow: 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
-        }
-      }
+    @include themed-declaration ('orange') {
+      box-shadow: 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+    }
 
-      @include themed-declaration ('orange') {
-        & {
-          box-shadow: 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
-        }
-      }
-
-      @include themed-declaration ('red') {
-        & {
-          box-shadow: 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
-        }
-      }
+    @include themed-declaration ('red') {
+      box-shadow: 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+    }
   }
   // filter: drop-shadow(0px 4px 4px f.palette('effects', 'shadow'));
 
@@ -1247,39 +1216,33 @@ $no-viewport: false !default;
 }
 
 @mixin columns($width: map.get(c.$line-lengths, 'column'), $gap: c.$gutter) {
-  & {
-    column-fill: balance;
+  column-fill: balance;
 
-    column-gap: $gap;
-    column-width: $width;
+  column-gap: $gap;
+  column-width: $width;
 
-    max-width: 100%;
-  }
+  max-width: 100%;
 
   @include hyphens;
 }
 
 @mixin container {
-  & {
-    width: 100%;
-    max-width: c.$max-width;
-    padding-right: c.$gutter;
-    padding-left: c.$gutter;
-    margin-right: auto;
-    margin-left: auto;
-  }
+  width: 100%;
+  max-width: c.$max-width;
+  padding-right: c.$gutter;
+  padding-left: c.$gutter;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 @mixin full-width {
-  & {
-    position: relative;
-    right: 50%;
-    left: 50%;
+  position: relative;
+  right: 50%;
+  left: 50%;
 
-    width: 100vw;
-    margin-right: -50vw;
-    margin-left: -50vw;
-  }
+  width: 100vw;
+  margin-right: -50vw;
+  margin-left: -50vw;
 }
 
 @mixin headings ($which-ones: 'all') {

@@ -109,32 +109,25 @@
 }
 
 .donation-values__custom-submit[class] {
-  @include my.image-replacement;
-  @include my.themed-color('background-color', ('button', 'focus'));
-
   flex-basis: 25%;
   flex-grow: 1;
-
   text-indent: calc(101% + my.$gutter * 2);
-
   background-image: my.image('icons/icon-arrow-triangle-fill-right.svg');
   background-position: 50%;
   border: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-
+  @include my.image-replacement;
+  @include my.themed-color('background-color', ('button', 'focus'));
   &:hover,
   &:focus {
     box-shadow: 0 20px 24px -10px my.palette('effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2);
-
     @include my.themed-declaration ('green') {
       box-shadow: 0 20px 24px -10px my.palette('green-theme', 'effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('green-theme', 'brand', 'tertiary'), $alpha: -0.2);
     }
-
     @include my.themed-declaration ('orange') {
       box-shadow: 0 20px 24px -10px my.palette('orange-theme', 'effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('orange-theme', 'brand', 'tertiary'), $alpha: -0.2);
     }
-
     @include my.themed-declaration ('red') {
       box-shadow: 0 20px 24px -10px my.palette('red-theme', 'effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('red-theme', 'brand', 'tertiary'), $alpha: -0.2);
     }

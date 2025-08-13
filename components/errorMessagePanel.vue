@@ -87,9 +87,6 @@ function flushErrors() {
 </script>
 <style scoped lang="scss">
 .error-message {
-  @include my.shadow;
-  @include my.pulsing-color(my.palette('effects', 'error-gradient'), 'background-color');
-
   position: sticky;
   right: my.$gutter;
   bottom: my.$gutter;
@@ -107,6 +104,10 @@ function flushErrors() {
   );
 
   border-radius: my.$rounded-corner;
+
+
+  @include my.shadow;
+  @include my.pulsing-color(my.palette('effects', 'error-gradient'), 'background-color');
 
   @include my.themed-declaration ('green') {
     @include my.pulsing-color(my.palette('green-theme', 'effects', 'error-gradient'), 'background-color');

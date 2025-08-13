@@ -65,13 +65,13 @@
 
   &::-webkit-slider-thumb {
     appearance: none;
-    @content;
-
     @if math.unit($height) != math.unit($track-height) {
       margin-top: math.div($height - $track-height, -2);
     } @else {
       margin-top: math.div($height - $track-height, -2);
     }
+
+    @content;
   }
 
   &::-moz-range-thumb {
@@ -101,41 +101,31 @@
  */
 [type='range'] {
   display: block;
-
   width: 100%; /* 1 */
   padding: 0;
-
   vertical-align: middle;
-
   appearance: none;
   cursor: pointer;
-
   background: transparent;
   border: 0; /* 1 */
-
   // stylelint-disable-next-line mixins-before-declarations
   @include range-track($height: 0.125rem, $thumb-height: 1.5rem, $bg-fallback: null) {
-    @include my.themed-color('background-color', ('button'));
-
     &:focus {
       outline: none;
     }
+    @include my.themed-color('background-color', ('button'));
   }
-
   // stylelint-disable-next-line mixins-before-declarations
   @include range-thumb($height: 1.5rem, $track-height: 0.125rem) {
-    @include my.themed-color('background-color', ('button', 'slider'));
-
     border: 0;
+    @include my.themed-color('background-color', ('button', 'slider'));
   }
-
   /**
    * 1. Remove the focus border in Firefox.
    */
   &::-moz-focus-outer {
     border: 0; /* 1 */
   }
-
   /* hide the outline behind the border */
   &:-moz-focusring {
     outline: 1px solid transparent;

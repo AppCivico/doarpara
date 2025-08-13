@@ -17,20 +17,21 @@
 .main-header {
   $header-bg-width: 593px;
 
-  @include my.themed-color('background-color', ('brand', 'primary'));
-
   color: my.palette('text', 'light');
+
+  @include my.themed-color('background-color', ('brand', 'primary'));
 
   @include my.themed-declaration ('orange') {
     color: my.text-contrast(my.palette('orange-theme', 'brand', 'primary'));
   }
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
-    @include my.themed-asset('background-image', 'header.svg');
     min-height: 242px;
 
     // using half the image width to deal with percentage alignment algorithm
     background-position: max(my.$cover-max-width + my.$gutter, 50% + (my.$cover-max-width - math.div(my.$max-width, 2) + my.$gutter) + math.div($header-bg-width, 2)) 0;
+
+    @include my.themed-asset('background-image', 'header.svg');
   }
 
   .container {
@@ -52,20 +53,19 @@
     flex-basis: 100%;
 
     @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
-      @include my.themed-asset('background-image', 'top-right-corner.svg');
 
       max-width: 48.75rem;
 
       background-position: 100% 2px;
+
+      @include my.themed-asset('background-image', 'top-right-corner.svg');
     }
   }
 
   .campaign-title {
     padding-top: my.$gutter;
 
-    & {
-      color: inherit;
-    }
+    color: inherit;
 
     @include my.fluid-font-size($min: my.ms-step(30px), $max: my.ms-step(45px));
 

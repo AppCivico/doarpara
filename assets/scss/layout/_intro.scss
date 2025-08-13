@@ -152,22 +152,20 @@ $_background-width-beyond-column: 70px;
   }
 
   &::after {
-    @include my.themed-color('background-color', ('brand', 'primary'));
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 
-    & {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-
-      content: '';
-    }
+    content: '';
 
     opacity: 0;
 
     transition-duration: 300ms;
     transition-property: opacity;
+
+    @include my.themed-color('background-color', ('brand', 'primary'));
   }
 
   &:hover,
@@ -238,14 +236,14 @@ $_background-width-beyond-column: 70px;
     }
 
     &::before {
-      @include my.themed-color('background-color', ('brand', 'primary'));
-
       right: min(0px, calc((100vw - my.$max-width) / -2));
       z-index: my.layer('below');
 
       width: 100vw;
 
       border-bottom-right-radius: 60px;
+
+      @include my.themed-color('background-color', ('brand', 'primary'));
     }
 
     &::after {
