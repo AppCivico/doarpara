@@ -71,17 +71,15 @@ defineProps<{
 }
 
 .rewards__item {
+  padding: my.$gutter;
+  margin-bottom: my.$gutter;
+
+  background-color: my.palette('neutral', 'white');
+  border-style: solid;
+  border-width: my.$stroke;
+  border-radius: 10px;
+
   @include my.themed-color('border-color', ('border'));
-
-  & {
-    padding: my.$gutter;
-    margin-bottom: my.$gutter;
-
-    background-color: my.palette('neutral', 'white');
-    border-style: solid;
-    border-width: my.$stroke;
-    border-radius: 10px;
-  }
 
   &:hover,
   &:focus {

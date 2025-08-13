@@ -10,24 +10,20 @@
  */
 
 form {
-  & {
-    margin: 0 0 my.$gutter 0;
-  }
+  margin: 0 0 my.$gutter 0;
 }
 
 [role='group'],
 fieldset {
-  & {
-    min-width: 0;
-    max-width: none;
-    padding: 0;
-    margin: 0;
-    margin-right: 0;
-    margin-bottom: my.$gutter;
-    margin-left: 0;
+  min-width: 0;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  margin-right: 0;
+  margin-bottom: my.$gutter;
+  margin-left: 0;
 
-    border: 0;
-  }
+  border: 0;
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     margin-bottom: my.$gutter * 2;
@@ -55,34 +51,30 @@ fieldset fieldset {
  */
 fieldset > legend, /* 4 */
 legend {
-  & {
-    box-sizing: border-box; /* 1 */
-    display: table; /* 1 */
+  box-sizing: border-box; /* 1 */
+  display: table; /* 1 */
 
-    flex-basis: 100%;
+  flex-basis: 100%;
 
-    max-width: 100%; /* 1 */
-    padding: 0; /* 3 */
-    margin-bottom: my.$gutter;
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  margin-bottom: my.$gutter;
 
-    font-weight: my.font-weight('extrabold');
-    color: inherit; /* 2 */
-    white-space: normal; /* 1 */
-  }
+  font-weight: my.font-weight('extrabold');
+  color: inherit; /* 2 */
+  white-space: normal; /* 1 */
 }
 
 label {
-  & {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 
-    font-size: my.ms-step(0);
-    font-weight: my.font-weight('bold');
-    line-height: my.$gutter * 1;
-    color: my.palette('text', 'faded');
+  font-size: my.ms-step(0);
+  font-weight: my.font-weight('bold');
+  line-height: my.$gutter * 1;
+  color: my.palette('text', 'faded');
 
-    cursor: pointer;
-  }
+  cursor: pointer;
 
   &:focus-within {
     color: my.palette('text', 'title');
@@ -307,11 +299,9 @@ form br {
   }
 
   &[aria-busy='true'] {
-    & {
-      cursor: wait;
+    cursor: wait;
 
-      @include my.pulsing-outline(('loading', 'pulsing-list'));
-    }
+    @include my.pulsing-outline(('loading', 'pulsing-list'));
   }
 
   + small {

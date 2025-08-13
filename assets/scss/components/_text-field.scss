@@ -14,27 +14,25 @@
 %text-field-reset {
   @extend %os-element-reset;
 
-  & {
-    box-sizing: inherit;
-    display: flex;
+  box-sizing: inherit;
+  display: flex;
 
-    align-items: center;
+  align-items: center;
 
-    width: 100%;
-    height: calc(my.$gutter * 2.5 - my.$stroke * 2);
-    padding: my.$gutter * 0.75;
-    margin: my.$gutter * 0.5 0; // vertical margins break floating labels
+  width: 100%;
+  height: calc(my.$gutter * 2.5 - my.$stroke * 2);
+  padding: my.$gutter * 0.75;
+  margin: my.$gutter * 0.5 0; // vertical margins break floating labels
 
-    font-weight: my.font-weight('text');
-    color: my.palette('text', 'dark');
+  font-weight: my.font-weight('text');
+  color: my.palette('text', 'dark');
 
-    appearance: none; /* 1 */
-    cursor: text;
+  appearance: none; /* 1 */
+  cursor: text;
 
-    background-color: my.palette('neutral', 'white');
-    border-style: solid;
-    border-width: my.$stroke;
-  }
+  background-color: my.palette('neutral', 'white');
+  border-style: solid;
+  border-width: my.$stroke;
 
   @include my.themed-color('border-color', ('border'));
 
