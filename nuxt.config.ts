@@ -110,7 +110,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          loadPaths: ['node_modules'],
+          includePaths: ['node_modules'],
           additionalData: '@use "@/assets/scss/abstracts" as my;',
         },
       },
