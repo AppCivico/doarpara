@@ -458,8 +458,8 @@ $_default-text-color--light: palette('text', 'light');
   }
 
   @if $final-contrast < $contrast-threshold and $is-strict {
-    @error "APCA Contrast Error: final contrast #{math.round($final-contrast, 1)} "
-         "is below threshold #{math.round($contrast-threshold, 1)} for usage-context '#{$usage-context}', "
+    @error "APCA Contrast Error: final contrast #{_to-fixed($final-contrast, 1)} "
+         "is below threshold #{_to-fixed($contrast-threshold, 1)} for usage-context '#{$usage-context}', "
          "font-size #{$font-size}, font-weight #{$font-weight}.";
   }
 
