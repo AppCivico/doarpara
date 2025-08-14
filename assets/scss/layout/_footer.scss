@@ -14,21 +14,17 @@
  * Within any `document` or `application`, the author **SHOULD** mark no more than one element with the `contentinfo` role.
  */
 .main-footer {
-  @include my.themed-asset('background-image', 'footer.svg');
-
   padding-top: my.$gutter * 5;
-
   font-size: my.ms-step(-1);
   color: my.palette('text', 'light');
-
   background-color: my.palette('neutral', 'x-dark');
   background-position: right my.$gutter * 0.5 top;
   background-size: 164px 110px;
   border-top-right-radius: 20px;
+  @include my.themed-asset('background-image', 'footer.svg');
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
     padding-top: my.$gutter * 2;
-
     background-position: right my.$gutter * 3 top;
     background-size: 360px 240px;
     border-top-right-radius: 80px;
@@ -49,21 +45,16 @@
 
   .main-footer__juridical-data {
       position: relative;
-
       &::before {
         position: absolute;
         top: 0;
         right: 50%;
         left: 50%;
-
         display: block;
-
         width: auto;
         margin-right: -50vw;
         margin-left: -50vw;
-
         content: '';
-
         border-top: my.$stroke solid color.adjust(my.palette('neutral','white'), $alpha: -0.9);
       }
   }

@@ -1,3 +1,5 @@
+@use 'sass:list';
+
 // Will remove this as soon as Sass has native sorting
 // https://github.com/sass/sass/issues/155
 
@@ -12,7 +14,7 @@
     // Write that value to the return
     $return: append($return, $m);
     // Replace that value in the list so it won't be called again.
-    $l: set-nth($l, index($l, $m), 999);
+    $l: set-nth($l, list.index($l, $m), 999);
   }
 
   // Return the newly sorted list

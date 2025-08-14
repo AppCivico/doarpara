@@ -9,30 +9,26 @@
 /* CLASSES
 ============================================================================ */
 %loading-bg {
-  @include my.themed-color('background-color', ('loading', 'background'));
-
   // TODO: set loading icon
   background-image: my.image('SvgSpinners3DotsMove.svg');
   background-repeat: no-repeat;
   background-position: 50% 50%;
+
+  @include my.themed-color('background-color', ('loading', 'background'));
 }
 
 %loading-el {
   overflow: hidden;
-
   cursor: wait;
-
   &::after {
     // prevent conflicts
     all: unset;
-
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: my.layer('modal');
-
     content: '';
   }
 }
@@ -64,9 +60,7 @@
   > body,
   &:not(html):not(.skeleton):not(table) {
     @extend %loading-el;
-
     position: relative;
-
     &::after {
       @extend %loading-bg;
     }
@@ -77,14 +71,10 @@ img,
 embed {
   &::before {
     @extend %loading-bg;
-
     display: block;
-
     content: '';
-
     background-size: auto;
   }
-
   &::after {
     /*
      *	Future proof reset
@@ -99,7 +89,6 @@ keygen,
 textarea {
   &[aria-busy='true'] {
     @extend %loading-bg;
-
     background-image: none;
     background-size: auto;
   }
@@ -116,25 +105,17 @@ textarea {
   .skeleton__bone {
     @include my.on-event(true) {
       text-decoration: none;
-
       border: 0;
       border-radius: my.$rounded-corner;
-
       &::before,
       &::after {
         all: unset;
-
         position: static;
-
         display: block;
-
         height: 0;
-
         content: '';
-
         border: 0;
       }
-
       &::before {
         height: 1em;
       }
@@ -144,12 +125,10 @@ textarea {
   .skeleton__bone {
     @include my.on-event(true) {
       display: block;
-
       background-color: #d9d9d9;
       background-image: linear-gradient(to right, #d9d9d9 0%, rgba(0, 0, 0, 0.05) 20%, #d9d9d9 40%, #d9d9d9 100%);
       background-repeat: no-repeat;
       background-size: 450px 400px;
-
       animation: shimmer 1s linear infinite;
     }
   }
@@ -159,29 +138,22 @@ textarea {
       &::before,
       &::after {
         display: inline-block;
-
         height: 1em;
-
         background-color: #d9d9d9;
         background-image: linear-gradient(to right, #d9d9d9 0%, rgba(0, 0, 0, 0.05) 20%, #d9d9d9 40%, #d9d9d9 100%);
         background-repeat: no-repeat;
         background-size: 450px 400px;
-
         animation: shimmer 1s linear infinite;
         box-decoration-break: clone;
       }
-
       &::before {
         width: 100%;
         max-width: 37.5em;
-
         content: '\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0 \0000a0\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0 \0000a0\0000a0\0000a0\0000a0\0000a0 \0000a0\0000a0\0000a0\0000a0\0000a0';
       }
-
       &::after {
         width: 66%;
         max-width: 22.5em;
-
         content: '\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0 \0000a0\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0\0000a0 \0000a0\0000a0\0000a0\0000a0\0000a0 \0000a0\0000a0\0000a0\0000a0\0000a0';
       }
     }
@@ -227,11 +199,12 @@ textarea {
   }
 
   &::after {
-    @include my.grid-image($n);
 
     content: '';
 
     background-position: center top;
+
+    @include my.grid-image($n);
   }
 
   &:root::before {

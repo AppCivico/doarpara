@@ -14,8 +14,6 @@
 %text-field-reset {
   @extend %os-element-reset;
 
-  @include my.themed-color('border-color', ('border'));
-
   box-sizing: inherit;
   display: flex;
 
@@ -35,6 +33,8 @@
   background-color: my.palette('neutral', 'white');
   border-style: solid;
   border-width: my.$stroke;
+
+  @include my.themed-color('border-color', ('border'));
 
   &:placeholder-shown ~ label {
     color: my.palette('neutral', 'base');
@@ -94,12 +94,12 @@
 
   @supports selector(:user-invalid) {
     &:invalid {
-      @include my.themed-color('border-color', ('border'));
-
       /* override old browsers styles */
       border-style: solid;
       border-width: my.$stroke;
       box-shadow: none;
+
+      @include my.themed-color('border-color', ('border'));
     }
 
     &:user-invalid {

@@ -76,7 +76,7 @@ $_ratios: constants.$ratios;
   $bases: ();
 
   // Render target values from settings.
-  @if type-of($ratio) == 'string' or type-of($ratio) == 'list' {
+  @if meta.type-of($ratio) == 'string' or meta.type-of($ratio) == 'list' {
     $ratio: radio-target($ratio, $base);
   }
 
@@ -120,7 +120,7 @@ $_ratios: constants.$ratios;
   @return math.pow($ratio, $step) * list.nth($bases, $base);
 }
 
-@mixin respond-to($mode: map-get($_settings, 'respond')) {
+@mixin respond-to($mode: map.get($_settings, 'respond')) {
   // Setup
   $id: #{unique-id()};
   $max: 0;
