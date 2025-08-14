@@ -453,8 +453,8 @@ $_default-text-color--light: palette('text', 'light');
   $final-contrast: math.abs(strip-unit($final-contrast-raw));
 
   @if $is-debug {
-    @warn "APCA ▶ final contrast (raw): #{math.round($final-contrast-raw, 1)}";
-    @warn "APCA ▶ final contrast (unitless): #{math.round($final-contrast, 1)}";
+    @warn "APCA ▶ final contrast (raw): #{_to-fixed($final-contrast-raw, 1)}";
+    @warn "APCA ▶ final contrast (unitless): #{_to-fixed($final-contrast, 1)}";
   }
 
   @if $final-contrast < $contrast-threshold and $is-strict {
