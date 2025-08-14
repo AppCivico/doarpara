@@ -79,7 +79,7 @@ $apca-use-case-thresholds: (
 /// @return {Url}
 ///
 @function asset($path, $base-url: $my-base-url, $type) {
-  @return url('#{$base-url}#{$type}/#{$path}?v=#{string.unique_id()}');
+  @return url('#{$base-url}#{$type}/#{$path}?v=#{string.unique-id()}');
 }
 
 /// Returns URL to an image based on its path
