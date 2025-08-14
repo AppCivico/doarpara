@@ -29,7 +29,10 @@
     min-height: 242px;
 
     // using half the image width to deal with percentage alignment algorithm
-    background-position: max(my.$cover-max-width + my.$gutter, 50% + (my.$cover-max-width - math.div(my.$max-width, 2) + my.$gutter) + math.div($header-bg-width, 2)) 0;
+    background-position: max(
+      #{my.$cover-max-width + my.$gutter},
+      calc(50% + #{my.$cover-max-width - math.div(my.$max-width, 2) + my.$gutter} + #{math.div($header-bg-width, 2)})
+    ) 0;
 
     @include my.themed-asset('background-image', 'header.svg');
   }
