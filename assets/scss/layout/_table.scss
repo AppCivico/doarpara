@@ -238,7 +238,7 @@ tfoot td {
 .cell--action {
   font-size: my.ms-step(-1);
 
-  @media screen and (max-width: calc(#{my.breakpoint('toggle-table-layout')} - 0.01)) {
+  @media screen and (max-width: #{my.breakpoint('toggle-table-layout')} - 0.01) {
     display: flex;
 
     align-items: flex-end;
