@@ -64,14 +64,15 @@
   }
 
   &::-webkit-slider-thumb {
-    appearance: none;
-    @if math.unit($height) != math.unit($track-height) {
-      margin-top: calc((#{$height} - #{$track-height}) / -2);
-    } @else {
-      margin-top: math.div($height - $track-height, -2);
-    }
-
     @content;
+    & {
+      appearance: none;
+      @if math.unit($height) != math.unit($track-height) {
+        margin-top: calc((#{$height} - #{$track-height}) / -2);
+      } @else {
+        margin-top: math.div($height - $track-height, -2);
+      }
+    }
   }
 
   &::-moz-range-thumb {
