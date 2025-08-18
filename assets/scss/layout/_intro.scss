@@ -75,7 +75,7 @@ $_background-width-beyond-column: 70px;
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: math.div(780, 440);
+  aspect-ratio: 780 / 440;
   object-fit: cover;
 }
 
