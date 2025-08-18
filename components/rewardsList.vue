@@ -132,10 +132,8 @@ defineProps<{
 .rewards__description {
   @include my.truncate(5);
 
-  & {
-    position: relative;
-    margin-bottom: 0;
-  }
+  position: relative;
+  margin-bottom: 0;
 
   &::after {
     @include my.themed-color('color', ('brand', 'secondary'));
