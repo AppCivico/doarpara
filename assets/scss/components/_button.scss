@@ -20,65 +20,49 @@
  */
 %button-reset {
   @extend %os-element-reset;
-
-  @include my.themed-color('background-color', ('button', 'base'));/* 5 */
-  @include my.themed-color('border-color', ('border', 'base'));
-
   box-sizing: inherit;
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   width: auto; /* 3 */
   max-width: 100%;
   min-height: my.$gutter * 2.5;
   // stylelint-disable-next-line property-units
   padding: calc(my.$gutter * 0.75 - my.$stroke) 0.75rem; /* 6 */
   overflow: visible; /* 3 */
-
   font-weight: my.font-weight('bold');
   line-height: 1.25;
   text-align: center;
   text-decoration: none;
   text-indent: 0;
   white-space: inherit;
-
   appearance: button; /* 1 */
   cursor: pointer; /* 2 */
-
   border-width: my.$stroke;
-
+  @include my.themed-color('background-color', ('button', 'base'));/* 5 */
+  @include my.themed-color('border-color', ('border', 'base'));
   [role='group'] > &,
   fieldset > & {
     &:only-child {
       display: flex;
-
       margin-right: auto;
       margin-left: auto;
     }
   }
-
   &::-moz-focus-inner {
     padding: 0; /* 4 */
-
     border: 0;
   }
-
   &:active {
   }
-
   &[aria-disabled='true'],
   &:disabled {
     cursor: not-allowed;
-
     filter: grayscale(50%);
   }
-
   &[aria-busy='true'] {
     @include my.pulsing-outline(('loading', 'pulsing-list'));
   }
-
   table & {
     min-height: 0;
     padding: calc(my.$gutter * 0.375 - my.$stroke) 0.375rem;
@@ -98,15 +82,12 @@ button,
 
   &:hover,
   &:focus {
-    @include my.themed-color('background-color', ('button', 'focus'));
-    @include my.themed-color('border-color', ('button', 'focus'));
-
     position: relative;
     z-index: my.layer('default');
-
     color: my.palette('text', 'light');
-
     box-shadow: 0 20px 24px -10px my.palette('effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2);
+    @include my.themed-color('background-color', ('button', 'focus'));
+    @include my.themed-color('border-color', ('button', 'focus'));
 
     @include my.themed-declaration ('green') {
       box-shadow: 0 20px 24px -10px my.palette('green-theme', 'effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('green-theme', 'brand', 'tertiary'), $alpha: -0.2);
@@ -114,7 +95,6 @@ button,
 
     @include my.themed-declaration ('orange') {
       color: my.text-contrast(my.palette('orange-theme', 'button', 'focus'));
-
       box-shadow: 0 20px 24px -10px my.palette('orange-theme', 'effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('orange-theme', 'brand', 'tertiary'), $alpha: -0.2);
     }
 
@@ -140,14 +120,11 @@ button,
 [type='submit'] {
   @extend %button-reset;
 
+  justify-content: center;
+  width: my.$gutter * 12;
+  text-align: center;
   @include my.themed-color('color', ('text', 'light'));
   @include my.themed-color('background-color', ('button', 'submit'));
-
-  justify-content: center;
-
-  width: my.$gutter * 12;
-
-  text-align: center;
 
   &:hover,
   &:focus {

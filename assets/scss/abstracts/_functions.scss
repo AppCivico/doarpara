@@ -79,7 +79,7 @@ $apca-use-case-thresholds: (
 /// @return {Url}
 ///
 @function asset($path, $base-url: $my-base-url, $type) {
-  @return url('#{$base-url}#{$type}/#{$path}?v=#{unique_id()}');
+  @return url('#{$base-url}#{$type}/#{$path}?v=#{string.unique-id()}');
 }
 
 /// Returns URL to an image based on its path
@@ -154,9 +154,9 @@ $apca-use-case-thresholds: (
   $brightness-divisor: $red-magic-number + $green-magic-number + $blue-magic-number;
 
   // Extract color components
-  $red-component: color.red($color);
-  $green-component: color.green($color);
-  $blue-component: color.blue($color);
+  $red-component: color.channel($color, 'red', $space: rgb);
+  $green-component: color.channel($color, 'green', $space: rgb);
+  $blue-component: color.channel($color, 'blue', $space: rgb);
 
   // Calculate a brightness value in 3d color space between 0 and 255
   $number: math.sqrt(
@@ -180,9 +180,9 @@ $apca-use-case-thresholds: (
 /// @link https://www.w3.org/TR/WCAG20/#relativeluminancedef
 ///
 @function _luminance($color) {
-  $red: color.red($color) + 1;
-  $green: color.green($color) + 1;
-  $blue: color.blue($color) + 1;
+  $red: math.round(color.channel($color, 'red', $space: rgb)) + 1;
+  $green: math.round(color.channel($color, 'green', $space: rgb)) + 1;
+  $blue: math.round(color.channel($color, 'blue', $space: rgb)) + 1;
 
   $red: list.nth(constants.$MDC-LINEAR-CHANNEL-VALUES, $red);
   $green: list.nth(constants.$MDC-LINEAR-CHANNEL-VALUES, $green);
@@ -213,7 +213,7 @@ $apca-use-case-thresholds: (
 /// @link http://thesassway.com/intermediate/mixins-for-semi-transparent-colors
 ///
 @function _opacize($foreground, $background) {
-  $percent: color.alpha($foreground) * 100%;
+  $percent: color.channel($foreground, 'alpha') * 100%;
   $opaque: color.adjust($foreground, $alpha: 1);
 
   @return color.mix($opaque, $background, $percent);
@@ -228,13 +228,13 @@ $apca-use-case-thresholds: (
 /// @link https://stackoverflow.com/a/38265284
 ///
 @function _alphaize($desired-color, $background-color) {
-  $r1: color.red($background-color);
-  $g1: color.green($background-color);
-  $b1: color.blue($background-color);
+  $r1: color.channel($background-color, 'red', $space: rgb);
+  $g1: color.channel($background-color, 'green', $space: rgb);
+  $b1: color.channel($background-color, 'blue', $space: rgb);
 
-  $r2: color.red($desired-color);
-  $g2: color.green($desired-color);
-  $b2: color.blue($desired-color);
+  $r2: color.channel($desired-color, 'red', $space: rgb);
+  $g2: color.channel($desired-color, 'green', $space: rgb);
+  $b2: color.channel($desired-color, 'blue', $space: rgb);
 
   $alpha: 0;
   $r: -1;
@@ -291,16 +291,16 @@ $_default-text-color--light: palette('text', 'light');
     @warn 'Unknown `$level` submitted. Allowed: `AA`, `AAA`. Assuming `AAA`';
   }
 
-  @if color.alpha($bg-color) < 1 {
+  @if color.channel($bg-color, 'alpha') < 1 {
     @error 'Background color can\'t have alpha channel. `#{$bg-color}` given';
   }
 
-  @if color.alpha($light-fg) < 1 {
+  @if color.channel($light-fg, 'alpha') < 1 {
     $light-fg: _opacize($light-fg, $bg-color);
     $light-fg-has-alpha: true;
   }
 
-  @if color.alpha($dark-fg) < 1 {
+  @if color.channel($dark-fg, 'alpha') < 1 {
     $dark-fg: _opacize($dark-fg, $bg-color);
     $dark-fg-has-alpha: true;
   }
@@ -416,8 +416,8 @@ $_default-text-color--light: palette('text', 'light');
   // Initial debug logs
   @if $is-debug {
     @warn "APCA ▶ usage-context: '#{$usage-context}', threshold: #{$contrast-threshold}";
-    @warn "APCA ▶ initial contrast (raw): #{round($initial-contrast-raw, 1)}";
-    @warn "APCA ▶ initial contrast (unitless): #{round($initial-contrast, 1)}";
+    @warn "APCA ▶ initial contrast (raw): #{math.round($initial-contrast-raw, 1)}";
+    @warn "APCA ▶ initial contrast (unitless): #{math.round($initial-contrast, 1)}";
   }
 
   // Binary search loop to find best contrast adjustment
@@ -434,7 +434,7 @@ $_default-text-color--light: palette('text', 'light');
     );
 
     @if $is-debug {
-      @warn "APCA ▶ iteration #{$i}: midpoint #{$mid-percentage}, candidate #{inspect($candidate-color)}";
+      @warn "APCA ▶ iteration #{$i}: midpoint #{$mid-percentage}, candidate #{meta.inspect($candidate-color)}";
     }
 
     $candidate-contrast-raw: apca.contrast($candidate-color, $background-color);
@@ -453,13 +453,13 @@ $_default-text-color--light: palette('text', 'light');
   $final-contrast: math.abs(strip-unit($final-contrast-raw));
 
   @if $is-debug {
-    @warn "APCA ▶ final contrast (raw): #{round($final-contrast-raw, 1)}";
-    @warn "APCA ▶ final contrast (unitless): #{round($final-contrast, 1)}";
+    @warn "APCA ▶ final contrast (raw): #{_to-fixed($final-contrast-raw, 1)}";
+    @warn "APCA ▶ final contrast (unitless): #{_to-fixed($final-contrast, 1)}";
   }
 
   @if $final-contrast < $contrast-threshold and $is-strict {
-    @error "APCA Contrast Error: final contrast #{round($final-contrast, 1)} "
-         "is below threshold #{round($contrast-threshold, 1)} for usage-context '#{$usage-context}', "
+    @error "APCA Contrast Error: final contrast #{_to-fixed($final-contrast, 1)} "
+         "is below threshold #{_to-fixed($contrast-threshold, 1)} for usage-context '#{$usage-context}', "
          "font-size #{$font-size}, font-weight #{$font-weight}.";
   }
 

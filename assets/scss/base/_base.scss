@@ -7,10 +7,12 @@
 /* User interaction (https://www.w3.org/TR/html5/editing.html)
 ========================================================================== */
 ::selection {
+  & {
+    text-shadow: none;
+  }
+
   @include my.themed-color('color', ('selection', 'foreground'));
   @include my.themed-color('background-color', ('selection', 'background'));
-
-  text-shadow: none;
 }
 
 [id] {
@@ -204,17 +206,19 @@ summary {
     &::after {
       @include my.focused;
 
-      position: absolute;
-      top: my.$gutter * -0.5;
-      right: my.$gutter * -0.5;
-      bottom: my.$gutter * -0.5;
-      left: my.$gutter * -0.5;
+      & {
+        position: absolute;
+        top: my.$gutter * -0.5;
+        right: my.$gutter * -0.5;
+        bottom: my.$gutter * -0.5;
+        left: my.$gutter * -0.5;
 
-      width: auto;
-      height: auto;
+        width: auto;
+        height: auto;
 
-      pointer-events: none;
-      content: '';
+        pointer-events: none;
+        content: '';
+      }
     }
   }
 
@@ -228,18 +232,22 @@ summary {
   &::before {
     @include my.triangle('left', my.palette('neutral', 'base'), 0.25em);
 
-    position: absolute;
-    top: my.$leading * 0.5em;
-    right: 0;
+    & {
+      position: absolute;
+      top: my.$leading * 0.5em;
+      right: 0;
 
-    content: '';
+      content: '';
+    }
   }
 
   details[open] > &::before {
     @include my.triangle('bottom', my.palette('neutral', 'base'), 0.25em);
 
-    content: '';
+    & {
+  content: '';
   }
+}
 
   details[open] > &:hover,
   details[open] > &:focus {
@@ -447,27 +455,31 @@ object > img {
 %broken-image {
   @include my.themed-color('color', ('loading', 'foreground'));
 
-  position: relative;
+  & {
+    position: relative;
 
-  overflow: hidden;
+    overflow: hidden;
 
-  font-size: my.ms-step(-1);
-  font-style: normal;
-  text-align: center;
+    font-size: my.ms-step(-1);
+    font-style: normal;
+    text-align: center;
+  }
 
   &::before,
   &::after {
     @include my.themed-color('background-color', ('loading', 'background'));
 
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    & {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
 
-    display: flex;
+      display: flex;
 
-    justify-content: center;
+      justify-content: center;
+    }
   }
 
   &::before {
@@ -551,12 +563,14 @@ a > picture {
   @include my.themed-color('color', ('anchor', 'link'));
   @include my.themed-color('-webkit-tap-highlight-color', ('tap-highlight'));
 
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-decoration-style: dotted;
-  text-underline-offset: 0.125em;
+  & {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-style: dotted;
+    text-underline-offset: 0.125em;
 
-  cursor: pointer;
+    cursor: pointer;
+  }
 }
 
 .like-a__link {
@@ -565,16 +579,18 @@ a > picture {
 
 .like-a__link,
 a {
+  & {
+    padding: 0;
+    margin: 0;
+
+    font-size: 100%;
+    vertical-align: baseline;
+
+    outline-width: 0;
+    outline-offset: 2px;
+  }
+
   @include my.themed-color('color', ('anchor', 'base'));
-
-  padding: 0;
-  margin: 0;
-
-  font-size: 100%;
-  vertical-align: baseline;
-
-  outline-width: 0;
-  outline-offset: 2px;
 
   @include my.on-event {
     text-decoration: underline;
@@ -624,8 +640,10 @@ a {
   &:active {
     @include my.themed-color('color', ('anchor', 'active'));
 
-    background-color: transparent;
+    & {
+  background-color: transparent;
   }
+}
 
   &[target='_blank'],
   &[rel='external'] {

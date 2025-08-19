@@ -52,6 +52,16 @@ const defaultMessage = computed(() => {
 </script>
 <style scoped lang="scss">
 .request-message {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: my.layer('dropdown');
+
+  padding: my.$gutter;
+
+  color: my.palette('neutral', 'white');
+
   @include my.shadow;
   @include my.pulsing-color(my.palette('loading', 'pulsing-list'), 'background-color');
 
@@ -66,16 +76,6 @@ const defaultMessage = computed(() => {
   @include my.themed-declaration('red') {
     @include my.pulsing-color(my.palette('red-theme', 'loading', 'pulsing-list'), 'background-color');
   }
-
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: my.layer('dropdown');
-
-  padding: my.$gutter;
-
-  color: my.palette('neutral', 'white');
 }
 
 .request-message--idle {}

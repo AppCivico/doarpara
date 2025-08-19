@@ -9,21 +9,21 @@
 }
 
 @mixin progress-bar-fg {
-  &[value]::-moz-progress-bar {
-    @content;
-  }
-
-  &[value]::-webkit-progress-value {
-    @content;
-  }
-
+  & {
   display: flex;
 
   flex-wrap: nowrap;
 
-  > div {
-    @include my.hide-text;
+    &[value]::-moz-progress-bar {
+      @content;
+    }
 
+    &[value]::-webkit-progress-value {
+      @content;
+    }
+  }
+
+  > div {
     display: block;
 
     max-width: 100%;
@@ -32,6 +32,8 @@
     line-height: inherit;
 
     border-radius: 0;
+
+    @include my.hide-text;
 
     @content;
 
@@ -57,26 +59,25 @@
 
 progress,
 [role='progressbar'] {
-  @include my.themed-color('color' ,('button', 'submit'));
-  @include my.themed-color('background-color' ,('disabled', 'background'));
-
   display: block;
-
   width: 100%;
   // Get rid of default border in Firefox.
   height: 0.25rem;
-
   appearance: none;
-
   border: 0;
 
+  @include my.themed-color('color' ,('button', 'submit'));
+  @include my.themed-color('background-color' ,('disabled', 'background'));
   @include progress-bar-fg {
-    @include my.themed-color('background' ,('brand', 'tertiary'));    border-radius: 999em;
+    & {
+      border-radius: 999em;
+    }
+    @include my.themed-color('background' ,('brand', 'tertiary'));
   }
-
   @include progress-bar-bg {
+    & {
+      border-radius: 999em;
+    }
     @include my.themed-color('background' ,('neutral', 'light'));
-
-    border-radius: 999em;
   }
 }

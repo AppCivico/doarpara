@@ -1049,8 +1049,6 @@ watch(() => route.query, (to, from) => {
 @use 'sass:color';
 
 .donation-summary {
-  @include my.themed-color('border-color', ('border'));
-
   flex-basis: 100%;
 
   overflow: hidden;
@@ -1058,6 +1056,7 @@ watch(() => route.query, (to, from) => {
   border-style: solid;
   border-width: my.$stroke;
   border-radius: my.$rounded-corner;
+  @include my.themed-color('border-color', ('border'));
 }
 
 .donation-summary__item {
@@ -1072,10 +1071,10 @@ watch(() => route.query, (to, from) => {
   border-radius: 0;
 
   & + & {
-    @include my.themed-color('border-top-color', ('border'));
-
     border-top-style: solid;
     border-top-width: my.$stroke;
+
+    @include my.themed-color('border-top-color', ('border'));
   }
 }
 

@@ -20,7 +20,7 @@ td {
   background-color: transparent;
   border: 0;
 
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: calc(#{my.breakpoint('toggle-table-layout')} - 0.01)) {
     display: block;
   }
 }
@@ -49,7 +49,7 @@ table {
 
 thead,
 tfoot {
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: calc(#{my.breakpoint('toggle-table-layout')} - 0.01)) {
     display: none;
   }
 }
@@ -80,7 +80,7 @@ tr {
   border-width: my.$stroke my.$stroke my.$stroke * 3 my.$stroke;
   border-radius: my.$rounded-corner;
 
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: calc(#{my.breakpoint('toggle-table-layout')} - 0.01)) {
     @include my.fallback('margin', 0 0 1.5rem);
     display: flex;
 
@@ -115,7 +115,7 @@ td {
     padding-right: my.$gutter;
   }
 
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: calc(#{my.breakpoint('toggle-table-layout')} - 0.01)) {
     flex-basis: calc(25% - my.$gutter);
     flex-grow: 1;
 
@@ -156,7 +156,7 @@ th {
 td {
   font-family: inherit;
 
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: calc(#{my.breakpoint('toggle-table-layout')} - 0.01)) {
     &:empty {
       display: none;
     }
@@ -183,7 +183,7 @@ tbody {
 }
 
 tbody tr {
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: calc(#{my.breakpoint('toggle-table-layout')} - 0.01)) {
     &:nth-of-type(even) {
       background-color: transparent;
     }
@@ -194,7 +194,7 @@ tbody th,
 tbody td {
   text-align: left;
 
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: calc(#{my.breakpoint('toggle-table-layout')} - 0.01)) {
     &[aria-label] {
       &::before {
         display: block;
@@ -238,7 +238,7 @@ tfoot td {
 .cell--action {
   font-size: my.ms-step(-1);
 
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: #{my.breakpoint('toggle-table-layout')} - 0.01) {
     display: flex;
 
     align-items: flex-end;
@@ -251,7 +251,7 @@ tfoot td {
 .cell--number {
   text-align: right;
 
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: calc(#{my.breakpoint('toggle-table-layout')} - 0.01)) {
     text-align: left;
   }
 }

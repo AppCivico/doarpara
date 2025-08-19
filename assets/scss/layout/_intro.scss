@@ -1,11 +1,11 @@
 @use 'sass:color';
+@use 'sass:math';
 @use '../abstracts' as my;
 
 $_background-width-beyond-column: 70px;
 
 .intro {
   margin-bottom: my.$gutter * 3;
-
   line-height: my.$gutter;
 
   @media screen and (min-width: my.breakpoint('toggle-sidebar-position')) {
@@ -23,19 +23,17 @@ $_background-width-beyond-column: 70px;
   }
 }
 
-.intro__cover {
-  @include my.themed-color('background-color', ('brand', 'primary'));
-
+ .intro__cover {
   position: relative;
   z-index: my.layer('default');
-
   align-self: flex-start;
-
   width: 100%;
   margin-top: 0;
   margin-right: auto;
   margin-bottom: my.$gutter * 2;
   margin-left: auto;
+
+  @include my.themed-color('background-color', ('brand', 'primary'));
 
   @media screen and (min-width: my.breakpoint('tablet__portrait')) {
     box-shadow: 0 60px 24px -36px my.palette('effects', 'shadow'), 0 48px 24px -48px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.6);
@@ -53,7 +51,7 @@ $_background-width-beyond-column: 70px;
     }
   }
 
-  @media screen and (max-width: my.breakpoint('toggle-sidebar-position') - 0.01) {
+  @media screen and (max-width: #{my.breakpoint('toggle-sidebar-position')} - 0.01) {
     @include my.full-width;
 
     max-width: none;
@@ -75,11 +73,9 @@ $_background-width-beyond-column: 70px;
 .intro__image,
 .intro__video {
   display: block;
-
   width: 100%;
   height: auto;
   aspect-ratio: 780 / 440;
-
   object-fit: cover;
 }
 
@@ -156,8 +152,6 @@ $_background-width-beyond-column: 70px;
   }
 
   &::after {
-    @include my.themed-color('background-color', ('brand', 'primary'));
-
     position: absolute;
     top: 0;
     right: 0;
@@ -170,6 +164,8 @@ $_background-width-beyond-column: 70px;
 
     transition-duration: 300ms;
     transition-property: opacity;
+
+    @include my.themed-color('background-color', ('brand', 'primary'));
   }
 
   &:hover,
@@ -240,14 +236,14 @@ $_background-width-beyond-column: 70px;
     }
 
     &::before {
-      @include my.themed-color('background-color', ('brand', 'primary'));
-
-      right: min(0px, (100vw - my.$max-width) / -2);
+      right: min(0px, calc((100vw - my.$max-width) / -2));
       z-index: my.layer('below');
 
       width: 100vw;
 
       border-bottom-right-radius: 60px;
+
+      @include my.themed-color('background-color', ('brand', 'primary'));
     }
 
     &::after {

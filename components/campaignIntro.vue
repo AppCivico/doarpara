@@ -155,9 +155,6 @@ const campaignCoverSrcset = computed(() => {
 <style lang="scss" scoped>
 // TO-DO: Update styles. It's ugly!
 .disabled-methods {
-  @include my.shadow;
-  @include my.pulsing-color(my.palette('effects', 'error-gradient'), 'background-color');
-
   padding: my.$gutter;
   color: my.apca-text-contrast(
     $background-color: my.palette('signage', 'danger'),
@@ -168,5 +165,7 @@ const campaignCoverSrcset = computed(() => {
   );
   border-radius: my.$rounded-corner;
 
+  @include my.shadow;
+  @include my.pulsing-color(my.palette('effects', 'error-gradient'), 'background-color');
 }
 </style>

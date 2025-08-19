@@ -71,8 +71,6 @@ defineProps<{
 }
 
 .rewards__item {
-  @include my.themed-color('border-color', ('border'));
-
   padding: my.$gutter;
   margin-bottom: my.$gutter;
 
@@ -80,6 +78,8 @@ defineProps<{
   border-style: solid;
   border-width: my.$stroke;
   border-radius: 10px;
+
+  @include my.themed-color('border-color', ('border'));
 
   &:hover,
   &:focus {
@@ -133,29 +133,30 @@ defineProps<{
   @include my.truncate(5);
 
   position: relative;
-
   margin-bottom: 0;
 
   &::after {
     @include my.themed-color('color', ('brand', 'secondary'));
 
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    & {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
 
-    padding-top: my.$leading * 2em;
-    padding-right: 50%;
+      padding-top: my.$leading * 2em;
+      padding-right: 50%;
 
-    font-weight: my.font-weight('bold');
+      font-weight: my.font-weight('bold');
 
-    content: '+ detalhes';
+      content: '+ detalhes';
 
-    background-image: linear-gradient(
-      to bottom,
-      color.adjust(my.palette('neutral', 'white'), $alpha: -1) 0%,
-      my.palette('neutral', 'white') my.$leading * 1em
-    );
+      background-image: linear-gradient(
+        to bottom,
+        color.adjust(my.palette('neutral', 'white'), $alpha: -1) 0%,
+        my.palette('neutral', 'white') my.$leading * 1em
+      );
+    }
   }
 
   :focus > & {
@@ -187,22 +188,24 @@ defineProps<{
 
   @include my.themed-color('color', ('brand', 'primary'));
 
-  display: block;
+  & {
+    display: block;
 
-  padding: my.$gutter * 0.75;
+    padding: my.$gutter * 0.75;
 
-  font-weight: my.font-weight('bold');
-  text-align: center;
+    font-weight: my.font-weight('bold');
+    text-align: center;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  border: my.$stroke solid currentColor;
-  border-radius: my.$rounded-corner;
+    border: my.$stroke solid currentColor;
+    border-radius: my.$rounded-corner;
+  }
 
   @include my.on-event {
+    color: my.palette('text', 'light');
     @include my.themed-color('background-color', ('brand', 'primary'));
     @include my.themed-color('border-color', ('brand', 'primary'));
-    color: my.palette('text', 'light');
   }
 }
 

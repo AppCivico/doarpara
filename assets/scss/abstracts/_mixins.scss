@@ -23,7 +23,9 @@ $_themes: 'blue' 'green' 'orange' 'red';
       @content;
     }
   } @else {
-    @content;
+    & {
+      @content;
+    }
 
     :where(.theme--default:root) & {
       @content;
@@ -94,25 +96,27 @@ $_themes: 'blue' 'green' 'orange' 'red';
   $_placeholder-bg__diagonal: rgb(0, 0, 0);
   $_placeholder-bg__color: rgb(220, 220, 220);
 
-  background: linear-gradient(
-    to top left,
-    transparent 0%,
-    transparent calc(50% - 1px),
-    $_placeholder-bg__diagonal 50%,
-    transparent calc(50% + 1px),
-    transparent 100%
-  ), linear-gradient(
-    to top right,
-    transparent 0%,
-    transparent calc(50% - 1px),
-    $_placeholder-bg__diagonal 50%,
-    transparent calc(50% + 1px),
-    transparent 100%
-  ), linear-gradient(
-    to right,
-    $_placeholder-bg__color,
-    $_placeholder-bg__color
-  );
+  & {
+    background: linear-gradient(
+      to top left,
+      transparent 0%,
+      transparent calc(50% - 1px),
+      $_placeholder-bg__diagonal 50%,
+      transparent calc(50% + 1px),
+      transparent 100%
+    ), linear-gradient(
+      to top right,
+      transparent 0%,
+      transparent calc(50% - 1px),
+      $_placeholder-bg__diagonal 50%,
+      transparent calc(50% + 1px),
+      transparent 100%
+    ), linear-gradient(
+      to right,
+      $_placeholder-bg__color,
+      $_placeholder-bg__color
+    );
+  }
 }
 
 /// Grid background image
@@ -137,10 +141,12 @@ $_themes: 'blue' 'green' 'orange' 'red';
     );
   }
 
-  background-image: linear-gradient(
-    to right,
-    #{list.append($grid-image, (transparent calc(100% - #{c.$gutter}), $color calc(100% - #{c.$gutter}), $color 100%), 'comma')}
-  );
+  & {
+    background-image: linear-gradient(
+      to right,
+      #{list.append($grid-image, (transparent calc(100% - #{c.$gutter}), $color calc(100% - #{c.$gutter}), $color 100%), 'comma')}
+    );
+  }
 }
 
 
@@ -149,9 +155,9 @@ $_themes: 'blue' 'green' 'orange' 'red';
 /// @access private
 ///
 @mixin _italic-overflow {
-  overflow: visible;
+    overflow: visible;
 
-  font-style: italic;
+    font-style: italic;
 }
 
 /// Special style for the _&_ used as a conjunction.
@@ -179,11 +185,14 @@ $_themes: 'blue' 'green' 'orange' 'red';
 ///
 @mixin alt-ampersand {
   .amp {
+    & {
+      font-family: fs.$AMPERSAND-FONT-STACK;
+      font-size: 2em;
+      line-height: 0.25;
+      vertical-align: middle;
+    }
+
     @include _italic-overflow;
-    font-family: fs.$AMPERSAND-FONT-STACK;
-    font-size: 2em;
-    line-height: 0.25;
-    vertical-align: middle;
 
     @content;
   }
@@ -210,9 +219,11 @@ $_themes: 'blue' 'green' 'orange' 'red';
 ///
 @mixin alt-preposition {
   .alt {
-    @include _italic-overflow;
+    & {
+      font-family: fs.$ALT-FONT-STACK;
+    }
 
-    font-family: fs.$ALT-FONT-STACK;
+    @include _italic-overflow;
 
     @content;
   }
@@ -468,8 +479,6 @@ $_themes: 'blue' 'green' 'orange' 'red';
 /// }
 ///
 @mixin icon-font {
-  @include _font-smoothing(true);
-
   // stylelint-disable-next-line property-units
   font-size: 14px; /* font-awesome pixel perfection is at 14px and multiples of 14 */
   font-style: normal;
@@ -479,6 +488,8 @@ $_themes: 'blue' 'green' 'orange' 'red';
   text-transform: none;
 
   speak: none;
+
+  @include _font-smoothing(true);
 }
 
 @mixin clearfix($ie: 8) {
@@ -505,7 +516,9 @@ $_themes: 'blue' 'green' 'orange' 'red';
   }
 
   @if ($ie <= 8) {
-    zoom: 1\9; // old IE sucks
+    & {
+      zoom: 1\9; // old IE sucks
+    }
   }
 }
 
@@ -745,7 +758,8 @@ $_themes: 'blue' 'green' 'orange' 'red';
 
     direction: ltr;
   } @else {
-    font: 0/0;
+    font-size: 0;
+    line-height: 0;
     color: transparent;
     text-shadow: none;
 
@@ -889,7 +903,7 @@ $no-viewport: false !default;
   @each $direction in $directions {
     $direction: string.to-lower-case($direction);
 
-    @if not index(top right bottom left, $direction) {
+    @if not list.index(top right bottom left, $direction) {
       @error 'Direction must be either `top`, `right`, `bottom` or `left`.';
     }
 
@@ -910,7 +924,7 @@ $no-viewport: false !default;
 @mixin triangle($direction, $color: currentcolor, $size: 1em) {
   $perpendicular-borders: $size solid transparent;
 
-  @if not index(top right bottom left, $direction) {
+  @if not list.index(top right bottom left, $direction) {
     @error 'Direction must be either `top`, `right`, `bottom` or `left`.';
   }
 
@@ -1088,25 +1102,27 @@ $no-viewport: false !default;
 }
 
 @mixin _focus-and-hover-basis {
-  @include themed-color('outline-color', ('effects', 'tap-highlight'));
-
   outline-width: 4px;
   outline-style: solid;
 
   transition-duration: 100ms;
   transition-property: outline-width;
   box-decoration-break: clone;
+
+  @include themed-color('outline-color', ('effects', 'tap-highlight'));
 }
 
 @mixin pulsing-color($list, $property: 'color') {
   $animation-name: pulsing-#{$property};
 
-  #{$property}: list.nth($list, 1);
+  & {
+    #{$property}: list.nth($list, 1);
 
-  animation-name: $animation-name;
-  animation-duration: 2s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+    animation-name: $animation-name;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
 
   @at-root {
     $length: list.length($list);
@@ -1126,11 +1142,12 @@ $no-viewport: false !default;
 }
 
 @mixin pulsing-outline($color-path) {
-  @include themed-color('outline-color', ('brand', 'secondary'));
-  @include pulsing-color(f.palette($color-path...), 'outline-color');
-
   outline-width: 2px;
   outline-style: solid;
+
+  @include themed-color('outline-color', ('brand', 'secondary'));
+
+  @include pulsing-color(f.palette($color-path...), 'outline-color');
 
   @each $theme in $_themes {
     $themed-path: list.join(('#{$theme}-theme'), $color-path);
@@ -1157,31 +1174,31 @@ $no-viewport: false !default;
   @if $inset {
     box-shadow: inset 10px 10px 50px f.palette('effects', 'shadow');
 
-      @include themed-declaration ('green') {
-        box-shadow: inset 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
-      }
+    @include themed-declaration ('green') {
+      box-shadow: inset 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
+    }
 
-      @include themed-declaration ('orange') {
-        box-shadow: inset 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
-      }
+    @include themed-declaration ('orange') {
+      box-shadow: inset 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+    }
 
-      @include themed-declaration ('red') {
-        box-shadow: inset 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
-      }
+    @include themed-declaration ('red') {
+      box-shadow: inset 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+    }
   } @else {
     box-shadow: 10px 10px 50px f.palette('effects', 'shadow');
 
-      @include themed-declaration ('green') {
-        box-shadow: 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
-      }
+    @include themed-declaration ('green') {
+      box-shadow: 10px 10px 50px f.palette('green-theme', 'effects', 'shadow');
+    }
 
-      @include themed-declaration ('orange') {
-        box-shadow: 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
-      }
+    @include themed-declaration ('orange') {
+      box-shadow: 10px 10px 50px f.palette('orange-theme', 'effects', 'shadow');
+    }
 
-      @include themed-declaration ('red') {
-        box-shadow: 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
-      }
+    @include themed-declaration ('red') {
+      box-shadow: 10px 10px 50px f.palette('red-theme', 'effects', 'shadow');
+    }
   }
   // filter: drop-shadow(0px 4px 4px f.palette('effects', 'shadow'));
 
@@ -1198,15 +1215,15 @@ $no-viewport: false !default;
   // }
 }
 
-@mixin columns($width: map-get(c.$line-lengths, 'column'), $gap: c.$gutter) {
-  @include hyphens;
-
+@mixin columns($width: map.get(c.$line-lengths, 'column'), $gap: c.$gutter) {
   column-fill: balance;
 
   column-gap: $gap;
   column-width: $width;
 
   max-width: 100%;
+
+  @include hyphens;
 }
 
 @mixin container {
@@ -1370,7 +1387,7 @@ $no-viewport: false !default;
     $min: math.div(100%, $n - 1);
     $max: math.div(100%, $n);
 
-    min-width: mth.div($min + $max, 2);
+    min-width: math.div($min + $max, 2);
   }
 }
 

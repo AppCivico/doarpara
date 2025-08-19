@@ -41,19 +41,14 @@
   padding-right: 0;
   padding-bottom: my.$gutter * 0.5;
   padding-left: 0;
-
   border-bottom: 3px solid transparent;
-
   @include my.link-undercover {
     color: my.palette('neutral', 'dark');
   }
-
   @include my.on-event {
-    @include my.themed-color('color', ('anchor', 'link'));
-
     border-bottom: 3px solid currentColor;
+    @include my.themed-color('color', ('anchor', 'link'));
   }
-
   &[aria-current='page'],
   &[aria-current='page']:visited {
     @include my.themed-color('color', ('anchor', 'link'));
