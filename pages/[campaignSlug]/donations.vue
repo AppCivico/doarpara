@@ -197,7 +197,7 @@ if (import.meta.client) {
 .donations-page__receipts-table {
   width: 100%;
 
-  @media screen and (max-width: my.breakpoint('toggle-table-layout') - 0.01) {
+  @media screen and (max-width: #{my.breakpoint('toggle-table-layout') - 0.01}) {
     tbody {
       display: flex;
 

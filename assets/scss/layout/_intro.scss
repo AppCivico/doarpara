@@ -51,7 +51,7 @@ $_background-width-beyond-column: 70px;
     }
   }
 
-  @media screen and (max-width: #{my.breakpoint('toggle-sidebar-position')} - 0.01) {
+  @media screen and (max-width: #{my.breakpoint('toggle-sidebar-position') - 0.01}) {
     @include my.full-width;
 
     max-width: none;
