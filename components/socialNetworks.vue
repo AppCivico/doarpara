@@ -1,5 +1,16 @@
 <template>
   <ul class="social-networks">
+    <li class="social-networks__item">
+      <a
+        class="social-networks__link"
+        target="_blank"
+        rel="noopener noreferrer"
+        @click="share"
+        @keydown.enter="share"
+      >
+        Compartilhar
+      </a>
+    </li>
     <li v-for="method in contactMethodsArray" :key="method.name" class="social-networks__item">
       <a
         class="social-networks__link"
@@ -36,4 +47,20 @@ const contactMethodsArray = computed(() => Object.entries(props.contactMethods)
 
     return 0;
   }));
+
+async function share() {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Doar para',
+        text: 'Doar para',
+        url: 'https://doarpara.com.br',
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  } else {
+    console.log('no share api')
+  }
+}
 </script>
