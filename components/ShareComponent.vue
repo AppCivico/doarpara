@@ -2,7 +2,6 @@
   <button
     type="button"
     :disabled="!clickable"
-    :aria-label="ariaLabel"
     class="share-button"
     @click="handleShare"
   >
@@ -21,7 +20,6 @@ interface Props {
   shareData?: ShareData
   clickable?: boolean
   fallbackAction?: 'copy' | 'custom' | null
-  ariaLabel?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -80,8 +78,8 @@ async function handleShare() {
 
 </script>
 
-<style scoped>
-.share-button {
+<style lang="scss" scoped>
+:where(.share-button) {
   background: none;
   border: none;
   padding: 0;
@@ -91,15 +89,16 @@ async function handleShare() {
   text-decoration: none;
   cursor: pointer;
   display: contents;
-}
 
-.share-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+  &.share-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
-.share-button:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
+  & .share-button:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
 }
 </style>

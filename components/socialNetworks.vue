@@ -1,12 +1,5 @@
 <template>
   <ul class="social-networks">
-    <li class="social-networks__item">
-      <ShareComponent>
-        <span class="social-networks__link">
-          Compartilhar
-        </span>
-      </ShareComponent>
-    </li>
     <li v-for="method in contactMethodsArray" :key="method.name" class="social-networks__item">
       <a
         class="social-networks__link"
