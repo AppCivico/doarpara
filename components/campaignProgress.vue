@@ -1,6 +1,8 @@
 <template>
   <div class="campaign-progress">
-    <ShareComponent class="campaign-progress__share">
+    <ShareComponent
+      :share-data="shareData"
+      class="campaign-progress__share">
       Compartilhe a campanha!
     </ShareComponent>
     <data class="campaign-progress__total" :value="totalAmount">
@@ -81,6 +83,9 @@
 <script setup lang="ts">
 import type { Campaign, SourceOnProgressBar } from '@/doar-para.d.ts';
 
+const requestURL = useRequestURL()
+const runtimeConfig = useRuntimeConfig();
+
 const props = defineProps<{
   campaign: Campaign;
 }>();
@@ -96,6 +101,14 @@ const totalDonations = computed(() => donationSources.value.reduce((acc, cur) =>
 }, 0));
 
 const currentGoal = computed(() => getCurrentGoal(props.campaign.goal_list, totalAmount.value));
+
+const shareData = {
+  title: props.campaign?.name
+      ? `${props.campaign?.name} • ${runtimeConfig.public.title}`
+      : `${runtimeConfig.public.title}`,
+  text: props.campaign?.preamble,
+  url: requestURL.href,
+}
 
 function percentage(amount = totalAmount.value, expected = currentGoal.value) {
   return Math.floor(
