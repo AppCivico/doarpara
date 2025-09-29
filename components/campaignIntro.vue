@@ -7,7 +7,7 @@
           class="intro__image"
           width="780"
           height="440"
-          :src="campaignDefaultCover || currentVideoUrl.thumbnailUrl || youtubeThumbnail"
+          :src="campaignDefaultCover || currentVideo.thumbnailUrl || youtubeThumbnail"
           :srcset="campaignCoverSrcset"
         />
         <button
@@ -33,8 +33,8 @@
           :title="$t('campaignVideo')"
           width="780"
           height="440"
-          :src="currentVideoUrl.videoUrl
-            ? `https://www.youtube-nocookie.com/embed/${currentVideoUrl.videoUrl}?origin=${origin}&autoplay=1&color=white&rel=0`
+          :src="currentVideo.id
+            ? `https://www.youtube-nocookie.com/embed/${currentVideo.id}?origin=${origin}&autoplay=1&color=white&rel=0`
             : `https://www.youtube-nocookie.com/embed/${videoId}?origin=${origin}&autoplay=1&color=white&rel=0`"
           frameborder="0"
           allow="autoplay; encrypted-media"
@@ -109,18 +109,18 @@ const origin: String = typeof window !== 'undefined'
 const videoId = computed<string | null | undefined>(() => getYoutubeId(props.campaign.video));
 const youtubeThumbnail = computed(() => getYoutubeThumbnail(props.campaign.video));
 
-const currentVideoUrl = computed(() => {
-  let videoUrl = '';
+const currentVideo = computed(() => {
+  let id = '';
   let thumbnailUrl = '';
 
   if (refParam) {
     const itemRefParam = refVideo.find((item) => item.code === refParam);
     if (itemRefParam) {
-      videoUrl = getYoutubeId(itemRefParam.video_url);
+      id = getYoutubeId(itemRefParam.video_url);
       thumbnailUrl = getYoutubeThumbnail(itemRefParam.video_url);
     }
   }
-  return { videoUrl, thumbnailUrl };
+  return { id, thumbnailUrl };
 });
 
 const campaignDefaultCover = computed(() => {
