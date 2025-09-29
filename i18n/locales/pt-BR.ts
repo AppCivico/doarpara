@@ -222,6 +222,8 @@ Por isso, **{campaignName}** está registrando todas suas doações financeiras 
   },
   rewards: 'Rewards',
   rewardsIntro: 'Este projeto oferece recompensas em troca do seu apoio. Selecione uma recompensa abaixo.',
+  share: 'Compartilhar',
+  shareCampaign: 'Compartilhe a campanha!',
   toExposeData: 'Exibir',
   totalAmount: 'Arrecadados',
   totalAmountByDonationsPerSource: '{percentage}% por {numberOfDonations} doações ({source})',

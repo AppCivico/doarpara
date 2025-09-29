@@ -1,5 +1,10 @@
 <template>
   <div class="campaign-progress">
+    <ShareComponent
+      :share-data="shareData"
+      class="campaign-progress__share">
+      {{ $t('shareCampaign') }}
+    </ShareComponent>
     <data class="campaign-progress__total" :value="totalAmount">
       <AnimatedNumber
         for="progress-bar"
@@ -78,6 +83,9 @@
 <script setup lang="ts">
 import type { Campaign, SourceOnProgressBar } from '@/doar-para.d.ts';
 
+const requestURL = useRequestURL()
+const runtimeConfig = useRuntimeConfig();
+
 const props = defineProps<{
   campaign: Campaign;
 }>();
@@ -93,6 +101,14 @@ const totalDonations = computed(() => donationSources.value.reduce((acc, cur) =>
 }, 0));
 
 const currentGoal = computed(() => getCurrentGoal(props.campaign.goal_list, totalAmount.value));
+
+const shareData = {
+  title: props.campaign?.name
+      ? `${props.campaign?.name} • ${runtimeConfig.public.title}`
+      : `${runtimeConfig.public.title}`,
+  text: props.campaign?.preamble,
+  url: requestURL.href,
+}
 
 function percentage(amount = totalAmount.value, expected = currentGoal.value) {
   return Math.floor(
@@ -179,5 +195,38 @@ function progressBarStyle(source: SourceOnProgressBar) {
 
 .campaign-progress__donations-number {
   font-weight: my.font-weight('bold');
+}
+
+.campaign-progress__share {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  @include my.themed-color('border-color', ('brand', 'primary'));
+
+  &:before {
+    content: "";
+    width: 1.2em;
+    aspect-ratio: 1;
+    mask: my.image('icons/share.svg') no-repeat center / contain;
+    background-color: currentColor;
+    will-change: transform;
+    backface-visibility: hidden;
+    animation: jiggle 10s ease-in-out infinite;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      animation-name: none;
+    }
+  }
+}
+
+@keyframes jiggle {
+  0%, 100% { transform: rotate(0deg); }
+  2%  { transform: rotate(-14deg); }
+  4%  { transform: rotate(14deg); }
+  6%  { transform: rotate(-10deg); }
+  8%  { transform: rotate(10deg); }
+  10% { transform: rotate(0deg); }
+  94% { transform: rotate(0deg); }
 }
 </style>
