@@ -3,7 +3,7 @@
     <ShareComponent
       :share-data="shareData"
       class="campaign-progress__share">
-      Compartilhe a campanha!
+      {{ $t('shareCampaign') }}
     </ShareComponent>
     <data class="campaign-progress__total" :value="totalAmount">
       <AnimatedNumber

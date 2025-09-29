@@ -5,7 +5,9 @@
     class="share-button"
     @click="handleShare"
   >
-    <slot />
+    <slot>
+      {{ $t('Share') }}
+    </slot>
   </button>
 </template>
 
