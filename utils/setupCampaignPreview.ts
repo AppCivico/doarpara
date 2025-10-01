@@ -1,4 +1,4 @@
-import { useCampaignStore } from '~/store/campaign';
+import { useCampaignStore } from '~/store/campaign.ts';
 
 /**
  * Checks if the current page is in preview mode
