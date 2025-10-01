@@ -276,6 +276,7 @@
 </template>
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
+import { isPreviewMode } from '@/utils/setupCampaignPreview.ts';
 
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
@@ -290,4 +291,10 @@ const campaignStore = useCampaignStore();
 const {
   campaign, campaignSections,
 } = storeToRefs(campaignStore);
+
+// Loading here because of SSR - ensures data is available before layout renders
+// Skip in preview mode as the page handles it with the preview token
+if (route.params.campaignSlug && !isPreviewMode()) {
+  await useAsyncData('campaign', async () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true));
+}
 </script>

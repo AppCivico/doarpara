@@ -133,6 +133,11 @@ The incoming message properties are transformed to match the Campaign schema:
   - `setupPreviewUpdateListener()` - Listens for `PREVIEW_UPDATE` messages
   - `updateCampaignFromMessage()` - Updates campaign with transformed properties
 
+- **[utils/setupCampaignPreview.ts](utils/setupCampaignPreview.ts)** - Preview mode utilities
+  - `isPreviewMode()` - Checks if the current page is in preview mode
+  - `setupCampaignPreview()` - Sets up preview mode, waits for token, returns preview token
+  - `notifyPreviewResult()` - Notifies parent window of preview success or error
+
 - **[utils/transformMessageToCampaign.ts](utils/transformMessageToCampaign.ts)** - Property transformation utility
   - Transforms message properties to Campaign schema
   - Handles nested object updates (e.g., `fundraiser.avatar`, `fundraiser.name`)
