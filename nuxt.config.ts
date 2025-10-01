@@ -61,6 +61,8 @@ export default defineNuxtConfig({
       campaignPoolingInterval: Number(process.env.CAMPAIGN_POOLING_INTERVAL)
         || 0,
 
+      controlPanelOrigin: process.env.CONTROL_PANEL_ORIGIN || '',
+
       masks: {
         creditCardExpirationCsc: process.env.MASKS_CREDIT_CARD_EXPIRATION_CSC
           || "['###', '####']",

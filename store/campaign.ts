@@ -1,3 +1,4 @@
+import transformMessageToCampaign from '~/utils/transformMessageToCampaign.ts';
 import type {
   Campaign,
   CampaignSection,
@@ -81,6 +82,55 @@ export const useCampaignStore = defineStore('campaign', {
 
       if (error.value) {
         this.error = error.value;
+      }
+    },
+
+    updateCampaignFromMessage(properties: any): void {
+      if (!this.campaign) return;
+
+      const transformed = transformMessageToCampaign(properties, this.campaign);
+      this.campaign = { ...this.campaign, ...transformed };
+    },
+
+    getPreviewToken(): Promise<string> {
+      this.pending = true;
+
+      return new Promise<string>((resolve) => {
+        if (typeof window === 'undefined') {
+          resolve('');
+          return;
+        }
+
+        const allowedOrigin = useRuntimeConfig().public.controlPanelOrigin;
+
+        const handleFirstMessage = (event: MessageEvent) => {
+          if (!allowedOrigin || event.origin !== allowedOrigin) {
+            return;
+          }
+
+          if (event.data?.type === 'PROVIDE_PREVIEW_TOKEN' && event.data?.previewToken) {
+            window.removeEventListener('message', handleFirstMessage);
+            resolve(event.data.previewToken);
+          }
+        };
+
+        window.addEventListener('message', handleFirstMessage);
+      });
+    },
+
+    setupPreviewUpdateListener(): void {
+      if (typeof window !== 'undefined') {
+        const allowedOrigin = useRuntimeConfig().public.controlPanelOrigin;
+
+        window.addEventListener('message', (event: MessageEvent) => {
+          if (!allowedOrigin || event.origin !== allowedOrigin) {
+            return;
+          }
+
+          if (event.data?.type === 'PREVIEW_UPDATE' && event.data?.properties) {
+            this.updateCampaignFromMessage(event.data.properties);
+          }
+        });
       }
     },
   },

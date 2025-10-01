@@ -290,7 +290,4 @@ const campaignStore = useCampaignStore();
 const {
   campaign, campaignSections,
 } = storeToRefs(campaignStore);
-
-// Loading here because of SSR
-await useAsyncData('campaign', async () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true));
 </script>
