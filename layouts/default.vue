@@ -292,9 +292,12 @@ const {
   campaign, campaignSections,
 } = storeToRefs(campaignStore);
 
-// Loading here because of SSR - ensures data is available before layout renders
-// Skip in preview mode as the page handles it with the preview token
+// Fetch campaign for SSR if there's a campaignSlug and not in preview mode
+// Preview mode is handled in the page component
 if (route.params.campaignSlug && !isPreviewMode()) {
-  await useAsyncData('campaign', async () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true));
+  await useAsyncData(
+    'campaign',
+    () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true),
+  );
 }
 </script>
