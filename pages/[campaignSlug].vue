@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
-import { isPreviewMode, notifyPreviewResult, setupCampaignPreview } from '@/utils/setupCampaignPreview.ts';
+import { isPreviewMode } from '@/utils/setupCampaignPreview.ts';
 
 let pollingInterval: ReturnType<typeof setInterval> | null = null;
 
@@ -30,17 +30,6 @@ function storeReferral() {
   if (referralCode && campaign.value?.id) {
     referral.value[campaign.value.id as keyof typeof referral.value] = String(referralCode);
   }
-}
-
-// Preview mode: wait for token and fetch with it
-if (isPreviewMode() && import.meta.client) {
-  const { previewToken } = await setupCampaignPreview();
-
-  const fetchParams = previewToken ? { live_preview_token: previewToken } : {};
-  await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug), fetchParams);
-
-  // Notify parent window about the result
-  notifyPreviewResult(error.value);
 }
 
 if (error.value) {

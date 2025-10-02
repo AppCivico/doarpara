@@ -20,9 +20,8 @@
 %loading-el {
   overflow: hidden;
   cursor: wait;
+
   &::after {
-    // prevent conflicts
-    all: unset;
     position: absolute;
     top: 0;
     right: 0;
@@ -39,7 +38,7 @@
 /// which can't be a parent and a pseudo element over any element other than
 /// `html`.
 ///
-/// Don't forget to customize it to your needs. Speacially the background
+/// Don't forget to customize it to your needs. Specially the background
 /// color.
 ///
 /// Already applied to `embed` and `img`, which can cause issues with
@@ -60,7 +59,9 @@
   > body,
   &:not(html):not(.skeleton):not(table) {
     @extend %loading-el;
+
     position: relative;
+
     &::after {
       @extend %loading-bg;
     }
@@ -71,6 +72,7 @@ img,
 embed {
   &::before {
     @extend %loading-bg;
+
     display: block;
     content: '';
     background-size: auto;
@@ -89,6 +91,7 @@ keygen,
 textarea {
   &[aria-busy='true'] {
     @extend %loading-bg;
+
     background-image: none;
     background-size: auto;
   }
@@ -107,6 +110,7 @@ textarea {
       text-decoration: none;
       border: 0;
       border-radius: my.$rounded-corner;
+
       &::before,
       &::after {
         all: unset;

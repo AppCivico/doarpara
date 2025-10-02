@@ -18,8 +18,8 @@
         <Meta name="msapplication-TileColor" content="#00aba9" />
         <Meta name="theme-color" content="#ffffff" />
       </Head>
-      <Body>
-        <header class="main-header">
+      <Body :aria-busy="pending ? 'true' : undefined">
+        <header v-if="campaign" class="main-header">
           <div class="container">
             <div class="title-and-colophon">
               <h1 v-if="campaign?.name" class="campaign-title">
@@ -144,7 +144,7 @@
           </div>
         </header>
         <campaignIntro v-if="campaign" :campaign="campaign" />
-        <article role="main">
+        <article v-if="campaign" role="main">
           <div class="text-body">
             <div class="container text-body__container">
               <nav
@@ -180,7 +180,7 @@
           </div>
         </article>
 
-        <footer class="main-footer">
+        <footer v-if="campaign" class="main-footer">
           <div class="container main-footer__navigation-social-and-credits">
             <nav
               v-if="(Array.isArray(campaignSections) && campaignSections.length > 1)
@@ -276,7 +276,7 @@
 </template>
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
-import { isPreviewMode } from '@/utils/setupCampaignPreview.ts';
+import { isPreviewMode, setupCampaignPreview, notifyPreviewResult } from '@/utils/setupCampaignPreview.ts';
 
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
@@ -289,15 +289,22 @@ const title = computed(() => (route.meta.title
 
 const campaignStore = useCampaignStore();
 const {
-  campaign, campaignSections,
+  campaign, campaignSections, pending, error,
 } = storeToRefs(campaignStore);
 
-// Fetch campaign for SSR if there's a campaignSlug and not in preview mode
-// Preview mode is handled in the page component
-if (route.params.campaignSlug && !isPreviewMode()) {
-  await useAsyncData(
-    'campaign',
-    () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true),
-  );
+if (route.params.campaignSlug) {
+  // Preview mode: wait for token and fetch with it
+  if (isPreviewMode() && import.meta.client) {
+    const { previewToken } = await setupCampaignPreview();
+    const fetchParams = previewToken ? { live_preview_token: previewToken } : {};
+    await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug), fetchParams);
+    notifyPreviewResult(error.value);
+  } else {
+    // Normal mode: SSR fetch
+    await useAsyncData(
+      'campaign',
+      () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true),
+    );
+  }
 }
 </script>
