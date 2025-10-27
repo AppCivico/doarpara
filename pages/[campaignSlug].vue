@@ -116,7 +116,9 @@ src="https://www.facebook.com/tr?id=${campaign.value.facebook_pixel}&ev=PageView
 
   if (!import.meta.dev && campaign.value?.google_analytics) {
     onMounted(() => {
-      initialize(campaign.value.google_analytics);
+      if (campaign.value?.google_analytics) {
+        initialize(campaign.value.google_analytics);
+      }
     });
   }
 }
