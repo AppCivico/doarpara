@@ -114,10 +114,10 @@ src="https://www.facebook.com/tr?id=${campaign.value.facebook_pixel}&ev=PageView
     twitterSite: extractTwitterHandle(campaign.value?.contact_methods?.twitter),
   });
 
-  if (!import.meta.dev && import.meta.client) {
-    if (campaign.value.google_analytics) {
+  if (!import.meta.dev && campaign.value?.google_analytics) {
+    onMounted(() => {
       initialize(campaign.value.google_analytics);
-    }
+    });
   }
 }
 </script>
