@@ -69,6 +69,7 @@ export const useCampaignStore = defineStore('campaign', {
         const data = await $fetch<Campaign>(fullUrl, {
           method: 'GET',
           params,
+          timeout: 10000,
         });
 
         if (data) {
@@ -79,7 +80,15 @@ export const useCampaignStore = defineStore('campaign', {
           }
         }
       } catch (error) {
-        this.error = error as any;
+        const statusCode = (error as any)?.statusCode || (error as any)?.status || 500;
+        const message = error instanceof Error ? error.message : String(error);
+
+        if (import.meta.dev) {
+          // eslint-disable-next-line no-console
+          console.error('[Campaign Store] Failed to fetch campaign:', error);
+        }
+
+        this.error = { message, statusCode };
       } finally {
         this.pending = false;
       }

@@ -32,10 +32,6 @@ function storeReferral() {
   }
 }
 
-if (error.value) {
-  throw createError(error.value);
-}
-
 if (import.meta.client && !isPreviewMode()) {
   onMounted(() => {
     if (campaign.value && runtimeConfig.public.campaignPoolingInterval) {

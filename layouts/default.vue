@@ -306,5 +306,14 @@ if (route.params.campaignSlug) {
       () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true),
     );
   }
+
+  // Throw error if fetch failed
+  if (error.value) {
+    const err = error.value as any;
+    throw createError({
+      statusCode: err.statusCode || 500,
+      statusMessage: err.message || 'Error loading campaign',
+    });
+  }
 }
 </script>
