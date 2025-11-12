@@ -111,6 +111,12 @@ export default defineNuxtConfig({
       authToken: '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',
     },
   },
+  sourcemap: {
+    server: true,
+    client: process.env.NODE_ENV === 'development'
+      ? true
+      : 'hidden'
+  },
   vite: {
     css: {
       preprocessorOptions: {
