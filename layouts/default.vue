@@ -307,13 +307,18 @@ if (route.params.campaignSlug) {
     );
   }
 
-  // Throw error if fetch failed (but not in preview mode)
-  if (!isPreviewMode() && error.value) {
+  // Throw error if fetch failed
+  // In preview mode, only throw non-404 errors (404 is expected if campaign doesn't exist in API yet)
+  if (error.value) {
     const err = error.value as any;
-    throw createError({
-      statusCode: err.statusCode || 500,
-      statusMessage: err.message || 'Error loading campaign',
-    });
+    const bypass404 = isPreviewMode() && err.statusCode === 404;
+
+    if (!bypass404) {
+      throw createError({
+        statusCode: err.statusCode || 500,
+        statusMessage: err.message || 'Error loading campaign',
+      });
+    }
   }
 }
 </script>
