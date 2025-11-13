@@ -307,8 +307,8 @@ if (route.params.campaignSlug) {
     );
   }
 
-  // Throw error if fetch failed
-  if (error.value) {
+  // Throw error if fetch failed (but not in preview mode)
+  if (!isPreviewMode() && error.value) {
     const err = error.value as any;
     throw createError({
       statusCode: err.statusCode || 500,
