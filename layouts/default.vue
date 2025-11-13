@@ -276,7 +276,7 @@
 </template>
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
-import { isPreviewMode, setupCampaignPreview, notifyPreviewResult } from '@/utils/setupCampaignPreview.ts';
+import { isPreviewMode, notifyPreviewResult, setupCampaignPreview } from '@/utils/setupCampaignPreview.ts';
 
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
@@ -296,7 +296,7 @@ if (route.params.campaignSlug) {
   // Preview mode: wait for token and fetch with it
   if (isPreviewMode() && import.meta.client) {
     const { previewToken } = await setupCampaignPreview();
-    const fetchParams = previewToken ? { live_preview_token: previewToken } : {};
+    const fetchParams = previewToken ? { preview_token: previewToken } : {};
     await campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug), fetchParams);
     notifyPreviewResult(error.value);
   } else {

@@ -46,7 +46,7 @@ iframe.contentWindow.postMessage({
 }, 'https://doarpara.com.br');
 ```
 
-The preview token is used as the `live_preview_token` parameter when fetching campaign data from the API.
+The preview token is used as the `preview_token` parameter when fetching campaign data from the API.
 
 ### 3. Preview Ready
 
