@@ -30,6 +30,7 @@ export default defineEventHandler((event) => {
   setHeader(event, 'Access-Control-Allow-Origin', '*');
 
   // CSPs
+  // Note: frame-ancestors should match CONTROL_PANEL_ORIGIN for preview mode to work
   const csp =
     "upgrade-insecure-requests; "
     + "frame-ancestors 'self' https://*.doarpara.com.br; "
@@ -56,6 +57,8 @@ export default defineEventHandler((event) => {
     + "https://pbs.twimg.com/ "
     + "https://*.s3.amazonaws.com/ "
     + "https://*.appcivico.com/ "
+    + "https://*.votolegal.com/ "
+    + "https://*.votolegal.com.br/ "
     + "http://*.iugu.com/ "
     + "data: blob:; "
     + "object-src 'self'; "
