@@ -308,7 +308,8 @@ if (route.params.campaignSlug) {
   }
 
   // Throw error if fetch failed
-  // In preview mode, only throw non-404 errors (404 is expected if campaign doesn't exist in API yet)
+  // In preview mode, only throw non-404 errors (404 is expected if campaign
+  // isn't public yet)
   if (error.value) {
     const err = error.value as any;
     const bypass404 = isPreviewMode() && err.statusCode === 404;
