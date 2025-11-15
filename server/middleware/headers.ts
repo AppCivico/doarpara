@@ -39,6 +39,7 @@ export default defineEventHandler((event) => {
       + "https://*.facebook.com/ "
       + "https://*.appcivico.com/ "
       + "https://*.votolegal.com/ "
+      + "https://*.votolegal.com.br/ "
       + "https://*.doarpara.com/ "
       + "https://*.iugu.com/; "
     + "frame-src 'self' "
