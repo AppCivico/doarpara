@@ -179,6 +179,7 @@ export interface Campaign {
   campaign_section_list: CampaignSection[];
 
   goal_list: Goal[];
+  faq?: FAQ;
 }
 
 export type CreatedDonation = {

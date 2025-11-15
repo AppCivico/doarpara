@@ -119,6 +119,9 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
 
     VotoLegalFP: 'Um componente essencial falhou em carregar',
   },
+  faq: {
+    title: 'Perguntas frequentes',
+  },
   flexibleFunding: 'Campanha flexível',
   footerMenuLabel: 'Menu da campanha, termos de uso e política de privacidade',
   goalAchieved: 'Meta alcançada',
@@ -146,7 +149,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   nav: {
     description: 'Campanha',
     donations: 'Transparência',
-    faq: 'FAQ',
+    faq: 'Perguntas frequentes',
     goals: 'Meta | Metas',
     rewards: 'Recompensa',
     testimonies: 'Depoimentos',

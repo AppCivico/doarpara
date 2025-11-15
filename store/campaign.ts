@@ -147,10 +147,19 @@ export const useCampaignStore = defineStore('campaign', {
     campaignSections: (({ campaign }): CampaignSection[] => (
       Array.isArray(campaign?.campaign_section_list)
         ? (campaign?.campaign_section_list || [])
-          // filter invalid sections and goals, in case its list is empty
-          .filter((section: CampaignSection) => (section === 'goals'
-            ? (campaign.goal_list?.length && sectionsConfig.valid.includes(section))
-            : sectionsConfig.valid.includes(section)))
+          // filter disabled sections and invalid list of goals or FAQ
+            .filter((section: CampaignSection) => {
+              if (!sectionsConfig.valid.includes(section)) {
+                return false;
+              }
+              if (section === 'goals') {
+                return !!campaign.goal_list?.length;
+              }
+              if (section === 'faq') {
+                return !!campaign.faq?.list?.length;
+              }
+              return true;
+            })
           // combine with list of required sections
           .concat(sectionsConfig.required
             // preventing duplicates

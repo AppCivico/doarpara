@@ -256,3 +256,7 @@ textarea {
 .nowrap {
   @include my.truncate;
 }
+
+.visually-hidden {
+  @include my.visually-hidden;
+}
