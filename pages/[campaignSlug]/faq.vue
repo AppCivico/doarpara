@@ -3,10 +3,13 @@
     v-if="Array.isArray(faq) && faq?.length"
     class="tab-list__item faq-page"
     role="tabpanel"
+    :aria-busy="pending"
   >
     <h2 class="visually-hidden">
       {{ $t('faq.title') }}
     </h2>
+
+    <errorMessagePanel :error="error" @close="flushError" />
 
     <section
       v-for="(questionAndAnswer, i) in faq"
@@ -28,11 +31,10 @@
   </article>
 </template>
 <script setup lang="ts">
-import { useCampaignStore } from '@/store/campaign.ts';
+import type { FAQ } from '@/doar-para.d.ts';
 
-const campaignStore = useCampaignStore();
-
-const { campaign } = storeToRefs(campaignStore);
+const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
 
 definePageMeta({
   name: 'faq',
@@ -41,10 +43,46 @@ definePageMeta({
   path: '/:campaignSlug/perguntas-frequentes',
 });
 
-const faq = computed(() => (Array.isArray(campaign.value?.faq?.list)
-  ? campaign.value?.faq?.list
+const pending = ref(false);
+const error = ref<any>(null);
+const faqData = ref<FAQ | null>(null);
+
+const faq = computed(() => (Array.isArray(faqData.value?.list)
+  ? faqData.value?.list
     .filter((x) => x.question && x.answer)
   : []));
+
+const fetchFaq = async () => {
+  pending.value = true;
+  error.value = null;
+
+  try {
+    const { campaignSlug } = route.params;
+    const fullUrl = `${runtimeConfig.public.publicApiBase}/campaign/${campaignSlug}/faq`;
+
+    faqData.value = await $fetch<FAQ>(fullUrl, {
+      method: 'GET',
+      timeout: 10000,
+    });
+  } catch (err) {
+    error.value = err;
+    if (import.meta.dev) {
+      // eslint-disable-next-line no-console
+      console.error('[FAQ Page] Failed to fetch FAQ:', err);
+    }
+  } finally {
+    pending.value = false;
+  }
+};
+
+const flushError = () => {
+  error.value = null;
+  fetchFaq();
+};
+
+onMounted(() => {
+  fetchFaq();
+});
 </script>
 <style lang="scss">
 .faq-page {

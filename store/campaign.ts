@@ -28,7 +28,7 @@ const sectionsConfig:SectionsConfig = {
   valid: [
     'description',
     'donations',
-    // 'faq',
+    'faq',
     'goals',
     // 'rewards', // available, but not fully tested
     'testimonies',
@@ -147,16 +147,13 @@ export const useCampaignStore = defineStore('campaign', {
     campaignSections: (({ campaign }): CampaignSection[] => (
       Array.isArray(campaign?.campaign_section_list)
         ? (campaign?.campaign_section_list || [])
-          // filter disabled sections and invalid list of goals or FAQ
+          // filter disabled sections and invalid list of goals
             .filter((section: CampaignSection) => {
               if (!sectionsConfig.valid.includes(section)) {
                 return false;
               }
               if (section === 'goals') {
                 return !!campaign.goal_list?.length;
-              }
-              if (section === 'faq') {
-                return !!campaign.faq?.list?.length;
               }
               return true;
             })
