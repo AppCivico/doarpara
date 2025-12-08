@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
   },
   build: {
-    analyze: true,
+    analyze: process.env.NODE_ENV === 'development',
     transpile: ['vue-i18n'],
   },
   css: ['@/assets/scss/index.scss'],
@@ -106,16 +106,15 @@ export default defineNuxtConfig({
   },
   sentry: {
     sourceMapsUploadOptions: {
-      org: 'appcivico',
-      project: 'doarpara',
-      authToken: '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',
+      org: process.env.SENTRY_ORG || 'appcivico',
+      project: process.env.SENTRY_PROJECT || 'doarpara',
+      authToken: process.env.SENTRY_AUTH_TOKEN,
     },
   },
   sourcemap: {
-    server: true,
-    client: process.env.NODE_ENV === 'development'
-      ? true
-      : 'hidden'
+    // Generate sourcemaps only for Sentry uploads, not for production deployment
+    server: process.env.NODE_ENV === 'production' ? 'hidden' : true,
+    client: process.env.NODE_ENV === 'production' ? 'hidden' : true,
   },
   vite: {
     css: {
