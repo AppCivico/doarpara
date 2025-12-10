@@ -58,7 +58,10 @@ export const useDonationsStore = defineStore('donation', {
         this.pending = false;
         this.error = (error as FetchError).data;
 
-        throw error;
+        // Don't throw to prevent SSR crashes on Cloudflare Pages
+        if (import.meta.dev) {
+          console.error('[Donations Store] Failed to fetch donations:', error);
+        }
       }
     },
   },

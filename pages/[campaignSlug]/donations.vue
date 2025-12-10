@@ -91,9 +91,12 @@
               -->
             </tr>
           </tbody>
-          <tbody v-if="pending || !donationsList.length">
+          <tbody v-if="pending || !donationsList.length || error">
             <tr>
-              <td v-if="pending" colspan="5" :aria-busy="pending">
+              <td v-if="error" colspan="5" class="error-message">
+                {{ $t('errors.loadingDonations') || 'Erro ao carregar doações. Tente novamente.' }}
+              </td>
+              <td v-else-if="pending" colspan="5" :aria-busy="pending">
                 {{ $t('waiting') }}
               </td>
               <td v-else colspan="5">
@@ -131,7 +134,7 @@ const donationsStore = useDonationsStore();
 const { campaign } = storeToRefs(campaignStore);
 
 const {
-  hasMore, list: donationsList, paginationMarker, pending,
+  hasMore, list: donationsList, paginationMarker, pending, error,
 } = storeToRefs(donationsStore);
 
 definePageMeta({
@@ -143,18 +146,26 @@ definePageMeta({
 
 const donationToUnmask = ref('');
 
-function fetchDonations(more = false) {
+async function fetchDonations(more = false) {
   if (pending.value) return;
-  if (more) {
-    donationsStore.fetchDonations(String(route.params.campaignSlug), paginationMarker.value);
-  } else {
-    donationsStore.fetchDonations(String(route.params.campaignSlug));
+  try {
+    if (more) {
+      await donationsStore.fetchDonations(String(route.params.campaignSlug), paginationMarker.value);
+    } else {
+      await donationsStore.fetchDonations(String(route.params.campaignSlug));
+    }
+  } catch (error) {
+    // Error is already stored in donationsStore.error
+    if (import.meta.dev) {
+      console.error('[Donations Page] Failed to fetch donations:', error);
+    }
   }
 }
 
-if (import.meta.client) {
+// Fetch donations on mount (page is client-side only)
+onMounted(() => {
   fetchDonations();
-}
+});
 </script>
 <style lang="scss">
 @mixin centralized {
