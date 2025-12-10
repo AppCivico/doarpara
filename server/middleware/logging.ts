@@ -1,36 +1,52 @@
 export default defineEventHandler((event) => {
-  const start = Date.now();
+  // Skip logging for static assets to reduce overhead
   const url = event.path;
-  const method = event.method;
-  const userAgent = getHeader(event, 'user-agent') || 'unknown';
-  const ip = getHeader(event, 'cf-connecting-ip') || getHeader(event, 'x-forwarded-for') || 'unknown';
+  if (url.match(/\.(css|js|png|jpg|jpeg|gif|svg|woff2?|ttf|ico|map)$/)) {
+    return;
+  }
 
-  // Log incoming request
-  console.log(`[Request] ${method} ${url}`, {
-    ip,
-    userAgent: userAgent.substring(0, 100), // Truncate long user agents
-    timestamp: new Date().toISOString(),
-  });
+  const start = Date.now();
+  const method = event.method;
+
+  // Only log errors and slow requests in production
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  if (!isProduction) {
+    // Development: log all requests
+    console.log(`[Request] ${method} ${url}`);
+  }
 
   // Track response
   event.node.res.on('finish', () => {
     const duration = Date.now() - start;
     const status = event.node.res.statusCode;
-    const logLevel = status >= 500 ? 'error' : status >= 400 ? 'warn' : 'log';
 
-    console[logLevel](`[Response] ${method} ${url} - ${status} (${duration}ms)`, {
-      status,
-      duration,
-      timestamp: new Date().toISOString(),
-    });
+    // Production: only log errors or slow requests (>1000ms)
+    if (isProduction) {
+      if (status >= 500) {
+        console.error(`[Error] ${method} ${url} - ${status} (${duration}ms)`);
+      } else if (status >= 400) {
+        console.warn(`[ClientError] ${method} ${url} - ${status} (${duration}ms)`);
+      } else if (duration > 1000) {
+        console.warn(`[Slow] ${method} ${url} - ${status} (${duration}ms)`);
+      }
+      // Log requests approaching CPU timeout (>5000ms suggests heavy processing)
+      else if (duration > 5000) {
+        console.warn(`[VerySlow] ${method} ${url} - ${status} (${duration}ms) - Possible CPU issue`);
+      }
+    } else {
+      // Development: log everything
+      const logLevel = status >= 500 ? 'error' : status >= 400 ? 'warn' : 'log';
+      console[logLevel](`[Response] ${method} ${url} - ${status} (${duration}ms)`);
+    }
   });
 
-  // Catch errors that might not be properly handled
+  // Catch uncaught errors (won't catch CPU limits, but will catch other errors)
   event.node.res.on('error', (error) => {
-    console.error(`[Error] ${method} ${url}`, {
-      error: error.message,
-      stack: error.stack,
-      timestamp: new Date().toISOString(),
+    const duration = Date.now() - start;
+    console.error(`[UnhandledError] ${method} ${url} (${duration}ms)`, {
+      message: error.message,
+      name: error.name,
     });
   });
 });
