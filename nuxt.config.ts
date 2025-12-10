@@ -105,11 +105,11 @@ export default defineNuxtConfig({
     },
   },
   sentry: {
-    sourceMapsUploadOptions: {
+    sourceMapsUploadOptions: process.env.SENTRY_AUTH_TOKEN ? {
       org: process.env.SENTRY_ORG || 'appcivico',
       project: process.env.SENTRY_PROJECT || 'doarpara',
       authToken: process.env.SENTRY_AUTH_TOKEN,
-    },
+    } : undefined,
   },
   sourcemap: {
     // Generate sourcemaps only for Sentry uploads, not for production deployment
