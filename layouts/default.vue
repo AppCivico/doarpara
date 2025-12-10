@@ -318,6 +318,7 @@ if (route.params.campaignSlug) {
       throw createError({
         statusCode: err.statusCode || 500,
         statusMessage: err.message || 'Error loading campaign',
+        fatal: false, // Don't crash SSR, show error page instead
       });
     }
   }
