@@ -86,6 +86,17 @@ export const useCampaignStore = defineStore('campaign', {
         if (import.meta.dev) {
           // eslint-disable-next-line no-console
           console.error('[Campaign Store] Failed to fetch campaign:', error);
+          console.trace('Stack trace:');
+        }
+
+        // Log error details in production for monitoring
+        if (!import.meta.dev) {
+          console.error('[Campaign Store] Error:', {
+            url: fullUrl,
+            message,
+            statusCode,
+            stack: error instanceof Error ? error.stack : undefined,
+          });
         }
 
         this.error = { message, statusCode };

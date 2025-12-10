@@ -44,9 +44,11 @@ export default defineEventHandler((event) => {
   // Catch uncaught errors (won't catch CPU limits, but will catch other errors)
   event.node.res.on('error', (error) => {
     const duration = Date.now() - start;
-    console.error(`[UnhandledError] ${method} ${url} (${duration}ms)`, {
+    console.error(`[UnhandledError] ${method} ${url} (${duration}ms)`);
+    console.error('Error details:', {
       message: error.message,
       name: error.name,
+      stack: error.stack,
     });
   });
 });

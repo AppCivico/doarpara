@@ -61,6 +61,16 @@ export const useDonationsStore = defineStore('donation', {
         // Don't throw to prevent SSR crashes on Cloudflare Pages
         if (import.meta.dev) {
           console.error('[Donations Store] Failed to fetch donations:', error);
+          console.trace('Stack trace:');
+        }
+
+        // Log error details in production for monitoring
+        if (!import.meta.dev) {
+          console.error('[Donations Store] Error:', {
+            url: `${runtimeConfig.public.publicApiBase}/candidate-donations/${campaignSlug || route.params.campaignSlug}/${paginationMarker}`,
+            message: error instanceof Error ? error.message : String(error),
+            statusCode: (error as any)?.statusCode || (error as any)?.status,
+          });
         }
       }
     },
