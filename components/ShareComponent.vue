@@ -43,38 +43,38 @@ const emit = defineEmits<{
 async function copyToClipboard(text: string) {
   try {
     await navigator.clipboard.writeText(text)
-    console.log('URL copiada para o clipboard!')
+    console.log('URL copiada para o clipboard!');
   } catch (err) {
     console.error('Erro ao copiar para clipboard:', err)
-    emit('shareError', err as Error)
+    emit('shareError', err as Error);
   }
 }
 
 function handleFallback() {
   if (props.fallbackAction === 'copy' && props.shareData.url) {
-    copyToClipboard(props.shareData.url)
+    copyToClipboard(props.shareData.url);
   } else if (props.fallbackAction === 'custom') {
-    emit('fallbackTriggered', props.shareData)
+    emit('fallbackTriggered', props.shareData);
   }
 }
 
 async function handleShare() {
-  if (!props.clickable) return
+  if (!props.clickable) return;
 
   if (navigator.share) {
     try {
-      await navigator.share(props.shareData)
-      emit('shareSuccess', props.shareData)
+      await navigator.share(props.shareData);
+      emit('shareSuccess', props.shareData);
     } catch (err) {
-      console.error('Erro no compartilhamento:', err)
-      emit('shareError', err as Error)
+      console.error('Erro no compartilhamento:', err);
+      emit('shareError', err as Error);
 
       if ((err as Error).name !== 'AbortError') {
-        handleFallback()
+        handleFallback();
       }
     }
   } else {
-    handleFallback()
+    handleFallback();
   }
 }
 
