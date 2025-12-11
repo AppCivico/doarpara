@@ -14,7 +14,11 @@
 
       <footer v-if="hasFaq" class="text-body__call-to-faq">
         <i18n-t keypath="callToFAQ.message" tag="p">
-          <a href="#faq">{{ $t('callToFAQ.textLink') }}</a>
+          <NuxtLink
+            :to="{ name: 'faq' }"
+          >
+            {{ $t('callToFAQ.textLink') }}
+          </NuxtLink>
         </i18n-t>
       </footer>
     </section>
