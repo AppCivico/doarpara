@@ -93,6 +93,7 @@ export default defineNuxtConfig({
         || 'https://dapi.votolegal.com.br/public-api',
       privateApiBase: process.env.PRIVATE_API
         || 'https://dapi.votolegal.com.br',
+      apiTimeout: Number(process.env.API_TIMEOUT) || 3000,
       receiptsBase: process.env.RECEIPTS_BASE || '',
       postalService: {
         queryUrl: process.env.POSTAL_SERVICE_QUERY_URL

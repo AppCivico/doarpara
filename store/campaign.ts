@@ -69,7 +69,7 @@ export const useCampaignStore = defineStore('campaign', {
         const data = await $fetch<Campaign>(fullUrl, {
           method: 'GET',
           params,
-          timeout: 10000,
+          timeout: runtimeConfig.public.apiTimeout,
         });
 
         if (data) {
