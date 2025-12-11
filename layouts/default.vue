@@ -108,7 +108,7 @@
                     {{ $t('campaignBy') }}
                     <a
                       v-if="campaign?.fundraiser.slug"
-                      :href="campaign.fundraiser.slug"
+                      :href="`/${campaign.fundraiser.slug}`"
                     >
                       {{ campaign.fundraiser.name }}
                     </a>
