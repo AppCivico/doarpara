@@ -19,17 +19,12 @@ interface ShareData {
 }
 
 interface Props {
-  shareData?: ShareData
+  shareData: ShareData // Required - always passed from parent
   clickable?: boolean
   fallbackAction?: 'copy' | 'custom' | null
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  shareData: () => ({
-    title: 'Doar para',
-    text: 'Doar para',
-    url: 'https://doarpara.com.br',
-  }),
   clickable: true,
   fallbackAction: 'copy'
 })
