@@ -155,27 +155,32 @@ export const useCampaignStore = defineStore('campaign', {
     },
   },
   getters: {
-    campaignSections: (({ campaign }): CampaignSection[] => (
-      Array.isArray(campaign?.campaign_section_list)
-        ? (campaign?.campaign_section_list || [])
-          // filter disabled sections and invalid list of goals
-            .filter((section: CampaignSection) => {
-              if (!sectionsConfig.valid.includes(section)) {
-                return false;
-              }
-              if (section === 'goals') {
-                return !!campaign.goal_list?.length;
-              }
-              return true;
-            })
-          // combine with list of required sections
-          .concat(sectionsConfig.required
-            // preventing duplicates
-            .filter((section, _i, sections) => sections.indexOf(section) < 0))
-          // sort sections the same as the list of the required ones
-          .sort((a, b) => validSectionsOrder[a] - validSectionsOrder[b])
-        : sectionsConfig.required
-    )),
+    campaignSections: (({ campaign }): CampaignSection[] => {
+      if (!Array.isArray(campaign?.campaign_section_list)) {
+        return sectionsConfig.required;
+      }
+
+      // Filter valid sections
+      const validSections = (campaign.campaign_section_list || [])
+        .filter((section: CampaignSection) => {
+          if (!sectionsConfig.valid.includes(section)) {
+            return false;
+          }
+          if (section === 'goals') {
+            return !!campaign.goal_list?.length;
+          }
+          return true;
+        });
+
+      // Add missing required sections (using Set for efficient lookup)
+      const sectionSet = new Set(validSections);
+      const requiredNotInList = sectionsConfig.required.filter(
+        (section) => !sectionSet.has(section),
+      );
+
+      return [...validSections, ...requiredNotInList]
+        .sort((a, b) => validSectionsOrder[a] - validSectionsOrder[b]);
+    }),
 
     minimumDonationPerMethod: (({ campaign }) => {
       const {
