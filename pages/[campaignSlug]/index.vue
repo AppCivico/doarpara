@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="text-body__tabs-and-rewards" role="tabpanel">
     <section
@@ -9,8 +8,9 @@
       <article
         v-if="campaign?.description"
         class="tab-list__item"
-        v-html="campaign.description"
-      />
+      >
+        {{ campaign.description }}
+      </article>
 
       <footer v-if="hasFaq" class="text-body__call-to-faq">
         <i18n-t keypath="callToFAQ.message" tag="p">
