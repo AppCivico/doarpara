@@ -13,6 +13,8 @@
     "lint:css": "stylelint assets/scss/**/*.{vue,scss} --fix",
     "lint": "npx lint:js && npx lint:css && npx lint:prettier",
     "lintAndFix": "npx lint:js --fix && npx lint:css --fix",
+    "tail:prod": "wrangler pages deployment tail --project-name=doarpara",
+    "tail:preview": "wrangler pages deployment tail --project-name=doarpara --environment=preview",
     "test": "vitest run"
   },
   "devDependencies": {
@@ -45,7 +47,8 @@
     "typescript": "^5.8.3",
     "vitest": "^3.2.4",
     "vue-eslint-parser": "^10.2.0",
-    "vue-tsc": "^3.0.1"
+    "vue-tsc": "^3.0.1",
+    "wrangler": "^4.54.0"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
