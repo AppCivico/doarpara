@@ -107,7 +107,7 @@ const origin: String = typeof window !== 'undefined'
   : '';
 
 const videoId = computed<string | null | undefined>(() => getYoutubeId(props.campaign.video));
-const youtubeThumbnail = computed(() => getYoutubeThumbnail(props.campaign.video));
+const youtubeThumbnail = computed(() => (videoId.value ? getYoutubeThumbnail({ id: videoId.value }) : ''));
 
 const currentVideo = computed(() => {
   let id = '';
@@ -117,7 +117,7 @@ const currentVideo = computed(() => {
     const itemRefParam = refVideo.find((item) => item.code === refParam);
     if (itemRefParam) {
       id = getYoutubeId(itemRefParam.video_url);
-      thumbnailUrl = getYoutubeThumbnail(itemRefParam.video_url);
+      thumbnailUrl = id ? getYoutubeThumbnail({ id }) : '';
     }
   }
   return { id, thumbnailUrl };

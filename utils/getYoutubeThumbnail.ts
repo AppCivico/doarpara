@@ -9,37 +9,44 @@ type Quality = 'lowest' | 'low' | 'medium' | 'high' | 'max';
 // maxresdefault -> 1280px / 720px
 
 export default (
-  url: string,
+  urlOrId: string | { id: string },
   quality: Quality = 'max',
   format: 'webp' | 'jpg' = 'jpg',
 ): string => {
-  if (url) {
-    const videoId = getYoutubeId(url);
+  if (!urlOrId) return '';
 
-    if (videoId) {
-      let qualityKey: string;
-
-      switch (quality) {
-        case 'lowest':
-          qualityKey = 'default';
-          break;
-        case 'low':
-          qualityKey = 'mqdefault';
-          break;
-        case 'medium':
-          qualityKey = 'hqdefault';
-          break;
-        case 'high':
-          qualityKey = 'sddefault';
-          break;
-        case 'max':
-        default:
-          qualityKey = 'maxresdefault';
-          break;
-      }
-
-      return `https://i.ytimg.com/vi/${videoId}/${qualityKey}.${format}`;
-    }
+  // Extract video ID (accepts URL string or { id } object to skip regex)
+  let videoId: string;
+  if (typeof urlOrId === 'object' && urlOrId.id) {
+    videoId = urlOrId.id;
+  } else if (typeof urlOrId === 'string') {
+    videoId = getYoutubeId(urlOrId);
+  } else {
+    return '';
   }
-  return '';
+
+  if (!videoId) return '';
+
+  let qualityKey: string;
+
+  switch (quality) {
+    case 'lowest':
+      qualityKey = 'default';
+      break;
+    case 'low':
+      qualityKey = 'mqdefault';
+      break;
+    case 'medium':
+      qualityKey = 'hqdefault';
+      break;
+    case 'high':
+      qualityKey = 'sddefault';
+      break;
+    case 'max':
+    default:
+      qualityKey = 'maxresdefault';
+      break;
+  }
+
+  return `https://i.ytimg.com/vi/${videoId}/${qualityKey}.${format}`;
 };
