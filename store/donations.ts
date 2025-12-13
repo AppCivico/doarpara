@@ -64,14 +64,14 @@ export const useDonationsStore = defineStore('donation', {
           console.trace('Stack trace:');
         }
 
-        // Production logging temporarily disabled to test CPU usage
-        // if (!import.meta.dev) {
-        //   console.error('[Donations Store] Error:', {
-        //     url: `${runtimeConfig.public.publicApiBase}/candidate-donations/${campaignSlug || route.params.campaignSlug}/${paginationMarker}`,
-        //     message: error instanceof Error ? error.message : String(error),
-        //     statusCode: (error as any)?.statusCode || (error as any)?.status,
-        //   });
-        // }
+        // Log error details in production for monitoring
+        if (!import.meta.dev) {
+          console.error('[Donations Store] Error:', {
+            url: `${runtimeConfig.public.publicApiBase}/candidate-donations/${campaignSlug || route.params.campaignSlug}/${paginationMarker}`,
+            message: error instanceof Error ? error.message : String(error),
+            statusCode: (error as any)?.statusCode || (error as any)?.status,
+          });
+        }
       }
     },
   },

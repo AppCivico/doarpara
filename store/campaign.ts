@@ -89,15 +89,15 @@ export const useCampaignStore = defineStore('campaign', {
           console.trace('Stack trace:');
         }
 
-        // Production logging temporarily disabled to test CPU usage
-        // if (!import.meta.dev) {
-        //   console.error('[Campaign Store] Error:', {
-        //     url: fullUrl,
-        //     message,
-        //     statusCode,
-        //     stack: error instanceof Error ? error.stack : undefined,
-        //   });
-        // }
+        // Log error details in production for monitoring
+        if (!import.meta.dev) {
+          console.error('[Campaign Store] Error:', {
+            url: fullUrl,
+            message,
+            statusCode,
+            stack: error instanceof Error ? error.stack : undefined,
+          });
+        }
 
         this.error = { message, statusCode };
       } finally {
