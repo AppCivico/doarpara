@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   },
   css: ['@/assets/scss/index.scss'],
   devtools: {
-    enabled: true,
+    enabled: process.env.NODE_ENV === 'development',
 
     timeline: {
       enabled: true,
