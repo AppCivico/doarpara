@@ -5,10 +5,13 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev:remote": "nuxt dev --remote",
     "generate": "nuxt generate",
     "preview": "NODE_OPTIONS='--import ./public/instrument.server.mjs' nuxt preview",
     "start": "node --import .output/public/instrument.server.mjs .output/server/index.mjs",
     "postinstall": "nuxt prepare",
+    "deploy": "npx nuxthub deploy",
+    "deploy:prod": "npx nuxthub deploy --production",
     "lint:js": "eslint --ext \".ts,.vue\" --ignore-path .gitignore .",
     "lint:css": "stylelint assets/scss/**/*.{vue,scss} --fix",
     "lint": "npx lint:js && npx lint:css && npx lint:prettier",
@@ -19,6 +22,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxthub/core": "^0.10.1",
     "@nuxtjs/i18n": "^9.5.6",
     "@nuxtjs/mdc": "^0.17.0",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",

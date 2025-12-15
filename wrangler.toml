@@ -1,0 +1,23 @@
+#:schema node_modules/@nuxthub/core/dist/wrangler.schema.json
+name = "doarpara"
+compatibility_date = "2025-07-08"
+compatibility_flags = ["nodejs_compat"]
+
+# Deployed by NuxtHub CLI (npx nuxthub deploy)
+# See all options: https://hub.nuxt.com/docs/getting-started/deploy#cloudflare
+
+# Environment variables (public)
+# Sensitive values should be set via Cloudflare dashboard or `npx wrangler secret put <KEY>`
+[vars]
+
+# Production environment
+[env.production]
+[env.production.vars]
+# Add production-specific environment variables here
+# Example: API_URL = "https://api.doarpara.com.br"
+
+# Preview/Staging environment
+[env.preview]
+[env.preview.vars]
+# Add preview-specific environment variables here
+# Example: API_URL = "https://api-preview.doarpara.com.br"

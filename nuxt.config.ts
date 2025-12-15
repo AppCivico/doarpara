@@ -51,6 +51,7 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
     '@sentry/nuxt/module',
     'nuxt-gtag',
+    '@nuxthub/core',
   ],
   runtimeConfig: {
     public: {
