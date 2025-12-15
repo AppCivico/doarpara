@@ -92,11 +92,9 @@ onMounted(() => {
   });
 });
 
-if (import.meta.client) {
-  watch(() => props.value, (newVal: number) => {
-    if (isVisible.value) {
-      updateDisplayNumber(newVal);
-    }
-  }, { immediate: true });
-}
+watch(() => props.value, (newVal: number) => {
+  if (isVisible.value) {
+    updateDisplayNumber(newVal);
+  }
+}, { immediate: true });
 </script>

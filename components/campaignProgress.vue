@@ -6,16 +6,26 @@
       {{ $t('shareCampaign') }}
     </ShareComponent>
     <data class="campaign-progress__total" :value="totalAmount">
-      <AnimatedNumber
-        for="progress-bar"
-        class="campaign-progress__total-value"
-        as="output"
-        :value="totalAmount / 100"
-        :formatter="($v: number) => $n($v, 'currency', {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        })"
-      />
+      <ClientOnly>
+        <AnimatedNumber
+          for="progress-bar"
+          class="campaign-progress__total-value"
+          as="output"
+          :value="totalAmount / 100"
+          :formatter="($v: number) => $n($v, 'currency', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })"
+        />
+        <template #fallback>
+          <output class="campaign-progress__total-value">
+            {{ $n(totalAmount / 100, 'currency', {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            }) }}
+          </output>
+        </template>
+      </ClientOnly>
       {{ $t('totalAmount').toLowerCase() }}
     </data>
 
