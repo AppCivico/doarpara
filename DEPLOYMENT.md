@@ -120,6 +120,7 @@ Connect your repository for automatic deployments on every push.
    - **Framework preset**: Nuxt.js
    - **Build command**: `npm run build`
    - **Build output directory**: `.output/public`
+   - **Node.js version**: Automatically detected from `.node-version` file (no manual configuration needed)
 6. Configure branch settings:
    - **Production branch**: `main` (or your default branch)
    - **Preview branches**: All other branches get preview deployments
@@ -235,6 +236,29 @@ rm -rf .nuxt .output node_modules/.cache
 npm run build
 ```
 
+### Native Binding Errors (@oxc-parser, optional dependencies)
+
+If you see errors like "Cannot find module '@oxc-parser/binding-linux-x64-gnu'" or "Cannot find native binding" during `nuxt prepare` or build:
+
+**Root cause**: `@nuxtjs/mdc` and `@nuxt/devtools` have native dependencies that require Node.js 20.9+.
+
+**Solutions** (all already configured in this project):
+
+1. **`.node-version` file**: Specifies Node.js 20 for Cloudflare Pages builds ([.node-version](.node-version))
+2. **package.json engines**: Specifies Node.js >= 20.9.0 ([package.json:5-7](package.json#L5-L7))
+3. **Devtools disabled in production**: ([nuxt.config.ts:25](nuxt.config.ts#L25))
+4. **Optional dependencies disabled**: (`.npmrc`)
+
+**If still encountering issues:**
+
+- Verify the `.node-version` file exists in your project root with content `20`
+- For manual deployments: use Node.js 20.9 or higher locally
+- Check that `NODE_ENV=production` is set during build
+
+**References:**
+- [Fix oxc-parser Module Error When Deploying Nuxt3 to Cloudflare](https://www.ubitools.com/fix-cloudflare-nuxt3-oxc-parser-module-error/)
+- [Nuxt Issue #32525](https://github.com/nuxt/nuxt/issues/32525)
+
 ### Deployment Authentication Issues
 
 ```bash
@@ -284,7 +308,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - run: npm ci
       - run: npx nuxthub deploy --production
         env:

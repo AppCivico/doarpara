@@ -5,6 +5,10 @@ compatibility_flags = ["nodejs_compat"]
 
 # Deployed by NuxtHub CLI (npx nuxthub deploy)
 # See all options: https://hub.nuxt.com/docs/getting-started/deploy#cloudflare
+#
+# NOTE: Node.js version for builds is controlled by:
+# 1. .node-version file (automatically detected by Cloudflare Pages)
+# 2. package.json engines field (minimum version requirement)
 
 # Environment variables (public)
 # Sensitive values should be set via Cloudflare dashboard or `npx wrangler secret put <KEY>`
