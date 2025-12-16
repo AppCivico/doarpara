@@ -62,7 +62,7 @@ const fetchFaq = async () => {
 
     faqData.value = await $fetch<FAQ>(fullUrl, {
       method: 'GET',
-      timeout: 10000,
+      timeout: runtimeConfig.public.apiTimeout,
     });
   } catch (err) {
     error.value = err;
