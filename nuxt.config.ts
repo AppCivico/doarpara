@@ -53,6 +53,14 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@nuxthub/core',
   ],
+  // https://nitro.build/deploy/providers/cloudflare#cloudflare-workers
+  nitro: {
+    preset: "cloudflare_module",
+    cloudflare: {
+      deployConfig: true,
+      nodeCompat: true
+    }
+  },
   runtimeConfig: {
     public: {
       title: process.env.APP_TITLE
