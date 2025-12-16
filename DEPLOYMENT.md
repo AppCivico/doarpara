@@ -76,10 +76,12 @@ API_TIMEOUT = "3000"
 
 **Important Notes:**
 
-- **Dashboard variables take precedence**: If a variable is set in both `wrangler.toml` and the Cloudflare Dashboard, the Dashboard value wins
-- **Secrets (via CLI or Dashboard) override everything**: Secrets are encrypted and always take precedence
+- **`wrangler.toml` takes precedence**: Once you use a `wrangler.toml` file, it becomes the source of truth. Dashboard fields become read-only and cannot override these values
+- **Secrets are separate**: Secrets (via `npx wrangler secret put` or Dashboard) are stored separately and don't conflict with `wrangler.toml` vars
 - **`wrangler.toml` is committed to git**: Only put non-sensitive values here (API URLs, timeouts, feature flags, etc.)
-- **Best practice**: Use `wrangler.toml` for default values and Dashboard/CLI for sensitive or environment-specific overrides
+- **Dashboard vs wrangler.toml**: You cannot edit the same fields in both. Choose one approach:
+  - **Use `wrangler.toml`** (recommended): Version-controlled, consistent across environments
+  - **Use Dashboard only**: Remove `wrangler.toml` vars and manage everything through the UI
 
 ## Deployment
 
