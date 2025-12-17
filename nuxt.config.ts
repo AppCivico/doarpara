@@ -53,12 +53,15 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@nuxthub/core',
   ],
-  // https://nitro.build/deploy/providers/cloudflare#cloudflare-workers
+  // https://nitro.build/deploy/providers/cloudflare#cloudflare-pages
   nitro: {
-    preset: "cloudflare_module",
+    preset: "cloudflare-pages",
     cloudflare: {
-      deployConfig: true,
-      nodeCompat: true
+      pages: {
+        routes: {
+          exclude: ['/assets/*']
+        }
+      }
     }
   },
   runtimeConfig: {
