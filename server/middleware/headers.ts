@@ -86,6 +86,7 @@ export default defineEventHandler((event) => {
       + "; "
     + "script-src-elem 'self' 'unsafe-inline' "
       + "https://*.facebook.com/ "
+      + "https://connect.facebook.net/ "
       + "https://*.doarpara.com.br/ "
       + "https://sentry.eokoe.com/ "
       + "https://storage.googleapis.com/ "
