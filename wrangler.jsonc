@@ -13,27 +13,15 @@
 
   // Environment variables (public)
   // Sensitive values should be set via Cloudflare dashboard or `npx wrangler secret put <KEY>`
-  // Common variables inherited by all environments
+  // NOTE: Top-level vars are for development/default environment only
+  // Each environment (production, preview) must define ALL its own vars
   "vars": {
-    // Shared across all environments
+    // Values that differ from nuxt.config.ts defaults
     "CAMPAIGN_POOLING_INTERVAL": "300000",
-    "MASKS_CREDIT_CARD_EXPIRATION_CSC": "[\"###\", \"####\"]",
-    "MASKS_CREDIT_CARD_EXPIRATION_DATE_MASK": "[\"##/##\", \"##/####\"]",
-    "MASKS_CREDIT_CARD_EXPIRATION_DATE_PLACEHOLDER": "MM/YY ou MM/YYYY",
-    "MASKS_CREDIT_CARD_NUMBER": "[\"#### #### #### ####\", \"#### #### #### ##\"]",
-    "MASKS_NATURAL_PERSON_IDENTIFICATION": "###.###.###-##",
-    "MASKS_ZIP_CODE": "#####-###",
     "PATH_SEGMENT_DONATE": "doar",
     "PATH_SEGMENT_DONATIONS": "doacoes",
     "PATH_SEGMENT_RECEIPT": "recibos",
-    "API_TIMEOUT": "3000",
     "QUERY_STRING_SPECIAL_PARAMETERS_AMOUNT": "valor",
-    "QUERY_STRING_SPECIAL_PARAMETERS_REFERRER": "ref",
-    "SENTRY_ORG": "appcvico",
-    "SENTRY_PROJECT": "doarpara",
-    "SENTRY_TRACES_SAMPLE_RATE": "0.1",
-    "SENTRY_REPLAY_SAMPLE_RATE": "0",
-    "SENTRY_ERROR_REPLAY_SAMPLE_RATE": "1.0",
 
     // Default/development environment specific
     "APP_TITLE": "Teste do DoarPara",
@@ -48,7 +36,29 @@
     // Production environment
     "production": {
       "vars": {
+        // Common values (must be repeated in each environment)
+        "CAMPAIGN_POOLING_INTERVAL": "300000",
+        "MASKS_CREDIT_CARD_EXPIRATION_CSC": "[\"###\", \"####\"]",
+        "MASKS_CREDIT_CARD_EXPIRATION_DATE_MASK": "[\"##/##\", \"##/####\"]",
+        "MASKS_CREDIT_CARD_EXPIRATION_DATE_PLACEHOLDER": "MM/YY ou MM/YYYY",
+        "MASKS_CREDIT_CARD_NUMBER": "[\"#### #### #### ####\", \"#### #### #### ##\"]",
+        "MASKS_NATURAL_PERSON_IDENTIFICATION": "###.###.###-##",
+        "MASKS_ZIP_CODE": "#####-###",
+        "PATH_SEGMENT_DONATE": "doar",
+        "PATH_SEGMENT_DONATIONS": "doacoes",
+        "PATH_SEGMENT_RECEIPT": "recibos",
+        "API_TIMEOUT": "3000",
+        "QUERY_STRING_SPECIAL_PARAMETERS_AMOUNT": "valor",
+        "QUERY_STRING_SPECIAL_PARAMETERS_REFERRER": "ref",
+        "SENTRY_ORG": "appcvico",
+        "SENTRY_PROJECT": "doarpara",
+        "SENTRY_TRACES_SAMPLE_RATE": "0.1",
+        "SENTRY_REPLAY_SAMPLE_RATE": "0",
+        "SENTRY_ERROR_REPLAY_SAMPLE_RATE": "1.0",
+
+        // Production-specific
         "APP_TITLE": "DoarPara",
+        "BASE_URL": "https://doarpara.com.br",
         "CONTROL_PANEL_ORIGIN": "https://painel.doarpara.com.br",
         "IUGU_IS_TESTING": "0",
         "GTAG_ID": "G-3WXES94ZEZ",
@@ -64,6 +74,27 @@
     // Preview/Staging environment
     "preview": {
       "vars": {
+        // Common values (must be repeated in each environment)
+        "CAMPAIGN_POOLING_INTERVAL": "300000",
+        "MASKS_CREDIT_CARD_EXPIRATION_CSC": "[\"###\", \"####\"]",
+        "MASKS_CREDIT_CARD_EXPIRATION_DATE_MASK": "[\"##/##\", \"##/####\"]",
+        "MASKS_CREDIT_CARD_EXPIRATION_DATE_PLACEHOLDER": "MM/YY ou MM/YYYY",
+        "MASKS_CREDIT_CARD_NUMBER": "[\"#### #### #### ####\", \"#### #### #### ##\"]",
+        "MASKS_NATURAL_PERSON_IDENTIFICATION": "###.###.###-##",
+        "MASKS_ZIP_CODE": "#####-###",
+        "PATH_SEGMENT_DONATE": "doar",
+        "PATH_SEGMENT_DONATIONS": "doacoes",
+        "PATH_SEGMENT_RECEIPT": "recibos",
+        "API_TIMEOUT": "3000",
+        "QUERY_STRING_SPECIAL_PARAMETERS_AMOUNT": "valor",
+        "QUERY_STRING_SPECIAL_PARAMETERS_REFERRER": "ref",
+        "SENTRY_ORG": "appcvico",
+        "SENTRY_PROJECT": "doarpara",
+        "SENTRY_TRACES_SAMPLE_RATE": "0.1",
+        "SENTRY_REPLAY_SAMPLE_RATE": "0",
+        "SENTRY_ERROR_REPLAY_SAMPLE_RATE": "1.0",
+
+        // Preview-specific
         "APP_TITLE": "Teste do DoarPara",
         "BASE_URL": "https://dev.doarpara.com.br",
         "CONTROL_PANEL_ORIGIN": "https://dev-painel.doarpara.com.br",
