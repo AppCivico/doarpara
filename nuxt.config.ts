@@ -39,7 +39,7 @@ export default defineNuxtConfig({
     locales: [
       {
         code: 'pt-BR',
-        iso: 'pt-BR',
+        language: 'pt-BR',
         file: 'pt-BR.ts',
       },
     ],
