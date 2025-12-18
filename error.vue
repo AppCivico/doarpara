@@ -60,13 +60,13 @@
       <!-- eslint-disable-next-line vuejs-accessibility/heading-has-content -->
       <h1 v-t="'errors.generic.title'" class="error-page__title" />
 
-      <pre>$props.error: {{ $props.error }}</pre>
-
       <p v-if="$props.error?.message">
         {{ $props.error.message }}
       </p>
       <p v-else v-t="'errors.generic.message'" class="error-page__message" />
     </template>
+
+    <pre>$props.error: {{ $props.error }}</pre>
 
     <button
       type="button"
