@@ -7,6 +7,11 @@
   // Build output directory for Cloudflare Pages
   "pages_build_output_dir": ".output/public",
 
+  "limits": {
+    // default is 30000 (30 seconds)
+    "cpu_ms": 300000 // 5 minutes
+  },
+
   // NOTE: Node.js version for builds is controlled by:
   // 1. .node-version file (automatically detected by Cloudflare Pages)
   // 2. package.json engines field (minimum version requirement)
