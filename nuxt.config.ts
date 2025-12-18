@@ -53,6 +53,9 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@nuxthub/core',
   ],
+  hub: {
+    cache: true,
+  },
   // https://nitro.build/deploy/providers/cloudflare#cloudflare-pages
   nitro: {
     preset: "cloudflare-pages",
@@ -63,6 +66,22 @@ export default defineNuxtConfig({
         }
       }
     }
+  },
+  routeRules: {
+    // Cache SSR-rendered HTML in Workers KV (default: 30 seconds)
+    '/**': {
+      cache: {
+        maxAge: Number(process.env.EDGE_CACHE_DURATION) || 30,
+        swr: true,
+        staleMaxAge: 60,
+      },
+    },
+    // Don't cache donation, donations, and receipt pages
+    '/doar/**': { cache: false },
+    '/doacoes/**': { cache: false },
+    '/recibos/**': { cache: false },
+    // Don't cache preview mode
+    '/**?previewing*': { cache: false },
   },
   runtimeConfig: {
     public: {
