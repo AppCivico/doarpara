@@ -73,9 +73,18 @@
         "PUBLIC_API": "https://api24.doarpara.com.br/public-api",
         "URL_OF_PRIVACY_POLICY": "https://blog.doarpara.com.br/contrato/",
         "URL_OF_USE_TERMS": "https://blog.doarpara.com.br/contrato/"
-      }
+      },
+      // NOTE: KV namespace bindings for NuxtHub cache should be configured
+      // in Cloudflare Pages Dashboard: Settings → Functions → KV namespace bindings
+      // Variable name: CACHE
+      // Create separate namespaces for production and preview environments
+      "kv_namespaces": [
+        {
+          "binding": "CACHE",
+          "id": "e286ca3286a846feb0fd44d72d819b2d"
+        }
+      ]
     },
-
     // Preview/Staging environment
     "preview": {
       "vars": {
@@ -108,5 +117,15 @@
         "PUBLIC_API": "https://votolegal-test-api.appcivico.com/public-api"
       }
     }
-  }
+  },
+  // NOTE: KV namespace bindings for NuxtHub cache should be configured
+  // in Cloudflare Pages Dashboard: Settings → Functions → KV namespace bindings
+  // Variable name: CACHE
+  // Create separate namespaces for production and preview environments
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "a77cb110e33b4bbb8fa672168d741fda"
+    }
+  ]
 }
