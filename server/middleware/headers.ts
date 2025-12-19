@@ -1,9 +1,22 @@
 export default defineEventHandler((event) => {
   const host = getHeader(event, 'host') || '';
+  const url = event.path;
 
   // Noindex headers for dev environments
   if (host.includes('pages.dev') || host === 'dev.doarpara.com.br') {
     setHeader(event, 'X-Robots-Tag', 'noindex');
+  }
+
+  // Cache campaign pages to reduce load during traffic spikes
+  // Match pattern: /campaign-slug (but not /campaign-slug/doacoes, etc.)
+  // Browser cache controlled by BROWSER_CACHE_DURATION env (default: 30s, set to 0 to disable)
+  // Edge cache controlled by EDGE_CACHE_DURATION env (configured in nuxt.config.ts)
+  const browserCacheDuration = Number(process.env.BROWSER_CACHE_DURATION) || 30;
+  const edgeCacheDuration = Number(process.env.EDGE_CACHE_DURATION) || 30;
+
+  if (browserCacheDuration > 0 && url.match(/^\/[^/?]+$/) && !event.path.includes('previewing')) {
+    const staleWhileRevalidate = Math.max(browserCacheDuration, edgeCacheDuration) * 2;
+    setHeader(event, 'Cache-Control', `public, max-age=${browserCacheDuration}, s-maxage=${edgeCacheDuration}, stale-while-revalidate=${staleWhileRevalidate}`);
   }
 
   // Only set security headers for non-dev environments or specific hosts
