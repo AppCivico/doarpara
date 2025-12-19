@@ -20,6 +20,28 @@ function flushError() {
 
 if (import.meta.client) {
   onErrorCaptured((error) => {
+    // Check if this is a dynamic import/chunk loading error
+    const errorMessage = error.message?.toLowerCase() || '';
+    const isChunkLoadError =
+      errorMessage.includes('dynamically imported module') ||
+      errorMessage.includes('failed to fetch') ||
+      errorMessage.includes('loading chunk') ||
+      errorMessage.includes('importing a module script failed');
+
+    if (isChunkLoadError) {
+      // Log to Sentry before refreshing
+      Sentry.captureException(error, {
+        tags: {
+          error_type: 'chunk_load_error',
+          auto_refresh: true,
+        },
+      });
+
+      // Force a hard reload to get fresh chunks
+      window.location.reload();
+      return false; // Prevent further error handling
+    }
+
     errorToShow.value = error;
 
     if (import.meta.dev) {
