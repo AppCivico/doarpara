@@ -67,6 +67,7 @@ export default defineEventHandler((event) => {
       + "https://*.votolegal.com/ "
       + "https://*.votolegal.com.br/ "
       + "http://*.iugu.com/ "
+      + "https://i.ytimg.com/ "
       + "data: blob: "
       + "; "
     + "object-src 'self'; "
