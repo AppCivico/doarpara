@@ -21,7 +21,10 @@
       />
       <!-- eslint-disable-next-line vuejs-accessibility/heading-has-content -->
       <h1 v-t="'errors.404.title'" class="error-page__title" />
-      <p v-t="'errors.404.message'" class="error-page__message" />
+      <p
+        v-t="isCampaignError ? 'errors.404.campaign' : 'errors.404.generic'"
+        class="error-page__message"
+      />
     </template>
 
     <template v-else-if="String($props.error?.statusCode)[0] === '5'">
@@ -90,12 +93,28 @@ const props = defineProps({
 });
 const runtimeConfig = useRuntimeConfig();
 
+const isCampaignError = computed(() => {
+  const errorData = (props.error as any)?.data;
+  // Handle both object and stringified JSON
+  if (typeof errorData === 'string') {
+    try {
+      const parsed = JSON.parse(errorData);
+      return parsed.type === 'campaign';
+    } catch {
+      return false;
+    }
+  }
+  return errorData?.type === 'campaign';
+});
+
 const meta = computed(() => {
   switch (true) {
     case props.error?.statusCode === 404:
       return {
         title: () => `${props.error.statusCode} • ${runtimeConfig.public.title}`,
-        description: t('errors.404.message'),
+        description: isCampaignError.value
+          ? t('errors.404.campaign')
+          : t('errors.404.generic'),
         htmlAttrs: {
           class: 'error-page--client error-page--404',
         },

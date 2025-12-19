@@ -17,6 +17,12 @@ let pollingInterval: ReturnType<typeof setInterval> | null = null;
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 
+// Exclude paths with dots (static files like robots.txt, manifest.json, etc.)
+// Campaign slugs cannot contain dots
+definePageMeta({
+  validate: (to) => !String(to.params.campaignSlug || '').includes('.'),
+});
+
 const campaignStore = useCampaignStore();
 const donateStore = useDonateStore();
 const { campaign, error } = storeToRefs(campaignStore);

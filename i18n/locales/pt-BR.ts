@@ -104,7 +104,8 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
 
     404: {
       title: 'Oops!',
-      message: 'A candidatura que você procura não foi encontrada.',
+      generic: 'A página que você procura não foi encontrada.',
+      campaign: 'A candidatura que você procura não foi encontrada.',
     },
 
     generic: {
