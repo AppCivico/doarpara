@@ -1,6 +1,45 @@
+import { writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-08',
+  hooks: {
+    'build:before': () => {
+      const manifest = {
+        name: process.env.APP_TITLE || 'DoarPara',
+        short_name: process.env.APP_TITLE || 'DoarPara',
+        description: 'Plataforma de campanhas de arrecadação',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#ffffff',
+        theme_color: '#00d182',
+        icons: [
+          {
+            src: '/favicon-16x16.png',
+            sizes: '16x16',
+            type: 'image/png',
+          },
+          {
+            src: '/favicon-32x32.png',
+            sizes: '32x32',
+            type: 'image/png',
+          },
+          {
+            src: '/apple-touch-icon.png',
+            sizes: '180x180',
+            type: 'image/png',
+          },
+        ],
+      };
+
+      const publicDir = resolve(process.cwd(), 'public');
+      const manifestPath = resolve(publicDir, 'manifest.json');
+
+      writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+      console.log('✓ Generated manifest.json');
+    },
+  },
   app: {
     head: {
       noscript: [
