@@ -21,7 +21,8 @@
     "lintAndFix": "npx lint:js --fix && npx lint:css --fix",
     "tail:prod": "wrangler pages deployment tail --project-name=doarpara",
     "tail:preview": "wrangler pages deployment tail --project-name=doarpara --environment=preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
