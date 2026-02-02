@@ -21,16 +21,25 @@ const { hash } = route.params;
 
 const {
   data: receipt,
-  error,
   pending,
-} = await useLazyFetch(`${runtimeConfig.public.publicApiBase}/donation/digest/${hash}`);
+} = await useLazyFetch(`${runtimeConfig.public.publicApiBase}/donation/digest/${hash}`, {
+  onResponseError({ response: { status, statusText, _data: responseData } }) {
+    const message = responseData?.message
+      || responseData?.error
+      || statusText
+      || 'Erro ao buscar recibo';
+    showError({
+      statusCode: status,
+      statusMessage: message,
+      message,
+      data: { type: 'receipt' },
+    });
+  },
+});
 </script>
 <template>
   <div v-if="pending">
     Carregando
-  </div>
-  <div v-else-if="error">
-    Erro ao buscar dados da API - {{ error.message }}
   </div>
   <div v-else class="receipts-page">
     <header>
