@@ -118,6 +118,7 @@ export default defineNuxtConfig({
     // Don't cache donation, donations, and receipt pages
     '/doar/**': { cache: false },
     '/doacoes/**': { cache: false },
+    '/recibo/**': { cache: false },
     '/recibos/**': { cache: false },
     // Don't cache preview mode
     '/**?previewing*': { cache: false },

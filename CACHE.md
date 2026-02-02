@@ -22,7 +22,8 @@ DoarPara uses **NuxtHub cache** powered by **Cloudflare Workers KV** to cache SS
 
 - `/doar/**` - Donation pages
 - `/doacoes/**` - Donations list pages
-- `/recibos/**` - Receipt pages
+- `/recibo/**` - Receipt pages (singular)
+- `/recibos/**` - Receipt pages (plural alias)
 - `/**?previewing*` - Preview mode (any page with `?previewing` parameter)
 
 ### Configuration Files
