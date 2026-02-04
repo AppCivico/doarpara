@@ -54,32 +54,63 @@ const {
           :alt="`fotografia de ${receipt?.donation.candidate.popular_name}`"
         >
       </div>
+      <hgroup>
+        <h1>
+          Recibo
+          <span
+            v-if="receipt?.donation.refunded_at_human"
+            class="receipts-page__refunded-at"
+          >
+            cancelado
+          </span>
+        </h1>
 
-      <h1>
-        Recibo
-      </h1>
+        <p class="receipts-page-title">
+          <template v-if="receipt?.donation?.candidate?.is_party">
+            Essa doação foi realizada para
+            <strong>{{ receipt?.donation.candidate.popular_name }}</strong>.
+          </template>
+          <template v-else>
+            Essa doação foi realizada para
+            <strong>{{ receipt?.donation.candidate.popular_name }}</strong>,
+            <template
+              v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'"
+            >
+              <template v-if="receipt?.donation?.candidate?.office?.code">
+                {{ $t(`electionCampaign.preRunningForOffice.${receipt?.donation.candidate.gender}`) }}
+              </template>
+              <template v-else>
+                {{ $t(`electionCampaign.preRunningForName.${receipt?.donation.candidate.gender}`) }}
+              </template>
+            </template>
 
-      <h2
-        v-if="receipt?.donation.refunded_at_human"
-        class="receipts-page__refunded-at"
-      >
-        Recibo cancelado
-      </h2>
+            <template v-else>
+              <template v-if="receipt?.donation?.candidate?.office?.code">
+                {{ $t(`electionCampaign.runningForOffice.${receipt?.donation.candidate.gender}`) }}
+              </template>
+              <template v-else>
+                {{ $t(`electionCampaign.runningForName.${receipt?.donation.candidate.gender}`) }}
+              </template>
+            </template>
 
-      <h3 class="receipts-page-title">
-        Essa doação foi realizada para <strong>{{ receipt?.donation.candidate.popular_name }}</strong>,
-        <span v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
-          {{ $t(`electionCampaign.preRunningForOffice.${receipt?.donation.candidate.gender}`) }}
-        </span>
-        <span v-else>
-          {{ $t(`electionCampaign.runningForOffice.${receipt?.donation.candidate.gender}`) }}
-        </span> {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}.${receipt?.donation.candidate.gender}`) }}
-        por
-        <span v-if="receipt?.donation.candidate.party">
-          {{ receipt?.donation.candidate.party.acronym }} -
-          {{ receipt?.donation.candidate.party.name }}.
-        </span>
-      </h3>
+            <template v-if="receipt?.donation?.candidate?.office?.code">
+              {{ $t(`governmentOffices.${receipt?.donation.candidate.office.code}.${receipt?.donation.candidate.gender}`) }}
+            </template>
+            <template v-else-if="receipt?.donation?.candidate?.office">
+              {{ receipt?.donation?.candidate?.office }}
+            </template>
+
+            por
+            <em
+              v-if="receipt?.donation.candidate.party"
+              class="receipts-page-title__party"
+            >
+              {{ receipt?.donation.candidate.party.acronym }} -
+              {{ receipt?.donation.candidate.party.name }}.
+            </em>
+          </template>
+        </p>
+      </hgroup>
     </header>
 
     <section>
@@ -90,13 +121,18 @@ const {
         descentralizada para garantir controle social.
       </p>
       <p>
-        Por isso, <span>{{ receipt?.donation.candidate.popular_name }}</span> está registrando
+        Por isso, <strong>{{ receipt?.donation.candidate.popular_name }}</strong> está registrando
         todas suas doações financeiras para comprovar a integridade e honestidade no seu processo
         de captação de recursos.
       </p>
     </section>
     <section>
-      <h2 v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
+      <h2
+        v-if="receipt?.donation?.candidate?.is_party"
+      >
+        {{ $t('electionCampaign.politicalParty') }}
+      </h2>
+      <h2 v-else-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'">
         {{ $t(`electionCampaign.preRunningForName.${receipt?.donation.candidate.gender}`) }}
       </h2>
       <h2 v-else>
@@ -105,6 +141,18 @@ const {
 
       <dl class="receipt-data">
         <div
+          v-if="receipt?.donation?.candidate?.is_party"
+          class="receipt-data__item"
+        >
+          <dt class="receipt-data__term">
+            Nome
+          </dt>
+          <dd class="receipt-data__description">
+            {{ receipt?.donation.candidate.party.name }}
+          </dd>
+        </div>
+        <div
+          v-else
           class="receipt-data__item"
         >
           <dt v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'" class="receipt-data__term">
@@ -129,7 +177,10 @@ const {
             {{ formatCNPJ(receipt?.donation.candidate.cnpj) }}
           </dd>
         </div>
-        <div class="receipt-data__item">
+        <div
+          v-if="receipt?.donation.candidate.cpf"
+          class="receipt-data__item"
+        >
           <dt class="receipt-data__term">
             CPF
           </dt>
@@ -137,7 +188,10 @@ const {
             {{ formatCPF(receipt?.donation.candidate.cpf) || '-' }}
           </dd>
         </div>
-        <div class="receipt-data__item">
+        <div
+          v-if="!receipt?.donation?.candidate?.is_party"
+          class="receipt-data__item"
+        >
           <dt class="receipt-data__term">
             Partido
           </dt>
@@ -361,6 +415,10 @@ const {
   opacity: 0.85;
 
   transform: translateX(25%) translateY(50%) rotate(45deg);
+
+  &::before {
+    content: 'Recibo ';
+  }
 }
 
 .receipt-data {}
@@ -466,7 +524,14 @@ const {
 
 .receipts-page-title {
   font-weight: normal;
+  font-size: my.ms-step(2);
   color: #2667ff;
+  text-wrap: auto;
+}
+
+.receipts-page-title__party {
+  font-style: inherit;
+  font-variant: small-caps;
 }
 
 .receipts-page section {
