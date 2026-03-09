@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Google Analytics default tag stopped to load
+
 ---
 
 ## v3.x - 2026-03-09
