@@ -6,7 +6,7 @@
 
 ---
 
-## v3.x - 2026-03-09
+## v3.4 - 2026-03-09
 
 - feat: Adjust receipts for political parties
 - fix: Alias URL of receipts being cached
@@ -34,7 +34,7 @@
 - fix: Transition expand component do not shrink enough
 - feat: Load donation form on client side only
 
-## v3.x - 2024-05-17
+## v3.3 - 2024-05-17
 
 - fix: Focus indicator clipping text of links
 - fix: Alignment of empty donations table
@@ -44,7 +44,7 @@
 - fix: Style of links on footer
 - fix: ToS link
 
-## v3.x - 2024-05-08
+## v3.2 - 2024-05-08
 
 - feat: Install GTag module
 - feat: Add Google Analytics tracking
@@ -67,7 +67,7 @@
 - fix: Vendor VotoLegalFP not always loading
 - feat: Manually localize routes
 
-## v3.x - 2024-04-21
+## v3.1 - 2024-04-21
 
 - feat: Stylize PIX payment success message
 - feat: Improve shadow mixin
