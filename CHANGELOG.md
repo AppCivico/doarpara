@@ -1,5 +1,9 @@
 # Changelog
 
+- fix: Wrong Google Analytics ID in production
+
+---
+
 ## v3.4.1 - 2026-03-09
 
 - fix: Google Analytics default tag stopped to load
