@@ -66,7 +66,7 @@
         "BASE_URL": "https://doarpara.com.br",
         "CONTROL_PANEL_ORIGIN": "https://painel.doarpara.com.br",
         "IUGU_IS_TESTING": "0",
-        "NUXT_PUBLIC_GTAG_ID": "G-PHC942VJT4",
+        "NUXT_PUBLIC_GTAG_ID": "G-L648BYKLQD",
         "POSTAL_SERVICE_HELPER_WEBSITE_URL": "https://buscacepinter.correios.com.br/",
         "POSTAL_SERVICE_QUERY_URL": "https://api24.doarpara.com.br/api/cep?cep=",
         "PRIVATE_API": "https://api24.doarpara.com.br",

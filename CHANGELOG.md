@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Wrong Google Analytics ID in production
+
 ## v3.4.2 - 2026-03-10
 
 - fix: Wrong Google Analytics ID in production
