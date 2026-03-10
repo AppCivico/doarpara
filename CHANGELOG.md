@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Google Tag Manager missing from CSP image sources
+
 ## v3.4.3 - 2026-03-10
 
 - fix: Wrong Google Analytics ID in production
