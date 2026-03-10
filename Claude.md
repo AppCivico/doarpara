@@ -1,25 +1,40 @@
-# Campaign Store Message Listener
+# Project Notes
+
+## Changelog Management
+
+Changelog entries are added to [CHANGELOG.md](CHANGELOG.md) manually, before the version heading. The version number and date are inserted automatically when running `npm version`.
+
+New entries go at the top of the file, above the first `## v*` heading, in the format:
+
+```markdown
+- fix: Short description of the fix
+- feat: Short description of the feature
+```
+
+---
+
+## Campaign Store Message Listener
 
 This document describes the window message listener implementation for live preview of campaigns from a parent window (control panel).
 
-## Overview
+### Overview
 
 The campaign store (`useCampaignStore`) listens for `postMessage` events from a parent window to enable live preview functionality with real-time updates.
 
-## Setup
+### Setup
 
 When accessing a campaign page with the `?previewing` query parameter, the message listener is automatically initialized in [[campaignSlug].vue](pages/[campaignSlug].vue).
 
-## Environment Configuration
+### Environment Configuration
 
 The listener validates that messages come from an authorized origin defined in the environment variable:
 
 - **Development**: `CONTROL_PANEL_ORIGIN=http://localhost:3001` (in `.env`)
 - **Production**: `CONTROL_PANEL_ORIGIN=https://painel.doarpara.com.br` (in `.env.production`)
 
-## Preview Flow
+### Preview Flow
 
-### 1. Initial Setup
+#### 1. Initial Setup
 
 Access the campaign with the preview parameter:
 
@@ -35,7 +50,7 @@ The iframe will send a message to the parent:
 }
 ```
 
-### 2. Provide Preview Token
+#### 2. Provide Preview Token
 
 Parent window must respond with:
 
@@ -48,7 +63,7 @@ iframe.contentWindow.postMessage({
 
 The preview token is used as the `preview_token` parameter when fetching campaign data from the API.
 
-### 3. Preview Ready
+#### 3. Preview Ready
 
 After fetching campaign data, the iframe will send one of:
 
@@ -72,7 +87,7 @@ After fetching campaign data, the iframe will send one of:
 }
 ```
 
-### 4. Real-time Updates
+#### 4. Real-time Updates
 
 To update campaign properties in real-time, send:
 
@@ -90,7 +105,7 @@ iframe.contentWindow.postMessage({
 }, 'https://doarpara.com.br');
 ```
 
-## Property Mapping
+### Property Mapping
 
 The incoming message properties are transformed to match the Campaign schema:
 
@@ -106,7 +121,7 @@ The incoming message properties are transformed to match the Campaign schema:
 | `show_external_donations` | _(not used)_ | Ignored |
 | `faq_tab_active` | _(not used)_ | Ignored |
 
-## Message Types
+### Message Types
 
 | Message Type | Direction | Purpose | Required Fields |
 |-------------|-----------|---------|----------------|
@@ -116,9 +131,9 @@ The incoming message properties are transformed to match the Campaign schema:
 | `PREVIEW_ERROR` | Iframe → Parent | Indicates error loading campaign data | `error` (object with `message`, `statusCode`) |
 | `PREVIEW_UPDATE` | Parent → Iframe | Updates campaign properties in real-time | `properties` (object) |
 
-## Implementation Details
+### Implementation Details
 
-### Files
+#### Files
 
 - **[pages/[campaignSlug].vue](pages/[campaignSlug].vue)** - Preview mode initialization
   - Detects `?previewing` query parameter
@@ -142,14 +157,14 @@ The incoming message properties are transformed to match the Campaign schema:
   - Transforms message properties to Campaign schema
   - Handles nested object updates (e.g., `fundraiser.avatar`, `fundraiser.name`)
 
-### Security
+#### Security
 
 - **Origin Validation**: Only messages from the configured `CONTROL_PANEL_ORIGIN` are processed
 - **Query Parameter**: Preview mode only activates with `?previewing` parameter
 - **Type Checking**: Different message types for different purposes
 - **Property Validation**: Transformation function ensures type safety
 
-## Complete Example
+### Complete Example
 
 ```javascript
 // Parent window (control panel)
