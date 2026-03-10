@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: CSP issues
+
 ## v3.4.4 - 2026-03-10
 
 - fix: Google Tag Manager missing from CSP image sources
