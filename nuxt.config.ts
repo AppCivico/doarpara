@@ -93,7 +93,7 @@ export default defineNuxtConfig({
     '@nuxthub/core',
   ],
   hub: {
-    cache: true,
+    cache: process.env.NODE_ENV !== 'development',
   },
   // https://nitro.build/deploy/providers/cloudflare#cloudflare-pages
   nitro: {
