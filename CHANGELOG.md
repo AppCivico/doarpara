@@ -2,6 +2,7 @@
 
 - feat: Make header image faster to show
 - feat: Get responsive images for cover
+- feat: Update donation taxes
 
 ## v3.4.6 - 2026-03-18
 

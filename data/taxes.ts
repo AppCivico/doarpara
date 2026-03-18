@@ -13,7 +13,7 @@ type Taxes = {
 const taxes: Taxes = {
   credit_card: {
     percent: 5.9,
-    tax: 0,
+    tax: 100,
   },
   boleto: {
     percent: 3.5,
