@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Disable close button while donation is pending
+
 ## v3.4.7 - 2026-03-18
 
 - feat: Make header image faster to show

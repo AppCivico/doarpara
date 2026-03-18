@@ -33,6 +33,8 @@
           <nav>
             <NuxtLink
               :to="{ name: 'campaign' }"
+              :aria-disabled="combinedPending || undefined"
+              :tabindex="combinedPending ? -1 : undefined"
               class="dialog__close-button"
             >
               {{ $t('backToCampaign') }}
@@ -46,6 +48,7 @@
 </template>
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
+import { useDonateStore } from '@/store/donate.ts';
 import { isPreviewMode, notifyPreviewResult, setupCampaignPreview } from '@/utils/setupCampaignPreview.ts';
 
 const route = useRoute();
@@ -53,6 +56,9 @@ const runtimeConfig = useRuntimeConfig();
 
 const campaignStore = useCampaignStore();
 const { campaign, error } = storeToRefs(campaignStore);
+
+const donateStore = useDonateStore();
+const { combinedPending } = storeToRefs(donateStore);
 
 const head = useLocaleHead();
 
@@ -118,6 +124,11 @@ header span {
 
 .dialog__close-button {
   background-color: my.palette('neutral', 'white');
+
+  &[aria-disabled] {
+    pointer-events: none;
+    opacity: 0.4;
+  }
 
   @media screen and (min-width: my.$max-width--dialog + my.$gutter * 2) {
     position: fixed;
