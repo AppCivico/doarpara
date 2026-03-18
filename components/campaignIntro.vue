@@ -36,7 +36,6 @@
           :src="currentVideo.id
             ? `https://www.youtube-nocookie.com/embed/${currentVideo.id}?origin=${origin}&autoplay=1&color=white&rel=0`
             : `https://www.youtube-nocookie.com/embed/${videoId}?origin=${origin}&autoplay=1&color=white&rel=0`"
-          frameborder="0"
           allow="autoplay; encrypted-media"
           allowfullscreen
         />
@@ -101,9 +100,7 @@ const refParam = route.query.ref;
 
 const showVideo = ref(false);
 
-const origin: String = typeof window !== 'undefined'
-  ? window.location.origin
-  : '';
+const origin: string = globalThis?.location?.origin ?? '';
 
 const videoId = computed<string | null | undefined>(() => getYoutubeId(props.campaign.video));
 const youtubeThumbnail = computed(() => (videoId.value ? getYoutubeThumbnail({ id: videoId.value }) : ''));
@@ -137,14 +134,15 @@ const campaignDefaultCover = computed(() => {
 const campaignCoverSrcset = computed(() => {
   if (typeof props.campaign.cover === 'string') {
     return undefined;
-  } if (Array.isArray(props.campaign.cover)) {
+  }
+  if (Array.isArray(props.campaign.cover)) {
     return props.campaign.cover
       .reduce((acc, cur) => {
         if (typeof cur === 'object' && cur.url && cur.width) {
           acc.push(`${cur.url} ${cur.width}w`);
         }
         return acc;
-      }, [] as String[])
+      }, [] as string[])
       .join(', ')
       || undefined;
   }
