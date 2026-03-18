@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.8 - 2026-03-18
+
 - fix: Disable close button while donation is pending
 
 ## v3.4.7 - 2026-03-18
