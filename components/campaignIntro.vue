@@ -7,6 +7,7 @@
           class="intro__image"
           width="780"
           height="440"
+          fetchpriority="high"
           :src="campaignDefaultCover || currentVideo.thumbnailUrl || youtubeThumbnail"
           :srcset="campaignCoverSrcset"
         />
