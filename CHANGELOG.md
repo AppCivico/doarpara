@@ -1,6 +1,7 @@
 # Changelog
 
 - feat: Make header image faster to show
+- feat: Get responsive images for cover
 
 ## v3.4.6 - 2026-03-18
 

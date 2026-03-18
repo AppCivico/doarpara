@@ -41,6 +41,10 @@ type Image = string | { url: string; width: number; height: number };
 
 type ImageOrSet = Image | Image[];
 
+type VideoCoverVariants = {
+  [dimensions: string]: string;
+};
+
 interface LegalEntity {
   name: string;
   legal_entities_id: string;
@@ -171,6 +175,7 @@ export interface Campaign {
 
   cover: ImageOrSet;
   video: string;
+  video_cover_variants?: VideoCoverVariants;
   theme: Theme;
   preamble: string;
   description: string;

@@ -10,6 +10,7 @@
           fetchpriority="high"
           :src="campaignDefaultCover || currentVideo.thumbnailUrl || youtubeThumbnail"
           :srcset="campaignCoverSrcset"
+          :sizes="campaignCoverSrcset ? '(max-width: 780px) 100vw, 780px' : undefined"
         />
         <button
           v-if="refVideo.some(item => item.code === refParam) || youtubeThumbnail"
@@ -136,6 +137,15 @@ const campaignDefaultCover = computed(() => {
 });
 
 const campaignCoverSrcset = computed(() => {
+  const variants = props.campaign?.video_cover_variants;
+  if (variants && Object.keys(variants).length > 0) {
+    return Object.entries(variants)
+      .map(([dimensions, url]) => {
+        const width = dimensions.split('x')[0];
+        return `${url} ${width}w`;
+      })
+      .join(', ');
+  }
   if (typeof props.campaign.cover === 'string') {
     return undefined;
   }
