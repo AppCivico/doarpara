@@ -192,7 +192,7 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/{account_id}/stora
 If the update is not urgent, you can simply wait for the cache to expire naturally:
 
 - **Default**: 30 seconds (configurable via `EDGE_CACHE_DURATION`)
-- **Stale content**: Served for up to 60 additional seconds while revalidating
+- **Stale content**: Served for up to 30 additional seconds while revalidating
 
 ## Authentication
 

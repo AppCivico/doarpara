@@ -1,6 +1,7 @@
 # Changelog
 
 - fix: Can't enable pre-campaign donations
+- fix: Too stale of API responses
 
 ## v3.4.5 - 2026-03-10
 

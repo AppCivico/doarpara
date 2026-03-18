@@ -112,7 +112,7 @@ export default defineNuxtConfig({
       cache: {
         maxAge: Number(process.env.EDGE_CACHE_DURATION) || 30,
         swr: true,
-        staleMaxAge: 60,
+        staleMaxAge: 30,
       },
     },
     // Don't cache donation, donations, and receipt pages
