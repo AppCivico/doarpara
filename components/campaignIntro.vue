@@ -33,9 +33,7 @@
           :title="$t('campaignVideo')"
           width="780"
           height="440"
-          :src="currentVideo.id
-            ? `https://www.youtube-nocookie.com/embed/${currentVideo.id}?origin=${origin}&autoplay=1&color=white&rel=0`
-            : `https://www.youtube-nocookie.com/embed/${videoId}?origin=${origin}&autoplay=1&color=white&rel=0`"
+          :src="videoEmbedUrl"
           allow="autoplay; encrypted-media"
           allowfullscreen
         />
@@ -117,6 +115,11 @@ const currentVideo = computed(() => {
     }
   }
   return { id, thumbnailUrl };
+});
+
+const videoEmbedUrl = computed(() => {
+  const id = currentVideo.value.id || videoId.value;
+  return `https://www.youtube-nocookie.com/embed/${id}?origin=${origin}&autoplay=1&color=white&rel=0`;
 });
 
 const campaignDefaultCover = computed(() => {
