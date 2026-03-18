@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.7 - 2026-03-18
+
 - feat: Make header image faster to show
 - feat: Get responsive images for cover
 - feat: Update donation taxes
