@@ -747,11 +747,11 @@ const amount = computed(() => {
 const maskedBirthDate = computed({
   get() {
     // Using spread operator because `Array.reverse()` as side effects
-    return [...((donor.value.birthdate || '').split('-'))].reverse().join('/');
+    return (donor.value.birthdate || '').split('-').reverse().join('/');
   },
   set(newValue) {
     // Using spread operator because `Array.reverse()` as side effects
-    donor.value.birthdate = [...newValue.split('/')].reverse().join('-');
+    donor.value.birthdate = newValue.split('/').reverse().join('-');
   },
 });
 
@@ -826,24 +826,23 @@ function addMessages(messageOrMessages: DonationMessage[] | DonationMessage) {
 function delegation(event: Event) {
   const target = event.target as HTMLElement;
 
-  if (target && target.hasAttribute('data-pix')) {
-    const textToCopy = target.getAttribute('data-pix');
+  const textToCopy = target?.dataset?.pix;
 
-    if (textToCopy) {
-      navigator.clipboard
-        .writeText(textToCopy)
-        .then(() => {
-          alert('Chave PIX copiada');
-        }).catch((err) => {
-          isClipboardInaccessible.value = true;
+  if (textToCopy) {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        alert('Chave PIX copiada');
+      })
+      .catch((err) => {
+        isClipboardInaccessible.value = true;
 
-          clipboardError.value = err;
+        clipboardError.value = err;
 
-          if (import.meta.dev) {
-            console.error(err);
-          }
-        });
-    }
+        if (import.meta.dev) {
+          console.error(err);
+        }
+      });
   }
 }
 
