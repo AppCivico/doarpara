@@ -1,6 +1,10 @@
 type Taxes = {
   [key: string]: {
     percent: number;
+    // The tax field is used to store the fixed tax amount in cents, which is
+    // added to the percentage-based tax. This allows for more accurate
+    // calculations, especially for small donations where the percentage-based
+    // tax might be negligible.
     tax: number;
     [key: string]: number;
   };
