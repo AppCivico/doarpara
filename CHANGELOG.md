@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Can't enable pre-campaign donations
+
 ## v3.4.5 - 2026-03-10
 
 - fix: CSP issues

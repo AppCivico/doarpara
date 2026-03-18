@@ -67,8 +67,7 @@
         </p>
 
         <div
-          v-if="!campaign?.payment_method_list?.length
-            || !campaign?.cnpj_approved"
+          v-if="!campaign?.payment_method_list?.length"
           class="disabled-methods"
         >
           <template v-if="!campaign?.cnpj_approved">
