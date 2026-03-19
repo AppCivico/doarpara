@@ -88,8 +88,10 @@
 </template>
 <script setup lang="ts">
 import type { Campaign } from '@/doar-para.d.ts';
+import generateCloudflareSrcset from '@/utils/generateCloudflareSrcset.ts';
 
 const route = useRoute();
+const baseUrl = useRuntimeConfig().public.baseUrl as string | undefined;
 
 const props = defineProps<{
   campaign: Campaign;
@@ -136,32 +138,11 @@ const campaignDefaultCover = computed(() => {
   return '';
 });
 
-const campaignCoverSrcset = computed(() => {
-  const variants = props.campaign?.video_cover_variants;
-  if (variants && Object.keys(variants).length > 0) {
-    return Object.entries(variants)
-      .map(([dimensions, url]) => {
-        const width = dimensions.split('x')[0];
-        return `${url} ${width}w`;
-      })
-      .join(', ');
-  }
-  if (typeof props.campaign.cover === 'string') {
-    return undefined;
-  }
-  if (Array.isArray(props.campaign.cover)) {
-    return props.campaign.cover
-      .reduce((acc, cur) => {
-        if (typeof cur === 'object' && cur.url && cur.width) {
-          acc.push(`${cur.url} ${cur.width}w`);
-        }
-        return acc;
-      }, [] as string[])
-      .join(', ')
-      || undefined;
-  }
-  return undefined;
-});
+const campaignCoverSrcset = computed(() => (
+  typeof props.campaign.cover === 'string'
+    ? generateCloudflareSrcset(props.campaign.cover, baseUrl)
+    : undefined
+));
 </script>
 <style lang="scss" scoped>
 // TO-DO: Update styles. It's ugly!

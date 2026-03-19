@@ -1,5 +1,7 @@
 # Changelog
 
+- refactor: Use Cloudflare transform on cover images
+
 ## v3.4.8 - 2026-03-18
 
 - fix: Disable close button while donation is pending

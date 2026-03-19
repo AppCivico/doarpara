@@ -6,7 +6,6 @@ type MessageProperties = {
   picture?: string;
   video_url?: string;
   video_cover?: string;
-  video_cover_variants?: Record<string, string>;
   show_external_donations?: boolean;
   faq_tab_active?: boolean;
   username?: string;
@@ -36,10 +35,6 @@ export default function transformMessageToCampaign(
 
   if (properties.video_cover !== undefined) {
     transformed.cover = properties.video_cover;
-  }
-
-  if (properties.video_cover_variants !== undefined) {
-    transformed.video_cover_variants = properties.video_cover_variants;
   }
 
   if (properties.username !== undefined) {

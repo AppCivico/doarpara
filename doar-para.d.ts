@@ -175,7 +175,6 @@ export interface Campaign {
 
   cover: ImageOrSet;
   video: string;
-  video_cover_variants?: VideoCoverVariants;
   theme: Theme;
   preamble: string;
   description: string;
