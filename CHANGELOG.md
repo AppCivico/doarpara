@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.9 - 2026-03-19
+
 - refactor: Use Cloudflare transform on cover images
 
 ## v3.4.8 - 2026-03-18
