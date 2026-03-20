@@ -573,7 +573,7 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
                   type="text"
                   readonly
                   :value="instantPaymentPlatformKey"
-                  @click="($e) => { selectContent($e.target) }"
+                  @click="($e: MouseEvent) => { selectContent($e.target) }"
                 />
               </div>
               <div

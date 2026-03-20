@@ -13,7 +13,7 @@
           :sizes="campaignCoverSrcset ? '(max-width: 780px) 100vw, 780px' : undefined"
         />
         <button
-          v-if="refVideo.some(item => item.code === refParam) || youtubeThumbnail"
+          v-if="hasRefVideo || youtubeThumbnail"
           class="intro__figure-switcher"
           type="button"
           :aria-label="$t('loadVideo')"
@@ -99,6 +99,7 @@ const props = defineProps<{
 
 const refVideo = props.campaign.refs_videos;
 const refParam = route.query.ref;
+const hasRefVideo = refVideo.some((item) => item.code === refParam);
 
 const showVideo = ref(false);
 
