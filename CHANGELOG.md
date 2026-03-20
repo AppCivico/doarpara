@@ -1,5 +1,7 @@
 # Changelog
 
+- build: Try to fix build
+
 ## v3.4.11 - 2026-03-20
 
 - build: Try to fix build

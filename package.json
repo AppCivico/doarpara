@@ -65,5 +65,8 @@
     "sass-apca": "^1.1.1",
     "vue-i18n": "^11.1.8"
   },
+  "overrides": {
+    "vue-tsc": "$vue-tsc"
+  },
   "version": "3.4.11"
 }
