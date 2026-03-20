@@ -69,7 +69,7 @@
       <p v-else v-t="'errors.generic.message'" class="error-page__message" />
     </template>
 
-    <pre>$props.error: {{ $props.error }}</pre>
+    <pre v-debug hidden>$props.error: {{ $props.error }}</pre>
 
     <button
       type="button"
