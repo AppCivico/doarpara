@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.10 - 2026-03-20
+
 - fix: Debug message showing on public site
 - doc: Annotate cache KV Cache purging
 
