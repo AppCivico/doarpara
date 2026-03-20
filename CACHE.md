@@ -10,13 +10,13 @@ DoarPara uses **NuxtHub cache** powered by **Cloudflare Workers KV** to cache SS
 
 ### Cache Settings
 
-- **Cache duration**: Configurable via `EDGE_CACHE_DURATION` environment variable (default: 30 seconds)
+- **Cache duration**: Configurable via `EDGE_CACHE_DURATION` environment variable (default: 30 seconds, production: 5 seconds)
 - **Stale-while-revalidate**: Enabled (serves stale content while fetching fresh data)
-- **Stale max age**: 60 seconds
+- **Stale max age**: 30 seconds
 
 ### Cached Routes
 
-- `/**` - All campaign pages (30 seconds by default)
+- `/**` - All campaign pages
 
 ### Excluded Routes (Never Cached)
 
@@ -33,53 +33,203 @@ DoarPara uses **NuxtHub cache** powered by **Cloudflare Workers KV** to cache SS
 
 ## KV Namespace Bindings
 
-The cache uses Cloudflare Workers KV with the binding name `CACHE`:
+The cache uses Cloudflare Workers KV under Appcivico's Cloudflare account:
 
-- **Production**: KV namespace ID `e286ca3286a846feb0fd44d72d819b2d`
-- **Preview**: KV namespace ID `a77cb110e33b4bbb8fa672168d741fda`
+| Environment | Binding name       | Namespace ID                                        |
+|-------------|--------------------|-----------------------------------------------------|
+| Production  | `production-CACHE` | see `env.production.kv_namespaces` in [wrangler.jsonc](wrangler.jsonc) |
+| Preview     | `CACHE`            | see `kv_namespaces` in [wrangler.jsonc](wrangler.jsonc)                |
+
+The account ID can be found in the Cloudflare Dashboard URL or under **My Profile** → **API Tokens** → any token's details.
+
+> **Note**: The `cf-cache-status: DYNAMIC` header in responses is expected — it refers to Cloudflare's CDN layer, which does not cache Workers/Pages responses. Caching happens inside the Worker via KV and is transparent to the CDN.
+
+## Cache Key Format
+
+NuxtHub/Nitro generates cache keys in the format:
+
+```
+nitro:routes:_:{slug_without_hyphens}.{hash}.json
+```
+
+- The slug has **hyphens removed** (e.g., `igor-oliveira` → `igoroliveira`)
+- The hash is a **random 10-character string** generated at cache write time, making exact keys unpredictable
+- There may be **multiple keys** per campaign (main page + sub-routes like `/doar`, `/doacoes`, `/depoimentos`)
+
+For a campaign with slug `minha-campanha`, keys look like:
+
+```
+nitro:routes:_:minhacampanha.2ED5WIS9SQ.json
+nitro:routes:_:minhacampanha.rqWzvjUR3T.json
+nitro:routes:_:minhacampanhadoar.DO2D9jKDAK.json
+...
+```
+
+Because the hash is unpredictable, purging requires **listing keys by prefix first, then deleting all matches**.
+
+## Authentication
+
+### Creating a Cloudflare API Token
+
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → **My Profile** → **API Tokens**
+2. Click **Create Token**
+3. Create a custom token with:
+   - **Permissions**: `Account > Workers KV Storage > Edit`
+   - **Account Resources**: Appcivico's Account
+4. Copy the token and store it securely
+
+### Required Environment Variables
+
+```bash
+CLOUDFLARE_ACCOUNT_ID=your-account-id                  # Cloudflare Dashboard or My Profile → API Tokens
+CLOUDFLARE_API_TOKEN=your-api-token
+CLOUDFLARE_KV_NAMESPACE_ID_PRODUCTION=your-namespace-id  # see wrangler.jsonc → env.production.kv_namespaces
+CLOUDFLARE_KV_NAMESPACE_ID_PREVIEW=your-namespace-id     # see wrangler.jsonc → kv_namespaces
+```
 
 ## Programmatic Cache Purging
 
-When a campaign is updated from the backend, you should purge its cache to ensure users see fresh content immediately.
-
 ### Method 1: Purge Specific Campaign (Recommended)
 
-Delete the specific cache entry for the updated campaign using the Cloudflare KV API.
+Since cache keys have an unpredictable hash suffix, purging requires two steps:
+1. List all keys with the campaign's prefix
+2. Delete each matching key
 
-#### API Request
-
-```bash
-DELETE https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/values/{key}
-```
-
-#### Parameters
-
-- `account_id`: Your Cloudflare account ID
-- `namespace_id`:
-  - Production: `e286ca3286a846feb0fd44d72d819b2d`
-  - Preview: `a77cb110e33b4bbb8fa672168d741fda`
-- `key`: The cache key for the campaign page
-
-#### Cache Key Format
-
-NuxtHub generates cache keys in the format:
-
-```
-nitro:handlers:{route_path}.html
-```
-
-For a campaign with slug `minha-campanha`, the key would be:
-
-```
-nitro:handlers:/minha-campanha.html
-```
-
-#### Example: cURL
+#### Example: cURL (manual)
 
 ```bash
-curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/e286ca3286a846feb0fd44d72d819b2d/values/nitro:handlers:/minha-campanha.html" \
-  -H "Authorization: Bearer {api_token}" \
-  -H "Content-Type: application/json"
+ACCOUNT_ID="your-account-id"         # Cloudflare Dashboard URL or My Profile → API Tokens
+NAMESPACE_ID="your-namespace-id"     # see wrangler.jsonc → env.production.kv_namespaces
+API_TOKEN="your-api-token"
+SLUG="minha-campanha"
+PREFIX="nitro:routes:_:${SLUG//-/}"  # removes hyphens from slug
+
+# 1. List keys with that prefix
+curl "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/storage/kv/namespaces/${NAMESPACE_ID}/keys?prefix=$(python3 -c "import urllib.parse; print(urllib.parse.quote('${PREFIX}', safe=''))")" \
+  -H "Authorization: Bearer ${API_TOKEN}"
+
+# 2. Delete each key returned (repeat for each)
+curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/storage/kv/namespaces/${NAMESPACE_ID}/values/$(python3 -c "import urllib.parse; print(urllib.parse.quote('nitro:routes:_:minhacampanha.REPLACE_HASH.json', safe=''))")" \
+  -H "Authorization: Bearer ${API_TOKEN}"
+```
+
+#### Example: Python
+
+```python
+import requests
+import os
+
+def purge_campaign_cache(campaign_slug, environment='production'):
+    account_id = os.getenv('CLOUDFLARE_ACCOUNT_ID')
+    api_token = os.getenv('CLOUDFLARE_API_TOKEN')
+
+    # Namespace IDs are in wrangler.jsonc:
+    #   production → env.production.kv_namespaces[0].id
+    #   preview    → kv_namespaces[0].id
+    namespace_id = os.getenv(
+        'CLOUDFLARE_KV_NAMESPACE_ID_PRODUCTION' if environment == 'production'
+        else 'CLOUDFLARE_KV_NAMESPACE_ID_PREVIEW'
+    )
+
+    headers = {
+        'Authorization': f'Bearer {api_token}',
+        'Content-Type': 'application/json',
+    }
+
+    # Keys use slug without hyphens as prefix
+    prefix = f"nitro:routes:_:{campaign_slug.replace('-', '')}"
+
+    # 1. List all keys matching this campaign
+    list_url = f'https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/keys'
+    response = requests.get(list_url, headers=headers, params={'prefix': prefix})
+    keys = response.json().get('result', [])
+
+    if not keys:
+        print(f'No cache entries found for: {campaign_slug}')
+        return True
+
+    # 2. Delete each key
+    purged = 0
+    for key in keys:
+        key_name = key['name']
+        from urllib.parse import quote
+        delete_url = f'https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/values/{quote(key_name, safe="")}'
+        delete_response = requests.delete(delete_url, headers=headers)
+        if delete_response.ok:
+            purged += 1
+        else:
+            print(f'✗ Failed to delete key {key_name}: {delete_response.json()}')
+
+    print(f'✓ Purged {purged}/{len(keys)} cache entries for: {campaign_slug}')
+    return purged == len(keys)
+
+# Usage
+purge_campaign_cache('minha-campanha', 'production')
+```
+
+#### Example: Perl
+
+```perl
+use strict;
+use warnings;
+use LWP::UserAgent;
+use HTTP::Request;
+use URI;
+use URI::Escape;
+use JSON;
+
+sub purge_campaign_cache {
+    my ($campaign_slug, $environment) = @_;
+    $environment //= 'production';
+
+    my $account_id   = $ENV{CLOUDFLARE_ACCOUNT_ID};
+    my $api_token    = $ENV{CLOUDFLARE_API_TOKEN};
+    my $namespace_id = $environment eq 'production'
+        ? $ENV{CLOUDFLARE_KV_NAMESPACE_ID_PRODUCTION}  # see wrangler.jsonc → env.production.kv_namespaces
+        : $ENV{CLOUDFLARE_KV_NAMESPACE_ID_PREVIEW};    # see wrangler.jsonc → kv_namespaces
+
+    my $ua = LWP::UserAgent->new;
+    my %headers = (Authorization => "Bearer $api_token", 'Content-Type' => 'application/json');
+
+    # Keys use slug without hyphens as prefix
+    (my $slug_no_hyphens = $campaign_slug) =~ s/-//g;
+    my $prefix = "nitro:routes:_:$slug_no_hyphens";
+
+    # 1. List all keys matching this campaign
+    my $list_uri = URI->new("https://api.cloudflare.com/client/v4/accounts/$account_id/storage/kv/namespaces/$namespace_id/keys");
+    $list_uri->query_form(prefix => $prefix);
+
+    my $list_req = HTTP::Request->new(GET => $list_uri);
+    $list_req->header(%headers);
+    my $list_res = $ua->request($list_req);
+    my $keys = decode_json($list_res->content)->{result} // [];
+
+    unless (@$keys) {
+        print "No cache entries found for: $campaign_slug\n";
+        return 1;
+    }
+
+    # 2. Delete each key
+    my $purged = 0;
+    for my $key (@$keys) {
+        my $encoded = uri_escape($key->{name});
+        my $delete_url = "https://api.cloudflare.com/client/v4/accounts/$account_id/storage/kv/namespaces/$namespace_id/values/$encoded";
+        my $del_req = HTTP::Request->new(DELETE => $delete_url);
+        $del_req->header(%headers);
+        my $del_res = $ua->request($del_req);
+        if ($del_res->is_success) {
+            $purged++;
+        } else {
+            warn "Failed to delete key $key->{name}: " . $del_res->content . "\n";
+        }
+    }
+
+    printf "Purged %d/%d cache entries for: %s\n", $purged, scalar @$keys, $campaign_slug;
+    return $purged == scalar @$keys;
+}
+
+# Usage
+purge_campaign_cache('minha-campanha', 'production');
 ```
 
 #### Example: Node.js
@@ -89,163 +239,155 @@ async function purgeCampaignCache(campaignSlug, environment = 'production') {
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
   const apiToken = process.env.CLOUDFLARE_API_TOKEN;
 
-  // Select namespace based on environment
+  // Namespace IDs are in wrangler.jsonc:
+  //   production → env.production.kv_namespaces[0].id
+  //   preview    → kv_namespaces[0].id
   const namespaceId = environment === 'production'
-    ? 'e286ca3286a846feb0fd44d72d819b2d'  // Production
-    : 'a77cb110e33b4bbb8fa672168d741fda'; // Preview
+    ? process.env.CLOUDFLARE_KV_NAMESPACE_ID_PRODUCTION
+    : process.env.CLOUDFLARE_KV_NAMESPACE_ID_PREVIEW;
 
-  // Generate cache key
-  const cacheKey = `nitro:handlers:/${campaignSlug}.html`;
+  const headers = {
+    'Authorization': `Bearer ${apiToken}`,
+    'Content-Type': 'application/json',
+  };
 
-  const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/values/${encodeURIComponent(cacheKey)}`;
+  // Keys use slug without hyphens as prefix
+  const prefix = `nitro:routes:_:${campaignSlug.replace(/-/g, '')}`;
 
-  const response = await fetch(url, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': `Bearer ${apiToken}`,
-      'Content-Type': 'application/json',
-    },
-  });
+  // 1. List all keys matching this campaign
+  const listUrl = new URL(`https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/keys`);
+  listUrl.searchParams.set('prefix', prefix);
 
-  if (response.ok) {
-    console.log(`✓ Cache purged for campaign: ${campaignSlug}`);
+  const listResponse = await fetch(listUrl, { headers });
+  const { result: keys = [] } = await listResponse.json();
+
+  if (!keys.length) {
+    console.log(`No cache entries found for: ${campaignSlug}`);
     return true;
-  } else {
-    const error = await response.json();
-    console.error(`✗ Failed to purge cache:`, error);
-    return false;
   }
+
+  // 2. Delete each key
+  let purged = 0;
+  for (const { name } of keys) {
+    const deleteUrl = `https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/values/${encodeURIComponent(name)}`;
+    const deleteResponse = await fetch(deleteUrl, { method: 'DELETE', headers });
+    if (deleteResponse.ok) {
+      purged++;
+    } else {
+      const error = await deleteResponse.json();
+      console.error(`✗ Failed to delete key ${name}:`, error);
+    }
+  }
+
+  console.log(`✓ Purged ${purged}/${keys.length} cache entries for: ${campaignSlug}`);
+  return purged === keys.length;
 }
 
 // Usage
 await purgeCampaignCache('minha-campanha', 'production');
 ```
 
-#### Example: Python
-
-```python
-import requests
-import os
-from urllib.parse import quote
-
-def purge_campaign_cache(campaign_slug, environment='production'):
-    account_id = os.getenv('CLOUDFLARE_ACCOUNT_ID')
-    api_token = os.getenv('CLOUDFLARE_API_TOKEN')
-
-    # Select namespace based on environment
-    namespace_id = (
-        'e286ca3286a846feb0fd44d72d819b2d' if environment == 'production'
-        else 'a77cb110e33b4bbb8fa672168d741fda'
-    )
-
-    # Generate cache key
-    cache_key = f'nitro:handlers:/{campaign_slug}.html'
-
-    url = f'https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/values/{quote(cache_key, safe="")}'
-
-    headers = {
-        'Authorization': f'Bearer {api_token}',
-        'Content-Type': 'application/json',
-    }
-
-    response = requests.delete(url, headers=headers)
-
-    if response.ok:
-        print(f'✓ Cache purged for campaign: {campaign_slug}')
-        return True
-    else:
-        print(f'✗ Failed to purge cache: {response.json()}')
-        return False
-
-# Usage
-purge_campaign_cache('minha-campanha', 'production')
-```
-
 ### Method 2: Purge All Cache (Nuclear Option)
-
-To purge the entire cache (all campaigns), you can delete all keys in the KV namespace.
 
 **⚠️ Warning**: This will purge cache for ALL campaigns, causing temporary performance degradation until caches rebuild.
 
-#### API Request
-
 ```bash
-DELETE https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/bulk
-```
+ACCOUNT_ID="your-account-id"         # Cloudflare Dashboard URL or My Profile → API Tokens
+NAMESPACE_ID="your-namespace-id"     # see wrangler.jsonc → env.production.kv_namespaces
+API_TOKEN="your-api-token"
 
-#### Example: cURL
-
-```bash
 # Get list of all keys
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/keys" \
-  -H "Authorization: Bearer {api_token}" > keys.json
+curl "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/storage/kv/namespaces/${NAMESPACE_ID}/keys" \
+  -H "Authorization: Bearer ${API_TOKEN}" > keys.json
 
-# Delete all keys (requires list of keys in body)
-curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/bulk" \
-  -H "Authorization: Bearer {api_token}" \
+# Delete all keys in bulk
+curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/storage/kv/namespaces/${NAMESPACE_ID}/bulk" \
+  -H "Authorization: Bearer ${API_TOKEN}" \
   -H "Content-Type: application/json" \
   -d @keys.json
 ```
 
 ### Method 3: Wait for Cache Expiration
 
-If the update is not urgent, you can simply wait for the cache to expire naturally:
+If the update is not urgent, wait for the cache to expire naturally:
 
-- **Default**: 30 seconds (configurable via `EDGE_CACHE_DURATION`)
-- **Stale content**: Served for up to 30 additional seconds while revalidating
-
-## Authentication
-
-### Creating a Cloudflare API Token
-
-1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → **My Profile** → **API Tokens**
-2. Click **Create Token**
-3. Use the **Edit Cloudflare Workers** template or create custom token with:
-   - Permissions: `Account > Workers KV Storage > Edit`
-   - Account Resources: Include your account
-4. Copy the token and store it securely
-
-### Required Environment Variables
-
-For the backend to purge cache, set these environment variables:
-
-```bash
-CLOUDFLARE_ACCOUNT_ID=your-account-id
-CLOUDFLARE_API_TOKEN=your-api-token
-```
+- **Production**: 5 seconds (`EDGE_CACHE_DURATION=5`) + up to 30 seconds stale
+- **Default**: 30 seconds + up to 30 seconds stale
 
 ## Cache Key Discovery
 
-If you're unsure about the exact cache key format, you can list all keys in the KV namespace:
+To inspect what is currently cached for a specific campaign:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/keys" \
-  -H "Authorization: Bearer {api_token}"
+ACCOUNT_ID="your-account-id"         # Cloudflare Dashboard URL or My Profile → API Tokens
+NAMESPACE_ID="your-namespace-id"     # see wrangler.jsonc → env.production.kv_namespaces
+API_TOKEN="your-api-token"
+SLUG="minha-campanha"
+PREFIX="nitro:routes:_:${SLUG//-/}"  # removes hyphens
+
+curl "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/storage/kv/namespaces/${NAMESPACE_ID}/keys?prefix=$(python3 -c "import urllib.parse; print(urllib.parse.quote('${PREFIX}', safe=''))")" \
+  -H "Authorization: Bearer ${API_TOKEN}"
 ```
 
-This will return a list of all cached keys, allowing you to identify the pattern.
-
-## Testing Cache Purging
-
-### 1. Verify Cache is Working
+To list all keys in the namespace (no filter):
 
 ```bash
-# First request (cache MISS)
-curl -I https://doarpara.com.br/minha-campanha
-
-# Second request (cache HIT - should be faster)
-curl -I https://doarpara.com.br/minha-campanha
+curl "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/storage/kv/namespaces/${NAMESPACE_ID}/keys" \
+  -H "Authorization: Bearer ${API_TOKEN}"
 ```
 
-### 2. Purge the Cache
+## Example: Backend Integration
 
-Use one of the methods above to purge the campaign cache.
+Integrate cache purging into the campaign disable/update endpoint (fire-and-forget — don't let cache failures block the operation):
 
-### 3. Verify Cache was Purged
+**Python:**
 
-```bash
-# This should be slow again (cache MISS)
-curl -I https://doarpara.com.br/minha-campanha
+```python
+def disable_campaign(campaign_slug):
+    # 1. Update status in DB
+    update_campaign_status(campaign_slug, disabled=True)
+
+    # 2. Purge frontend cache (non-blocking)
+    try:
+        purge_campaign_cache(campaign_slug, environment='production')
+    except Exception as e:
+        log.error(f'Cache purge failed for {campaign_slug}: {e}')
+        # Don't raise — the DB update already succeeded
+```
+
+**Perl:**
+
+```perl
+sub disable_campaign {
+    my ($campaign_slug) = @_;
+
+    # 1. Update status in DB
+    update_campaign_status($campaign_slug, disabled => 1);
+
+    # 2. Purge frontend cache (non-blocking)
+    eval {
+        purge_campaign_cache($campaign_slug, 'production');
+    };
+    if ($@) {
+        warn "Cache purge failed for $campaign_slug: $@";
+        # Don't die — the DB update already succeeded
+    }
+}
+```
+
+**Node.js:**
+
+```javascript
+async function disableCampaign(campaignSlug) {
+  // 1. Update status in DB
+  await updateCampaignStatus(campaignSlug, { disabled: true });
+
+  // 2. Purge frontend cache (fire and forget)
+  purgeCampaignCache(campaignSlug, 'production').catch(err => {
+    console.error(`Cache purge failed for ${campaignSlug}:`, err);
+    // Don't throw — the DB update already succeeded
+  });
+}
 ```
 
 ## Monitoring
@@ -278,19 +420,15 @@ This means KV writes are timing out. The cache will eventually work after a few 
 
 ### Cache Not Being Purged
 
-1. Verify the API token has correct permissions
-2. Check the cache key format matches exactly
-3. Ensure you're using the correct namespace ID for the environment
-4. Check Cloudflare API response for error details
+1. Verify the API token has `Account > Workers KV Storage > Edit` permission
+2. Confirm you are using the correct namespace ID for the environment (see table above)
+3. Remember the slug must have hyphens removed when building the key prefix
+4. List keys first to confirm the exact key names before deleting
+5. Check Cloudflare API response body for error details
 
-### Different Cache Keys
+### `cf-cache-status: DYNAMIC` Does Not Mean Uncached
 
-If Nitro's cache key format changes in future versions, use the key listing API to discover the new format:
-
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/keys" \
-  -H "Authorization: Bearer {api_token}"
-```
+This header is set by Cloudflare's CDN layer, which never caches Pages Function responses. It does **not** indicate whether the response came from KV cache or live SSR. To check if a page is cached, list the KV keys for that campaign slug.
 
 ## API References
 
@@ -300,35 +438,8 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/name
 
 ## Best Practices
 
-1. **Purge only when necessary** - Cache expires automatically in 30 seconds
+1. **Purge only when necessary** - Cache expires automatically in production after ~35 seconds
 2. **Purge specific campaigns** - Avoid purging entire cache unless absolutely needed
 3. **Handle errors gracefully** - Cache purge failures should not break campaign updates
 4. **Log purge operations** - Track when and why caches are purged for debugging
 5. **Test in preview first** - Verify cache purging works in preview environment before production
-
-## Example: Backend Integration
-
-Here's a complete example of integrating cache purging into a campaign update endpoint:
-
-```javascript
-// Backend API endpoint (Node.js/Express example)
-app.put('/api/campaigns/:slug', async (req, res) => {
-  try {
-    // 1. Update campaign in database
-    const campaign = await updateCampaign(req.params.slug, req.body);
-
-    // 2. Purge frontend cache (fire and forget)
-    purgeCampaignCache(req.params.slug, 'production').catch(err => {
-      console.error('Failed to purge cache:', err);
-      // Don't fail the request if cache purge fails
-    });
-
-    // 3. Return success
-    res.json({ success: true, campaign });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-```
-
-This ensures the campaign is updated even if cache purging fails, preventing cache issues from blocking critical operations.
