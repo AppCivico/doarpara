@@ -87,7 +87,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@pinia/nuxt',
     '@nuxtjs/mdc',
-    '@pinia-plugin-persistedstate/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
     '@sentry/nuxt/module',
     'nuxt-gtag',
     '@nuxthub/core',

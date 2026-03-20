@@ -1,6 +1,7 @@
 # Changelog
 
 - build: Try to fix build
+- build: Update obsolete dependency: Persist state
 
 ## v3.4.10 - 2026-03-20
 

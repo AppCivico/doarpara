@@ -30,7 +30,7 @@
     "@nuxthub/core": "^0.10.1",
     "@nuxtjs/i18n": "^9.5.6",
     "@nuxtjs/mdc": "^0.17.0",
-    "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
+    "pinia-plugin-persistedstate": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^8.35.1",
     "@typescript-eslint/parser": "^8.35.1",
     "@vue/eslint-config-airbnb-with-typescript": "^8.0.0",
@@ -59,7 +59,7 @@
     "wrangler": "^4.54.0"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.5.1",
+    "@pinia/nuxt": "^0.11.0",
     "@sentry/nuxt": "^9.34.0",
     "maska": "^3.2.0",
     "sass-apca": "^1.1.1",
