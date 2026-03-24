@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/nuxt';
 
 Sentry.init({
+  enabled: process.env.NODE_ENV !== 'development',
   dsn: process.env.SENTRY_DSN_PUBLIC || process.env.SENTRY_DSN,
 
   // Performance monitoring
@@ -19,6 +20,4 @@ Sentry.init({
     return event;
   },
 
-  // Enable debugging in development
-  debug: process.env.NODE_ENV === 'development',
 });

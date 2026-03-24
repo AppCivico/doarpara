@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/nuxt';
 
 Sentry.init({
+  enabled: process.env.NODE_ENV !== 'development',
   dsn: process.env.SENTRY_DSN_PUBLIC || process.env.SENTRY_DSN,
 
   // We recommend adjusting this value in production, or using tracesSampler

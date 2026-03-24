@@ -6,6 +6,7 @@
 - perf: Improve render of campaign progress bars
 - perf: Saves cached campaigns between navigation
 - fix: Purge stale KV cache entries when campaign returns 404
+- fix: Disable Sentry on local development environment
 
 ## v3.4.12 - 2026-03-20
 
