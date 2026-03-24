@@ -1,4 +1,7 @@
 import transformMessageToCampaign from '~/utils/transformMessageToCampaign.ts';
+import getCurrentGoal from '~/utils/getCurrentGoal.ts';
+import combineDonationSources from '~/utils/combineDonationSources.ts';
+import consolidateTotalAmount from '~/utils/consolidateTotalAmount.ts';
 import type {
   Campaign,
   CampaignSection,
@@ -155,6 +158,20 @@ export const useCampaignStore = defineStore('campaign', {
     },
   },
   getters: {
+    donationSources: ({ campaign }) => combineDonationSources(campaign?.platforms ?? []),
+
+    totalAmount(): number {
+      return consolidateTotalAmount(this.donationSources);
+    },
+
+    totalDonations(): number {
+      return this.donationSources.reduce((acc, cur) => acc + cur.total_donations, 0);
+    },
+
+    currentGoal(): number {
+      return getCurrentGoal(this.campaign?.goal_list ?? [], this.totalAmount);
+    },
+
     campaignSections: (({ campaign }): CampaignSection[] => {
       if (!Array.isArray(campaign?.campaign_section_list)) {
         return sectionsConfig.required;

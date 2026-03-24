@@ -98,19 +98,11 @@ const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps<{
   campaign: Campaign;
+  donationSources: SourceOnProgressBar[];
+  totalAmount: number;
+  totalDonations: number;
+  currentGoal: number;
 }>();
-
-const donationSources = computed(() => combineDonationSources(props.campaign.platforms));
-
-const totalAmount = computed(() => consolidateTotalAmount(donationSources.value));
-
-const totalDonations = computed(() => donationSources.value.reduce((acc, cur) => {
-  // eslint-disable-next-line no-param-reassign
-  acc += cur.total_donations;
-  return acc;
-}, 0));
-
-const currentGoal = computed(() => getCurrentGoal(props.campaign.goal_list, totalAmount.value));
 
 const shareData = {
   title: props.campaign?.name
@@ -120,9 +112,9 @@ const shareData = {
   url: requestURL.href,
 }
 
-function percentage(amount = totalAmount.value, expected = currentGoal.value) {
+function percentage(amount = props.totalAmount, expected = props.currentGoal) {
   return Math.floor(
-    (amount * 100) / Math.max(totalAmount.value, expected),
+    (amount * 100) / Math.max(props.totalAmount, expected),
   );
 }
 

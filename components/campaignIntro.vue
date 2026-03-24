@@ -48,6 +48,10 @@
       <campaignProgress
         class="intro__campaign-progress"
         :campaign="campaign"
+        :donation-sources="donationSources"
+        :total-amount="totalAmount"
+        :total-donations="totalDonations"
+        :current-goal="currentGoal"
       />
       <div class="call-to-action-values">
         <p v-if="campaign?.reward_list?.length" class="call-to-action-values__intro">
@@ -89,6 +93,7 @@
 <script setup lang="ts">
 import type { Campaign } from '@/doar-para.d.ts';
 import generateCloudflareSrcset from '@/utils/generateCloudflareSrcset.ts';
+import { useCampaignStore } from '@/store/campaign.ts';
 
 const route = useRoute();
 const baseUrl = useRuntimeConfig().public.baseUrl as string | undefined;
@@ -104,6 +109,9 @@ const hasRefVideo = refVideo.some((item) => item.code === refParam);
 const showVideo = ref(false);
 
 const origin: string = globalThis?.location?.origin ?? '';
+
+const campaignStore = useCampaignStore();
+const { donationSources, totalAmount, totalDonations, currentGoal } = storeToRefs(campaignStore);
 
 const videoId = computed<string | null | undefined>(() => getYoutubeId(props.campaign.video));
 const youtubeThumbnail = computed(() => (videoId.value ? getYoutubeThumbnail({ id: videoId.value }) : ''));

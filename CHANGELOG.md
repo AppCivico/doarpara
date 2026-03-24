@@ -1,5 +1,7 @@
 # Changelog
 
+- perf: Simplify calculating current goal
+
 ## v3.4.12 - 2026-03-20
 
 - build: Try to fix build

@@ -46,7 +46,7 @@ import { useCampaignStore } from '@/store/campaign.ts';
 
 const campaignStore = useCampaignStore();
 
-const { campaign } = storeToRefs(campaignStore);
+const { campaign, currentGoal } = storeToRefs(campaignStore);
 
 definePageMeta({
   name: 'goals',
@@ -54,16 +54,6 @@ definePageMeta({
   // Currently, `localePath()` and `NuxtLinkLocale` do not support complex roue objects
   path: '/:campaignSlug/metas',
 });
-
-const donationSources = computed(() => (Array.isArray(campaign.value?.platforms)
-  ? combineDonationSources(campaign.value?.platforms)
-  : []));
-
-const totalAmount = computed(() => consolidateTotalAmount(donationSources.value));
-
-const currentGoal = computed(() => (Array.isArray(campaign.value?.goal_list)
-  ? getCurrentGoal(campaign.value.goal_list, totalAmount.value)
-  : 0));
 
 const goals = computed(() => (Array.isArray(campaign.value?.goal_list)
   ? campaign.value?.goal_list
