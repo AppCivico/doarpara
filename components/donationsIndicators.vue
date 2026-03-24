@@ -2,22 +2,22 @@
   <dl class="donation-indicators">
     <div class="donation-indicators__item">
       <dt class="donation-indicators__title">
-        {{ $n(totalDonations.totalDonors) }}
+        {{ $n(consolidatedTotals.totalDonors) }}
       </dt>
       <dd class="donation-indicators__description">
         {{ $t('indicators.donorsToCampaign', {
-          campaignName: campaign?.name,
-          donations: totalDonations.totalDonations,
+          campaignName,
+          donations: consolidatedTotals.totalDonations,
         }) }}
       </dd>
     </div>
 
     <div
-      v-if="totalDonations.newDonorsPercent && totalDonations.newDonorsPercent < 100"
+      v-if="consolidatedTotals.newDonorsPercent && consolidatedTotals.newDonorsPercent < 100"
       class="donation-indicators__item"
     >
       <dt class="donation-indicators__title">
-        {{ $n(totalDonations.newDonorsPercent) }}%
+        {{ $n(consolidatedTotals.newDonorsPercent) }}%
       </dt>
       <dd class="donation-indicators__description">
         {{ $t('indicators.newDonors.title') }}
@@ -27,11 +27,11 @@
       </dd>
     </div>
     <div
-      v-if="totalDonations.recurringPercent && totalDonations.recurringPercent < 100"
+      v-if="consolidatedTotals.recurringPercent && consolidatedTotals.recurringPercent < 100"
       class="donation-indicators__item"
     >
       <dt class="donation-indicators__title">
-        {{ $n(totalDonations.recurringPercent) }}%
+        {{ $n(consolidatedTotals.recurringPercent) }}%
       </dt>
       <dd class="donation-indicators__description">
         {{ $t('indicators.oldDonors.title') }}
@@ -43,13 +43,12 @@
   </dl>
 </template>
 <script setup lang="ts">
-import type { Campaign } from '@/doar-para.d.ts';
+import type { ConsolidatedTotal } from '@/utils/consolidateTotals.ts';
 
-const props = defineProps<{
-  campaign: Campaign;
+defineProps<{
+  campaignName: string;
+  consolidatedTotals: ConsolidatedTotal;
 }>();
-
-const totalDonations = computed(() => consolidateTotals(props.campaign?.platforms));
 </script>
 <style lang="scss">
 .donation-indicators {

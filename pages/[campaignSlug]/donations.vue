@@ -4,7 +4,11 @@
     role="main"
   >
     <section class="donations-page__indicators">
-      <donationsIndicators v-if="campaign" :campaign="campaign" />
+      <donationsIndicators
+        v-if="campaign"
+        :campaign-name="campaign.name"
+        :consolidated-totals="consolidatedTotals"
+      />
     </section>
 
     <section class="donations-page__receipts">
@@ -131,7 +135,7 @@ const route = useRoute();
 const campaignStore = useCampaignStore();
 const donationsStore = useDonationsStore();
 
-const { campaign } = storeToRefs(campaignStore);
+const { campaign, consolidatedTotals } = storeToRefs(campaignStore);
 
 const {
   hasMore, list: donationsList, paginationMarker, pending, error,

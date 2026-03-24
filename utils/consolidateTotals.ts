@@ -1,6 +1,6 @@
 import type { RaisedAndSource } from '~/doar-para';
 
-type ConsolidatedTotal = {
+export type ConsolidatedTotal = {
   recurringPercent: number,
   newDonorsPercent: number,
   totalDonors: number,

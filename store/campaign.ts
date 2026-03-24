@@ -2,6 +2,7 @@ import transformMessageToCampaign from '~/utils/transformMessageToCampaign.ts';
 import getCurrentGoal from '~/utils/getCurrentGoal.ts';
 import combineDonationSources from '~/utils/combineDonationSources.ts';
 import consolidateTotalAmount from '~/utils/consolidateTotalAmount.ts';
+import consolidateTotals from '~/utils/consolidateTotals.ts';
 import type {
   Campaign,
   CampaignSection,
@@ -171,6 +172,8 @@ export const useCampaignStore = defineStore('campaign', {
     currentGoal(): number {
       return getCurrentGoal(this.campaign?.goal_list ?? [], this.totalAmount);
     },
+
+    consolidatedTotals: ({ campaign }) => consolidateTotals(campaign?.platforms),
 
     campaignSections: (({ campaign }): CampaignSection[] => {
       if (!Array.isArray(campaign?.campaign_section_list)) {
