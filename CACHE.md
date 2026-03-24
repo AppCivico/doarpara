@@ -10,9 +10,9 @@ DoarPara uses **NuxtHub cache** powered by **Cloudflare Workers KV** to cache SS
 
 ### Cache Settings
 
-- **Cache duration**: Configurable via `EDGE_CACHE_DURATION` environment variable (default: 30 seconds, production: 5 seconds)
-- **Stale-while-revalidate**: Enabled (serves stale content while fetching fresh data)
-- **Stale max age**: 30 seconds
+- **Cache duration**: Configurable via `EDGE_CACHE_DURATION` environment variable (default: 30 seconds, production: 30 seconds)
+- **Stale-while-revalidate**: Enabled (serves stale content while fetching fresh data in background)
+- **Stale max age**: 5 seconds — just enough for a background revalidation to complete, keeping total max staleness at ~35s
 
 ### Cached Routes
 
@@ -311,7 +311,7 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/stor
 
 If the update is not urgent, wait for the cache to expire naturally:
 
-- **Production**: 5 seconds (`EDGE_CACHE_DURATION=5`) + up to 30 seconds stale
+- **Production**: 30 seconds (`EDGE_CACHE_DURATION=30`) + up to 5 seconds stale
 - **Default**: 30 seconds + up to 30 seconds stale
 
 ## Cache Key Discovery

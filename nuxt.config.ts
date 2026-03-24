@@ -112,7 +112,11 @@ export default defineNuxtConfig({
       cache: {
         maxAge: Number(process.env.EDGE_CACHE_DURATION) || 30,
         swr: true,
-        staleMaxAge: 30,
+        // Server-side KV staleness: how long the Worker may serve a stale KV
+        // entry while revalidating from the API in the background.
+        // Unrelated to the browser-level stale-while-revalidate header in
+        // server/middleware/headers.ts, which controls browser ↔ Worker staleness.
+        staleMaxAge: 5,
       },
     },
     // Don't cache donation, donations, and receipt pages

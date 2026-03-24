@@ -15,8 +15,12 @@ export default defineEventHandler((event) => {
   const edgeCacheDuration = Number(process.env.EDGE_CACHE_DURATION) || 30;
 
   if (browserCacheDuration > 0 && url.match(/^\/[^/?]+$/) && !event.path.includes('previewing')) {
-    const staleWhileRevalidate = Math.max(browserCacheDuration, edgeCacheDuration) * 2;
-    setHeader(event, 'Cache-Control', `public, max-age=${browserCacheDuration}, s-maxage=${edgeCacheDuration}, stale-while-revalidate=${staleWhileRevalidate}`);
+    // Browser-side staleness: how long the browser may serve a stale cached
+    // response while fetching a fresh one from the Worker in the background.
+    // Unrelated to staleMaxAge in nuxt.config.ts, which controls server-side
+    // KV staleness (Worker ↔ API). Both happen to share the same name but
+    // operate at different layers of the caching stack.
+    setHeader(event, 'Cache-Control', `public, max-age=${browserCacheDuration}, s-maxage=${edgeCacheDuration}, stale-while-revalidate=${browserCacheDuration}`);
   }
 
   // Only set security headers for non-dev environments or specific hosts
