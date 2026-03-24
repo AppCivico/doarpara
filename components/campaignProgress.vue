@@ -43,7 +43,7 @@
         <div
           v-for="(source, i) in donationSources"
           :key="i"
-          :style="progressBarStyle(source)"
+          :style="progressBarStyles[i]"
           :title="$t('totalAmountByDonationsPerSource', {
             percentage: $n(percentage(source.total_donated)),
             numberOfDonations: source.total_donations,
@@ -118,12 +118,12 @@ function percentage(amount = props.totalAmount, expected = props.currentGoal) {
   );
 }
 
-function progressBarStyle(source: SourceOnProgressBar) {
-  return {
+const progressBarStyles = computed(() =>
+  props.donationSources.map((source) => ({
     backgroundImage: `linear-gradient(rgba(0, 0, 0, ${source.opacity}), rgba(0, 0, 0, ${source.opacity}))`,
     width: `${percentage(source.total_donated)}%`,
-  };
-}
+  })),
+);
 </script>
 <style lang="scss">
 .campaign-progress {

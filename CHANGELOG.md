@@ -3,6 +3,7 @@
 - perf: Simplify calculating current goal
 - perf: Load testimonies on client side only
 - perf: Simplify donations summary
+- perf: Improve render of campaign progress bars
 
 ## v3.4.12 - 2026-03-20
 
