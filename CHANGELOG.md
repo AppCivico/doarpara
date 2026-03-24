@@ -4,6 +4,7 @@
 - perf: Load testimonies on client side only
 - perf: Simplify donations summary
 - perf: Improve render of campaign progress bars
+- perf: Saves cached campaigns between navigation
 
 ## v3.4.12 - 2026-03-20
 

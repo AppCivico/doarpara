@@ -302,8 +302,14 @@ if (route.params.campaignSlug) {
   } else {
     // Normal mode: SSR fetch
     await useAsyncData(
-      'campaign',
-      () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug)).then(() => true),
+      `campaign-${route.params.campaignSlug}`,
+      () => campaignStore.fetchCampaignAndRewards(String(route.params.campaignSlug))
+        .then(() => true),
+      {
+        getCachedData: (key, nuxtApp) => (campaign.value?.slug === route.params.campaignSlug
+          ? true
+          : nuxtApp.payload.data[key]),
+      },
     );
   }
 
