@@ -1,6 +1,7 @@
 # Changelog
 
 - perf: Simplify calculating current goal
+- perf: Load testimonies on client side only
 
 ## v3.4.12 - 2026-03-20
 

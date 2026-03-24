@@ -163,7 +163,9 @@ const url = `${runtimeConfig.public.privateApiBase}/api2/candidate-review`;
 const {
   data: depositions,
   pending,
-} = await useFetch(`${url}?candidate_id=${campaign.value.id}`);
+} = await useFetch(`${url}?candidate_id=${campaign.value.id}`, {
+  server: false,
+});
 
 const submitTestimonies = async (event) => {
   try {
