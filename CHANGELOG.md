@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.13 - 2026-03-24
+
 - perf: Simplify calculating current goal
 - perf: Load testimonies on client side only
 - perf: Simplify donations summary
