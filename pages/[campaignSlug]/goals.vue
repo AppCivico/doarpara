@@ -7,7 +7,6 @@
     <section
       v-for="(goal, i) in goals"
       :key="i"
-      role="region"
       class="tab-list text-body__tab-list goals-page__goal-item"
       :class="currentGoal > goal.amount ? 'goals-page__goal-item--achieved' : 'goals-page__goal-item--current'"
     >
