@@ -75,10 +75,7 @@
         "URL_OF_PRIVACY_POLICY": "https://blog.doarpara.com.br/contrato/",
         "URL_OF_USE_TERMS": "https://blog.doarpara.com.br/contrato/"
       },
-      // NOTE: KV namespace bindings for NuxtHub cache should be configured
-      // in Cloudflare Pages Dashboard: Settings → Functions → KV namespace bindings
-      // Variable name: CACHE
-      // Create separate namespaces for production and preview environments
+      // KV namespace for NuxtHub cache (production)
       "kv_namespaces": [
         {
           "binding": "CACHE",
@@ -120,10 +117,7 @@
       }
     }
   },
-  // NOTE: KV namespace bindings for NuxtHub cache should be configured
-  // in Cloudflare Pages Dashboard: Settings → Functions → KV namespace bindings
-  // Variable name: CACHE
-  // Create separate namespaces for production and preview environments
+  // KV namespace for NuxtHub cache (local wrangler dev — default environment)
   "kv_namespaces": [
     {
       "binding": "CACHE",
