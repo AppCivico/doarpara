@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.15 - 2026-03-25
+
 - fix: Nitro cache entries
 
 ## v3.4.14 - 2026-03-25
