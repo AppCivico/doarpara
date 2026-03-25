@@ -49,10 +49,10 @@ The account ID can be found in the Cloudflare Dashboard URL or under **My Profil
 NuxtHub/Nitro generates cache keys in the format:
 
 ```
-nitro:routes:_:{slug_without_hyphens}.{hash}.json
+nitro:routes:_:{slug_normalized}.{hash}.json
 ```
 
-- The slug has **hyphens removed** (e.g., `igor-oliveira` → `igoroliveira`)
+- The slug has **non-word characters removed** via `/\W/g` (e.g., `igor-oliveira` → `igoroliveira`, but `renato_cron` → `renato_cron` since underscores are word characters)
 - The hash is a **random 10-character string** generated at cache write time, making exact keys unpredictable
 - There may be **multiple keys** per campaign (main page + sub-routes like `/doar`, `/doacoes`, `/depoimentos`)
 
@@ -102,7 +102,7 @@ ACCOUNT_ID="your-account-id"         # Cloudflare Dashboard URL or My Profile �
 NAMESPACE_ID="your-namespace-id"     # see wrangler.jsonc → env.production.kv_namespaces
 API_TOKEN="your-api-token"
 SLUG="minha-campanha"
-PREFIX="nitro:routes:_:${SLUG//-/}"  # removes hyphens from slug
+PREFIX="nitro:routes:_:${SLUG//[^a-zA-Z0-9_]/}"  # removes non-word characters (keeps underscores)
 
 # 1. List keys with that prefix
 curl "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/storage/kv/namespaces/${NAMESPACE_ID}/keys?prefix=$(python3 -c "import urllib.parse; print(urllib.parse.quote('${PREFIX}', safe=''))")" \
@@ -136,8 +136,9 @@ def purge_campaign_cache(campaign_slug, environment='production'):
         'Content-Type': 'application/json',
     }
 
-    # Keys use slug without hyphens as prefix
-    prefix = f"nitro:routes:_:{campaign_slug.replace('-', '')}"
+    # Nitro removes non-word characters (/\W/g) from keys — underscores are kept
+    import re
+    prefix = f"nitro:routes:_:{re.sub(r'\W', '', campaign_slug)}"
 
     # 1. List all keys matching this campaign
     list_url = f'https://api.cloudflare.com/client/v4/accounts/{account_id}/storage/kv/namespaces/{namespace_id}/keys'
@@ -191,9 +192,9 @@ sub purge_campaign_cache {
     my $ua = LWP::UserAgent->new;
     my %headers = (Authorization => "Bearer $api_token", 'Content-Type' => 'application/json');
 
-    # Keys use slug without hyphens as prefix
-    (my $slug_no_hyphens = $campaign_slug) =~ s/-//g;
-    my $prefix = "nitro:routes:_:$slug_no_hyphens";
+    # Nitro removes non-word characters (/\W/g) from keys — underscores are kept
+    (my $slug_normalized = $campaign_slug) =~ s/\W//g;
+    my $prefix = "nitro:routes:_:$slug_normalized";
 
     # 1. List all keys matching this campaign
     my $list_uri = URI->new("https://api.cloudflare.com/client/v4/accounts/$account_id/storage/kv/namespaces/$namespace_id/keys");
@@ -251,8 +252,8 @@ async function purgeCampaignCache(campaignSlug, environment = 'production') {
     'Content-Type': 'application/json',
   };
 
-  // Keys use slug without hyphens as prefix
-  const prefix = `nitro:routes:_:${campaignSlug.replace(/-/g, '')}`;
+  // Nitro removes non-word characters (/\W/g) from keys — underscores are kept
+  const prefix = `nitro:routes:_:${campaignSlug.replace(/\W/g, '')}`;
 
   // 1. List all keys matching this campaign
   const listUrl = new URL(`https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/keys`);
@@ -323,7 +324,7 @@ ACCOUNT_ID="your-account-id"         # Cloudflare Dashboard URL or My Profile �
 NAMESPACE_ID="your-namespace-id"     # see wrangler.jsonc → env.production.kv_namespaces
 API_TOKEN="your-api-token"
 SLUG="minha-campanha"
-PREFIX="nitro:routes:_:${SLUG//-/}"  # removes hyphens
+PREFIX="nitro:routes:_:${SLUG//[^a-zA-Z0-9_]/}"  # removes non-word characters (keeps underscores)
 
 curl "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/storage/kv/namespaces/${NAMESPACE_ID}/keys?prefix=$(python3 -c "import urllib.parse; print(urllib.parse.quote('${PREFIX}', safe=''))")" \
   -H "Authorization: Bearer ${API_TOKEN}"

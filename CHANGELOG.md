@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Nitro cache purging
+
 ## v3.4.13 - 2026-03-24
 
 - perf: Simplify calculating current goal
