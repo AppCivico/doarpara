@@ -154,14 +154,16 @@ async function fetchDonations(more = false) {
   if (pending.value) return;
   try {
     if (more) {
-      await donationsStore.fetchDonations(String(route.params.campaignSlug), paginationMarker.value);
+      await donationsStore
+        .fetchDonations(String(route.params.campaignSlug), paginationMarker.value);
     } else {
-      await donationsStore.fetchDonations(String(route.params.campaignSlug));
+      await donationsStore
+        .fetchDonations(String(route.params.campaignSlug));
     }
-  } catch (error) {
+  } catch (err) {
     // Error is already stored in donationsStore.error
     if (import.meta.dev) {
-      console.error('[Donations Page] Failed to fetch donations:', error);
+      console.error('[Donations Page] Failed to fetch donations:', err);
     }
   }
 }
