@@ -8,7 +8,7 @@ export default defineNitroPlugin((nitroApp) => {
     // Nitro uses /\W/g to normalize cache keys (removes non-word characters),
     // so "igor-oliveira" → "igoroliveira" but "renato_cron" → "renato_cron"
     // Source: nitropack/dist/runtime/internal/cache.mjs line 125
-    const normalizedSlug = slug.replace(/\W/g, '');
+    const normalizedSlug = slug.replaceAll(/\W/g, '');
 
     try {
       // Access the CACHE KV binding directly via Cloudflare's native API.
