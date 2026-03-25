@@ -117,6 +117,10 @@ export default defineNuxtConfig({
         // Unrelated to the browser-level stale-while-revalidate header in
         // server/middleware/headers.ts, which controls browser ↔ Worker staleness.
         staleMaxAge: 5,
+        // Prevent request headers (e.g. accept-encoding, user-agent) from
+        // leaking into the cache key hash, which would create one KV entry per
+        // unique client fingerprint and grow the namespace unboundedly.
+        varies: [],
       },
     },
     // Don't cache donation, donations, and receipt pages
