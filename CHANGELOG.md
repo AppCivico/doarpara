@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: disabled campaigns to stay live indefinitely
+
 ## v3.4.16 - 2026-03-26
 
 - fix: KV cache purging

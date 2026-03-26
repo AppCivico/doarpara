@@ -111,6 +111,11 @@ export default defineNuxtConfig({
     '/**': {
       cache: {
         maxAge: Number(process.env.EDGE_CACHE_DURATION) || 30,
+        // Nitro's default staleMaxAge is -1 (serve stale indefinitely while
+        // revalidating in background). Must be 0 to disable stale serving so
+        // that 404s propagate immediately once maxAge expires instead of being
+        // swallowed as "[cache] SWR handler error" indefinitely.
+        staleMaxAge: 0,
         // Prevent request headers (e.g. accept-encoding, user-agent) from
         // leaking into the cache key hash, which would create one KV entry per
         // unique client fingerprint and grow the namespace unboundedly.
