@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.16 - 2026-03-26
+
 - fix: KV cache purging
 
 ## v3.4.15 - 2026-03-25
