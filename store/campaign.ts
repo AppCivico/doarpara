@@ -76,6 +76,14 @@ export const useCampaignStore = defineStore('campaign', {
           timeout: runtimeConfig.public.apiTimeout,
         });
 
+        // Some API endpoints return HTTP 200 with { error: "..." } instead of
+        // a proper 4xx status code. Treat these as 404 so the layout throws
+        // correctly and the KV cache is purged via the render:response plugin.
+        if ((data as any)?.error) {
+          this.error = { message: (data as any).error, statusCode: 404 };
+          return;
+        }
+
         if (data) {
           this.campaign = data;
 
