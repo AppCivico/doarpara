@@ -1,6 +1,8 @@
 # Changelog
 
 - fix: purge stale KV cache on 403 in addition to 404
+- fix: disabled campaigns to stay live indefinitely
+
 ## v3.4.17 - 2026-03-26
 
 - fix: disabled campaigns to stay live indefinitely
