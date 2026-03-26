@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.19 - 2026-03-26
+
 - fix: Type script error on build
 
 ## v3.4.18 - 2026-03-26
