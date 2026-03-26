@@ -321,10 +321,20 @@ if (route.params.campaignSlug) {
     const bypass404 = isPreviewMode() && err.statusCode === 404;
 
     if (!bypass404) {
+      const statusCode = err.statusCode || 500;
+
+      // fatal: true renders the error page but does not automatically set the
+      // HTTP response status code in SSR — setResponseStatus must be called explicitly.
+      // Without this, the Nitro render:response hook sees statusCode 200 and the
+      // purge-stale-on-404 plugin never fires.
+      // useRequestEvent() loses context after await — use ssrContext directly
+      const event = useNuxtApp().ssrContext?.event;
+      if (event) setResponseStatus(event, statusCode);
+
       throw createError({
-        statusCode: err.statusCode || 500,
+        statusCode,
         statusMessage: err.message || 'Error loading campaign',
-        data: err.statusCode === 404 ? { type: 'campaign' } : undefined,
+        data: statusCode === 404 ? { type: 'campaign' } : undefined,
         fatal: true,
       });
     }

@@ -111,12 +111,6 @@ export default defineNuxtConfig({
     '/**': {
       cache: {
         maxAge: Number(process.env.EDGE_CACHE_DURATION) || 30,
-        swr: true,
-        // Server-side KV staleness: how long the Worker may serve a stale KV
-        // entry while revalidating from the API in the background.
-        // Unrelated to the browser-level stale-while-revalidate header in
-        // server/middleware/headers.ts, which controls browser ↔ Worker staleness.
-        staleMaxAge: 5,
         // Prevent request headers (e.g. accept-encoding, user-agent) from
         // leaking into the cache key hash, which would create one KV entry per
         // unique client fingerprint and grow the namespace unboundedly.
