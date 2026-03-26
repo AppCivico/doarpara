@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.18 - 2026-03-26
+
 - fix: purge stale KV cache on 403 in addition to 404
 - fix: disabled campaigns to stay live indefinitely
 - fix: HTTP 200 responses with `error` being cached
