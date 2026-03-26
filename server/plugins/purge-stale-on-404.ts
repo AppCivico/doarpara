@@ -2,7 +2,7 @@ const PURGE_ON_STATUS = new Set([403, 404]);
 
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('render:response', async (response, { event }) => {
-    if (!PURGE_ON_STATUS.has(response.statusCode)) return;
+    if (!response.statusCode || !PURGE_ON_STATUS.has(response.statusCode)) return;
 
     const slug = event.path.split('/').find(Boolean);
     if (!slug) return;

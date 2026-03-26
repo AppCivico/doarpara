@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Type script error on build
+
 ## v3.4.18 - 2026-03-26
 
 - fix: purge stale KV cache on 403 in addition to 404
