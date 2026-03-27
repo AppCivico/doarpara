@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Worker exhaustion from `swr: false` — revert to `swr: true` with explicit `staleMaxAge` so expired entries are served stale briefly while Nitro revalidates in background
+
 ## v3.4.19 - 2026-03-26
 
 - fix: Type script error on build

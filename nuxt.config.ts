@@ -111,13 +111,14 @@ export default defineNuxtConfig({
     '/**': {
       cache: {
         maxAge: Number(process.env.EDGE_CACHE_DURATION) || 30,
-        // Nitro defaults: swr=true, staleMaxAge=-1 (serve stale indefinitely
-        // while revalidating in background). Both must be explicitly disabled
-        // so that expired entries are never served — the next request always
-        // blocks on a fresh SSR, allowing 404s to propagate and the
-        // purge-stale-on-error plugin to fire and clean up KV entries.
-        swr: false,
-        staleMaxAge: 0,
+        // swr=true (default): serve stale while revalidating in background —
+        // avoids Worker exhaustion on cache expiry / post-deploy thundering herd.
+        // staleMaxAge: after maxAge+staleMaxAge seconds the entry is "too stale"
+        // and Nitro blocks on a fresh SSR instead of serving stale. That SSR
+        // fires render:response, which lets purge-stale-on-error.ts detect 404s
+        // and purge the KV entry. staleMaxAge=-1 (default) serves stale forever
+        // and must never be used.
+        staleMaxAge: Number(process.env.STALE_MAX_AGE) || 30,
         // Prevent request headers (e.g. accept-encoding, user-agent) from
         // leaking into the cache key hash, which would create one KV entry per
         // unique client fingerprint and grow the namespace unboundedly.
