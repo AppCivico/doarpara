@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.21 - 2026-03-30
+
 - fix: double vertical scrollbars
 - fix: ARIA markup
 - fix: tab navigation links scrolling page to top on route change
