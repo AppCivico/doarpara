@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: double vertical scrollbars
+
 ## v3.4.20 - 2026-03-27
 
 - fix: Worker exhaustion from `swr: false` — revert to `swr: true` with explicit `staleMaxAge` so expired entries are served stale briefly while Nitro revalidates in background
