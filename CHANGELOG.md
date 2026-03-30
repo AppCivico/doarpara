@@ -2,6 +2,7 @@
 
 - fix: double vertical scrollbars
 - fix: ARIA markup
+- fix: tab navigation links scrolling page to top on route change
 
 ## v3.4.20 - 2026-03-27
 

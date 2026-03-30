@@ -163,6 +163,7 @@
                       :to="sectionId === 'description'
                         ? { name: 'campaign' }
                         : { name: sectionId }"
+                      @click="saveScroll"
                     >
                       <template v-if="sectionId === 'goals' && campaign?.goal_list?.length">
                         {{ $t(`nav.${sectionId}`, campaign.goal_list.length) }}
@@ -279,6 +280,22 @@ import { isPreviewMode, notifyPreviewResult, setupCampaignPreview } from '@/util
 
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
+const router = useRouter()
+const savedScrollY = ref<number | null>(null)
+
+function saveScroll() {
+  savedScrollY.value = window.scrollY
+}
+
+const removeAfterEach = router.afterEach(() => {
+  if (savedScrollY.value !== null) {
+    const y = savedScrollY.value
+    savedScrollY.value = null
+    nextTick(() => window.scrollTo({ top: y, behavior: 'instant' }))
+  }
+})
+
+onUnmounted(removeAfterEach)
 
 const head = useLocaleHead();
 
