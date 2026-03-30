@@ -149,7 +149,6 @@
             <div class="container text-body__container">
               <nav
                 v-if="Array.isArray(campaignSections) && campaignSections?.length > 1"
-                role="tablist"
                 class="tab-navigation text-body__tab-navigation"
                 :aria-label="$t('navigationLabel')"
               >

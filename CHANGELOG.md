@@ -1,6 +1,7 @@
 # Changelog
 
 - fix: double vertical scrollbars
+- fix: ARIA markup
 
 ## v3.4.20 - 2026-03-27
 
