@@ -1,5 +1,7 @@
 # Changelog
 
+- feat: Update donation taxes
+
 ## v3.4.21 - 2026-03-30
 
 - fix: double vertical scrollbars
