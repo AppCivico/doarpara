@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.22 - 2026-04-17
+
 - feat: Update donation taxes
 
 ## v3.4.21 - 2026-03-30
