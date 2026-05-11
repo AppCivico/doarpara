@@ -2,6 +2,7 @@
 
 - fix: Receipts for parties not showing its name
 - fix: Importing error on i18n
+- fix: Hydration error on SEO
 
 ## v3.4.22 - 2026-04-17
 

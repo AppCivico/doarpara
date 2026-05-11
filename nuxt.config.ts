@@ -68,7 +68,6 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    baseUrl: process.env.BASE_URL,
     bundle: {
       optimizeTranslationDirective: false,
     },
@@ -135,6 +134,10 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      i18n: {
+        baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+      },
+
       title: process.env.APP_TITLE
         || 'DoarPara',
 
