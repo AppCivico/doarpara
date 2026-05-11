@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.23 - 2026-05-11
+
 - fix: Receipts for parties not showing its name
 - fix: Importing error on i18n
 - fix: Hydration error on SEO
