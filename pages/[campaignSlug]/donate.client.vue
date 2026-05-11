@@ -617,9 +617,7 @@ import type {
 } from '@/doar-para.d.ts';
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
-import { useI18n } from 'vue-i18n';
-
-const { t } = useI18n();
+const { t } = useI18n({ useScope: 'global' });
 
 const creditCardMaskOption = {
   mask: 'A',

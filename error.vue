@@ -82,9 +82,7 @@
 </template>
 <script setup lang="ts">
 import type { NuxtError } from '#app';
-import { useI18n } from 'vue-i18n';
-
-const { t } = useI18n();
+const { t } = useI18n({ useScope: 'global' });
 const props = defineProps({
   error: {
     type: Object as () => NuxtError,
