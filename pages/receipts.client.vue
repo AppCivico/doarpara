@@ -51,7 +51,7 @@ const {
         <img
           class="receipts-page__candidate-avatar"
           :src="receipt?.donation.candidate.avatar"
-          :alt="`fotografia de ${receipt?.donation.candidate.popular_name}`"
+          :alt="`fotografia de ${receipt?.donation.candidate.popular_name || receipt?.donation.candidate.name || 'recebedor da doação'}`"
         >
       </div>
       <hgroup>
@@ -68,7 +68,7 @@ const {
         <p class="receipts-page-title">
           <template v-if="receipt?.donation?.candidate?.is_party">
             Essa doação foi realizada para
-            <strong>{{ receipt?.donation.candidate.popular_name }}</strong>.
+            <strong>{{ receipt?.donation.candidate.name }}</strong>.
           </template>
           <template v-else>
             Essa doação foi realizada para

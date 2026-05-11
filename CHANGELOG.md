@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Receipts for parties not showing its name
+
 ## v3.4.22 - 2026-04-17
 
 - feat: Update donation taxes
