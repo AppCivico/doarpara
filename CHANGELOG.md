@@ -1,5 +1,9 @@
 # Changelog
 
+- fix: Worker 1102 under marketing traffic — strip query strings (utm_*, fbclid, gclid, etc.) from cache keys so tracking-tagged URLs no longer fragment the KV cache; `ref` is preserved server-side for ref-specific cover videos
+- fix: Donation and slug-nested pages being silently cached — route-rule globs corrected (the previous `/doar/**` pattern only matched the non-existent top-level `/doar/<x>` URL)
+- perf: Increase `staleMaxAge` default to 5 min (matches client-polling interval) to absorb `waitUntil` cancellations and the post-deploy thundering herd caused by Nitro's per-build `integrity` invalidation
+
 ## v3.4.23 - 2026-05-11
 
 - fix: Receipts for parties not showing its name

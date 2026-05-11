@@ -117,18 +117,33 @@ export default defineNuxtConfig({
         // fires render:response, which lets purge-stale-on-error.ts detect 404s
         // and purge the KV entry. staleMaxAge=-1 (default) serves stale forever
         // and must never be used.
-        staleMaxAge: Number(process.env.STALE_MAX_AGE) || 30,
+        // The 5 min default absorbs `waitUntil` cancellations (see
+        // WORKER-PERFORMANCE.md) and the post-deploy thundering herd that
+        // happens when Nitro's per-build `integrity` hash invalidates all
+        // existing entries. Aligned with CAMPAIGN_POOLING_INTERVAL (5 min):
+        // the client-side poll refreshes data after that anyway, so the
+        // user-visible staleness window is capped at ~5 min regardless.
+        staleMaxAge: Number(process.env.STALE_MAX_AGE) || 300,
         // Prevent request headers (e.g. accept-encoding, user-agent) from
         // leaking into the cache key hash, which would create one KV entry per
         // unique client fingerprint and grow the namespace unboundedly.
         varies: [],
       },
     },
-    // Don't cache donation, donations, and receipt pages
-    '/doar/**': { cache: false },
-    '/doacoes/**': { cache: false },
+    // Don't cache donation, donations, and receipt pages.
+    // Two URL patterns exist:
+    //   • Slug-nested:  /<slug>/doar, /<slug>/doacoes — match with /*/doar
+    //   • Top-level:    /recibo/<id>, /recibos/<id>   — match with /recibo/**
+    // Nitro's radix3 matcher only allows ** at the END of a pattern, so the
+    // slug-nested rules use `*` (single-segment wildcard) for the slug.
+    // The previous config only had the top-level patterns, which meant
+    // slug-nested donation pages were silently being cached.
     '/recibo/**': { cache: false },
     '/recibos/**': { cache: false },
+    '/*/doar': { cache: false },
+    '/*/doacoes': { cache: false },
+    '/*/recibo': { cache: false },
+    '/*/recibos': { cache: false },
     // Don't cache preview mode
     '/**?previewing*': { cache: false },
   },

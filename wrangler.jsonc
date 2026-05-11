@@ -63,6 +63,7 @@
 
         // Production-specific
         "EDGE_CACHE_DURATION": "30",
+        "STALE_MAX_AGE": "300",
         "APP_TITLE": "DoarPara",
         "BASE_URL": "https://doarpara.com.br",
         "CONTROL_PANEL_ORIGIN": "https://painel.doarpara.com.br",
@@ -108,6 +109,7 @@
 
         // Preview-specific
         "EDGE_CACHE_DURATION": "30",
+        "STALE_MAX_AGE": "300",
         "APP_TITLE": "Teste do DoarPara",
         "BASE_URL": "https://dev.doarpara.com.br",
         "CONTROL_PANEL_ORIGIN": "https://dev-painel.doarpara.com.br",
