@@ -175,6 +175,7 @@ $_background-width-beyond-column: 70px;
     background: none;
     border: 0;
     box-shadow: none;
+    outline: 0;
 
     > img {
       filter: invert(1) drop-shadow(my.palette('effects', 'shadow') 0 0 2px) drop-shadow(color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2) 0 0 4px);
