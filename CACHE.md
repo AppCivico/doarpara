@@ -12,19 +12,30 @@ DoarPara uses **NuxtHub cache** powered by **Cloudflare Workers KV** to cache SS
 
 - **Cache duration**: Configurable via `EDGE_CACHE_DURATION` environment variable (default: 30 seconds, production: 30 seconds)
 - **Stale-while-revalidate**: Enabled (serves stale content while fetching fresh data in background)
-- **Stale max age**: 5 seconds — just enough for a background revalidation to complete, keeping total max staleness at ~35s
+- **Stale max age**: Configurable via `STALE_MAX_AGE` environment variable (default and production: 300 seconds / 5 minutes). Wide enough to absorb `waitUntil` write cancellations and the post-deploy thundering herd caused by Nitro's per-build `integrity` invalidation. Matches the client-side polling interval (`CAMPAIGN_POOLING_INTERVAL=300000`), so user-visible staleness is capped at ~5 minutes regardless. Total max staleness: ~5.5 minutes.
 
 ### Cached Routes
 
-- `/**` - All campaign pages
+- `/**` — All campaign pages and their cacheable sub-routes (`/<slug>`, `/<slug>/metas`, `/<slug>/depoimentos`, `/<slug>/perguntas-frequentes`)
+
+### Query-string handling
+
+Cache keys are derived from the request URL. To prevent unbounded fragmentation from marketing and tracking parameters (`?utm_*`, `?fbclid`, `?gclid`, etc.), [`server/middleware/cache-key-strip-query.ts`](server/middleware/cache-key-strip-query.ts) strips query strings before the cache layer runs. Only two params are kept (whitelist):
+
+- `ref` — read server-side by [`components/campaignIntro.vue`](components/campaignIntro.vue) to select a ref-specific cover video; preserved in the cache key so each ref value gets its own entry
+- `previewing` — kept defensively so preview-mode routing still works
+
+All other query parameters (UTM, fbclid, gclid, valor, etc.) are removed at the server boundary. `/<slug>`, `/<slug>?utm_source=fb`, `/<slug>?fbclid=ABC`, and `/<slug>?valor=20` all map to the **same** cache key. Client-side JavaScript still sees the original query string via `window.location.search` and `useRoute().query` — the stripping only affects what the SSR cache layer sees.
 
 ### Excluded Routes (Never Cached)
 
-- `/doar/**` - Donation pages
-- `/doacoes/**` - Donations list pages
-- `/recibo/**` - Receipt pages (singular)
-- `/recibos/**` - Receipt pages (plural alias)
-- `/**?previewing*` - Preview mode (any page with `?previewing` parameter)
+Two URL-pattern families need exclusion because each request is user-specific or carries server-side state:
+
+- `/recibo/**` and `/recibos/**` — top-level receipt pages (each receipt has a unique signed ID)
+- `/*/doar`, `/*/doacoes`, `/*/recibo`, `/*/recibos` — slug-nested donation, donations-list, and receipt pages
+- `/**?previewing*` — preview mode (any page with `?previewing` parameter)
+
+> Note: Nitro's route matcher (radix3) only allows `**` at the *end* of a pattern, so slug-nested rules use `*` (single-segment wildcard) for the slug. A previous `/doar/**` rule was a no-op because the real donation URL is `/<slug>/doar`, not `/doar/<x>`.
 
 ### Configuration Files
 
@@ -52,20 +63,19 @@ NuxtHub/Nitro generates cache keys in the format:
 nitro:routes:_:{slug_normalized}.{hash}.json
 ```
 
-- The slug has **non-word characters removed** via `/\W/g` (e.g., `igor-oliveira` → `igoroliveira`, but `renato_cron` → `renato_cron` since underscores are word characters)
-- The hash is a **random 10-character string** generated at cache write time, making exact keys unpredictable
-- There may be **multiple keys** per campaign (main page + sub-routes like `/doar`, `/doacoes`, `/depoimentos`)
+- The "slug" portion is the request **pathname** with non-word characters removed via `/\W/g` and truncated to **16 characters** (e.g., `igor-oliveira` → `igoroliveira`, `pt-ribeirao-preto-sp` → `ptribeiraopretos` because of the 16-char cap). Underscores are word characters and are preserved (`renato_cron` stays `renato_cron`).
+- The hash is **deterministic** on the post-middleware request URL — `hash("/pacheco")` always produces the same 10-character string. After the query-string middleware (see "Query-string handling" above), every UTM-tagged variant of the same URL produces the same hash, so they share one cache key.
+- One cache entry exists per (slug × cacheable sub-route × `ref` value). Cacheable sub-routes today: `/<slug>`, `/<slug>/metas`, `/<slug>/depoimentos`, `/<slug>/perguntas-frequentes`. Donation, donations-list, and receipt routes are excluded.
 
 For a campaign with slug `minha-campanha`, keys look like:
 
 ```
-nitro:routes:_:minhacampanha.2ED5WIS9SQ.json
-nitro:routes:_:minhacampanha.rqWzvjUR3T.json
-nitro:routes:_:minhacampanhadoar.DO2D9jKDAK.json
-...
+nitro:routes:_:minhacampanha.UhupfLmBE8.json          # /minha-campanha
+nitro:routes:_:minhacampanha.QVKe7ZPFnH.json          # /minha-campanha?ref=video1
+nitro:routes:_:minhacampanhametas.KviNRbOSpL.json     # /minha-campanha/metas
 ```
 
-Because the hash is unpredictable, purging requires **listing keys by prefix first, then deleting all matches**.
+Although the hash is deterministic, recovering it from a slug alone requires reproducing Nitro's hashing function. So purging in practice still uses **prefix listing + delete** — e.g. the prefix `nitro:routes:_:minhacampanha` matches all of the above (substring match on the 16-char-truncated pathname).
 
 ## Authentication
 
@@ -312,8 +322,8 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/stor
 
 If the update is not urgent, wait for the cache to expire naturally:
 
-- **Production**: 30 seconds (`EDGE_CACHE_DURATION=30`) + up to 5 seconds stale
-- **Default**: 30 seconds + up to 30 seconds stale
+- **Production**: 30 seconds (`EDGE_CACHE_DURATION=30`) + up to 5 minutes stale (`STALE_MAX_AGE=300`)
+- **Default**: 30 seconds + up to 5 minutes stale
 
 ## Cache Key Discovery
 
