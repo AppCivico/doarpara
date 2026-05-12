@@ -70,15 +70,10 @@
         </p>
 
         <div
-          v-if="!campaign?.payment_method_list?.length"
+          v-if="disabledCampaignMessage"
           class="disabled-methods"
         >
-          <template v-if="!campaign?.cnpj_approved">
-            {{ $t('legal_entities_id_missing') }}
-          </template>
-          <template v-else>
-            {{ $t('disabledPaymentMethods') }}
-          </template>
+          {{ disabledCampaignMessage }}
         </div>
 
         <donationValues
@@ -92,8 +87,8 @@
 </template>
 <script setup lang="ts">
 import type { Campaign } from '@/doar-para.d.ts';
-import generateCloudflareSrcset from '@/utils/generateCloudflareSrcset.ts';
 import { useCampaignStore } from '@/store/campaign.ts';
+import generateCloudflareSrcset from '@/utils/generateCloudflareSrcset.ts';
 
 const route = useRoute();
 const baseUrl = useRuntimeConfig().public.baseUrl as string | undefined;
@@ -111,7 +106,9 @@ const showVideo = ref(false);
 const origin: string = globalThis?.location?.origin ?? '';
 
 const campaignStore = useCampaignStore();
-const { donationSources, totalAmount, totalDonations, currentGoal } = storeToRefs(campaignStore);
+const {
+  donationSources, totalAmount, totalDonations, currentGoal
+} = storeToRefs(campaignStore);
 
 const videoId = computed<string | null | undefined>(() => getYoutubeId(props.campaign.video));
 const youtubeThumbnail = computed(() => (videoId.value ? getYoutubeThumbnail({ id: videoId.value }) : ''));
@@ -152,6 +149,20 @@ const campaignCoverSrcset = computed(() => (
     ? generateCloudflareSrcset(props.campaign.cover, baseUrl)
     : undefined
 ));
+
+const { t } = useI18n();
+
+const disabledCampaignMessage = computed(() => {
+  if (!props.campaign?.payment_method_list?.length) {
+    if (!props.campaign?.cnpj_approved
+      && props.campaign?.campaign_donation_type !== 'pre-campaign'
+    ) {
+      return t('legal_entities_id_missing');
+    }
+    return t('disabledCampaign');
+  }
+  return '';
+});
 </script>
 <style lang="scss" scoped>
 // TO-DO: Update styles. It's ugly!

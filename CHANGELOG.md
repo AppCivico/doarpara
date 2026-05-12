@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Wrong messages for disabled campaigns
+
 ## v3.4.25 - 2026-05-12
 
 - fix: Specificity of hovered buttons too high

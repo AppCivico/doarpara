@@ -20,7 +20,7 @@ export default {
     validationCode: 'CVV',
   },
   currentGoal: 'Meta corrente',
-  disabledPaymentMethods: 'Doações finalizadas',
+  disabledCampaign: 'Doações indisponíveis',
   legal_entities_id_missing: 'Aguardando confirmação de CNPJ',
   donateWithoutReward: 'Doe sem recompensa',
   donationForm: {
