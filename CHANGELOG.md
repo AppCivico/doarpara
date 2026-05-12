@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.25 - 2026-05-12
+
 - fix: Specificity of hovered buttons too high
 - fix: Button over intro video overflowing area on hover/focus
 
