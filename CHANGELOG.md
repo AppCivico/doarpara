@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.26 - 2026-05-12
+
 - fix: Wrong messages for disabled campaigns
 
 ## v3.4.25 - 2026-05-12
