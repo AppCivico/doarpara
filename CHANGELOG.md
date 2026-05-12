@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Specificity of hovered buttons too high
+
 ## v3.4.24 - 2026-05-11
 
 - fix: Worker 1102 under marketing traffic — strip query strings (utm_*, fbclid, gclid, etc.) from cache keys so tracking-tagged URLs no longer fragment the KV cache; `ref` is preserved server-side for ref-specific cover videos

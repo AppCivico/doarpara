@@ -276,7 +276,7 @@ form br {
 
   @include my.themed-color('border-color', ('border'));
 
-  &:not(:disabled):hover {
+  &:where(:not(:disabled)):hover {
     @include my.hovered;
   }
 
