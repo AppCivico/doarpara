@@ -277,25 +277,14 @@
 <script setup lang="ts">
 import { useCampaignStore } from '@/store/campaign.ts';
 import { isPreviewMode, notifyPreviewResult, setupCampaignPreview } from '@/utils/setupCampaignPreview.ts';
+import { setPreservedScrollY } from '~/app/router.options.ts';
 
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
-const router = useRouter()
-const savedScrollY = ref<number | null>(null)
 
 function saveScroll() {
-  savedScrollY.value = window.scrollY
+  setPreservedScrollY(window.scrollY);
 }
-
-const removeAfterEach = router.afterEach(() => {
-  if (savedScrollY.value !== null) {
-    const y = savedScrollY.value
-    savedScrollY.value = null
-    nextTick(() => window.scrollTo({ top: y, behavior: 'instant' }))
-  }
-})
-
-onUnmounted(removeAfterEach)
 
 const head = useLocaleHead();
 
