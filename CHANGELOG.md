@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.27 - 2026-05-14
+
 - fix: Window scrolling unnecessarily on tab navigation
 
 ## v3.4.26 - 2026-05-12
