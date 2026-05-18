@@ -73,8 +73,8 @@
         "POSTAL_SERVICE_QUERY_URL": "https://api24.doarpara.com.br/api/cep?cep=",
         "PRIVATE_API": "https://api24.doarpara.com.br",
         "PUBLIC_API": "https://api24.doarpara.com.br/public-api",
-        "URL_OF_PRIVACY_POLICY": "https://blog.doarpara.com.br/contrato/",
-        "URL_OF_USE_TERMS": "https://blog.doarpara.com.br/contrato/"
+        "URL_OF_PRIVACY_POLICY": "https://www2.doarpara.com.br/contrato/",
+        "URL_OF_USE_TERMS": "https://www2.doarpara.com.br/contrato/"
       },
       // KV namespace for NuxtHub cache (production)
       "kv_namespaces": [
