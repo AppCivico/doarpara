@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.29 - 2026-05-18
+
 ## v3.4.28 - 2026-05-18
 
 - fix: CSP `connect-src` missing `googletagmanager.com`, blocking GTM debug requests
