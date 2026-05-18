@@ -54,6 +54,7 @@ export default defineEventHandler((event) => {
     + "connect-src 'self' blob: data: "
       + "https://static.cloudflareinsights.com/ "
       + "https://*.google-analytics.com/ "
+      + "https://*.googletagmanager.com/ "
       + "https://*.facebook.com/ "
       + "https://*.appcivico.com/ "
       + "https://*.votolegal.com/ "
