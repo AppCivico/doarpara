@@ -1470,3 +1470,8 @@ $no-viewport: false !default;
 @mixin like-a {
   all: unset;
 }
+
+@mixin button-padding {
+  // stylelint-disable-next-line property-units
+  padding: calc(c.$gutter * 0.75 - c.$stroke) 0.75rem;
+}

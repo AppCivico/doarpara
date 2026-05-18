@@ -69,6 +69,8 @@
 }
 
 .donation-values__custom-currency {
+  @include my.button-padding;
+
   display: flex;
 
   flex-basis: 33%;
@@ -78,7 +80,7 @@
   justify-content: flex-end;
 
   height: auto;
-  padding: 0;
+  padding-right: 0.75rem * 0.5;
   margin: 0;
 
   font-size: 1em;
@@ -87,11 +89,14 @@
 }
 
 .donation-values__custom-input {
+  @include my.button-padding;
+
   flex-basis: 33%;
   flex-grow: 1;
 
   // to make sure at least 4 digits are visible
   min-width: 4.5em;
+  padding-left: 0.75rem * 0.5; // similar to button padding defined at %button-reset, but with half on the left side
 
   font-weight: inherit;
   text-align: left;
@@ -102,6 +107,10 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 
+  &:invalid {
+    border-radius: 0;
+  }
+
   &[class]:hover,
   &[class]:focus {
     outline: 0;
@@ -109,16 +118,19 @@
 }
 
 .donation-values__custom-submit[class] {
+  @include my.image-replacement;
+  @include my.themed-color('background-color', ('button', 'focus'));
+
   flex-basis: 25%;
   flex-grow: 1;
+  max-width: max-content;
   text-indent: calc(101% + my.$gutter * 2);
   background-image: my.image('icons/icon-arrow-triangle-fill-right.svg');
   background-position: 50%;
   border: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  @include my.image-replacement;
-  @include my.themed-color('background-color', ('button', 'focus'));
+
   &:hover,
   &:focus {
     box-shadow: 0 20px 24px -10px my.palette('effects', 'shadow'), 0 12px 24px -12px color.adjust(my.palette('brand', 'tertiary'), $alpha: -0.2);
