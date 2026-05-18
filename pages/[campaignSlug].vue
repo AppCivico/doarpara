@@ -28,7 +28,7 @@ const donateStore = useDonateStore();
 const { campaign, error } = storeToRefs(campaignStore);
 const { referral } = storeToRefs(donateStore);
 
-const { initialize } = useGtag();
+const { gtag } = useGtag();
 
 function storeReferral() {
   const referralCode = route.query[runtimeConfig.public.queryStringSpecialParameters.referrer];
@@ -119,7 +119,7 @@ src="https://www.facebook.com/tr?id=${campaign.value.facebook_pixel}&ev=PageView
   if (!import.meta.dev && campaign.value?.google_analytics) {
     onMounted(() => {
       if (campaign.value?.google_analytics) {
-        initialize(campaign.value.google_analytics);
+        gtag('config', campaign.value.google_analytics);
       }
     });
   }

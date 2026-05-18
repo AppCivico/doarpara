@@ -3,6 +3,7 @@
 ## v3.4.28 - 2026-05-18
 
 - fix: CSP `connect-src` missing `googletagmanager.com`, blocking GTM debug requests
+- fix: Campaign-specific GA4 tags never sending hits — `nuxt-gtag`'s `initialize()` is a no-op when a default tag is already loaded; replaced with direct `gtag('config', id)` call
 
 ## v3.4.27 - 2026-05-14
 
