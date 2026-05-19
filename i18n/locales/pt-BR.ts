@@ -73,7 +73,7 @@ Declaro estar ciente que, ao realizar uma doação, por conta da legislação el
   electionCampaign: {
     ballotNumber: 'Número',
     politicalParty: 'Partido',
-    runningForLocation: 'Concorre em',
+    runningForLocation: 'Concorre por {location}',
     preRunningForOffice: {
       female: 'Pré-candidata a',
       male: 'Pré-candidato a',

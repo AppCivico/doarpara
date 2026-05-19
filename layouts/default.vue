@@ -81,14 +81,14 @@
                   </div>
 
                   <div
-                    v-if="campaign.fundraiser.city && campaign.fundraiser.state"
+                    v-if="locationLevelToShow.city || locationLevelToShow.state"
                     class="colophon__campaign-location colophon__campaign-location--election"
                   >
                     <dt>
                       {{ $t('electionCampaign.runningForLocation') }}
                     </dt>
                     <dd>
-                      <template v-if="campaign.fundraiser.city">
+                      <template v-if="locationLevelToShow.city">
                         <span class="colophon__campaign-location-city">
                           {{ campaign.fundraiser.city }}
                         </span>
@@ -345,4 +345,21 @@ if (route.params.campaignSlug) {
     }
   }
 }
+
+const locationLevelToShow = computed(() => {
+  const showState = [
+    'state_legislature',
+    'state_government',
+    'federal_chamber',
+    'senate',
+  ];
+  const showCity = ['municipal_council', 'city_hall'];
+
+  return {
+    state: campaign.value?.fundraiser?.state
+      && showState.includes(campaign.value?.fundraiser?.office),
+    city: campaign.value?.fundraiser?.city
+      && showCity.includes(campaign.value?.fundraiser?.office),
+  }
+});
 </script>
