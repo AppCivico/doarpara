@@ -1,5 +1,7 @@
 # Changelog
 
+- feat: App version logged to the browser console on load (`<title> v<version>`)
+
 ## v3.4.31 - 2026-05-19
 
 - fix: Sharing image being ignored by WhatsApp

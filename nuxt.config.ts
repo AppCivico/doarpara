@@ -1,5 +1,10 @@
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
+let version = 'unknown';
+try {
+  version = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8')).version;
+} catch { /* non-fatal */ }
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -162,6 +167,8 @@ export default defineNuxtConfig({
 
       campaignPoolingInterval: Number(process.env.CAMPAIGN_POOLING_INTERVAL)
         || 0,
+
+      version,
 
       controlPanelOrigin: process.env.CONTROL_PANEL_ORIGIN || '',
 
