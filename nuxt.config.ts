@@ -115,28 +115,27 @@ export default defineNuxtConfig({
     '/**': {
       cache: {
         maxAge: Number(process.env.EDGE_CACHE_DURATION) || 30,
-        // swr=true (default): serve stale while revalidating in background —
-        // avoids Worker exhaustion on cache expiry / post-deploy thundering herd.
-        // staleMaxAge: after maxAge+staleMaxAge seconds the entry is "too stale"
-        // and Nitro blocks on a fresh SSR instead of serving stale. That SSR
-        // fires render:response, which lets purge-stale-on-error.ts detect 404s
-        // and purge the KV entry. staleMaxAge=-1 (default) serves stale forever
-        // and must never be used.
-        // The 5 min default absorbs `waitUntil` cancellations (see
-        // WORKER-PERFORMANCE.md) and the post-deploy thundering herd that
-        // happens when Nitro's per-build `integrity` hash invalidates all
-        // existing entries. Aligned with CAMPAIGN_POOLING_INTERVAL (5 min):
-        // the client-side poll refreshes data after that anyway, so the
-        // user-visible staleness window is capped at ~5 min regardless.
+        // swr=true (default): when an entry exists, Nitro ALWAYS serves stale
+        // and revalidates in the background via waitUntil — it never blocks,
+        // regardless of staleMaxAge. staleMaxAge only sets the
+        // stale-while-revalidate response header for browsers/CDNs; it has no
+        // effect on Nitro's own serve-vs-block decision (verified in
+        // nitropack/dist/runtime/internal/cache.mjs lines 83-94).
+        // Consequence: stale entries are served indefinitely if waitUntil writes
+        // keep failing (IoContext cancellation). The only way to force a fresh
+        // blocking SSR is a true cold miss (no KV entry at all) — achieved by
+        // purging the namespace after each deploy.
         staleMaxAge: Number(process.env.STALE_MAX_AGE) || 300,
         // Tie the integrity to the Cloudflare Pages commit hash so that every
-        // deploy invalidates all existing KV entries. Without this, Nitro
+        // deploy marks all existing entries as expired. Without this, Nitro
         // computes integrity from hash(handler+opts), which doesn't change when
-        // only client-side code (plugins, CSS) is updated — causing users to
-        // receive stale HTML that references old JS bundles indefinitely.
+        // only client-side code (plugins, CSS) is updated — so stale entries
+        // are never flagged for revalidation after a client-only deploy.
         // CF_PAGES_COMMIT_SHA is injected by Cloudflare Pages at build time;
-        // undefined in local dev (falls back to Nitro's default, which is fine
-        // since local dev doesn't use KV).
+        // undefined in local dev (no effect, local dev doesn't use KV).
+        // Note: marking as expired still only triggers a background waitUntil
+        // revalidation (not a blocking SSR), because swr=true. To guarantee
+        // fresh HTML after a deploy, purge the KV namespace post-deploy.
         integrity: process.env.CF_PAGES_COMMIT_SHA,
         // Prevent request headers (e.g. accept-encoding, user-agent) from
         // leaking into the cache key hash, which would create one KV entry per

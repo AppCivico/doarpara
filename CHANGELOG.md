@@ -2,7 +2,7 @@
 
 ## v3.4.33 - 2026-05-19
 
-- fix: KV cache not invalidated on deploy when only client-side code changes — tie cache integrity to `CF_PAGES_COMMIT_SHA` so every Cloudflare Pages deploy flushes stale entries
+- fix: KV cache not invalidated on deploy when only client-side code changes — tie cache integrity to `CF_PAGES_COMMIT_SHA` so every Cloudflare Pages deploy marks stale entries for revalidation
 
 ## v3.4.32 - 2026-05-19
 
