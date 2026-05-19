@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.32 - 2026-05-19
+
 - feat: App version logged to the browser console on load (`<title> v<version>`)
 
 ## v3.4.31 - 2026-05-19
