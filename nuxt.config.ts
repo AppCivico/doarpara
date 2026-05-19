@@ -129,6 +129,15 @@ export default defineNuxtConfig({
         // the client-side poll refreshes data after that anyway, so the
         // user-visible staleness window is capped at ~5 min regardless.
         staleMaxAge: Number(process.env.STALE_MAX_AGE) || 300,
+        // Tie the integrity to the Cloudflare Pages commit hash so that every
+        // deploy invalidates all existing KV entries. Without this, Nitro
+        // computes integrity from hash(handler+opts), which doesn't change when
+        // only client-side code (plugins, CSS) is updated — causing users to
+        // receive stale HTML that references old JS bundles indefinitely.
+        // CF_PAGES_COMMIT_SHA is injected by Cloudflare Pages at build time;
+        // undefined in local dev (falls back to Nitro's default, which is fine
+        // since local dev doesn't use KV).
+        integrity: process.env.CF_PAGES_COMMIT_SHA,
         // Prevent request headers (e.g. accept-encoding, user-agent) from
         // leaking into the cache key hash, which would create one KV entry per
         // unique client fingerprint and grow the namespace unboundedly.
