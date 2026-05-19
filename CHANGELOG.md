@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Sharing image being ignored by WhatsApp
+
 ## v3.4.30 - 2026-05-19
 
 - feat: Campaign location showing city or state based on the office being run for

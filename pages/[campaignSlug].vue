@@ -11,6 +11,7 @@
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
 import { isPreviewMode } from '@/utils/setupCampaignPreview.ts';
+import generateCloudflareOgImage from '@/utils/generateCloudflareOgImage.ts';
 
 let pollingInterval: ReturnType<typeof setInterval> | null = null;
 
@@ -101,14 +102,16 @@ src="https://www.facebook.com/tr?id=${campaign.value.facebook_pixel}&ev=PageView
       ? `${campaign.value?.name} • ${runtimeConfig.public.title}`
       : `${runtimeConfig.public.title}`),
     ogTitle: () => campaign.value?.name,
-    ogImage: () => (typeof campaign.value?.sharing_image === 'object'
-      ? {
-        url: campaign.value?.sharing_image?.url,
-        width: campaign.value?.sharing_image?.width,
-        height: campaign.value?.sharing_image?.height,
-      }
-      : campaign.value?.sharing_image
-      || null),
+    ogImage: () => {
+      const raw = campaign.value?.sharing_image;
+      const src = typeof raw === 'object' ? raw?.url : raw;
+      if (!src) return null;
+      return {
+        url: generateCloudflareOgImage(src, useRequestURL().origin),
+        width: 1200,
+        height: 630,
+      };
+    },
     description: () => campaign.value?.preamble,
     ogDescription: () => campaign.value?.preamble,
     ogType: 'website',
