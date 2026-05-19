@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.34 - 2026-05-19
+
 - fix: Cropping of sharing images crashing the server
 
 ## v3.4.33 - 2026-05-19
