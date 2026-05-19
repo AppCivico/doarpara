@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.4.30 - 2026-05-19
+
 - feat: Campaign location showing city or state based on the office being run for
 
 ## v3.4.29 - 2026-05-18
