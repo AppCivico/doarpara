@@ -90,17 +90,18 @@ onBeforeUnmount(() => {
 });
 
 const copied = ref(false);
-async function copyPixCode() {
-  const code = receipt.value?.donation?.pix?.qrcode_text;
-  if (!code) return;
+async function copyToClipboard(text) {
+  if (!text) return;
   try {
-    await navigator.clipboard.writeText(code);
+    await navigator.clipboard.writeText(text);
     copied.value = true;
     setTimeout(() => { copied.value = false; }, 2500);
   } catch (_) {
     // user can still select the text manually
   }
 }
+const copyPixCode = () => copyToClipboard(receipt.value?.donation?.pix?.qrcode_text);
+const copyBoletoLine = () => copyToClipboard(receipt.value?.donation?.boleto?.digitable_line);
 </script>
 <template>
   <div v-if="pending">
@@ -231,26 +232,41 @@ async function copyPixCode() {
       </template>
 
       <template v-else-if="receipt?.donation.is_boleto && receipt?.donation.boleto">
-        <p>Clique no botão abaixo para abrir o boleto e efetuar o pagamento:</p>
-
-        <a
-          v-if="receipt.donation.boleto.pdf_url"
-          class="checkout__boleto-link"
-          :href="receipt.donation.boleto.pdf_url"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Abrir boleto (PDF)
-        </a>
-
         <p v-if="receipt.donation.boleto.due_date" class="checkout__hint">
           Vencimento:
           <strong>{{ receipt.donation.boleto.due_date }}</strong>
         </p>
 
+        <img
+          v-if="receipt.donation.boleto.barcode_image_url"
+          class="checkout__boleto-barcode"
+          :src="receipt.donation.boleto.barcode_image_url"
+          alt="Código de barras do boleto"
+        >
+
+        <template v-if="receipt.donation.boleto.digitable_line">
+          <p>Linha digitável (copie e cole no app do seu banco):</p>
+
+          <textarea
+            class="checkout__pix-code"
+            readonly
+            rows="2"
+            :value="receipt.donation.boleto.digitable_line"
+            @focus="$event.target.select()"
+          />
+
+          <button type="button" class="checkout__copy" @click="copyBoletoLine">
+            {{ copied ? 'Copiado!' : 'Copiar linha digitável' }}
+          </button>
+        </template>
+
+        <p v-else class="checkout__hint">
+          Estamos gerando os dados do boleto. Atualize a página em alguns segundos.
+        </p>
+
         <p class="checkout__hint">
-          A linha digitável e o código de barras estão no PDF do boleto.
-          Esta página será atualizada automaticamente após a compensação bancária (pode levar até 2 dias úteis).
+          Após o pagamento, esta página será atualizada automaticamente
+          (a compensação bancária pode levar até 2 dias úteis).
         </p>
       </template>
 
@@ -727,6 +743,15 @@ async function copyPixCode() {
 
   width: 16rem;
   max-width: 100%;
+  height: auto;
+  margin: my.$gutter auto;
+}
+
+.checkout__boleto-barcode {
+  display: block;
+
+  width: 100%;
+  max-width: 32rem;
   height: auto;
   margin: my.$gutter auto;
 }
