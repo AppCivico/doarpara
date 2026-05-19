@@ -107,7 +107,7 @@ src="https://www.facebook.com/tr?id=${campaign.value.facebook_pixel}&ev=PageView
       const src = typeof raw === 'object' ? raw?.url : raw;
       if (!src) return null;
       return {
-        url: generateCloudflareOgImage(src, useRequestURL().origin),
+        url: generateCloudflareOgImage(src, runtimeConfig.public.i18n.baseUrl),
         width: 1200,
         height: 630,
       };
