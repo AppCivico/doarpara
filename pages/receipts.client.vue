@@ -19,10 +19,13 @@ const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 const { hash } = route.params;
 
+const endpoint = `${runtimeConfig.public.publicApiBase}/donation/digest/${hash}`;
+
 const {
   data: receipt,
   pending,
-} = await useLazyFetch(`${runtimeConfig.public.publicApiBase}/donation/digest/${hash}`, {
+  refresh,
+} = await useLazyFetch(endpoint, {
   onResponseError({ response: { status, statusText, _data: responseData } }) {
     const message = responseData?.message
       || responseData?.error
@@ -36,6 +39,68 @@ const {
     });
   },
 });
+
+const paymentStatus = computed(() => receipt.value?.donation?.payment_status);
+const isPending = computed(() => paymentStatus.value === 'pending');
+
+// Status polling: while the donation is pending and the tab is visible, hit
+// the lightweight status endpoint every 4s. When it flips to paid/refunded,
+// refresh the full payload once so the page swaps from checkout to receipt.
+let pollTimer = null;
+const isVisible = ref(typeof document === 'undefined' || document.visibilityState !== 'hidden');
+function stopPolling() {
+  if (pollTimer) {
+    clearInterval(pollTimer);
+    pollTimer = null;
+  }
+}
+async function pollStatus() {
+  try {
+    const status = await $fetch(`${endpoint}/status`);
+    if (status?.payment_status && status.payment_status !== 'pending') {
+      stopPolling();
+      await refresh();
+    }
+  } catch (_) {
+    // swallow transient errors; the next tick will retry
+  }
+}
+function handleVisibilityChange() {
+  isVisible.value = document.visibilityState !== 'hidden';
+  // Catch up immediately when returning to the tab so the user doesn't wait
+  // up to 4s for the next tick if the payment cleared while they were away.
+  if (isVisible.value && isPending.value) {
+    pollStatus();
+  }
+}
+watchEffect(() => {
+  if (isPending.value && isVisible.value && !pollTimer) {
+    pollTimer = setInterval(pollStatus, 4000);
+  }
+  else if (!isPending.value || !isVisible.value) {
+    stopPolling();
+  }
+});
+onMounted(() => {
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+});
+onBeforeUnmount(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+  stopPolling();
+});
+
+const copied = ref(false);
+async function copyPixCode() {
+  const code = receipt.value?.donation?.pix?.qrcode_text;
+  if (!code) return;
+  try {
+    await navigator.clipboard.writeText(code);
+    copied.value = true;
+    setTimeout(() => { copied.value = false; }, 2500);
+  } catch (_) {
+    // user can still select the text manually
+  }
+}
 </script>
 <template>
   <div v-if="pending">
@@ -56,7 +121,12 @@ const {
       </div>
       <hgroup>
         <h1>
-          Recibo
+          <template v-if="isPending">
+            Pagamento da doação
+          </template>
+          <template v-else>
+            Recibo
+          </template>
           <span
             v-if="receipt?.donation.refunded_at_human"
             class="receipts-page__refunded-at"
@@ -67,11 +137,21 @@ const {
 
         <p class="receipts-page-title">
           <template v-if="receipt?.donation?.candidate?.is_party">
-            Essa doação foi realizada para
+            <template v-if="isPending">
+              Essa doação está sendo realizada para
+            </template>
+            <template v-else>
+              Essa doação foi realizada para
+            </template>
             <strong>{{ receipt?.donation.candidate.name }}</strong>.
           </template>
           <template v-else>
-            Essa doação foi realizada para
+            <template v-if="isPending">
+              Essa doação está sendo realizada para
+            </template>
+            <template v-else>
+              Essa doação foi realizada para
+            </template>
             <strong>{{ receipt?.donation.candidate.popular_name }}</strong>,
             <template
               v-if="receipt?.donation.candidate.campaign_donation_type === 'pre-campaign'"
@@ -113,7 +193,76 @@ const {
       </hgroup>
     </header>
 
-    <section>
+    <section v-if="isPending" class="checkout">
+      <h2>Aguardando pagamento</h2>
+
+      <p class="checkout__amount">
+        Valor a pagar:
+        <strong>{{ $n(receipt?.donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) }}</strong>
+      </p>
+
+      <template v-if="receipt?.donation.is_pix && receipt?.donation.pix">
+        <p>Escaneie o QR Code abaixo com o aplicativo do seu banco:</p>
+
+        <img
+          v-if="receipt.donation.pix.qrcode_image_url"
+          class="checkout__pix-qr"
+          :src="receipt.donation.pix.qrcode_image_url"
+          alt="QR Code Pix para pagamento"
+        >
+
+        <p>Ou copie o código Pix Copia e Cola:</p>
+
+        <textarea
+          class="checkout__pix-code"
+          readonly
+          rows="3"
+          :value="receipt.donation.pix.qrcode_text"
+          @focus="$event.target.select()"
+        />
+
+        <button type="button" class="checkout__copy" @click="copyPixCode">
+          {{ copied ? 'Copiado!' : 'Copiar código Pix' }}
+        </button>
+
+        <p class="checkout__hint">
+          Esta página será atualizada automaticamente assim que recebermos a confirmação do pagamento.
+        </p>
+      </template>
+
+      <template v-else-if="receipt?.donation.is_boleto && receipt?.donation.boleto">
+        <p>Clique no botão abaixo para abrir o boleto e efetuar o pagamento:</p>
+
+        <a
+          v-if="receipt.donation.boleto.pdf_url"
+          class="checkout__boleto-link"
+          :href="receipt.donation.boleto.pdf_url"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Abrir boleto (PDF)
+        </a>
+
+        <p v-if="receipt.donation.boleto.due_date" class="checkout__hint">
+          Vencimento:
+          <strong>{{ receipt.donation.boleto.due_date }}</strong>
+        </p>
+
+        <p class="checkout__hint">
+          A linha digitável e o código de barras estão no PDF do boleto.
+          Esta página será atualizada automaticamente após a compensação bancária (pode levar até 2 dias úteis).
+        </p>
+      </template>
+
+      <template v-else>
+        <p class="checkout__hint">
+          Estamos aguardando a confirmação do seu pagamento.
+          Esta página será atualizada automaticamente assim que ele for processado.
+        </p>
+      </template>
+    </section>
+
+    <section v-else>
       <p>
         As doações eleitorais são muito importantes para construção de projetos políticos,
         porém é fundamental que as plataformas de financiamento coletivo, sociedade e o próprio
@@ -250,12 +399,20 @@ const {
             {{ formatCPF(receipt?.donation.donor_cpf) || '-' }}
           </dd>
         </div>
-        <div class="receipt-data__item">
+        <div v-if="!isPending && receipt?.donation.captured_at_human" class="receipt-data__item">
           <dt class="receipt-data__term">
             Data da doação
           </dt>
           <dd class="receipt-data__description">
             {{ $d(new Date(receipt?.donation.captured_at_human), 'medium') }}
+          </dd>
+        </div>
+        <div v-else-if="isPending" class="receipt-data__item">
+          <dt class="receipt-data__term">
+            Status
+          </dt>
+          <dd class="receipt-data__description signage__text--warning">
+            Aguardando pagamento
           </dd>
         </div>
         <div class="receipt-data__item">
@@ -297,7 +454,7 @@ const {
         </div>
       </dl>
     </section>
-    <section>
+    <section v-if="!isPending">
       <h2>Informações sobre o registro na blockchain</h2>
       <p>
         Para que sua doação tenha garantias, usamos o Blockchain, uma ferramenta
@@ -555,5 +712,68 @@ const {
   margin: 0 auto;
 
   border-top: 1px solid #ebebeb;
+}
+
+.checkout {
+  text-align: center;
+}
+
+.checkout__amount {
+  font-size: my.ms-step(2);
+}
+
+.checkout__pix-qr {
+  display: block;
+
+  width: 16rem;
+  max-width: 100%;
+  height: auto;
+  margin: my.$gutter auto;
+}
+
+.checkout__pix-code {
+  display: block;
+
+  width: 100%;
+  max-width: 32rem;
+  margin: my.$gutter auto;
+  padding: my.$gutter * 0.5;
+
+  font-family: monospace;
+  font-size: 0.85em;
+  word-break: break-all;
+
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: none;
+}
+
+.checkout__copy,
+.checkout__boleto-link {
+  display: inline-block;
+
+  padding: my.$gutter * 0.5 my.$gutter * 1.5;
+  margin: my.$gutter * 0.5 0;
+
+  font-weight: bold;
+  color: #ffffff;
+  text-decoration: none;
+
+  cursor: pointer;
+  background: #2667ff;
+  border: 0;
+  border-radius: 6px;
+
+  &:hover,
+  &:focus {
+    background: color.adjust(#2667ff, $lightness: -8%);
+  }
+}
+
+.checkout__hint {
+  margin-top: my.$gutter;
+
+  font-size: 0.9em;
+  color: #666;
 }
 </style>
