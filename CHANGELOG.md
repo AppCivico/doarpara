@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Browser caching error responses (4xx/5xx) — override `Cache-Control` to `no-store` for error responses in `render:response` hook
+
 ## v3.4.34 - 2026-05-19
 
 - fix: Cropping of sharing images crashing the server
