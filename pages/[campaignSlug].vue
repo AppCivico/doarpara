@@ -17,6 +17,7 @@ let pollingInterval: ReturnType<typeof setInterval> | null = null;
 
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
+const requestOrigin = useRequestURL().origin;
 
 // Exclude paths with dots (static files like robots.txt, manifest.json, etc.)
 // Campaign slugs cannot contain dots
@@ -107,7 +108,7 @@ src="https://www.facebook.com/tr?id=${campaign.value.facebook_pixel}&ev=PageView
       const src = typeof raw === 'object' ? raw?.url : raw;
       if (!src) return null;
       return {
-        url: generateCloudflareOgImage(src, runtimeConfig.public.i18n.baseUrl),
+        url: generateCloudflareOgImage(src, requestOrigin),
         width: 1200,
         height: 630,
       };
