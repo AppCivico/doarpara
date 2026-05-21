@@ -214,19 +214,5 @@ onMounted(() => {
 .donations-page__receipts-table {
   width: 100%;
 
-  @media screen and (max-width: #{my.breakpoint('toggle-table-layout') - 0.01}) {
-    tbody {
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 0 my.$gutter;
-    }
-
-    tr {
-      flex-basis: calc(50% - my.$gutter);
-      flex-grow: 1;
-    }
-  }
 }
 </style>

@@ -2,6 +2,7 @@
 
 - fix: Browser caching error responses (4xx/5xx) — override `Cache-Control` to `no-store` for error responses in `render:response` hook
 - feat: Prevent generation of sharing image from crashing the server
+- fix: Styles for tables on narrow screen not being applied
 
 ## v3.4.34 - 2026-05-19
 
