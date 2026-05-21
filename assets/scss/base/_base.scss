@@ -639,8 +639,8 @@ a {
   &:active {
     @include my.themed-color('color', ('anchor', 'active'));
 
-    & {
-  background-color: transparent;
+  & {
+    background-color: transparent;
   }
 }
 
