@@ -482,7 +482,7 @@ $_themes: 'blue' 'green' 'orange' 'red';
   // stylelint-disable-next-line property-units
   font-size: 14px; /* font-awesome pixel perfection is at 14px and multiples of 14 */
   font-style: normal;
-  font-weight: font-weight('normal');
+  font-weight: f.font-weight('normal');
   font-variant: normal;
   line-height: 1;
   text-transform: none;
