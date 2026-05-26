@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: A11y issues on table of donations
+
 ## v3.4.35 - 2026-05-22
 
 - fix: Browser caching error responses (4xx/5xx) — override `Cache-Control` to `no-store` for error responses in `render:response` hook

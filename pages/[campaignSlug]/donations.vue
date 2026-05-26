@@ -31,15 +31,22 @@
           -->
           <thead>
             <tr>
-              <th>{{ $t('receipts.donorName') }}</th>
+              <th id="col-donor-name">
+                {{ $t('receipts.donorName') }}
+              </th>
               <th
+                id="col-natural-person-id"
                 class="cell--nowrap"
               >
                 {{ $t('naturalPersonIdentification') }}
               </th>
-              <th>{{ $t('receipts.creationDate') }}</th>
-              <th>{{ $t('receipts.paymentMethod') }}</th>
-              <th class="cell--number">
+              <th id="col-creation-date">
+                {{ $t('receipts.creationDate') }}
+              </th>
+              <th id="col-payment-method">
+                {{ $t('receipts.paymentMethod') }}
+              </th>
+              <th id="col-amount" class="cell--number">
                 {{ $t('receipts.amount') }}
               </th>
               <!--
@@ -59,26 +66,40 @@
                 'unmasked-row': donationToUnmask === donation.id,
               }"
             >
-              <td :aria-label="$t('receipts.donorName')">
+              <td
+                :data-label="$t('receipts.donorName')"
+                aria-labelledby="col-donor-name"
+              >
                 {{ donationToUnmask === donation.id
                   ? donation.donor_name
                   : maskName(donation.donor_name) }}
               </td>
               <td
-                :aria-label="$t('naturalPersonIdentification')"
+                :data-label="$t('naturalPersonIdentification')"
+                aria-labelledby="col-natural-person-id"
                 class="cell--nowrap"
               >
                 {{ donationToUnmask === donation.id
                   ? formatCPF(donation.donor_natural_person_id)
                   : maskCPF(donation.donor_natural_person_id) }}
               </td>
-              <td :aria-label="$t('receipts.creationDate')">
+              <td
+                :data-label="$t('receipts.creationDate')"
+                aria-labelledby="col-creation-date"
+              >
                 {{ $d(new Date(donation.captured_at), 'medium') }}
               </td>
-              <td :aria-label="$t('receipts.paymentMethod')">
+              <td
+                :data-label="$t('receipts.paymentMethod')"
+                aria-labelledby="col-payment-method"
+              >
                 {{ $t(`paymentMethods.${donation.payment_method}`) }}
               </td>
-              <td :aria-label="$t('receipts.amount')" class="cell--number">
+              <td
+                :data-label="$t('receipts.amount')"
+                aria-labelledby="col-amount"
+                class="cell--number"
+              >
                 {{ $n(donation.amount / 100, 'currency', { maximumFractionDigits: 2 }) }}
               </td>
               <!--

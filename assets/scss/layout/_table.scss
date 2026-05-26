@@ -195,7 +195,7 @@ tbody td {
   text-align: left;
 
   @media screen and (max-width: #{my.breakpoint('toggle-table-layout') - 0.01}) {
-    &[aria-label] {
+    &[data-label] {
       &::before {
         display: block;
 
@@ -204,7 +204,7 @@ tbody td {
         font-weight: font-weight('bold');
         color: my.palette('neutral');
 
-        content: attr(aria-label);
+        content: attr(data-label);
       }
 
       &:first-child::before {
