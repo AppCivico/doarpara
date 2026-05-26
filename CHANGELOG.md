@@ -1,6 +1,7 @@
 # Changelog
 
 - fix: A11y issues on table of donations
+- feat: Allow use of clean theme
 
 ## v3.4.35 - 2026-05-22
 

@@ -1,7 +1,10 @@
 export default (themeName = 'default') => {
-  const trimmedThemeName = themeName.trim();
+  const trimmed = themeName.trim();
 
-  return trimmedThemeName.indexOf('theme--') === 0
-    ? trimmedThemeName
-    : `theme--${trimmedThemeName}`;
-}
+  if (trimmed.startsWith('theme__')) return trimmed;
+
+  // Strip legacy `theme--` prefix before normalizing to new format
+  const bare = trimmed.startsWith('theme--') ? trimmed.slice(7) : trimmed;
+
+  return `theme__${bare}`;
+};

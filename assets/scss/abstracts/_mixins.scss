@@ -19,7 +19,7 @@ $_themes: 'blue' 'green' 'orange' 'red';
 
 @mixin themed-declaration($theme: null) {
   @if $theme {
-    :where(.theme--#{$theme}:root) & {
+    :where(.theme__#{$theme}:root, [class*="theme__#{$theme}--"]:root) & {
       @content;
     }
   } @else {
@@ -27,7 +27,7 @@ $_themes: 'blue' 'green' 'orange' 'red';
       @content;
     }
 
-    :where(.theme--default:root) & {
+    :where(.theme__default:root, [class*="theme__default--"]:root) & {
       @content;
     }
   }
@@ -51,12 +51,23 @@ $_themes: 'blue' 'green' 'orange' 'red';
   }
 }
 
-@mixin themed-asset($property, $asset-name) {
-  #{$property}: f.image(#{'themes/blue/#{$asset-name}'});
+@mixin themed-asset($property, $asset-name, $gradient-stop-path: null) {
+  :where(:root:not([class*="--clean"])) & {
+    @if $gradient-stop-path {
+      #{$property}: f.image(#{'themes/blue/#{$asset-name}'}), linear-gradient(to bottom, transparent, f.palette($gradient-stop-path...));
+    } @else {
+      #{$property}: f.image(#{'themes/blue/#{$asset-name}'});
+    }
+  }
 
   @each $theme in $_themes {
-    :where(.theme--#{$theme}:root) & {
-      #{$property}: f.image(#{'themes/#{$theme}/#{$asset-name}'});
+    :where(.theme__#{$theme}:root, [class*="theme__#{$theme}--"]:root:not([class*="--clean"])) & {
+      @if $gradient-stop-path {
+        $themed-stop: list.join(('#{$theme}-theme'), $gradient-stop-path);
+        #{$property}: f.image(#{'themes/#{$theme}/#{$asset-name}'}), linear-gradient(to bottom, transparent, f.palette($themed-stop...));
+      } @else {
+        #{$property}: f.image(#{'themes/#{$theme}/#{$asset-name}'});
+      }
     }
   }
 }

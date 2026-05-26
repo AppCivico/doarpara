@@ -253,21 +253,10 @@ $_background-width-beyond-column: 70px;
 
       width: 470px;
 
-      background-image: my.image('themes/blue/preamble.svg'), linear-gradient(to bottom, transparent, my.palette('brand', 'quaternary'));
       background-position: 100% 0;
       border-bottom-right-radius: 60px;
 
-      @include my.themed-declaration ('green') {
-        background-image: my.image('themes/green/preamble.svg'), linear-gradient(to bottom, transparent, my.palette('green-theme', 'brand', 'quaternary'));
-      }
-
-      @include my.themed-declaration ('orange') {
-        background-image: my.image('themes/orange/preamble.svg'), linear-gradient(to bottom, transparent, my.palette('orange-theme', 'brand', 'quaternary'));
-      }
-
-      @include my.themed-declaration ('red') {
-        background-image: my.image('themes/red/preamble.svg'), linear-gradient(to bottom, transparent, my.palette('red-theme', 'brand', 'quaternary'));
-      }
+      @include my.themed-asset('background-image', 'preamble.svg', ('brand', 'quaternary'));
     }
   }
 
