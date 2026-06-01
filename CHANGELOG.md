@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.0 - 2026-06-01
+
 - feat: Differentiate taxes per tier
 
 ## v3.5.0 - 2026-05-26
