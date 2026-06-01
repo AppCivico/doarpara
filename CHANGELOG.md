@@ -1,5 +1,7 @@
 # Changelog
 
+- feat: Differentiate taxes per tier
+
 ## v3.5.0 - 2026-05-26
 
 - fix: A11y issues on table of donations

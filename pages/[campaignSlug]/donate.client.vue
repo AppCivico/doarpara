@@ -611,12 +611,14 @@ Here, sobral! Hydration attribute mismatch on `grossValue` or `combinedPending`:
 </template>
 <script setup lang="ts">
 import states from '@/data/states.json';
-import taxes from '@/data/taxes.ts';
+import type { Taxes, TaxesPerMethod } from '@/data/taxes.ts';
+import taxesPerTier from '@/data/taxes.ts';
 import type {
   CreatedDonation, DonationMessage, MinDonationValue, PaymentMethod,
 } from '@/doar-para.d.ts';
 import { useCampaignStore } from '@/store/campaign.ts';
 import { useDonateStore } from '@/store/donate.ts';
+
 const { t } = useI18n({ useScope: 'global' });
 
 const creditCardMaskOption = {
@@ -688,7 +690,7 @@ const {
 } = storeToRefs(donateStore);
 
 // TODO: remove dumb mapping. It was a bad decision.
-const mappedPaymentMethod = computed(() => {
+const mappedPaymentMethod = computed((): keyof TaxesPerMethod => {
   switch (paymentMethod.value) {
     case 'instant_payment_platform':
       return 'pix';
@@ -697,16 +699,27 @@ const mappedPaymentMethod = computed(() => {
       return 'boleto';
 
     default:
-      return paymentMethod.value;
+      return paymentMethod.value as keyof TaxesPerMethod;
   }
 });
 
-const currentTaxes = computed(() => (taxes[mappedPaymentMethod.value]
-  ? taxes[mappedPaymentMethod.value]
-  : {
+const currentTaxes = computed((): Taxes => {
+  const keyOfMethod = mappedPaymentMethod.value;
+
+  if (campaign.value?.tier && campaign.value.tier in taxesPerTier) {
+    if (keyOfMethod in taxesPerTier[campaign.value.tier]) {
+      // eslint-disable-next-line vue/max-len
+      return taxesPerTier[campaign.value.tier][keyOfMethod as keyof typeof taxesPerTier[typeof campaign.value.tier]];
+    }
+  } else if (keyOfMethod in taxesPerTier.default) {
+    return taxesPerTier.default[keyOfMethod as keyof typeof taxesPerTier.default];
+  }
+
+  return {
     percent: 0,
     tax: 0,
-  }));
+  }
+});
 
 const amount = computed(() => {
   let amountFromUrl = route.query[runtimeConfig.public.queryStringSpecialParameters.amount];

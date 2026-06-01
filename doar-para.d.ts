@@ -152,6 +152,7 @@ export interface Campaign {
   slug: string;
   name: string;
   id: string | number;
+  tier?: string;
 
   fundraiser: FundRaiser;
 
