@@ -9,27 +9,46 @@ interface SubNationalEntities {
   abbr: string;
 }
 
-type Office = 'municipal_council' | 'city_hall' | 'state_legislature' | 'state_government' | 'federal_chamber' | 'senate' | 'presidency';
+type Office =
+  | 'municipal_council'
+  | 'city_hall'
+  | 'state_legislature'
+  | 'state_government'
+  | 'federal_chamber'
+  | 'senate'
+  | 'presidency';
 
 type Gender = 'male' | 'female' | 'other' | 'prefer not to say';
 
-export type PaymentMethod = 'pro_forma_invoice' | 'credit_card' | 'instant_payment_platform';
+export type PaymentMethod =
+  | 'pro_forma_invoice'
+  | 'credit_card'
+  | 'instant_payment_platform';
 
 export type ApiError = {
-  message?: string,
-  statusCode?: number,
-  data?: {
-    message?: string,
-    msg_id?: string,
-    error?: string,
-  } | {
-    message?: string,
-    msg_id?: string,
-    error?: string,
-  }[] | any,
+  message?: string;
+  statusCode?: number;
+  data?:
+    | {
+        message?: string;
+        msg_id?: string;
+        error?: string;
+      }
+    | {
+        message?: string;
+        msg_id?: string;
+        error?: string;
+      }[]
+    | any;
 };
 
-export type CampaignSection = 'description' | 'donations' | 'faq' | 'goals' | 'rewards' | 'testimonies';
+export type CampaignSection =
+  | 'description'
+  | 'donations'
+  | 'faq'
+  | 'goals'
+  | 'rewards'
+  | 'testimonies';
 
 interface PoliticalParty {
   ballot_number: string;
@@ -74,7 +93,13 @@ interface Candidate {
 
 type FundRaiser = Required<Partial<Candidate> & Partial<LegalEntity>>;
 
-type ContactService = 'instagram' | 'mastodon' | 'tiktok' | 'website' | 'twitter' | 'whatsapp';
+type ContactService =
+  | 'instagram'
+  | 'mastodon'
+  | 'tiktok'
+  | 'website'
+  | 'twitter'
+  | 'whatsapp';
 
 export interface ContactMethods {
   [ContactService: string]: string; // Dictionary with contact methods as keys and URLs as values
@@ -87,8 +112,8 @@ export interface Goal {
 }
 
 export type MinDonationValue = {
-  method: PaymentMethod,
-  value: number,
+  method: PaymentMethod;
+  value: number;
 };
 
 export type PledgeValue = number | 'custom';
@@ -193,8 +218,14 @@ export type CreatedDonation = {
   donor: {
     cpf: string;
     name: string;
-  }
-  state: 'boleto_authentication' | 'certificate_refused' | 'credit_card_form' | 'pix_expired' | 'wait_for_compensation' | 'waiting_pix_payment';
+  };
+  state:
+    | 'boleto_authentication'
+    | 'certificate_refused'
+    | 'credit_card_form'
+    | 'pix_expired'
+    | 'wait_for_compensation'
+    | 'waiting_pix_payment';
 } | null;
 
 export type DonationMessage = {
