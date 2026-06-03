@@ -42,6 +42,21 @@ const taxesPerTier: Record<string, TaxesPerMethod> = {
       tax: 0, // in cents
     },
   },
+
+  PARTIDOS: {
+    credit_card: {
+      percent: 5.9,
+      tax: 100, // in cents
+    },
+    boleto: {
+      percent: 3.5,
+      tax: 390, // in cents
+    },
+    pix: {
+      percent: 2.99,
+      tax: 0, // in cents
+    },
+  },
 };
 
 export default taxesPerTier;

@@ -1,5 +1,7 @@
 # Changelog
 
+- feat: Add specific taxes for parties
+
 ## v3.6.0 - 2026-06-01
 
 - feat: Differentiate taxes per tier
