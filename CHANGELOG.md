@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.1 - 2026-06-03
+
 - feat: Add specific taxes for parties
 
 ## v3.6.0 - 2026-06-01
