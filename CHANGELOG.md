@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.2 - 2026-06-03
+
 - fix: Sharing button not always working
 
 ## v3.6.1 - 2026-06-03
