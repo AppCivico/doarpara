@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Sharing button not always working
+
 ## v3.6.1 - 2026-06-03
 
 - feat: Add specific taxes for parties

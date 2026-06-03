@@ -8,6 +8,7 @@ export default {
   campaignBy: 'Por',
   closeError: 'Fechar mensagem de erro',
   chooseThisReward: 'Selecionar essa recompensa',
+  copiedToClipboard: 'Copiado para a área de transferência',
   credits: {
     fundraiserLabel: 'Responsável por esta página',
     poweredBy: 'Campanha proporcionada por',
