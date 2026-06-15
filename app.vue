@@ -5,6 +5,7 @@
     </div>
   </NuxtLayout>
 
+  <updateBannerPanel v-if="updateAvailable" @reload="reload" />
   <errorMessagePanel :error="errorToShow" @close="flushError" />
 
   <NuxtLoadingIndicator :color="false" :height="3" />
@@ -12,6 +13,7 @@
 <script setup lang="ts">
 import * as Sentry from '@sentry/nuxt';
 
+const { updateAvailable, reload } = useVersionChecker();
 const errorToShow: Ref<Error | null> = ref(null);
 
 function flushError() {

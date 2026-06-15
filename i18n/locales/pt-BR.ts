@@ -7,6 +7,8 @@ export default {
   },
   campaignBy: 'Por',
   closeError: 'Fechar mensagem de erro',
+  updateAvailable: 'Uma nova versão está disponível.',
+  updateReload: 'Recarregar',
   chooseThisReward: 'Selecionar essa recompensa',
   copiedToClipboard: 'Copiado para a área de transferência',
   credits: {

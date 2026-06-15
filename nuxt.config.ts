@@ -143,6 +143,8 @@ export default defineNuxtConfig({
         varies: [],
       },
     },
+    // Never cache the version endpoint — it must always reflect the live build.
+    '/_version': { cache: false },
     // Don't cache donation, donations, and receipt pages.
     // Two URL patterns exist:
     //   • Slug-nested:  /<slug>/doar, /<slug>/doacoes — match with /*/doar
@@ -174,6 +176,9 @@ export default defineNuxtConfig({
         : 1,
 
       campaignPoolingInterval: Number(process.env.CAMPAIGN_POOLING_INTERVAL)
+        || 0,
+
+      versionCheckInterval: Number(process.env.VERSION_CHECK_INTERVAL)
         || 0,
 
       version,

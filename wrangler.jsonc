@@ -28,6 +28,8 @@
     "PATH_SEGMENT_RECEIPT": "recibos",
     "QUERY_STRING_SPECIAL_PARAMETERS_AMOUNT": "valor",
 
+    "VERSION_CHECK_INTERVAL": "600",
+
     // Default/development environment specific
     "APP_TITLE": "Teste do DoarPara",
     "BASE_URL": "http://localhost:3000",
@@ -60,6 +62,8 @@
         "SENTRY_TRACES_SAMPLE_RATE": "0.1",
         "SENTRY_REPLAY_SAMPLE_RATE": "0",
         "SENTRY_ERROR_REPLAY_SAMPLE_RATE": "1.0",
+
+        "VERSION_CHECK_INTERVAL": "600",
 
         // Production-specific
         "EDGE_CACHE_DURATION": "30",
@@ -106,6 +110,8 @@
         "SENTRY_TRACES_SAMPLE_RATE": "0.1",
         "SENTRY_REPLAY_SAMPLE_RATE": "0",
         "SENTRY_ERROR_REPLAY_SAMPLE_RATE": "1.0",
+
+        "VERSION_CHECK_INTERVAL": "600",
 
         // Preview-specific
         "EDGE_CACHE_DURATION": "30",
