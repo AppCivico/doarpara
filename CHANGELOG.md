@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.3 - 2026-08-19
+
 - feat: Add periodic check for new version
 - fix Credit card hash not always matching
 
