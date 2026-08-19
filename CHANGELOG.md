@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.4 - 2026-08-19
+
 - perf: Increase CDN stale-while-revalidate from 30s to 300s for campaign pages, reducing cache misses during low-traffic periods
 - perf: Add stale-if-error=86400 so Cloudflare serves cached campaign pages for up to 24h when the origin is unavailable
 - fix: Wire Sentry DSN through the @sentry/nuxt module so client-side error tracking is no longer silently disabled
