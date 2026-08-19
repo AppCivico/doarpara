@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Expose SENTRY_DSN_PUBLIC via Vite define so client-side error tracking is no longer silently disabled
+
 ## v3.6.4 - 2026-08-19
 
 - perf: Increase CDN stale-while-revalidate from 30s to 300s for campaign pages, reducing cache misses during low-traffic periods

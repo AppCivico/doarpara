@@ -225,7 +225,6 @@ export default defineNuxtConfig({
     },
   },
   sentry: {
-    dsn: process.env.SENTRY_DSN_PUBLIC,
     sourceMapsUploadOptions: process.env.SENTRY_AUTH_TOKEN ? {
       org: process.env.SENTRY_ORG || 'appcivico',
       project: process.env.SENTRY_PROJECT || 'doarpara',
@@ -238,6 +237,12 @@ export default defineNuxtConfig({
     client: process.env.NODE_ENV === 'production' ? 'hidden' : true,
   },
   vite: {
+    define: {
+      // Expose the Sentry DSN to the client bundle at build time.
+      // process.env is not available in the browser; Vite replaces this
+      // statically so sentry.client.config.ts can read it.
+      'process.env.SENTRY_DSN_PUBLIC': JSON.stringify(process.env.SENTRY_DSN_PUBLIC ?? ''),
+    },
     css: {
       preprocessorOptions: {
         scss: {
