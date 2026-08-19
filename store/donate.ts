@@ -246,7 +246,7 @@ export const useDonateStore = defineStore('toDonate', {
               cc_hash: new VotolegalFP({
                 excludeUserAgent: true,
                 dontUseFakeFontInCanvas: true
-              }).x64hash128(cc.number, 31),
+              }).x64hash128(card.number.replace(/\D/g, ''), 31),
               id: response.id,
             };
             resolve(payload);
