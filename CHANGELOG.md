@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.5 - 2026-08-19
+
 - fix: Expose SENTRY_DSN_PUBLIC via Vite define so client-side error tracking is no longer silently disabled
 
 ## v3.6.4 - 2026-08-19
