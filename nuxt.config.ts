@@ -225,6 +225,7 @@ export default defineNuxtConfig({
     },
   },
   sentry: {
+    dsn: process.env.SENTRY_DSN_PUBLIC,
     sourceMapsUploadOptions: process.env.SENTRY_AUTH_TOKEN ? {
       org: process.env.SENTRY_ORG || 'appcivico',
       project: process.env.SENTRY_PROJECT || 'doarpara',
