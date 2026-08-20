@@ -10,9 +10,21 @@ DoarPara uses **NuxtHub cache** powered by **Cloudflare Workers KV** to cache SS
 
 ### Cache Settings
 
-- **Cache duration**: Configurable via `EDGE_CACHE_DURATION` environment variable (default: 30 seconds, production: 30 seconds)
-- **Stale-while-revalidate**: Enabled (serves stale content while fetching fresh data in background)
-- **Stale max age**: Configurable via `STALE_MAX_AGE` environment variable (default and production: 300 seconds / 5 minutes). Wide enough to absorb `waitUntil` write cancellations and the post-deploy thundering herd caused by Nitro's per-build `integrity` invalidation. Matches the client-side polling interval (`CAMPAIGN_POOLING_INTERVAL=300000`), so user-visible staleness is capped at ~5 minutes regardless. Total max staleness: ~5.5 minutes.
+There are two independent caching layers:
+
+**Layer 1 — Cloudflare CDN** (before the Worker runs): controlled by the `Cache-Control` HTTP response header set in [`server/middleware/headers.ts`](server/middleware/headers.ts) for `/<slug>` campaign pages:
+
+- `s-maxage` — how long the CDN keeps the response fresh. Configurable via `EDGE_CACHE_DURATION` (default and production: 30 seconds).
+- `stale-while-revalidate` — how long the CDN may serve a stale copy while fetching a fresh response from the Worker in the background. Configurable via `STALE_MAX_AGE` (default and production: 300 seconds / 5 minutes). Raising this from 30 s → 300 s significantly improves cache-hit rates during low-traffic periods where requests are more than 30 s apart.
+- `stale-if-error=86400` — how long the CDN may serve a stale copy when the origin returns a 5xx. Set to 24 hours so cached campaign pages remain visible during Worker crashes or deploys.
+- `max-age` — browser-side freshness. Configurable via `BROWSER_CACHE_DURATION` (default: 30 seconds).
+
+Total CDN staleness window: up to `s-maxage + stale-while-revalidate` = ~5.5 minutes under normal conditions, or up to 24 hours if the origin is unavailable.
+
+**Layer 2 — Worker KV** (inside the Worker, after the CDN miss): controlled by `routeRules` in [`nuxt.config.ts`](nuxt.config.ts):
+
+- **Cache duration**: `EDGE_CACHE_DURATION` (default and production: 30 seconds)
+- **Stale-while-revalidate**: Enabled — `STALE_MAX_AGE` (default and production: 300 seconds / 5 minutes). Wide enough to absorb `waitUntil` write cancellations and the post-deploy thundering herd caused by Nitro's per-build `integrity` invalidation. Matches the client-side polling interval (`CAMPAIGN_POOLING_INTERVAL=300000`), so user-visible staleness is capped at ~5 minutes regardless. Total KV staleness: ~5.5 minutes.
 
 ### Cached Routes
 
@@ -53,7 +65,7 @@ The cache uses Cloudflare Workers KV under Appcivico's Cloudflare account:
 
 The account ID can be found in the Cloudflare Dashboard URL or under **My Profile** → **API Tokens** → any token's details.
 
-> **Note**: The `cf-cache-status: DYNAMIC` header in responses is expected — it refers to Cloudflare's CDN layer, which does not cache Workers/Pages responses. Caching happens inside the Worker via KV and is transparent to the CDN.
+> **Note**: You may see `cf-cache-status: DYNAMIC` on some responses. This means the CDN served the response without a CDN-layer cache hit — either because the entry had expired, the CDN had no entry yet, or the response came from a part of the site that the CDN doesn't cache (non-`/<slug>` pages). Campaign pages (`/<slug>`) with `stale-while-revalidate=300` should frequently return `cf-cache-status: HIT` or `cf-cache-status: STALE` within the 5.5-minute window. `DYNAMIC` on those pages just means the CDN window had also expired before this request.
 
 ## Cache Key Format
 
@@ -322,8 +334,12 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/stor
 
 If the update is not urgent, wait for the cache to expire naturally:
 
-- **Production**: 30 seconds (`EDGE_CACHE_DURATION=30`) + up to 5 minutes stale (`STALE_MAX_AGE=300`)
-- **Default**: 30 seconds + up to 5 minutes stale
+Both cache layers must expire before users see fresh content:
+
+- **CDN layer**: `s-maxage=30` (fresh) + `stale-while-revalidate=300` (stale window) = up to **~5.5 minutes**
+- **KV layer**: `EDGE_CACHE_DURATION=30` (fresh) + `STALE_MAX_AGE=300` (stale window) = up to **~5.5 minutes**
+
+Worst case: ~5.5 minutes total (the two layers run in parallel — once the CDN misses and hits the Worker, the KV stale window is all that's left).
 
 ## Cache Key Discovery
 
