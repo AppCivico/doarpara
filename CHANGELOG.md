@@ -1,6 +1,7 @@
 # Changelog
 
 - fix: Route campaign 404s from the layout through Nuxt's error page instead of the generic error panel
+- fix: Catch stale chunk load failures from Vite's module preloading, not just Vue-rendered errors, so the auto-refresh actually fires
 - fix: Drop Facebook In-App Browser's "Java object is gone" postMessage noise from Sentry
 
 ## v3.6.5 - 2026-08-19
