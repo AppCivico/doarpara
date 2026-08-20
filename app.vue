@@ -44,6 +44,15 @@ if (import.meta.client) {
       return false; // Prevent further error handling
     }
 
+    // Fatal errors created via createError (e.g. a campaign 404 thrown from
+    // layouts/default.vue) already carry their own status page — hand them
+    // to Nuxt's error handling instead of showing the generic panel below,
+    // otherwise they get stuck as an unhandled exception here.
+    if (isNuxtError(error) && error.fatal) {
+      showError(error);
+      return false;
+    }
+
     errorToShow.value = error;
 
     if (import.meta.dev) {
