@@ -82,18 +82,26 @@ if (route.params.campaignSlug && !campaign.value) {
     );
   }
 
-  // Throw error if fetch failed
-  // In preview mode, only throw non-404 errors (404 is expected if campaign
-  // isn't public yet)
+  // Show the error page if the fetch failed.
+  // In preview mode, only do this for non-404 errors (404 is expected if
+  // the campaign isn't public yet).
+  //
+  // This layout is only used by .client.vue pages, so this setup runs
+  // inside Vue's implicit Suspense boundary. Throwing here (as opposed to
+  // showError) would reject that boundary's async dependency, which can
+  // leave Suspense's internal DOM bookkeeping broken and crash later with
+  // a null-parent insertBefore when it tries to resolve/move its subtree
+  // (see Sentry DOARPARA-62/63/64). showError() lets this setup complete
+  // normally and hands the redirect to Nuxt instead.
   if (error.value) {
     const err = error.value as any;
     const bypass404 = isPreviewMode() && err.statusCode === 404;
 
     if (!bypass404) {
-      throw createError({
+      showError({
         statusCode: err.statusCode || 500,
         statusMessage: err.message || 'Error loading campaign',
-        fatal: false, // Don't crash SSR, show error page instead
+        data: { type: 'campaign' },
       });
     }
   }
