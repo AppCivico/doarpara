@@ -24,7 +24,6 @@ function isChunkLoadError(error: unknown) {
   const errorMessage = (error as Error)?.message?.toLowerCase() || '';
   return (
     errorMessage.includes('dynamically imported module')
-    || errorMessage.includes('failed to fetch')
     || errorMessage.includes('loading chunk')
     || errorMessage.includes('importing a module script failed')
   );
