@@ -20,10 +20,15 @@ Sentry.init({
   replaysOnErrorSampleRate: Number(process.env.SENTRY_ERROR_REPLAY_SAMPLE_RATE) || 1.0,
 
   beforeSend(event, hint) {
-    // Facebook's In-App Browser fires a native bridge call on page unload;
-    // if the WebView is already being torn down, Android throws this.
-    const message = (hint?.originalException as Error)?.message ?? '';
-    if (message.includes('Java object is gone')) return null;
+    // Facebook/Instagram's in-app browser fires a native bridge call on page
+    // hide/unload — a Java object on Android, window.webkit.messageHandlers
+    // on iOS; if that bridge is already torn down, it throws. Wording and
+    // platform vary ("Java object is gone", "undefined is not an object
+    // (evaluating 'window.webkit.messageHandlers')", ...), but every variant
+    // routes through Meta's own sendDataToNative relay function, so key off
+    // that instead of chasing each new message/platform.
+    const stack = (hint?.originalException as Error)?.stack ?? '';
+    if (stack.includes('sendDataToNative')) return null;
     return event;
   },
 });

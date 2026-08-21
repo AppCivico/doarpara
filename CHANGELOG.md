@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Widen the Facebook/Instagram in-app-browser Sentry filter to key off the `sendDataToNative` relay function instead of matching one exact message string. The original filter only matched the literal `'Java object is gone'`, which missed two siblings found while monitoring post-deploy: `DOARPARA-67` ("Java exception was raised during method invocation", Instagram's Android IAB) and `DOARPARA-6A` ("undefined is not an object (evaluating 'window.webkit.messageHandlers')", Instagram's iOS IAB, via `window.webkit.messageHandlers` instead of a Java bridge). All three — plus both platforms — route through Meta's own `sendDataToNative` function in their injected IAB script, confirmed present in every captured stack trace, so keying off that catches the whole family regardless of OS or wording
+
 ## v3.6.9 - 2026-08-21
 
 - feat: Tag every Sentry event (client and server) with `app_version`, the human-readable `package.json` version, alongside Sentry's own `release` tag (which stays the git SHA it already was, since that's what sourcemap upload matches against). Lets you filter/search issues by version in the Sentry UI without touching sourcemap resolution. Verified against a real production build: the client bundle carries the literal `app_version:"3.6.8"`, and the server reads it live via `readFileSync`
