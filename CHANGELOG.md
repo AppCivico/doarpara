@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.9 - 2026-08-21
+
 - feat: Tag every Sentry event (client and server) with `app_version`, the human-readable `package.json` version, alongside Sentry's own `release` tag (which stays the git SHA it already was, since that's what sourcemap upload matches against). Lets you filter/search issues by version in the Sentry UI without touching sourcemap resolution. Verified against a real production build: the client bundle carries the literal `app_version:"3.6.8"`, and the server reads it live via `readFileSync`
 
 ## v3.6.8 - 2026-08-21
