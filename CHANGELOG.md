@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.8 - 2026-08-21
+
 - fix: Pin GA4's `cookie_domain` instead of relying on its `auto` detection — reported as `Cookie "_ga_L648BYKLQD" has been rejected for invalid domain` in Firefox's console on a campaign page (`/nabil`). GA's `auto` heuristic treats the domain's last two labels as the whole eTLD+1, which is wrong for two-label ccSLDs like `.com.br`: it was trying to set the `_ga` cookie on the public suffix `com.br` itself, which Firefox correctly rejects. Applied to both the site-wide tag (`nuxt.config.ts`) and the per-campaign `google_analytics` tag (`pages/[campaignSlug].vue`)
 
 ## v3.6.7 - 2026-08-21
