@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.7 - 2026-08-21
+
 - fix: Allow `https://www.google.com/` in the `connect-src` CSP directive — reported as a browser console error blocking `https://www.google.com/g/collect?...` on a campaign page (`/nabil`). That endpoint is GA4's consent-mode fallback beacon (note the `dma=0`/`gcd=` params, sent when Google's consent signals are active), which posts to `www.google.com` rather than `*.google-analytics.com`, so it fell outside the existing CSP allowance and was silently dropped
 
 ## v3.6.6 - 2026-08-21
