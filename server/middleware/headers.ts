@@ -54,6 +54,7 @@ export default defineEventHandler((event) => {
       + "https://static.cloudflareinsights.com/ "
       + "https://*.google-analytics.com/ "
       + "https://*.googletagmanager.com/ "
+      + "https://www.google.com/ "
       + "https://*.facebook.com/ "
       + "https://*.appcivico.com/ "
       + "https://*.votolegal.com/ "

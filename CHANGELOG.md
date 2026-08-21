@@ -1,5 +1,7 @@
 # Changelog
 
+- fix: Allow `https://www.google.com/` in the `connect-src` CSP directive — reported as a browser console error blocking `https://www.google.com/g/collect?...` on a campaign page (`/nabil`). That endpoint is GA4's consent-mode fallback beacon (note the `dma=0`/`gcd=` params, sent when Google's consent signals are active), which posts to `www.google.com` rather than `*.google-analytics.com`, so it fell outside the existing CSP allowance and was silently dropped
+
 ## v3.6.6 - 2026-08-21
 
 - fix: Drop the generic "failed to fetch" string from stale-chunk detection — it's redundant for real chunk-load failures (Chrome/Firefox already include "dynamically imported module" in that same message, Safari says "Importing a module script failed") and was the one heuristic broad enough to also match an unrelated `fetch()` network error, which the new app-wide `unhandledrejection` listener could then mistake for a stale deploy and force a page reload over
