@@ -4,6 +4,13 @@ Sentry.init({
   enabled: process.env.NODE_ENV !== 'development',
   dsn: process.env.SENTRY_DSN_PUBLIC || process.env.SENTRY_DSN,
 
+  // Tag every event with the human-readable app version, alongside
+  // Sentry's own release (which is the git SHA, tied to sourcemap upload —
+  // left as-is so stack traces keep resolving).
+  initialScope: {
+    tags: { app_version: process.env.APP_VERSION },
+  },
+
   // We recommend adjusting this value in production, or using tracesSampler
   // for finer control
   tracesSampleRate: Number(process.env.SENTRY_TRACES_SAMPLE_RATE) || 0.2,

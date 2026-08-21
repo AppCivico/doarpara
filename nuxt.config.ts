@@ -257,6 +257,9 @@ export default defineNuxtConfig({
       // process.env is not available in the browser; Vite replaces this
       // statically so sentry.client.config.ts can read it.
       'process.env.SENTRY_DSN_PUBLIC': JSON.stringify(process.env.SENTRY_DSN_PUBLIC ?? ''),
+      // Same trick, so sentry.client.config.ts can tag events with the
+      // human-readable app version alongside Sentry's own git-SHA release.
+      'process.env.APP_VERSION': JSON.stringify(version),
     },
     css: {
       preprocessorOptions: {
