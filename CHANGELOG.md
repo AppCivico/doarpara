@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.6.6 - 2026-08-21
+
 - fix: Drop the generic "failed to fetch" string from stale-chunk detection — it's redundant for real chunk-load failures (Chrome/Firefox already include "dynamically imported module" in that same message, Safari says "Importing a module script failed") and was the one heuristic broad enough to also match an unrelated `fetch()` network error, which the new app-wide `unhandledrejection` listener could then mistake for a stale deploy and force a page reload over
 - fix: Stop the donation dialog layout from throwing inside its async setup on a failed campaign fetch, which was corrupting Vue's Suspense boundary and crashing with a null-parent `insertBefore` (Sentry DOARPARA-62/63/64). Verified by reproducing client-side: the original code logged "Unhandled error during execution of setup function" plus an actual uncaught promise rejection inside `<AsyncComponentWrapper>`; with `showError()` in place, the identical repro resolves cleanly to the error page with no unhandled/uncaught errors. Could not force the exact `insertBefore` TypeError locally (likely needs concurrent conditions from production), but the unhandled-rejection-inside-Suspense state it depends on is confirmed gone.
 - fix: Route campaign 404s from the layout through Nuxt's error page instead of the generic error panel
