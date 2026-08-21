@@ -123,7 +123,7 @@ src="https://www.facebook.com/tr?id=${campaign.value.facebook_pixel}&ev=PageView
   if (!import.meta.dev && campaign.value?.google_analytics) {
     onMounted(() => {
       if (campaign.value?.google_analytics) {
-        gtag('config', campaign.value.google_analytics);
+        gtag('config', campaign.value.google_analytics, { cookie_domain: window.location.hostname });
       }
     });
   }

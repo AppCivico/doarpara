@@ -6,6 +6,16 @@ try {
   version = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8')).version;
 } catch { /* non-fatal */ }
 
+// GA4's `cookie_domain: 'auto'` default misdetects the eTLD+1 boundary on
+// ccSLDs like .com.br (it treats the last two labels as the whole domain),
+// so it tries to set the _ga cookie on the public suffix "com.br" itself —
+// which Firefox correctly rejects as an invalid domain. Pinning the exact
+// hostname avoids the auto-detection entirely.
+let gtagCookieDomain: string | undefined;
+try {
+  gtagCookieDomain = process.env.BASE_URL ? new URL(process.env.BASE_URL).hostname : undefined;
+} catch { /* non-fatal */ }
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-08',
@@ -98,6 +108,11 @@ export default defineNuxtConfig({
   ],
   hub: {
     cache: process.env.NODE_ENV !== 'development',
+  },
+  gtag: {
+    config: {
+      cookie_domain: gtagCookieDomain,
+    },
   },
   // https://nitro.build/deploy/providers/cloudflare#cloudflare-pages
   nitro: {
