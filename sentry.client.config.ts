@@ -19,16 +19,22 @@ Sentry.init({
   replaysSessionSampleRate: Number(process.env.SENTRY_REPLAY_SAMPLE_RATE) || 0,
   replaysOnErrorSampleRate: Number(process.env.SENTRY_ERROR_REPLAY_SAMPLE_RATE) || 1.0,
 
-  beforeSend(event, hint) {
-    // Facebook/Instagram's in-app browser fires a native bridge call on page
-    // hide/unload — a Java object on Android, window.webkit.messageHandlers
-    // on iOS; if that bridge is already torn down, it throws. Wording and
-    // platform vary ("Java object is gone", "undefined is not an object
-    // (evaluating 'window.webkit.messageHandlers')", ...), but every variant
-    // routes through Meta's own sendDataToNative relay function, so key off
-    // that instead of chasing each new message/platform.
-    const stack = (hint?.originalException as Error)?.stack ?? '';
-    if (stack.includes('sendDataToNative')) return null;
+  beforeSend(event) {
+    // Meta's own scripts throwing on deferred callbacks that outlive their
+    // target: their in-app-browser bridge (Android Java object / iOS
+    // window.webkit.messageHandlers, wording varies) firing on page
+    // hide/unload after the WebView is already torn down, and their
+    // Business Extension signals script (/signals/iwl.js) firing a
+    // requestAnimationFrame callback after its target element is gone.
+    // None of this is reachable from our code — key off the frame data
+    // Sentry already resolved (more reliable than the raw stack string,
+    // which varies by browser and is often empty for parse errors like
+    // "Unexpected end of input") rather than chasing every message/platform.
+    const frames = event.exception?.values?.flatMap((v) => v.stacktrace?.frames ?? []) ?? [];
+    const isMetaScriptNoise = frames.some((f) => f.function === 'sendDataToNative'
+      || f.filename?.startsWith('iabjs://')
+      || f.filename?.includes('/signals/iwl.js'));
+    if (isMetaScriptNoise) return null;
     return event;
   },
 });
