@@ -1,7 +1,16 @@
 <template>
   <div class="page-wrapper">
     <!-- `.page-wrapper` required by NUXT page transitions -->
-    <pre v-if="error">{{ error }}</pre>
+    <!--
+      Only fall back to the raw error dump when there's no cached campaign to
+      keep showing. `error` is reactive and can flip true well after initial
+      load (e.g. the 5-minute background poll below failing) — if we swapped
+      on `error` alone, that unmounts the entire <NuxtPage /> subtree (whatever
+      nested Suspense-wrapped child page happens to be active) out from under
+      a user who's already mid-flow, which corrupts Vue's Suspense internals
+      and crashes with a null-parent insertBefore (Sentry DOARPARA-62/63/64/6D).
+    -->
+    <pre v-if="error && !campaign">{{ error }}</pre>
     <template v-else>
       <NuxtPage />
     </template>
