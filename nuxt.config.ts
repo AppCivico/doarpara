@@ -86,7 +86,13 @@ export default defineNuxtConfig({
     bundle: {
       optimizeTranslationDirective: false,
     },
-    lazy: true,
+    // Lazy-loading locale files exists to avoid shipping unused languages —
+    // with a single locale (pt-BR, 8KB) there's nothing to save, and it was
+    // the direct cause of a production crash (Sentry DOARPARA-6H): a dynamic
+    // import() failure during unrelated network instability left @nuxtjs/i18n's
+    // plugin reading `.default` off an undefined result. Bundling it directly
+    // removes that runtime failure mode entirely.
+    lazy: false,
     strategy: 'no_prefix',
     defaultLocale: 'pt-BR',
     locales: [
